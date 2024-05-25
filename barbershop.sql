@@ -1,11 +1,11 @@
 ﻿use master 
 go
 -- Tạo cơ sở dữ liệu
-CREATE DATABASE Barbershop;
+CREATE DATABASE Barbershop_test;
 GO 
 
 -- Sử dụng cơ sở dữ liệu
-USE Barbershop;
+USE Barbershop_test;
 GO
 
 -- Tạo bảng accounts
@@ -59,8 +59,8 @@ GO
 -- Tạo bảng shifts
 CREATE TABLE [shifts] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [startTime] time NOT NULL,
-  [endTime] time NOT NULL,
+  [startTime] VARCHAR(5) NOT NULL,
+  [endTime] VARCHAR(5) NOT NULL,
   [createdAt] datetime NOT NULL,
   [updatedAt] datetime
 );
@@ -83,7 +83,7 @@ CREATE TABLE [orders] (
   [shiftsID] int NOT NULL,
   [statusId] int NOT NULL,
   [orderDate] datetime NOT NULL,
-  [totalAmount] decimal(10, 2),
+  [totalAmount] int,
   [createdAt] datetime NOT NULL,
   [updatedAt] datetime
 );
@@ -95,7 +95,7 @@ CREATE TABLE [services] (
   [name] nvarchar(255) NOT NULL,
   [image] varchar(255) NOT NULL,
   [description] nvarchar(255),
-  [price] decimal(10, 2) NOT NULL,
+  [price] int NOT NULL,
   [createdAt] datetime NOT NULL,
   [updatedAt] datetime
 );
@@ -153,7 +153,7 @@ GO
 -- Thiết lập khóa ngoại cho bảng orders
 ALTER TABLE [orders] 
 ADD FOREIGN KEY ([accountID]) REFERENCES [accounts] ([id]),
-    FOREIGN KEY ([employeeId]) REFERENCES [employees] ([id]),
+    FOREIGN KEY ([employeeId]) REFERENCES [accounts] ([id]),
     FOREIGN KEY ([statusId]) REFERENCES [statuses] ([id]),
     FOREIGN KEY ([shiftsID]) REFERENCES [shifts] ([id]);
 GO
@@ -200,35 +200,35 @@ GO
 
 -- Chèn dữ liệu vào bảng shifts với thời gian cách nhau 30 phút từ 9h đến 20h
 INSERT INTO shifts (startTime, endTime, createdAt, updatedAt) VALUES
-('09:00:00', '09:30:00', GETDATE(), GETDATE()),
-('09:30:00', '10:00:00', GETDATE(), GETDATE()),
-('10:00:00', '10:30:00', GETDATE(), GETDATE()),
-('10:30:00', '11:00:00', GETDATE(), GETDATE()),
-('11:00:00', '11:30:00', GETDATE(), GETDATE()),
-('11:30:00', '12:00:00', GETDATE(), GETDATE()),
-('12:00:00', '12:30:00', GETDATE(), GETDATE()),
-('12:30:00', '13:00:00', GETDATE(), GETDATE()),
-('13:00:00', '13:30:00', GETDATE(), GETDATE()),
-('13:30:00', '14:00:00', GETDATE(), GETDATE()),
-('14:00:00', '14:30:00', GETDATE(), GETDATE()),
-('14:30:00', '15:00:00', GETDATE(), GETDATE()),
-('15:00:00', '15:30:00', GETDATE(), GETDATE()),
-('15:30:00', '16:00:00', GETDATE(), GETDATE()),
-('16:00:00', '16:30:00', GETDATE(), GETDATE()),
-('16:30:00', '17:00:00', GETDATE(), GETDATE()),
-('17:00:00', '17:30:00', GETDATE(), GETDATE()),
-('17:30:00', '18:00:00', GETDATE(), GETDATE()),
-('18:00:00', '18:30:00', GETDATE(), GETDATE()),
-('18:30:00', '19:00:00', GETDATE(), GETDATE()),
-('19:00:00', '19:30:00', GETDATE(), GETDATE()),
-('19:30:00', '20:00:00', GETDATE(), GETDATE());
+('09:00', '09:30', GETDATE(), GETDATE()),
+('09:30', '10:00', GETDATE(), GETDATE()),
+('10:00', '10:30', GETDATE(), GETDATE()),
+('10:30', '11:00', GETDATE(), GETDATE()),
+('11:00', '11:30', GETDATE(), GETDATE()),
+('11:30', '12:00', GETDATE(), GETDATE()),
+('12:00', '12:30', GETDATE(), GETDATE()),
+('12:30', '13:00', GETDATE(), GETDATE()),
+('13:00', '13:30', GETDATE(), GETDATE()),
+('13:30', '14:00', GETDATE(), GETDATE()),
+('14:00', '14:30', GETDATE(), GETDATE()),
+('14:30', '15:00', GETDATE(), GETDATE()),
+('15:00', '15:30', GETDATE(), GETDATE()),
+('15:30', '16:00', GETDATE(), GETDATE()),
+('16:00', '16:30', GETDATE(), GETDATE()),
+('16:30', '17:00', GETDATE(), GETDATE()),
+('17:00', '17:30', GETDATE(), GETDATE()),
+('17:30', '18:00', GETDATE(), GETDATE()),
+('18:00', '18:30', GETDATE(), GETDATE()),
+('18:30', '19:00', GETDATE(), GETDATE()),
+('19:00', '19:30', GETDATE(), GETDATE()),
+('19:30', '20:00', GETDATE(), GETDATE());
 GO
 
 -- Chèn dữ liệu vào bảng orders chỉ với tài khoản có role là user và employeeId là thợ cắt tóc
 INSERT INTO orders (accountID, employeeId, shiftsID, statusId, orderDate, totalAmount, createdAt, updatedAt) VALUES
-(1, 2, 1, 1, GETDATE(), 100.00, GETDATE(), GETDATE()), -- accountID = 1 (user01), employeeId = 2 (barber01), shiftsID = 1, statusId = 1 (Đang xử lý)
-(2, 3, 2, 2, GETDATE(), 150.00, GETDATE(), GETDATE()), -- accountID = 2 (user02), employeeId = 3 (barber02), shiftsID = 2, statusId = 2 (Xác nhận)
-(1, 2, 3, 3, GETDATE(), 200.00, GETDATE(), GETDATE()); -- accountID = 1 (user01), employeeId = 2 (barber01), shiftsID = 3, statusId = 3 (Hoàn thành)
+(1, 5, 1, 1, GETDATE(), 100.00, GETDATE(), GETDATE()), -- accountID = 1 (user01), employeeId = 2 (barber01), shiftsID = 1, statusId = 1 (Đang xử lý)
+(2, 6, 2, 2, GETDATE(), 150.00, GETDATE(), GETDATE()), -- accountID = 2 (user02), employeeId = 3 (barber02), shiftsID = 2, statusId = 2 (Xác nhận)
+(1, 5, 3, 3, GETDATE(), 200.00, GETDATE(), GETDATE()); -- accountID = 1 (user01), employeeId = 2 (barber01), shiftsID = 3, statusId = 3 (Hoàn thành)
 GO
 
 -- Chèn dữ liệu vào bảng schedules_work chỉ với tài khoản có role là thợ cắt tóc
