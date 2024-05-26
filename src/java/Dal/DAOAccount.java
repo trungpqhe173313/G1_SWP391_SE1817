@@ -16,7 +16,7 @@ public class DAOAccount extends DBContext{
    
     
     public Accounts login(String user, String pass) {
-        String sql = "SELECT*FROM Account where username = ? and password = ?";
+        String sql = "SELECT*FROM Accounts where username = ? and password = ?";
         try {
             
             PreparedStatement st = connection.prepareStatement(sql);
@@ -46,7 +46,7 @@ public class DAOAccount extends DBContext{
     }
 
    public Accounts checkAuthentic(String user, String pass) {
-        String sql="select*from Account where accountname=? and password=?";
+        String sql="select*from Accounts where accountname=? and password=?";
         try{
             PreparedStatement st=connection.prepareStatement(sql);
             st.setString(1, user);
@@ -75,7 +75,7 @@ public class DAOAccount extends DBContext{
     
     public Accounts checkAccountExist(String user) {
         try {
-            String sql = "SELECT * FROM Account WHERE username = ?";
+            String sql = "SELECT * FROM Accounts WHERE username = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user);
             ResultSet rs = stm.executeQuery();
@@ -101,7 +101,7 @@ public class DAOAccount extends DBContext{
     }
   
    public void insertAccount(Accounts account) {
-        String sql = "INSERT INTO Account (username, password, fullName, email, "
+        String sql = "INSERT INTO Accounts (username, password, fullName, email, "
                 + "avatar, isMale, roleId, isActive, createAt, updatedAt) " +
                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
