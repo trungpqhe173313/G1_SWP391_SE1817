@@ -12,6 +12,10 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>Controller.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SignupController</servlet-name>
+        <servlet-class>Controller.SignupController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -23,5 +27,9 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupController</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
 </web-app>
