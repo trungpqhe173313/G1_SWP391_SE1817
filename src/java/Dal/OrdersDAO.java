@@ -22,12 +22,12 @@ import java.util.List;
  *
  * @author xdrag
  */
-public class OdersDBContext extends DBContext {
+public class OrdersDAO extends DBContext {
 
     public List<Accounts> getAllAccounts() {
         List<Accounts> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
-                + "      ,[username]\n"
+                + "      ,[phone]\n"
                 + "      ,[password]\n"
                 + "      ,[fullName]\n"
                 + "      ,[email]\n"
@@ -42,7 +42,7 @@ public class OdersDBContext extends DBContext {
             while (rs.next()) {
                 Accounts m = new Accounts();
                 m.setId(rs.getInt("id"));
-                m.setUsername(rs.getString("username"));
+                m.setPhone(rs.getString("phone"));
                 m.setPassword(rs.getString("password"));
                 m.setFullName(rs.getString("fullName"));
                 m.setEmail(rs.getString("email"));
@@ -206,7 +206,7 @@ public class OdersDBContext extends DBContext {
     public List<Accounts> getAllBarber() {
         List<Accounts> list = new ArrayList<>();
         String sql = "SELECT a.[id],\n"
-                + "       a.[username],\n"
+                + "       a.[phone],\n"
                 + "       a.[password],\n"
                 + "       a.[fullName],\n"
                 + "       a.[email],\n"
@@ -225,7 +225,7 @@ public class OdersDBContext extends DBContext {
             while (rs.next()) {
                 Accounts m = new Accounts();
                 m.setId(rs.getInt("id"));
-                m.setUsername(rs.getString("username"));
+                m.setPhone(rs.getString("phone"));
                 m.setPassword(rs.getString("password"));
                 m.setFullName(rs.getString("fullName"));
                 m.setEmail(rs.getString("email"));
@@ -305,10 +305,11 @@ public class OdersDBContext extends DBContext {
 
     public int GetNewOrderId(int accountId) {
         int id = 0;
-        String sql = "SELECT TOP 1 [id]\n"
-                + "FROM [orders]\n"
-                + "WHERE [accountID] = ?\n"
-                + "ORDER BY [orderDate] DESC;";
+        String sql = "SELECT top 1 [id]\n"
+                + "      \n"
+                + "  FROM [dbo].[orders]\n"
+                + "  where accountID = ?\n"
+                + "  order by  id desc";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, accountId);
@@ -327,11 +328,10 @@ public class OdersDBContext extends DBContext {
                 + "           ([orderId]\n"
                 + "           ,[serviceId]\n"
                 + "           ,[isActive]\n"
-                + "           ,[quantity]\n"
                 + "           ,[createdAt]\n"
                 + "           ,[updatedAt])\n"
                 + "     VALUES\n"
-                + "           (?,?,1,1,GETDATE(),GETDATE())";
+                + "           (?,?,1,GETDATE(),GETDATE())";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, orderId);
@@ -342,10 +342,11 @@ public class OdersDBContext extends DBContext {
     }
 
     public static void main(String[] args) {
-        OdersDBContext d = new OdersDBContext();
-        List<Accounts> l = d.getAllBarber();
-        for (Accounts a : l) {
+        OrdersDAO d = new OrdersDAO();
+        List<Services> l = d.getAllServices();
+        for (Services a : l) {
             System.out.println(a.toString());
         }
+        System.out.println(d.GetNewOrderId(1));
     }
 }

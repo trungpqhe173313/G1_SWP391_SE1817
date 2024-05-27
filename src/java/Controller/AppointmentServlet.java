@@ -4,11 +4,12 @@
  */
 package Controller;
 
-import Dal.OdersDBContext;
+import Dal.OrdersDAO;
 import Model.Accounts;
 import Model.Orders;
 import Model.Services;
 import Model.Shifts;
+import jakarta.jms.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -67,11 +68,13 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OdersDBContext d = new OdersDBContext();
+        OrdersDAO d = new OrdersDAO();
         List<Shifts> listShift = d.getAllShifts();
         List<Accounts> listBarber = d.getAllBarber();
         List<Services> listServices = d.getAllServices();
         List<String> listDate = new ArrayList<>();
+        HttpSession s = request.getSession();
+        Accounts account = (Accounts) s.getAttribute("account");
 
         // Lấy ngày hôm nay
         LocalDate today = LocalDate.now();
@@ -103,9 +106,9 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OdersDBContext d = new OdersDBContext();
+        OrdersDAO d = new OrdersDAO();
         HttpSession session = request.getSession();
-        Accounts account = (Accounts) session.getAttribute("accounts");
+        Accounts account = (Accounts) session.getAttribute("account");
         String date_raw = request.getParameter("date");
         String shifts = request.getParameter("shifts");
         String barber = request.getParameter("barber");
@@ -140,12 +143,13 @@ public class AppointmentServlet extends HttpServlet {
             System.out.println(order.toString());
             d.AddOrder(order, services_id);
             int newOrderId = d.GetNewOrderId(order.getAccountID());
+            System.out.println(newOrderId);
             for (String s : services_id) {
                 d.AddOrder_Services(s, newOrderId);
             }
+            response.sendRedirect("home");
         } catch (Exception e) {
         }
-        doGet(request, response);
     }
 
     /**

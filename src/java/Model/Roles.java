@@ -9,7 +9,7 @@ package Model;
  * @author phamt
  */
 public class Roles {
-    
+   
     private int id;
     private String name;
 

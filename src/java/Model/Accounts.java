@@ -11,21 +11,23 @@ package Model;
 public class Accounts {
 
     private int id;
-    private String username;
+    private String phone;
+
     private String password;
     private String fullName;
     private String email;
     private String avatar;
-    private boolean isMale;
+
+    private Boolean isMale;
     private int roleId;
-    private boolean isActive;
+    private Boolean isActive;
 
     public Accounts() {
     }
 
-    public Accounts(int id, String username, String password, String fullName, String email, String avatar, boolean isMale, int roleId, boolean isActive) {
+    public Accounts(int id, String phone, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive) {
         this.id = id;
-        this.username = username;
+        this.phone = phone;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
@@ -43,12 +45,13 @@ public class Accounts {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhone(String phone) {
+        this.phone = phone;
+
     }
 
     public String getPassword() {
@@ -83,11 +86,12 @@ public class Accounts {
         this.avatar = avatar;
     }
 
-    public boolean isIsMale() {
+    public Boolean getIsMale() {
         return isMale;
     }
 
-    public void setIsMale(boolean isMale) {
+    public void setIsMale(Boolean isMale) {
+
         this.isMale = isMale;
     }
 
@@ -99,17 +103,17 @@ public class Accounts {
         this.roleId = roleId;
     }
 
-    public boolean isIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
     @Override
     public String toString() {
-        return "Accounts{" + "id=" + id + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", avatar=" + avatar + ", isMale=" + isMale + ", roleId=" + roleId + ", isActive=" + isActive + '}';
+        return "Accounts{" + "id=" + id + ", phone=" + phone + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", avatar=" + avatar + ", isMale=" + isMale + ", roleId=" + roleId + ", isActive=" + isActive + '}';
     }
-
+ 
 }
