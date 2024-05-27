@@ -4,7 +4,7 @@
  */
 package Model;
 
-import java.sql.Timestamp;
+
 
 /**
  *
@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  */
 public class Accounts {
     private int id;
-    private String username;
+    private String phone;
     private String password;
     private String fullName;
     private String email;
@@ -20,27 +20,8 @@ public class Accounts {
     private Boolean isMale;
     private int roleId;
     private Boolean isActive;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
     public Accounts() {
     }
-
-    public Accounts(int id, String username, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.avatar = avatar;
-        this.isMale = isMale;
-        this.roleId = roleId;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-
-   
 
     public int getId() {
         return id;
@@ -50,12 +31,12 @@ public class Accounts {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -114,23 +95,17 @@ public class Accounts {
         this.isActive = isActive;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public Accounts(int id, String phone, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive) {
+        this.id = id;
+        this.phone = phone;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.avatar = avatar;
+        this.isMale = isMale;
+        this.roleId = roleId;
+        this.isActive = isActive;
     }
+    
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-   
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-  
 }
