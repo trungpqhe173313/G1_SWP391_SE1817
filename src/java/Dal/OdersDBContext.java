@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author xdrag
  */
-public class DAO extends DBContext {
+public class OdersDBContext extends DBContext {
 
     public List<Accounts> getAllAccounts() {
         List<Accounts> list = new ArrayList<>();
@@ -342,7 +342,7 @@ public class DAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        DAO d = new DAO();
+        OdersDBContext d = new OdersDBContext();
         List<Accounts> l = d.getAllBarber();
         for (Accounts a : l) {
             System.out.println(a.toString());

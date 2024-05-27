@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Dal.DAO;
+import Dal.OdersDBContext;
 import Model.Accounts;
 import Model.Orders;
 import Model.Services;
@@ -67,7 +67,7 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO d = new DAO();
+        OdersDBContext d = new OdersDBContext();
         List<Shifts> listShift = d.getAllShifts();
         List<Accounts> listBarber = d.getAllBarber();
         List<Services> listServices = d.getAllServices();
@@ -103,7 +103,7 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO d = new DAO();
+        OdersDBContext d = new OdersDBContext();
         HttpSession session = request.getSession();
         Accounts account = (Accounts) session.getAttribute("accounts");
         String date_raw = request.getParameter("date");
