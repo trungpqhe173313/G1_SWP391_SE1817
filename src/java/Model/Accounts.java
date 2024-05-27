@@ -20,12 +20,12 @@ public class Accounts {
     private Boolean isMale;
     private int roleId;
     private Boolean isActive;
-    private Timestamp createAt;
+    private Timestamp createdAt;
     private Timestamp updatedAt;
     public Accounts() {
     }
 
-    public Accounts(int id, String username, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive, Timestamp createAt, Timestamp updatedAt) {
+    public Accounts(int id, String username, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -35,9 +35,12 @@ public class Accounts {
         this.isMale = isMale;
         this.roleId = roleId;
         this.isActive = isActive;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+
+   
 
     public int getId() {
         return id;
@@ -111,13 +114,15 @@ public class Accounts {
         this.isActive = isActive;
     }
 
-    public Timestamp getCreateAt() {
-        return createAt;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Timestamp createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
+
+   
 
     public Timestamp getUpdatedAt() {
         return updatedAt;
