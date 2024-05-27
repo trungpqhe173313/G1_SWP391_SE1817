@@ -49,7 +49,26 @@
 	        	<li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
 	        	<li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
 	        	<li class="nav-item"><a href="blog.jsp" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
+                        
+                        <c:if test="${sessionScope.account==null}">
+                            <li class="nav-item" >
+                                <a href="login" style="color:#FFA500; margin-left:300px" class="nav-link p-2 m-4  " >Login</a>
+                            </li>
+
+                        </c:if>
+                        
+                        <c:if test="${sessionScope.account!=null}">
+                            <li class="nav-item">
+                                <a href="logout" style="color:#FFA500; margin-left:300px" class="nav-link p-2 m-4">Logout</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="customer-profile.jsp" style="color:#FFA500; margin-left:300px" class="nav-link p-2 m-4">
+                                    Hello ${sessionScope.account.username}
+                                </a>
+                            </li>
+                        </c:if>
 	        </ul>
 	      </div>
 	    </div>
