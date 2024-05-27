@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpSession;
  */
 public class LoginController extends HttpServlet {
 
-    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accountname = request.getParameter("username");
@@ -34,11 +34,15 @@ public class LoginController extends HttpServlet {
             int sessionTimeoutSeconds = 2400;
             //tao session
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
-            response.sendRedirect("homepage");
+            response.sendRedirect("home");
         }
     }
-
-    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
 
 }
