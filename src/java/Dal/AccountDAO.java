@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Accounts;
+import java.sql.Connection;
 
 
 public class AccountDAO extends DBContext{
@@ -119,6 +120,32 @@ public class AccountDAO extends DBContext{
             ex.printStackTrace();
         }
         return null;
+    }
+    
+   public boolean checkEmailExist(String email) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {//1. Connect DB
+            con = DBContext.connection;
+
+            if (con != null) {
+                String sql = "  SELECT *\n"
+                        + "     FROM [User]\n"
+                        + "        WHERE [account] =?;";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                //4. Excute Query
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("loi checkAcountExist" + e.getMessage());
+        }
+        return false;
     }
   
    public void insertAccount(Accounts account) {
