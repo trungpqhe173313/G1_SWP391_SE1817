@@ -34,7 +34,18 @@
             .checkbox-item input[type="checkbox"] {
                 margin-right: 5px;
             }
-
+            .list-group-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .service-name {
+                flex-grow: 1;
+            }
+            .service-price {
+                white-space: nowrap;
+                margin-left: 10px;
+            }
         </style>
         <script>
             function validateEmail(email) {
@@ -104,25 +115,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <a class="navbar-brand" href="homepage.jsp"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
-                </button>
-
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="homepage.jsp" class="nav-link">Home</a></li>
-                        <li class="nav-item active"><a href="services.jsp" class="nav-link">Services-> Booking</a></li>
-                        <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
-                        <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
-                        <li class="nav-item"><a href="blog.jsp" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="contact.jsp" class="nav-link">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="nav.jsp"></jsp:include>
         <!-- END nav -->
 
         <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
@@ -131,13 +124,13 @@
                 <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
                     <div class="col-md-9 ftco-animate pb-5 text-center">
                         <h2 class="mb-0 bread">Booking</h2>
-                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking <i class="ion-ios-arrow-round-forward"></i></span></p>
+                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        
+
 
         <section class="ftco-section ftco-booking bg-light">
             <div class="container ftco-relative">
@@ -215,11 +208,14 @@
                                             <ul class="list-group">
                                                 <c:forEach items="${listServices}" var="service" varStatus="status">
                                                     <li class="list-group-item form-control">
-                                                        <div class="custom-control custom-checkbox">
+                                                        <div class="custom-control custom-checkbox" style="display: flex; align-items: center; width: 100%;">
                                                             <input class="custom-control-input" name="services" 
                                                                    type="checkbox" id="customCheck${status.index}" value="${service.id}">
                                                             <label class="cursor-pointer d-block custom-control-label" 
-                                                                   for="customCheck${status.index}">${service.name}</label>
+                                                                   for="customCheck${status.index}" style="flex-grow: 1;">
+                                                                <span class="service-name">${service.name}</span>
+                                                            </label>
+                                                            <span class="service-price">${service.getPrice()}K</span>
                                                         </div>
                                                     </li>
                                                 </c:forEach>
@@ -246,7 +242,7 @@
             </div>
         </section>
 
-        
+
 
 
         <footer class="ftco-footer ftco-section">

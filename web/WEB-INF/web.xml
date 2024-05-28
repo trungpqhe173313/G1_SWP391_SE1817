@@ -29,8 +29,8 @@
         <servlet-class>Controller.CustomerUpdatePage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SendLinkReset</servlet-name>
-        <servlet-class>Controller.SendLinkReset</servlet-class>
+        <servlet-name>EmployeesController</servlet-name>
+        <servlet-class>Controller.EmployeesController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -61,7 +61,7 @@
         <url-pattern>/customerupdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SendLinkReset</servlet-name>
-        <url-pattern>/sendmail</url-pattern>
+        <servlet-name>EmployeesController</servlet-name>
+        <url-pattern>/employees</url-pattern>
     </servlet-mapping>
 </web-app>
