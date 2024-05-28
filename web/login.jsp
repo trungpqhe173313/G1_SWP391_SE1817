@@ -50,7 +50,7 @@
                                             <div class="text-center pt-1 mb-5 pb-1">
                                                 <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"style="background: linear-gradient(45deg, #ffd700, #ffec5e); color: white;">Log
                                                     in</button>
-                                                <a class="text-muted" href="sendmail" style="color: #FFA500">Forgot password?</a>
+                                                <a class="text-muted" href="sendLinkResetPass" style="color: #FFA500">Forgot password?</a>
                                             </div>
 
                                             <div class="d-flex align-items-center justify-content-center pb-4">

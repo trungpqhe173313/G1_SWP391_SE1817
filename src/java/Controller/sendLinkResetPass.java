@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author LENOVO
  */
-public class SendLinkReset extends HttpServlet {
+public class sendLinkResetPass extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class SendLinkReset extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SendLinkReset</title>");  
+            out.println("<title>Servlet sendLinkResetPass</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SendLinkReset at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet sendLinkResetPass at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,8 +59,7 @@ public class SendLinkReset extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       request.getRequestDispatcher("/resetPasswordC.jsp").forward(request, response);
-       
+        request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
     } 
 
     /** 
@@ -71,32 +70,30 @@ public class SendLinkReset extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-//            processRequest(request, response);
-           try ( PrintWriter out = response.getWriter()) {
-                /* sendLinkResetPass */
-                String emailReset = request.getParameter("emailInputReset");
-                SendMail sm = new SendMail();
-                AccountDAO dao = new AccountDAO();
-                boolean test = sm.sendEmailResetPass(emailReset);
-                HttpSession session = request.getSession();
-                session.setAttribute("emailReset", emailReset);
-                if (!dao.checkEmailExist(emailReset)) {
-                    request.setAttribute("mess", "You have not registered for this email!! ");
-                    request.getRequestDispatcher("/resetPasswordC.jsp").forward(request, response);
-                } else if (test) {
-                    request.setAttribute("mess", "Check your mail");
-                    request.getRequestDispatcher("/resetPasswordC.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("mess", "Server error");
-                    request.getRequestDispatcher("/resetPasswordC.jsp").forward(request, response);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(SendLinkReset.class.getName()).log(Level.SEVERE, null, ex);
-            }    
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+         try ( PrintWriter out = response.getWriter()) {
+            /* sendLinkResetPass */
+            String emailReset = request.getParameter("emailInputReset");
+            SendMail sm = new SendMail();
+             AccountDAO dao = new AccountDAO();
+            boolean test = sm.sendEmailResetPass(emailReset);
+            HttpSession session = request.getSession();
+            session.setAttribute("emailReset", emailReset);
+            if (!dao.checkEmailExist(emailReset)) {
+                request.setAttribute("mess", "You have not registered for this email!! ");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            } else if (test) {
+                request.setAttribute("mess", "Check your mail");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            } else {
+                request.setAttribute("mess", "Server error");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(sendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
     /** 
      * Returns a short description of the servlet.
