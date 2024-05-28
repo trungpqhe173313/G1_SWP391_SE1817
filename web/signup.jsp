@@ -31,8 +31,8 @@
                                                 
                                                
                                                 <div class="form-outline mb-4">
-                                                    <input type="text" required name="username" class="form-control"/>
-                                                    <label class="form-label">Account Name(Phone number)</label>
+                                                    <input type="text" required name="phone" class="form-control"/>
+                                                    <label class="form-label">Phone number</label>
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
@@ -62,18 +62,25 @@
                                                 
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label">Gender</label>
-                                                    <select required name="isMale" class="form-select">
-                                                        <option value="1">Male</option>
-                                                        <option value="0">Female</option>
-                                                    </select>
-                                                    
+                                                    <div>
+                                                        <input type="radio" id="male" name="isMale" value="1" required>
+                                                        <label for="male">Male</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="female" name="isMale" value="0" required>
+                                                        <label for="female">Female</label>
+                                                    </div>
                                                 </div>
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label">Role ID</label>
-                                                    <select required name="roleId" class="form-select">
-                                                        <option value="2">Customer</option>
-                                                        <option value="4">Barber</option>
-                                                    </select>
+                                                    <div>
+                                                        <input type="radio" id="customer" name="roleId" value="2" required>
+                                                        <label for="customer">Customer</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="radio" id="barber" name="roleId" value="4" required>
+                                                        <label for="barber">Barber</label>
+                                                    </div>
                                                     
                                                 </div>
                                                 <div class="form-outline mb-4">

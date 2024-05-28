@@ -15,7 +15,7 @@ import Model.Roles;
  * @author admin
  */
 public class CustomerDAO extends DBContext{
-//    public Accounts getProfileByUsername(String user) {
+//    public Accounts getProfileByPhone(String user) {
 //        String sql = "Select*from Accounts where (phone = ?)";
 //        try {
 //
@@ -86,8 +86,7 @@ public class CustomerDAO extends DBContext{
             stm.setString(3, account.getEmail());
             stm.setString(4, account.getAvatar());
             stm.setBoolean(5, account.getIsMale());
-            stm.setTimestamp(6, account.getUpdatedAt());
-            stm.setString(7, account.getUsername());
+            stm.setString(7, account.getPhone());
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -96,14 +95,14 @@ public class CustomerDAO extends DBContext{
     public static void main(String[] args) {
         CustomerDAO c = new CustomerDAO();
         String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
-        //Accounts account = c.getProfileByUsername(phone);
+        Accounts account = c.getCusProfile(phone);
        
 
             // In thông tin tài khoản nếu đăng nhập thành công
             if (account != null) {
                 System.out.println("Profile Information");
                 System.out.println("Account ID: " + account.getId());
-                System.out.println("Username: " + account.getUsername());
+                System.out.println("Phone: " + account.getPhone());
                 System.out.println("Password: " + account.getPassword());
                 System.out.println("Full Name: " + account.getFullName());
                 System.out.println("Email: " + account.getEmail());
@@ -111,8 +110,6 @@ public class CustomerDAO extends DBContext{
                 System.out.println("Is Male: " + account.getIsMale());
                 System.out.println("Role ID: " + account.getRoleId());
                 System.out.println("Is Active: " + account.getIsActive());
-                System.out.println("Created At: " + account.getCreatedAt());
-                System.out.println("Updated At: " + account.getUpdatedAt());
             } else {
                 System.out.println("Login failed: Invalid phone or password");
             

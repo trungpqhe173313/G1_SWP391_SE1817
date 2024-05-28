@@ -98,7 +98,7 @@ public class AccountDAO extends DBContext{
     
     public Accounts checkAccountExist(String phone) {
         try {
-            String sql = "SELECT * FROM accounts WHERE phone = ?";
+            String sql = "SELECT * FROM accounts WHERE (phone = ?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, phone);
             ResultSet rs = stm.executeQuery();
@@ -145,9 +145,8 @@ public class AccountDAO extends DBContext{
         AccountDAO a = new AccountDAO();
         String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
         String password = "password1"; // Thay thế bằng mật khẩu thử nghiệm
-         Accounts account = a.checkAuthentic(phone, password);
-       
-
+        //Accounts account = a.checkAuthentic(phone, password);
+        Accounts account = a.checkAccountExist(phone);
             // In thông tin tài khoản nếu đăng nhập thành công
             if (account != null) {
                 System.out.println("Login successful!");

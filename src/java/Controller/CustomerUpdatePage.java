@@ -57,9 +57,9 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String phone = request.getParameter("phone");
         CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts a = daoCustomer.getProfileByUsername(username);
+        Accounts a = daoCustomer.getCusProfile(phone);
         
         if (a != null) {
             request.setAttribute("account", a);
@@ -81,7 +81,7 @@ public class CustomerUpdatePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ form
-        String username = request.getParameter("username");
+        String phone = request.getParameter("phone");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
@@ -89,19 +89,17 @@ public class CustomerUpdatePage extends HttpServlet {
         
         // Tạo một đối tượng Account với các thông tin mới cập nhật
         CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts existingAccount = daoCustomer.getProfileByUsername(username);
+        Accounts existingAccount = daoCustomer.getCusProfile(phone);
         if (existingAccount != null) {
             Accounts updatedAccount = new Accounts(existingAccount.getId(), 
-                    existingAccount.getUsername(), existingAccount.getPassword(), 
-                    fullName, email, avatar, isMale, existingAccount.getRoleId(), 
-                    existingAccount.getIsActive(), existingAccount.getCreatedAt(), 
-                    new Timestamp(System.currentTimeMillis()));
+                    existingAccount.getPhone(),password, 
+                    fullName, email, avatar, isMale, existingAccount.getRoleId());
             
             // Cập nhật thông tin vào CSDL
             daoCustomer.updateProfile(updatedAccount);
             
             // Điều hướng sau khi cập nhật
-            response.sendRedirect("customer-profile?username=" + updatedAccount.getUsername());
+            response.sendRedirect("customer-profile?phone=" + updatedAccount.getPhone());
         } else {
             System.out.println("Error!");
         }

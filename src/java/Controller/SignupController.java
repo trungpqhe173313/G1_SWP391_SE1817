@@ -12,7 +12,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
 
 /**
  *
@@ -23,7 +22,7 @@ public class SignupController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("text/html;charset=UTF-8");
-        String accountname = request.getParameter("phone");
+        String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String pass = request.getParameter("pass");
         String fullName = request.getParameter("fullName");
@@ -44,32 +43,28 @@ public class SignupController extends HttpServlet {
         
          
             AccountDAO d = new AccountDAO();
-            Accounts a = d.checkAccountExist(accountname);
+            Accounts a = d.checkAccountExist(phone);
             if (a == null) {
-                
                 if (pass == null || !pass.equals(password)) {
-                    request.setAttribute("error", "Password incorrect!!!");
-                    //request.getRequestDispatcher("signup.jsp").forward(request, response);
-                    //return;
+                    request.setAttribute("error", "Password incorrect!Confirm password must be equal password!");
+                    request.getRequestDispatcher("signup.jsp").forward(request, response);
+                    return;
                 }
-                if(!accountname.matches("^\\d{10}$")){
-                    request.setAttribute("error", "Username must be a valid phone number with 10 digits!");
-                    //request.getRequestDispatcher("signup.jsp").forward(request, response);
-                    //return;
+                
+                if(!phone.matches("^\\d{10}$")){
+                    request.setAttribute("error", "Phone must be a valid phone number with 10 digits!");
+                    request.getRequestDispatcher("signup.jsp").forward(request, response);
+                    return;
                 }else{
                     Accounts newAccount = new Accounts();
-                    newAccount.setUsername(accountname);
+                    newAccount.setPhone(phone);
                     newAccount.setPassword(password);
                     newAccount.setFullName(fullName);
                     newAccount.setEmail(email);
                     newAccount.setAvatar(avatar);
                     newAccount.setIsMale(isMale);
                     newAccount.setRoleId(roleId);
-                    newAccount.setIsActive(isActive);
-                    // Thiết lập thời gian tạo và cập nhật là thời gian hiện tại
-                    Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-                    newAccount.setCreatedAt(currentTimestamp);
-                    newAccount.setUpdatedAt(currentTimestamp);
+                    newAccount.setIsActive(isActive);  
                     d.insertAccount(newAccount);
                     response.sendRedirect("login");
                 }
@@ -77,7 +72,7 @@ public class SignupController extends HttpServlet {
 
             } else {
                 // Nếu tên người dùng đã tồn tại, thông báo lỗi và yêu cầu nhập lại
-                request.setAttribute("error", "Username already exists! Please choose another one.");
+                request.setAttribute("error", "Phone already exists! Please choose another one.");
                 request.getRequestDispatcher("signup.jsp").forward(request, response);
             }
         }

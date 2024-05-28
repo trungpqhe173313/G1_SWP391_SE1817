@@ -24,9 +24,9 @@ public class CustomerProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String username = request.getParameter("username");
+        String phone = request.getParameter("phone");
         CustomerDAO dc = new CustomerDAO();
-        Accounts a = dc.getProfileByUsername(username);
+        Accounts a = dc.getCusProfile(phone);
         
         if (a != null) {
             request.setAttribute("account", a);
