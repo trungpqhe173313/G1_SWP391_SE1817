@@ -9,7 +9,7 @@ import Model.Accounts;
 import Model.Orders;
 import Model.Services;
 import Model.Shifts;
-import jakarta.jms.Session;
+import Model.Statuses;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -69,9 +69,14 @@ public class AppointmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrdersDAO d = new OrdersDAO();
+        
+        // lay ra cac ca de hien thi
         List<Shifts> listShift = d.getAllShifts();
+        //lay ra cac barber hoat dong
         List<Accounts> listBarber = d.getAllBarber();
+        //lay ra danh sach cac dich vu
         List<Services> listServices = d.getAllServices();
+        //tao danh sach ngay de hien thi
         List<String> listDate = new ArrayList<>();
         HttpSession s = request.getSession();
         Accounts account = (Accounts) s.getAttribute("account");
@@ -115,17 +120,17 @@ public class AppointmentServlet extends HttpServlet {
         String[] services_id = request.getParameterValues("services");
         Orders order = new Orders();
 
-        for (String s : services_id) {
-            System.out.println(s);
-        }
+        
 
         try {
             order.setAccountID(account.getId());
             order.setEmployeeId(Integer.parseInt(barber));
+            
             //ep kieu String sang date
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             //ep kieu string sang date truoc roi tao ra mot cai sql date
             Date date = new java.sql.Date(sdf.parse(date_raw).getTime());
+            
             order.setOrderDate(date);
             order.setShiftsID(Integer.parseInt(shifts));
             order.setStatusId(1);
@@ -140,14 +145,38 @@ public class AppointmentServlet extends HttpServlet {
                 }
             }
             order.setTotalAmount(totalAmount);
-            System.out.println(order.toString());
             d.AddOrder(order, services_id);
             int newOrderId = d.GetNewOrderId(order.getAccountID());
-            System.out.println(newOrderId);
             for (String s : services_id) {
                 d.AddOrder_Services(s, newOrderId);
             }
-            response.sendRedirect("home");
+            // lay ra services da dat
+            List<Services> listServicesAdded = new ArrayList<>();
+            for (String s : services_id) {
+                for (Services ls : listServices) {
+                    if (Integer.parseInt(s) == ls.getId()) {
+                        listServicesAdded.add(ls);
+                        break;
+                    }
+                }
+            }
+            // lay Status order da dat
+            Statuses status = d.getStatusesById(order.getStatusId());
+            // lay barber da dat
+            Accounts barberAdded = d.getAccountsById(order.getEmployeeId());
+            // lay shifts da dat
+            Shifts shiftsAdded = d.getShiftsById(order.getShiftsID());
+            //thong bao dat lich thanh cong
+            String mss ="Scheduled Successfully";
+            
+            request.setAttribute("newOrderId", newOrderId);
+            request.setAttribute("listServicesAdded", listServicesAdded);
+            request.setAttribute("NewOrder", order);
+            request.setAttribute("ShiftsAdded", shiftsAdded);
+            request.setAttribute("status", status);
+            request.setAttribute("barberAdded", barberAdded);
+            request.setAttribute("mss", mss);
+            request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

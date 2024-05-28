@@ -269,6 +269,80 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
+    public Statuses getStatusesById(int id) {
+        String sql = "SELECT [id]\n"
+                + "      ,[name]\n"
+                + "  FROM [dbo].[statuses] where id = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Statuses m = new Statuses();
+                m.setId(rs.getInt("id"));
+                m.setName(rs.getString("name"));
+                return m;
+            }
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+
+    public Accounts getAccountsById(int id) {
+        String sql = "SELECT [id]\n"
+                + "      ,[phone]\n"
+                + "      ,[password]\n"
+                + "      ,[fullName]\n"
+                + "      ,[email]\n"
+                + "      ,[avatar]\n"
+                + "      ,[isMale]\n"
+                + "      ,[roleId]\n"
+                + "      ,[isActive]\n"
+                + "  FROM [dbo].[accounts] where id = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Accounts m = new Accounts();
+                m.setId(rs.getInt("id"));
+                m.setPhone(rs.getString("phone"));
+                m.setPassword(rs.getString("password"));
+                m.setFullName(rs.getString("fullName"));
+                m.setEmail(rs.getString("email"));
+                m.setAvatar(rs.getString("avatar"));
+                m.setIsMale(rs.getBoolean("isMale"));
+                m.setRoleId(rs.getInt("roleId"));
+                m.setIsActive(rs.getBoolean("isActive"));
+                return m;
+            }
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+
+    public Shifts getShiftsById(int id) {
+        String sql = "SELECT [id]\n"
+                + "      ,[startTime]\n"
+                + "      ,[endTime]\n"
+                + "  FROM [dbo].[shifts] where id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Shifts m = new Shifts();
+                m.setId(rs.getInt("id"));
+                m.setStartTime(rs.getString("startTime"));
+                m.setEndTime(rs.getString("endTime"));
+                return m;
+            }
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+
     public void AddOrder(Orders o, String[] sevicesId) {
         String sql = "INSERT INTO [dbo].[orders]\n"
                 + "           ([accountID]\n"
@@ -347,6 +421,6 @@ public class OrdersDAO extends DBContext {
         for (Services a : l) {
             System.out.println(a.toString());
         }
-        System.out.println(d.GetNewOrderId(1));
+        System.out.println(d.getShiftsById(5).toString());
     }
 }

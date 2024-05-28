@@ -34,18 +34,7 @@
             .checkbox-item input[type="checkbox"] {
                 margin-right: 5px;
             }
-            .list-group-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .service-name {
-                flex-grow: 1;
-            }
-            .service-price {
-                white-space: nowrap;
-                margin-left: 10px;
-            }
+
         </style>
         <script>
             function validateEmail(email) {
@@ -115,7 +104,31 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <jsp:include page="nav.jsp"></jsp:include>
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="homepage.jsp"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="homepage.jsp" class="nav-link">Home</a></li>
+                        <li class="nav-item  active"><a href="services.jsp" class="nav-link">Services</a></li>
+                        <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
+                        <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
+                            <c:if test="${sessionScope.account==null}">
+
+                            <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.account!=null}">
+                            <li class="nav-item" ><a href="#" class="nav-link" >Hello ${sessionScope.account.getFullName()}</a></li>
+                            <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
+                            </c:if>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <!-- END nav -->
 
         <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
@@ -133,110 +146,64 @@
 
 
         <section class="ftco-section ftco-booking bg-light">
-            <div class="container ftco-relative">
-                <div class="row justify-content-center pb-3">
-                    <div class="col-md-10 heading-section text-center ftco-animate">
-                        <span class="subheading">Booking</span>
-                        <h2 class="mb-4">Make an Appointment</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-                    </div>
+            <div class="container">
+
+                <div class="table-responsive custom-table-responsive">
+
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>  
+                                <th scope="col">Order</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Services</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Barber</th>
+                                <th scope="col"> Customer Contact</th>
+                                <th scope="col"> Total Amount</th>
+                                <th scope="col">Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr scope="row">
+
+                                <td>
+                                    ${newOrderId}
+                                </td>
+                                <td><a href="#">${sessionScope.account.getFullName()}</a></td>
+                                <td style="font-size: 16px; font-weight: 500;">
+                                    <c:forEach items="${listServicesAdded}" var="s">
+                                        - ${s.getName()} </br>
+                                    </c:forEach>
+                                </td>
+                                <td>
+
+                                    <span style="font-size: 15px;">${ShiftsAdded.getStartTime()}-${ShiftsAdded.getEndTime()}</span>
+                                    </br>
+                                    <span style="font-size: 18px; font-weight: 500">${NewOrder.getOrderDate()}</span>
+                                </td>
+                                <td>${barberAdded.getFullName()}</td>
+                                <td>${sessionScope.account.getPhone()}</td>
+                                <td>${NewOrder.getTotalAmount()}K</td>
+                                <td>${status.getName()}</td>
+                            </tr>
+                            <tr class="spacer"><td colspan="100"></td></tr>
+                            <tr>
+                                <td colspan="100" style="text-align: center;
+                                    font-weight: bold; font-size: 30px; color: green;">${mss}</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
                 </div>
-                <h3 class="vr">Call Us: 012-3456-7890</h3>
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate">
-                        <c:if test="${sessionScope.account != null}">
-                            <c:set value="${sessionScope.account}" var="a"/>
-                            <form action="appointment" method="post" class="appointment-form" onsubmit="return validateForm()">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="name" class="form-control" id="appointment_name" placeholder="Name" value="${a.getFullName()}" readonly="">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="email" class="form-control" id="appointment_email" placeholder="Email" value="${a.getEmail()}" readonly="">
-                                            <span id="email_error_message" class="error-message"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="date" id="" class="form-control">
-                                                    <c:forEach items="${listDate}" var="date">
-                                                        <option value="${date}">${date}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="shifts" id="" class="form-control">
-                                                    <c:forEach items="${listShift}" var="shifts">
-                                                        <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="barber" id="" class="form-control">
-                                                    <c:forEach items="${listBarber}" var="baber">
-                                                        <option value="${baber.getId()}">${baber.getFullName()}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" value="${a.getPhone()}" readonly="">
-                                            <span id="phone_error_message" class="error-message"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h2 class="mb-4">Choose Services</h2>
-                                        <div class="form-group">
-
-                                            <ul class="list-group">
-                                                <c:forEach items="${listServices}" var="service" varStatus="status">
-                                                    <li class="list-group-item form-control">
-                                                        <div class="custom-control custom-checkbox" style="display: flex; align-items: center; width: 100%;">
-                                                            <input class="custom-control-input" name="services" 
-                                                                   type="checkbox" id="customCheck${status.index}" value="${service.id}">
-                                                            <label class="cursor-pointer d-block custom-control-label" 
-                                                                   for="customCheck${status.index}" style="flex-grow: 1;">
-                                                                <span class="service-name">${service.name}</span>
-                                                            </label>
-                                                            <span class="service-price">${service.getPrice()}K</span>
-                                                        </div>
-                                                    </li>
-                                                </c:forEach>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </c:if>
-                        <c:if test="${sessionScope.account == null}">
-                            <form action="login" class="appointment-form">
-                                <div class="form-group">
-                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </c:if>
+                        <form action="home" class="appointment-form">
+                            <div class="form-group">
+                                <input type="submit" value="Back to HomePage" class="btn btn-primary">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
