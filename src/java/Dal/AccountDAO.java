@@ -30,9 +30,7 @@ public class AccountDAO extends DBContext{
                 account.setAvatar(rs.getString("avatar"));
                 account.setIsMale(rs.getBoolean("isMale"));
                 account.setRoleId(rs.getInt("roleId"));
-                account.setIsActive(rs.getBoolean("isActive"));
-                
-
+                account.setIsActive(rs.getBoolean("isActive"));      
                 list.add(account);
             }
         } catch (SQLException e) {

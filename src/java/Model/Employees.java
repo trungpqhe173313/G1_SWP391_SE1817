@@ -8,7 +8,7 @@ import java.sql.Date;
 
 /**
  *
- * @author xdrag
+ * @author ducth
  */
 public class Employees {
     private int id;

@@ -25,10 +25,14 @@
 
         <link rel="stylesheet" href="css/aos.css">
 
-        <link rel="stylesheet" href="css/ionicons.min.css">
-
-        <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-        <link rel="stylesheet" href="css/jquery.timepicker.css">
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+	<jsp:include page="nav.jsp"></jsp:include>
+    <!-- END nav -->
 
 
         <link rel="stylesheet" href="css/flaticon.css">
