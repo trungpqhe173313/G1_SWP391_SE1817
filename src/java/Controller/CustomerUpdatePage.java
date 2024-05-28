@@ -59,7 +59,7 @@ public class CustomerUpdatePage extends HttpServlet {
             throws ServletException, IOException {
         String phone = request.getParameter("phone");
         CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts a = daoCustomer.getCusProfile(phone);
+        Accounts a = daoCustomer.getProfileByPhone(phone);
         
         if (a != null) {
             request.setAttribute("account", a);
@@ -85,11 +85,11 @@ public class CustomerUpdatePage extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-        boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
+         Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
         
         // Tạo một đối tượng Account với các thông tin mới cập nhật
         CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts existingAccount = daoCustomer.getCusProfile(phone);
+        Accounts existingAccount = daoCustomer.getProfileByPhone(phone);
         if (existingAccount != null) {
             Accounts updatedAccount = new Accounts(existingAccount.getId(), 
                     existingAccount.getPhone(),password, 

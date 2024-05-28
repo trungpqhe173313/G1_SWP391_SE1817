@@ -15,23 +15,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class SignupController extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("text/html;charset=UTF-8");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
-        String pass = request.getParameter("pass");
+        String re_pass = request.getParameter("re_pass");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-        Boolean isMale = Boolean.valueOf(request.getParameter("isMale"));
-
-        int roleId = 0; // Giá trị mặc định nếu không có giá trị truyền vào
-        String roleIdParam = request.getParameter("roleId");
+        Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
+        int roleId = 2; // Giá trị mặc định là Username
+//        String roleIdParam = request.getParameter("roleId");
 //        if (roleIdParam != null && !roleIdParam.isEmpty()) {
 //            roleId = Integer.parseInt(roleIdParam);
 //        } else {
@@ -39,43 +38,45 @@ public class SignupController extends HttpServlet {
 //            request.getRequestDispatcher("signup.jsp").forward(request, response);
 //            return;
 //        }
-        Boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
+        boolean isActive = true; //Giá trị là active (hoặc 1)
+
         
-         
+        if (password == null || re_pass == null || !password.equals(re_pass)) {
+            request.setAttribute("error1", "Password incorrect!Confirm password must be equal password!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            return;
+        }
+        if(!phone.matches("^\\d{10}$")){
+            request.setAttribute("error2", "Phone must be a valid phone number with 10 digits!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            return;
+        }
             AccountDAO d = new AccountDAO();
             Accounts a = d.checkAccountExist(phone);
             if (a == null) {
-                if (pass == null || !pass.equals(password)) {
-                    request.setAttribute("error", "Password incorrect!Confirm password must be equal password!");
-                    request.getRequestDispatcher("signup.jsp").forward(request, response);
-                    return;
-                }
-                
-                if(!phone.matches("^\\d{10}$")){
-                    request.setAttribute("error", "Phone must be a valid phone number with 10 digits!");
-                    request.getRequestDispatcher("signup.jsp").forward(request, response);
-                    return;
-                }else{
-                    Accounts newAccount = new Accounts();
-                    newAccount.setPhone(phone);
-                    newAccount.setPassword(password);
-                    newAccount.setFullName(fullName);
-                    newAccount.setEmail(email);
-                    newAccount.setAvatar(avatar);
-                    newAccount.setIsMale(isMale);
-                    newAccount.setRoleId(roleId);
-                    newAccount.setIsActive(isActive);  
-                    d.insertAccount(newAccount);
-                    response.sendRedirect("login");
-                }
-                
-
+                Accounts newAccount = new Accounts();
+                newAccount.setPhone(phone);
+                newAccount.setPassword(password);
+                newAccount.setFullName(fullName);
+                newAccount.setEmail(email);
+                newAccount.setAvatar(avatar);
+                newAccount.setIsMale(isMale);
+                newAccount.setRoleId(roleId);
+                newAccount.setIsActive(isActive);  
+                d.insertAccount(newAccount);
+                response.sendRedirect("home");
+                //request.getRequestDispatcher("homepage.jsp").forward(request, response);
             } else {
                 // Nếu tên người dùng đã tồn tại, thông báo lỗi và yêu cầu nhập lại
-                request.setAttribute("error", "Phone already exists! Please choose another one.");
+                request.setAttribute("error3", "Phone already exists! Please choose another one.");
                 request.getRequestDispatcher("signup.jsp").forward(request, response);
             }
-        }
+        
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
+    }
 }
 
     
