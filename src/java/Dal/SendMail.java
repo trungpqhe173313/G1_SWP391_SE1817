@@ -31,7 +31,7 @@ public class SendMail {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailReset));
             message.setSubject("Reset Password");
-            message.setText("Click the following link to reset your password: http://localhost:9999/Assignment/changePassResetServlet");
+            message.setText("Click the following link to reset your password:");
 
             Transport.send(message);
             isSent = true;

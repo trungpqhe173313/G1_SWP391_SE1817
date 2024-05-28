@@ -17,9 +17,9 @@
         <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
         <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
         <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-        <link rel="stylesheet" href="css/cssResetPass/main.css"/>
-        <link rel="stylesheet" type="text/css" href="css/cssResetPass/style.css">
-        <link rel="stylesheet" type="text/css" href="css/cssResetPass/util.css">
+        <link rel="stylesheet" href="css/css/cssResetPass/main.css"/>
+        <link rel="stylesheet" type="text/css" href="css/css/cssResetPass/style.css">
+        <link rel="stylesheet" type="text/css" href="css/css/cssResetPass/util.css">
 
 
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -39,8 +39,8 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="https://img.freepik.com/premium-vector/3d-password-field-with-padlock-isolated_169241-6460.jpg" alt="IMG">
                     </div>
-                    <form action="sendLinkResetPass" method="post"> <span class="login100-form-title">
-                            <b>Reset Password   </b>
+                    <form action="sendmail" method="post"> <span class="login100-form-title">
+                            <b>Reset Password  </b>
                         </span>
 
                         <div class="wrap-input100 validate-input">
@@ -59,7 +59,8 @@
                         </div>  
                         <div class="text-center p-t-12">
 
-                        </div><p class="text-danger" style="color: blue ; background-color: white ; width: auto ; margin: auto ;padding: auto ; text-align: center ; border-radius: 50px;">${mess}
+                        </div><p class="text-danger" style="color: blue ; background-color: white ; width: auto ; margin: auto ;padding: auto ; text-align: center ; border-radius: 50px;">
+                            ${mess}
                         </p>
                     </form>
 
