@@ -60,7 +60,6 @@ public class CustomerUpdatePage extends HttpServlet {
         String phone = request.getParameter("phone");
         CustomerDAO daoCustomer = new CustomerDAO();
         Accounts a = daoCustomer.getProfileByPhone(phone);
-        
         if (a != null) {
             request.setAttribute("account", a);
             request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
@@ -81,28 +80,39 @@ public class CustomerUpdatePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ form
+        String idStr = request.getParameter("id");
+        int id = 0; // Gán giá trị mặc định hoặc giá trị phù hợp khác
+        if (idStr != null && !idStr.isEmpty()) {
+            try {
+                id = Integer.parseInt(idStr);
+            } catch (NumberFormatException e) {
+                System.out.println(e);
+            }
+        }
         String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-         Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
+        Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
         
+        
+        int roleId = 2; // Giá trị mặc định là Username
+        boolean isActive = true; //Giá trị là active (hoặc 1)
         // Tạo một đối tượng Account với các thông tin mới cập nhật
-        CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts existingAccount = daoCustomer.getProfileByPhone(phone);
-        if (existingAccount != null) {
-            Accounts updatedAccount = new Accounts(existingAccount.getId(), 
-                    existingAccount.getPhone(),password, 
-                    fullName, email, avatar, isMale, existingAccount.getRoleId());
-            
-            // Cập nhật thông tin vào CSDL
-            daoCustomer.updateProfile(updatedAccount);
-            
-            // Điều hướng sau khi cập nhật
-            response.sendRedirect("customer-profile?phone=" + updatedAccount.getPhone());
-        } else {
-            System.out.println("Error!");
+        CustomerDAO daoC = new CustomerDAO();
+        try {
+            Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
+            daoC.updateProfile(newA);
+            response.sendRedirect("cusprofile");
+            //response.sendRedirect("cusprofile?phone=" + phone);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
+        
+        
+        
+        
     }
 
     /**

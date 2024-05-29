@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -64,7 +65,7 @@ public class SignupController extends HttpServlet {
                 newAccount.setRoleId(roleId);
                 newAccount.setIsActive(isActive);  
                 d.insertAccount(newAccount);
-                response.sendRedirect("home");
+                response.sendRedirect("login");
                 //request.getRequestDispatcher("homepage.jsp").forward(request, response);
             } else {
                 // Nếu tên người dùng đã tồn tại, thông báo lỗi và yêu cầu nhập lại

@@ -24,6 +24,18 @@
         <servlet-name>CustomerUpdatePage</servlet-name>
         <servlet-class>Controller.CustomerUpdatePage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeesController</servlet-name>
+        <servlet-class>Controller.EmployeesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <servlet-class>Controller.AppointmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendLinkResetPass</servlet-name>
+        <servlet-class>Controller.SendLinkResetPass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -47,5 +59,17 @@
     <servlet-mapping>
         <servlet-name>CustomerUpdatePage</servlet-name>
         <url-pattern>/customerupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeesController</servlet-name>
+        <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AppointmentServlet</servlet-name>
+        <url-pattern>/appointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendLinkResetPass</servlet-name>
+        <url-pattern>/sendLinkResetPass</url-pattern>
     </servlet-mapping>
 </web-app>

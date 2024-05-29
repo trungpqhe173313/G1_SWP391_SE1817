@@ -51,7 +51,7 @@
                             <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
                             </c:if>
                             <c:if test="${sessionScope.account!=null}">
-                            <li class="nav-item" ><a href="cusprofile" class="nav-link" >Hello ${sessionScope.account.getFullName()}</a></li>
+                            <li class="nav-item" ><a href="#" class="nav-link" >Hello ${sessionScope.account.getFullName()}</a></li>
                             <li class="nav-item" ><a href="cusprofile" class="nav-link">Your Profile</a></li>
                             <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
                             </c:if>

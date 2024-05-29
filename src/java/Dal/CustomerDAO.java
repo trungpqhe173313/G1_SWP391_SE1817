@@ -43,7 +43,8 @@ public class CustomerDAO extends DBContext{
     
     public void updateProfile(Accounts account) {
        String sql = "UPDATE Accounts SET password = ?, fullName = ?, email = ?, "
-               + "avatar = ?, isMale = ? WHERE (phone = ?)";
+               + "avatar = ?, isMale = ?, roleId = 2, isActive = 1, "
+               + "createdAt = GETDATE(), updatedAt =  GETDATE() WHERE (phone = ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getPassword());

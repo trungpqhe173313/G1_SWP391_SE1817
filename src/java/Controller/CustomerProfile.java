@@ -23,13 +23,13 @@ public class CustomerProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Kiểm tra xem người dùng đã đăng nhập chưa
-        if (request.getSession().getAttribute("phone") == null) {
+        if (request.getSession().getAttribute("account") == null) {
             // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
             response.sendRedirect("login.jsp");
             return;
         }
         // Lấy số điện thoại của người dùng đã đăng nhập từ session
-        String phone = ((Accounts)request.getSession().getAttribute("phone")).getPhone();
+        String phone = ((Accounts)request.getSession().getAttribute("account")).getPhone();
         CustomerDAO dc = new CustomerDAO();
         Accounts a = dc.getProfileByPhone(phone);
         

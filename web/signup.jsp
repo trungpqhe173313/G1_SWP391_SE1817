@@ -9,7 +9,7 @@
     </head>
     <body>
         
-            <section class="h-100 gradient-form" style="background-color: #eee;">
+            <section class="h-100 gradient-form" style="background-color: #000;">
                 <div class="container py-5 h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100">
                         <div class="col-xl-10">
@@ -18,7 +18,7 @@
                                     <div class="col-lg-12">
                                         <div class="card-body p-md-5 mx-md-4">
                                             <div class="text-md-left">
-                                                <a href="home" style="color: black"> Return to Home </a>
+                                                <a href="home" style="color: #ffaf00"> Return to Home </a>
                                             </div>
                                             <div class="text-center">
                                                 <img src=""
@@ -31,7 +31,7 @@
                                                 
                                                 
                                                  <div class="form-outline mb-4">
-                                                    <label class="form-label">Phone number</label>
+                                                    <label class="form-label"style="color: #ffaf00">Phone number</label>
                                                     <input type="text" required name="phone" class="form-control"/>
                                                 </div>
                                                 <p class="text-danger">${error2}</p>
@@ -39,37 +39,37 @@
                                                 
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Password</label>
+                                                    <label class="form-label"style="color: #ffaf00">Password</label>
                                                     <input type="text" required name="password"  class="form-control" />
                                                 </div>
                                                 <p class="text-danger">${error1}</p>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Confirm password</label>
+                                                    <label class="form-label"style="color: #ffaf00">Confirm password</label>
                                                     <input type="text" required name="re_pass"  class="form-control" />
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Full Name</label>
+                                                    <label class="form-label"style="color: #ffaf00">Full Name</label>
                                                     <input type="text" required name="fullName"  class="form-control" />
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Email</label>
+                                                    <label class="form-label"style="color: #ffaf00">Email</label>
                                                     <input type="text" required name="email"  class="form-control" />
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Avatar</label>
+                                                    <label class="form-label"style="color: #ffaf00">Avatar</label>
                                                     <input type="text" name="avatar"  class="form-control" />
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label">Gender</label>
+                                                    <label class="form-label"style="color: #ffaf00">Gender</label>
                                                     <div>
                                                         <label><input type="radio" name="isMale" value="true" required> Male</label>
                                                         <label><input type="radio" name="isMale" value="false" required> Female</label>
@@ -77,7 +77,7 @@
                                                 </div>
                                                 
                                                 
-                                                <div class="text-center pt-1 mb-5 pb-1">
+                                                <div class="text-center pt-1 mb-5 pb-1"style="color: white">
                                                     <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create new account</button>
 
                                                 </div>   
