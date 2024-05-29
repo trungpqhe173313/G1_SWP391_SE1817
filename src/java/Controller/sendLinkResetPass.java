@@ -5,21 +5,24 @@
 
 package Controller;
 
-import Dal.EmployeesDAO;
-import jakarta.servlet.RequestDispatcher;
+import Dal.AccountDAO;
+import Dal.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author ducth
+ * @author LENOVO
  */
-public class EmployeesController extends HttpServlet {
+public class sendLinkResetPass extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +39,10 @@ public class EmployeesController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EmployeesController</title>");  
+            out.println("<title>Servlet sendLinkResetPass</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EmployeesController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet sendLinkResetPass at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,13 +58,9 @@ public class EmployeesController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
-    EmployeesDAO dao = new EmployeesDAO();
-    List<Object[]> employees = dao.getAllEmployees();
-    
-    request.setAttribute("employees", employees);
-    request.getRequestDispatcher("your_jsp_file.jsp").forward(request, response);
-}
+    throws ServletException, IOException {
+        request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -73,7 +72,27 @@ public class EmployeesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+         try ( PrintWriter out = response.getWriter()) {
+            /* sendLinkResetPass */
+            String emailReset = request.getParameter("emailInputReset");
+            SendMail sm = new SendMail();
+             AccountDAO dao = new AccountDAO();
+            boolean test = sm.sendEmailResetPass(emailReset);
+            HttpSession session = request.getSession();
+            session.setAttribute("emailReset", emailReset);
+            if (!dao.checkEmailExist(emailReset)) {
+                request.setAttribute("mess", "You have not registered for this email!! ");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            } else if (test) {
+                request.setAttribute("mess", "Check your mail");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            } else {
+                request.setAttribute("mess", "Server error");
+                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(sendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 
