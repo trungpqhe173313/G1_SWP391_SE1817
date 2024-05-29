@@ -33,40 +33,6 @@
   <body>
 	<jsp:include page="nav.jsp"></jsp:include>
     <!-- END nav -->
-
-
-        <link rel="stylesheet" href="css/flaticon.css">
-        <link rel="stylesheet" href="css/icomoon.css">
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <a class="navbar-brand" href="homepage.jsp"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
-                </button>
-
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="homepage.jsp" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="services.jsp" class="nav-link">Services</a></li>
-                        <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
-                        <li class="nav-item  active"><a href="about.jsp" class="nav-link">About</a></li>
-                        <c:if test="${sessionScope.account==null}">
-
-                            <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.account!=null}">
-                            <li class="nav-item" ><a href="#" class="nav-link" >Hello ${sessionScope.account.getFullName()}</a></li>
-                            <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
-                        </c:if>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- END nav -->
-
         <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
             <div class="overlay"></div>
             <div class="container">
