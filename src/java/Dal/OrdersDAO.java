@@ -5,7 +5,7 @@
 package Dal;
 
 import Model.Accounts;
-import Model.EmployeesList;
+import Model.Employees;
 import Model.Orders;
 import Model.Roles;
 import Model.Services;
@@ -58,8 +58,8 @@ public class OrdersDAO extends DBContext {
         return list;
     }
 
-    public List<EmployeesList> getAllEmployees() {
-        List<EmployeesList> list = new ArrayList<>();
+    public List<Employees> getAllEmployees() {
+        List<Employees> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[accountId]\n"
                 + "      ,[isActive]\n"
@@ -70,7 +70,7 @@ public class OrdersDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                EmployeesList m = new EmployeesList();
+                Employees m = new Employees ();
                 m.setId(rs.getInt("id"));
                 m.setAccountId(rs.getInt("accountId"));
                 m.setIsActive(rs.getBoolean("isActive"));
@@ -242,6 +242,65 @@ public class OrdersDAO extends DBContext {
         return list;
     }
 
+    public List<Orders> getAllOrdersByAccountId(int id) {
+        List<Orders> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[accountID]\n"
+                + "      ,[employeeId]\n"
+                + "      ,[shiftsID]\n"
+                + "      ,[statusId]\n"
+                + "      ,[orderDate]\n"
+                + "      ,[totalAmount]\n"
+                + "  FROM [dbo].[orders] where accountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Orders m = new Orders(); 
+                m.setId(rs.getInt("id"));
+                m.setAccountID(rs.getInt("accountID"));
+                m.setEmployeeId(rs.getInt("employeeId"));
+                m.setShiftsID(rs.getInt("shiftsID"));
+                m.setStatusId(rs.getInt("statusId"));
+                m.setOrderDate(rs.getDate("orderDate"));
+                m.setTotalAmount(rs.getInt("totalAmount"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
+    public List<Services> getAllServicesByOrderId(int id) {
+        List<Services> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[name]\n"
+                + "      ,[image]\n"
+                + "      ,[description]\n"
+                + "      ,[price]\n"
+                + "  FROM [dbo].[services] s join dbo.order_services os\n"
+                + "  on os.serviceId = s.id where os.orderId = ? and os.isActive =1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Services m = new Services();
+                m.setId(rs.getInt("id"));
+                m.setName(rs.getString("name"));
+                m.setImage(rs.getString("image"));
+                m.setDescription(rs.getString("description"));
+                m.setPrice(rs.getInt("price"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
     public Services getServicesById(String id) {
 
         String sql = "SELECT [id]\n"
@@ -343,7 +402,7 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
-    public void AddOrder(Orders o, String[] sevicesId) {
+    public void AddOrder(Orders o) {
         String sql = "INSERT INTO [dbo].[orders]\n"
                 + "           ([accountID]\n"
                 + "           ,[employeeId]\n"
@@ -417,8 +476,8 @@ public class OrdersDAO extends DBContext {
 
     public static void main(String[] args) {
         OrdersDAO d = new OrdersDAO();
-        List<Services> l = d.getAllServices();
-        for (Services a : l) {
+        List<Orders> l = d.getAllOrdersByAccountId(2);
+        for (Orders a : l) {
             System.out.println(a.toString());
         }
         System.out.println(d.getShiftsById(5).toString());

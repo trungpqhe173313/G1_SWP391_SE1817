@@ -143,6 +143,29 @@ public class AccountDAO extends DBContext{
         }
         return false;
     }
+   
+   public void changePass(String email, String password)
+            throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        //1. Connect DB
+        con = DBContext.connection;
+        if (con != null) {
+            //2. Create SQL String
+            String sql = "    Update [accounts] SET   password =?\n"
+                    + "   WHERE [email] =?";
+            //3. Create Statement
+            stm = con.prepareStatement(sql);
+            stm.setString(1, password);
+            stm.setString(2, email);
+
+            //4. Excute Query
+            stm.executeUpdate();
+
+        }
+
+    }
   
    public void insertAccount(Accounts account) {
         String sql = "INSERT INTO accounts (phone, password, fullName, email, "

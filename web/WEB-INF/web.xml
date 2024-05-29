@@ -33,16 +33,28 @@
         <servlet-class>Controller.EmployeesController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EmployeesDetailController</servlet-name>
-        <servlet-class>Controller.EmployeesDetailController</servlet-class>
+        <servlet-name>BookingScheduleServlet</servlet-name>
+        <servlet-class>Controller.BookingScheduleServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeesController</servlet-name>
         <servlet-class>Controller.AddEmployeesController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EmployeesDetailController</servlet-name>
+        <servlet-class>Controller.EmployeesDetailController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteEmployeesController</servlet-name>
         <servlet-class>Controller.DeleteEmployeesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changepassreset</servlet-name>
+        <servlet-class>Controller.changepassreset</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendlink</servlet-name>
+        <servlet-class>Controller.sendlink</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -77,6 +89,10 @@
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>BookingScheduleServlet</servlet-name>
+        <url-pattern>/bookingschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EmployeesDetailController</servlet-name>
         <url-pattern>/employeesdetail</url-pattern>
     </servlet-mapping>
@@ -87,5 +103,14 @@
     <servlet-mapping>
         <servlet-name>DeleteEmployeesController</servlet-name>
         <url-pattern>/deleteemployees</url-pattern>
+    </servlet-mapping>
+</web-app>
+    <servlet-mapping>
+        <servlet-name>changepassreset</servlet-name>
+        <url-pattern>/changepassreset</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendlink</servlet-name>
+        <url-pattern>/sendlink</url-pattern>
     </servlet-mapping>
 </web-app>
