@@ -32,6 +32,18 @@
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.EmployeesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeesDetailController</servlet-name>
+        <servlet-class>Controller.EmployeesDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddEmployeesController</servlet-name>
+        <servlet-class>Controller.AddEmployeesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteEmployeesController</servlet-name>
+        <servlet-class>Controller.DeleteEmployeesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -63,5 +75,17 @@
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
         <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeesDetailController</servlet-name>
+        <url-pattern>/employeesdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddEmployeesController</servlet-name>
+        <url-pattern>/addemployees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteEmployeesController</servlet-name>
+        <url-pattern>/deleteemployees</url-pattern>
     </servlet-mapping>
 </web-app>

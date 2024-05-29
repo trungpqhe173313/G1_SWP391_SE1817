@@ -12,7 +12,6 @@ public class Accounts {
 
     private int id;
     private String phone;
-
     private String password;
     private String fullName;
     private String email;

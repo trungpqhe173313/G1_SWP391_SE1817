@@ -6,23 +6,21 @@
 package Controller;
 
 import Dal.EmployeesDAO;
-import Model.Accounts;
 import Model.DetailEmployees;
-import Model.EmployeesList;
-import Model.Roles;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
  * @author ducth
  */
-public class EmployeesController extends HttpServlet {
+public class AddEmployeesController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +37,10 @@ public class EmployeesController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EmployeesController</title>");  
+            out.println("<title>Servlet AddEmployeesController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EmployeesController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AddEmployeesController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,14 +55,12 @@ public class EmployeesController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        EmployeesDAO dao = new EmployeesDAO();
-        List<EmployeesList> employeesList = dao.getAllEmployees();
-        request.setAttribute("employeesList", employeesList);
-        request.getRequestDispatcher("employees.jsp").forward(request, response);
-} 
-
+            DetailEmployees newEmployee = new DetailEmployees();
+            request.setAttribute("addStaff", newEmployee);
+            request.getRequestDispatcher("addStaff.jsp").forward(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -76,9 +72,29 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        String fullName = request.getParameter("fullName");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String avatar = request.getParameter("avatar");
+        boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
+        String dateOfBirth = request.getParameter("dateOfBirth");
+        String address = request.getParameter("address");
 
+    EmployeesDAO dao = new EmployeesDAO();
+    DetailEmployees newEmployee = dao.addEmployees(phone, fullName, email, avatar, isMale, roleId, isActive, dateOfBirth, address);
+
+    // Trong servlet doPost method
+if (newEmployee != null) {
+    request.setAttribute("addSuccess", true);
+    response.sendRedirect("employees.jsp");
+} else {
+    request.setAttribute("addError", true);
+    request.getRequestDispatcher("employees.jsp").forward(request, response);
+}
+
+}
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
