@@ -145,7 +145,7 @@ public class AppointmentServlet extends HttpServlet {
                 }
             }
             order.setTotalAmount(totalAmount);
-            d.AddOrder(order, services_id);
+            d.AddOrder(order);
             int newOrderId = d.GetNewOrderId(order.getAccountID());
             for (String s : services_id) {
                 d.AddOrder_Services(s, newOrderId);

@@ -32,6 +32,10 @@
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.EmployeesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingScheduleServlet</servlet-name>
+        <servlet-class>Controller.BookingScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
         <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingScheduleServlet</servlet-name>
+        <url-pattern>/bookingschedule</url-pattern>
     </servlet-mapping>
 </web-app>

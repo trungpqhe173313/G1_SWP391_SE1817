@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/nbproject/build-impl.xml</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/CustomerProfile.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/DBContext.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/bookingschedule.jsp</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/nav.jsp</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/BookingSucces.jsp</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Model/Orders.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/HomeController.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Dal/OrdersDAO.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/AppointmentServlet.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/BookingScheduleServlet.java</file>
         </group>
     </open-files>
 </project-private>
