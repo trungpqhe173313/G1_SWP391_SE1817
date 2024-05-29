@@ -4,7 +4,7 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -72,6 +72,5 @@ public class Employees {
     public String toString() {
         return "Employees{" + "id=" + id + ", accountId=" + accountId + ", isActive=" + isActive + ", dateOfBirth=" + dateOfBirth + ", address=" + address + '}';
     }
-   
     
 }

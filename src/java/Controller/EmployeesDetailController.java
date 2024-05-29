@@ -6,7 +6,7 @@
 package Controller;
 
 import Dal.EmployeesDAO;
-import jakarta.servlet.RequestDispatcher;
+import Model.DetailEmployees;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author ducth
  */
-public class EmployeesController extends HttpServlet {
+public class EmployeesDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +36,10 @@ public class EmployeesController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EmployeesController</title>");  
+            out.println("<title>Servlet EmployeesDetailController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EmployeesController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EmployeesDetailController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,13 +55,12 @@ public class EmployeesController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException{
-    EmployeesDAO dao = new EmployeesDAO();
-    List<Object[]> employees = dao.getAllEmployees();
-    
-    request.setAttribute("employees", employees);
-    request.getRequestDispatcher("your_jsp_file.jsp").forward(request, response);
-}
+    throws ServletException, IOException {
+        EmployeesDAO dao = new EmployeesDAO();
+        List<DetailEmployees> detailList = dao.getDetailEmployees();
+        request.setAttribute("detailList", detailList);
+        request.getRequestDispatcher("employeesdetail.jsp").forward(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
