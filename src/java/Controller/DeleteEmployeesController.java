@@ -5,6 +5,7 @@
 
 package Controller;
 
+import Dal.EmployeesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -53,7 +54,6 @@ public class DeleteEmployeesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
     } 
 
     /** 
@@ -66,7 +66,14 @@ public class DeleteEmployeesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+    int accountId = Integer.parseInt(request.getParameter("accountId"));
+
+    EmployeesDAO dao = new EmployeesDAO();
+    boolean deleteSuccess = dao.deleteEmployeeById(accountId);
+
+    request.setAttribute("deleteSuccess", deleteSuccess);
+
+    response.sendRedirect("employeesdetail");
     }
 
     /** 

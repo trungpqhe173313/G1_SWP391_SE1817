@@ -63,6 +63,18 @@ public List<DetailEmployees> getDetailEmployees() {
     }
     return detailList;
 }
+    public boolean deleteEmployeeById(int accountId) {
+        String sql = "DELETE FROM employees WHERE accountId = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
 public class Main {
     public static void main(String[] args) {
