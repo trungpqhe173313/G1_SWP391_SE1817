@@ -35,12 +35,14 @@
     <servlet>
         <servlet-name>BookingScheduleServlet</servlet-name>
         <servlet-class>Controller.BookingScheduleServlet</servlet-class>
-        <servlet-name>EmployeesDetailController</servlet-name>
-        <servlet-class>Controller.EmployeesDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeesController</servlet-name>
         <servlet-class>Controller.AddEmployeesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeesDetailController</servlet-name>
+        <servlet-class>Controller.EmployeesDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteEmployeesController</servlet-name>
@@ -81,6 +83,8 @@
     <servlet-mapping>
         <servlet-name>BookingScheduleServlet</servlet-name>
         <url-pattern>/bookingschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EmployeesDetailController</servlet-name>
         <url-pattern>/employeesdetail</url-pattern>
     </servlet-mapping>

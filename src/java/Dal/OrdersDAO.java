@@ -5,7 +5,7 @@
 package Dal;
 
 import Model.Accounts;
-import Model.EmployeesList;
+import Model.Employees;
 import Model.Orders;
 import Model.Roles;
 import Model.Services;
@@ -58,8 +58,8 @@ public class OrdersDAO extends DBContext {
         return list;
     }
 
-    public List<EmployeesList> getAllEmployees() {
-        List<EmployeesList> list = new ArrayList<>();
+    public List<Employees> getAllEmployees() {
+        List<Employees> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[accountId]\n"
                 + "      ,[isActive]\n"
@@ -70,7 +70,7 @@ public class OrdersDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                EmployeesList m = new EmployeesList();
+                Employees m = new Employees ();
                 m.setId(rs.getInt("id"));
                 m.setAccountId(rs.getInt("accountId"));
                 m.setIsActive(rs.getBoolean("isActive"));
