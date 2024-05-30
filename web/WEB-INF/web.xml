@@ -48,6 +48,22 @@
         <servlet-name>DeleteEmployeesController</servlet-name>
         <servlet-class>Controller.DeleteEmployeesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changepassreset</servlet-name>
+        <servlet-class>Controller.changepassreset</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendlink</servlet-name>
+        <servlet-class>Controller.sendlink</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAppointmentController</servlet-name>
+        <servlet-class>Controller.GetAppointmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelAppointmentController</servlet-name>
+        <servlet-class>Controller.CancelAppointmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -95,5 +111,22 @@
     <servlet-mapping>
         <servlet-name>DeleteEmployeesController</servlet-name>
         <url-pattern>/deleteemployees</url-pattern>
+    </servlet-mapping>
+</web-app>
+    <servlet-mapping>
+        <servlet-name>changepassreset</servlet-name>
+        <url-pattern>/changepassreset</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendlink</servlet-name>
+        <url-pattern>/sendlink</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAppointmentController</servlet-name>
+        <url-pattern>/GetAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelAppointmentController</servlet-name>
+        <url-pattern>/CancelAppointment</url-pattern>
     </servlet-mapping>
 </web-app>

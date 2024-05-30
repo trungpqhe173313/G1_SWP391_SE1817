@@ -1,27 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Controller;
 
 import Dal.EmployeesDAO;
-import Model.DetailEmployees;
+import Model.Accounts;
+import Model.Employees;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.SQLException;
 
 /**
  *
  * @author ducth
  */
 public class AddEmployeesController extends HttpServlet {
-   
+
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -33,7 +28,6 @@ public class AddEmployeesController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -57,9 +51,7 @@ public class AddEmployeesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-            DetailEmployees newEmployee = new DetailEmployees();
-            request.setAttribute("addStaff", newEmployee);
-            request.getRequestDispatcher("addStaff.jsp").forward(request, response);
+        request.getRequestDispatcher("addemployees.jsp").forward(request, response);
     } 
 
     /** 
@@ -72,29 +64,46 @@ public class AddEmployeesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String fullName = request.getParameter("fullName");
+         // Lấy thông tin tài khoản từ request
         String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
+        String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-        boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
+        Boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
         int roleId = Integer.parseInt(request.getParameter("roleId"));
-        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
-        String dateOfBirth = request.getParameter("dateOfBirth");
+
+        // Lấy thông tin nhân viên từ request
+        Boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
         String address = request.getParameter("address");
 
-    EmployeesDAO dao = new EmployeesDAO();
-    DetailEmployees newEmployee = dao.addEmployees(phone, fullName, email, avatar, isMale, roleId, isActive, dateOfBirth, address);
+        // Tạo đối tượng Accounts và Employees
+        Accounts account = new Accounts();
+        account.setPhone(phone);
+        account.setPassword(password);
+        account.setFullName(fullName);
+        account.setEmail(email);
+        account.setAvatar(avatar);
+        account.setIsMale(isMale);
+        account.setRoleId(roleId);
 
-    // Trong servlet doPost method
-if (newEmployee != null) {
-    request.setAttribute("addSuccess", true);
-    response.sendRedirect("employees.jsp");
-} else {
-    request.setAttribute("addError", true);
-    request.getRequestDispatcher("employees.jsp").forward(request, response);
+        Employees employee = new Employees();
+        employee.setIsActive(isActive);
+        employee.setDateOfBirth(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        employee.setAddress(address);
+
+        // Thêm vào cơ sở dữ liệu
+        EmployeesDAO dao = new EmployeesDAO();
+        try {
+    dao.addAccountAndEmployee(account, employee);
+    response.sendRedirect("employeesdetail");
+} catch (Exception e) {
+    e.printStackTrace();
+    response.getWriter().write("Có lỗi xảy ra khi chèn dữ liệu.");
 }
 
-}
+    }
+        
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
