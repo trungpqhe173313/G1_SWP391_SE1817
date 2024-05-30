@@ -30,7 +30,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Personal Information</a>
-                            <a class="dropdown-item" href="#">Appointment Schedule</a>
+                            <a class="dropdown-item" href="GetAppointment">Appointment Schedule</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>

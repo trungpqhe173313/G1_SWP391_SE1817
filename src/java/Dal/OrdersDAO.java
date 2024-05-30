@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -416,7 +418,59 @@ public class OrdersDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
+    public Orders getAppointment(int aid) {
+        String sql = "SELECT *\n"
+                + "  FROM [Barbershop].[dbo].[orders] \n"
+                + "  where orders.statusId = 1 and orders.accountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, aid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Orders order = new Orders(rs.getInt(1),
+                        rs.getInt(2), rs.getInt(3),
+                        rs.getInt(4), rs.getInt(5),
+                        rs.getDate(6), rs.getInt(7));
+                return order;
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 
+    public void updateOrder(Orders order) {
+        try {
+            String sql = "UPDATE [dbo].[orders]\n"
+                    + "   SET [employeeId] = ?\n"
+                    + "      ,[shiftsID] = ?\n"
+                    + "      ,[orderDate] = ?\n"
+                    + "      ,[totalAmount] = ?\n"
+                    + " WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, order.getEmployeeId());
+            stm.setInt(2, order.getShiftsID());
+            stm.setDate(3, order.getOrderDate());
+            stm.setInt(4, order.getTotalAmount());
+            stm.setInt(5, order.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cancelOrder(int id) {
+        try {
+            String sql = "UPDATE [dbo].[orders]\n"
+                    + "   SET [statusId] = ?\n"
+                    + " WHERE [id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, 4);
+            stm.setInt(2, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public static void main(String[] args) {
         OrdersDAO d = new OrdersDAO();
         List<Services> l = d.getAllServices();
