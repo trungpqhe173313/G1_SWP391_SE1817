@@ -57,9 +57,13 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String phone = request.getParameter("phone");
+        //String phone = request.getParameter("phone");
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr); // Gán giá trị mặc định hoặc giá trị phù hợp khác
+        
         CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts a = daoCustomer.getProfileByPhone(phone);
+        //Accounts a = daoCustomer.getProfileByPhone(phone);
+        Accounts a = daoCustomer.getProfileById(id);
         if (a != null) {
             request.setAttribute("account", a);
             request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
@@ -81,14 +85,8 @@ public class CustomerUpdatePage extends HttpServlet {
             throws ServletException, IOException {
         // Lấy thông tin từ form
         String idStr = request.getParameter("id");
-        int id = 0; // Gán giá trị mặc định hoặc giá trị phù hợp khác
-        if (idStr != null && !idStr.isEmpty()) {
-            try {
-                id = Integer.parseInt(idStr);
-            } catch (NumberFormatException e) {
-                System.out.println(e);
-            }
-        }
+        int id = Integer.parseInt(idStr);
+            
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
@@ -104,6 +102,7 @@ public class CustomerUpdatePage extends HttpServlet {
         try {
             Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
             daoC.updateProfile(newA);
+            
             response.sendRedirect("cusprofile");
             //response.sendRedirect("cusprofile?phone=" + phone);
         } catch (NumberFormatException e) {

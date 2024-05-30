@@ -39,25 +39,71 @@ public class CustomerDAO extends DBContext{
         }
         return null;
     }
+    public Accounts getProfileById(int id) {
+        String sql = "Select*from Accounts where (id = ?)";
+        try {
 
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Accounts(
+                    rs.getInt("id"),
+                    rs.getString("phone"),
+                    rs.getString("password"),
+                    rs.getString("fullName"),
+                    rs.getString("email"),
+                    rs.getString("avatar"),
+                    rs.getBoolean("isMale"),
+                    rs.getInt("roleId"),
+                    rs.getBoolean("isActive")
+                );
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
     
     public void updateProfile(Accounts account) {
-       String sql = "UPDATE Accounts SET password = ?, fullName = ?, email = ?, "
+       String sql = "UPDATE Accounts SET phone = ?, password = ?, fullName = ?, email = ?, "
                + "avatar = ?, isMale = ?, roleId = 2, isActive = 1, "
-               + "createdAt = GETDATE(), updatedAt =  GETDATE() WHERE (phone = ?)";
+               + "createdAt = GETDATE(), updatedAt =  GETDATE() WHERE (id = ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, account.getPassword());
-            stm.setString(2, account.getFullName());
-            stm.setString(3, account.getEmail());
-            stm.setString(4, account.getAvatar());
-            stm.setBoolean(5, account.getIsMale());
-            stm.setString(6, account.getPhone());
+            stm.setString(1, account.getPhone());
+            stm.setString(2, account.getPassword());
+            stm.setString(3, account.getFullName());
+            stm.setString(4, account.getEmail());
+            stm.setString(5, account.getAvatar());
+            stm.setBoolean(6, account.getIsMale());
+            stm.setInt(7, account.getRoleId());
+            stm.setBoolean(8, account.getIsActive());
+            stm.setInt(9, account.getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
+//    
+//    public void updateProfile(Accounts account) {
+//       String sql = "UPDATE Accounts SET password = ?, fullName = ?, email = ?, "
+//               + "avatar = ?, isMale = ?, roleId = 2, isActive = 1, "
+//               + "createdAt = GETDATE(), updatedAt =  GETDATE() WHERE (phone = ?)";
+//        try {
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setString(1, account.getPassword());
+//            stm.setString(2, account.getFullName());
+//            stm.setString(3, account.getEmail());
+//            stm.setString(4, account.getAvatar());
+//            stm.setBoolean(5, account.getIsMale());
+//            stm.setString(6, account.getPhone());
+//            stm.executeUpdate();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
     public static void main(String[] args) {
         CustomerDAO c = new CustomerDAO();
         String phone = "0987654321"; // Thay thế bằng tên người dùng thử nghiệm

@@ -13,7 +13,7 @@
                 background: 
                     linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000),
                     linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
-                background-size: 50px 50px; /* Điều chỉnh kích thước của các ô nhỏ */
+                background-size: 150px 150px; /* Điều chỉnh kích thước của các ô nhỏ */
                 color: #fff;
                 display: flex;
                 justify-content: center;
@@ -97,13 +97,13 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button type="button" class="btn btn-primary" onclick="updateCustomer(${a.phone})">Update</button>
+                <button type="button" class="btn btn-primary" onclick="updateCustomer(${a.id})">Update</button>
             </div>
         </div>
 
         <script>
-            function updateCustomer(phone) {
-                window.location.href = 'customerupdate?phone=' + phone;
+            function updateCustomer(id) {
+                window.location.href = 'customerupdate?id=' + id;
             }
         </script>
     </body>
