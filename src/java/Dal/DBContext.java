@@ -18,13 +18,13 @@ import java.util.logging.Logger;
  * @author sonnt
  */
 public class DBContext {
-    public Connection connection;
+    protected static Connection connection;
     public DBContext()
     {
         try {
             //Change the username password and url to connect your own database
             String username = "sa";
-            String password = "12345";
+            String password = "123";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Barbershop";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);

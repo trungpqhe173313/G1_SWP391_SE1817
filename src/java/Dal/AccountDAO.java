@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Accounts;
+import java.sql.Connection;
 
 
 public class AccountDAO extends DBContext{
@@ -30,9 +31,7 @@ public class AccountDAO extends DBContext{
                 account.setAvatar(rs.getString("avatar"));
                 account.setIsMale(rs.getBoolean("isMale"));
                 account.setRoleId(rs.getInt("roleId"));
-                account.setIsActive(rs.getBoolean("isActive"));
-                
-
+                account.setIsActive(rs.getBoolean("isActive"));      
                 list.add(account);
             }
         } catch (SQLException e) {
@@ -120,6 +119,53 @@ public class AccountDAO extends DBContext{
         }
         return null;
     }
+    
+   public boolean checkEmailExist(String email) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {//1. Connect DB
+            con = DBContext.connection;
+
+            if (con != null) {
+                String sql = " SELECT * FROM accounts WHERE email = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                //4. Excute Query
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("loi checkAcountExist" + e.getMessage());
+        }
+        return false;
+    }
+   
+   public void changePass(String email, String password)
+            throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        //1. Connect DB
+        con = DBContext.connection;
+        if (con != null) {
+            //2. Create SQL String
+            String sql = "    Update [accounts] SET   password =?\n"
+                    + "   WHERE [email] =?";
+            //3. Create Statement
+            stm = con.prepareStatement(sql);
+            stm.setString(1, password);
+            stm.setString(2, email);
+
+            //4. Excute Query
+            stm.executeUpdate();
+
+        }
+
+    }
   
    public void insertAccount(Accounts account) {
         String sql = "INSERT INTO accounts (phone, password, fullName, email, "
@@ -141,32 +187,45 @@ public class AccountDAO extends DBContext{
         }
     }
 
-    public static void main(String[] args) {
-        AccountDAO a = new AccountDAO();
-        String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
-        String password = "password1"; // Thay thế bằng mật khẩu thử nghiệm
-         Accounts account = a.checkAuthentic(phone, password);
-       
-
-            // In thông tin tài khoản nếu đăng nhập thành công
-            if (account != null) {
-                System.out.println("Login successful!");
-                System.out.println("Account ID: " + account.getId());
-                System.out.println("Phone: " + account.getPhone());
-                System.out.println("Password: " + account.getPassword());
-                System.out.println("Full Name: " + account.getFullName());
-                System.out.println("Email: " + account.getEmail());
-                System.out.println("Avatar: " + account.getAvatar());
-                System.out.println("Is Male: " + account.getIsMale());
-                System.out.println("Role ID: " + account.getRoleId());
-                System.out.println("Is Active: " + account.getIsActive());
-            } else {
-                System.out.println("Login failed: Invalid phone or password");
-            
-            }
-    }
-
+//    public static void main(String[] args) {
+//        AccountDAO a = new AccountDAO();
+//        String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
+//        String password = "password1"; // Thay thế bằng mật khẩu thử nghiệm
+//         Accounts account = a.checkAuthentic(phone, password);
+//       
+//
+//            // In thông tin tài khoản nếu đăng nhập thành công
+//            if (account != null) {
+//                System.out.println("Login successful!");
+//                System.out.println("Account ID: " + account.getId());
+//                System.out.println("Phone: " + account.getPhone());
+//                System.out.println("Password: " + account.getPassword());
+//                System.out.println("Full Name: " + account.getFullName());
+//                System.out.println("Email: " + account.getEmail());
+//                System.out.println("Avatar: " + account.getAvatar());
+//                System.out.println("Is Male: " + account.getIsMale());
+//                System.out.println("Role ID: " + account.getRoleId());
+//                System.out.println("Is Active: " + account.getIsActive());
+//            } else {
+//                System.out.println("Login failed: Invalid phone or password");
+//            
+//            }
+//    }
+//    public static void main(String[] args) {
+//    String email = "quypdhe173508@fpt.edu.vn";
+//    AccountDAO dao = new AccountDAO();
+//    
+//    try {
+//        boolean emailExists = dao.checkEmailExist(email);
+//        System.out.println("Email exists: " + emailExists);
+//    } catch (SQLException e) {
+//        System.out.println("Error while checking email existence: " + e.getMessage());
+//        e.printStackTrace();
+//    }
+//}
+   
 }
+
 
 
     

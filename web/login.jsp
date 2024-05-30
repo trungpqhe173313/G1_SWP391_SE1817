@@ -48,7 +48,8 @@
                                             <div class="text-center pt-1 mb-5 pb-1">
                                                 <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"style="background: linear-gradient(45deg, #ffd700, #ffec5e); color: white">Log
                                                     in</button>
-                                                <a class="text-muted" href="#!" style="color: #FFA500">Forgot password?</a>
+                                                <a class="text-muted" href="sendlink" style="color: #FFA500">Forgot password?</a><br><!-- comment -->
+                                                ${mess}
                                             </div>
 
                                             <div class="d-flex align-items-center justify-content-center pb-4">

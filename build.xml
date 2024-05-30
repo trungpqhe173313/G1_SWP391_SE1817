@@ -8,6 +8,7 @@
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="G1_SWP391_SE1817" default="default" basedir=".">
+    <property name="libs.CopyLibs.classpath" value="C:\Program Files\NetBeans-17\netbeans\java\ant\extra\org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
     <description>Builds, tests, and runs the project G1_SWP391_SE1817.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--

@@ -6,7 +6,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class SendMail {
- public boolean sendEmailResetPass(String emailReset) {
+
+    public boolean sendEmailResetPass(String emailReset) {
         boolean isSent = false;
         
         final String username = "quypdhe173508@fpt.edu.vn";
@@ -30,7 +31,7 @@ public class SendMail {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailReset));
             message.setSubject("Reset Password");
-            message.setText("Click the following link to reset your password:");
+            message.setText("Click the following link to reset your password: http://localhost:9999/G1_SWP391_SE1817/changepassreset");
 
             Transport.send(message);
             isSent = true;

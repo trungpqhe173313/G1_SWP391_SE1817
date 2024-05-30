@@ -104,70 +104,46 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <a class="navbar-brand" href="homepage.jsp"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
-                </button>
+        <jsp:include page="nav.jsp"></jsp:include>
+            <!-- END nav -->
 
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="homepage.jsp" class="nav-link">Home</a></li>
-                        <li class="nav-item  active"><a href="services.jsp" class="nav-link">Services</a></li>
-                        <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
-                        <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
-                            <c:if test="${sessionScope.account==null}">
-
-                            <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
-                            </c:if>
-                            <c:if test="${sessionScope.account!=null}">
-                            <li class="nav-item" ><a href="#" class="nav-link" >Hello ${sessionScope.account.getFullName()}</a></li>
-                            <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
-                            </c:if>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- END nav -->
-
-        <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-                    <div class="col-md-9 ftco-animate pb-5 text-center">
-                        <h2 class="mb-0 bread">Booking</h2>
-                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
+            <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+                        <div class="col-md-9 ftco-animate pb-5 text-center">
+                            <h2 class="mb-0 bread">Booking</h2>
+                            <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
 
-        <section class="ftco-section ftco-booking bg-light">
-            <div class="container">
+            <section class="ftco-section ftco-booking bg-light">
+                <div class="container">
 
-                <div class="table-responsive custom-table-responsive">
+                    <div class="table-responsive custom-table-responsive">
 
-                    <table class="table custom-table">
-                        <thead>
-                            <tr>  
-                                <th scope="col">Order</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Services</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Barber</th>
-                                <th scope="col"> Customer Contact</th>
-                                <th scope="col"> Total Amount</th>
-                                <th scope="col">Status</th>
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>  
+                                    <th scope="col">Order</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Services</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Barber</th>
+                                    <th scope="col"> Customer Contact</th>
+                                    <th scope="col"> Total Amount</th>
+                                    <th scope="col">Status</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr scope="row">
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr scope="row">
 
-                                <td>
+                                    <td>
                                     ${newOrderId}
                                 </td>
                                 <td><a href="#">${sessionScope.account.getFullName()}</a></td>
