@@ -16,7 +16,6 @@ public class Accounts {
     private String fullName;
     private String email;
     private String avatar;
-
     private Boolean isMale;
     private int roleId;
     private Boolean isActive;

@@ -104,6 +104,7 @@
         <servlet-name>DeleteEmployeesController</servlet-name>
         <url-pattern>/deleteemployees</url-pattern>
     </servlet-mapping>
+</web-app>
     <servlet-mapping>
         <servlet-name>changepassreset</servlet-name>
         <url-pattern>/changepassreset</url-pattern>
