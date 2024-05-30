@@ -39,7 +39,7 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="https://img.freepik.com/premium-vector/3d-password-field-with-padlock-isolated_169241-6460.jpg" alt="IMG">
                     </div>
-                    <form action="sendLinkResetPass" method="post"> <span class="login100-form-title">
+                    <form action="sendlink" method="post"> <span class="login100-form-title">
                             <b>Reset Password  </b>
                         </span>
 
