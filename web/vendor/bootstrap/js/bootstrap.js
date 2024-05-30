@@ -914,7 +914,6 @@
           event.preventDefault();
           this.prev();
           break;
-
         case ARROW_RIGHT_KEYCODE:
           event.preventDefault();
           this.next();
@@ -1022,7 +1021,6 @@
       }
 
       var slideEvent = this._triggerSlideEvent(nextElement, eventDirectionName);
-
       if (slideEvent.isDefaultPrevented()) {
         return;
       }

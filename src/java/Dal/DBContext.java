@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author sonnt
  */
 public class DBContext {
-    public Connection connection;
+    protected static Connection connection;
     public DBContext()
     {
         try {

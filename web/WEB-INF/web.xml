@@ -32,6 +32,14 @@
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.EmployeesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendLinkResetPass</servlet-name>
+        <servlet-class>Controller.SendLinkResetPass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendLinkResetPass</servlet-name>
+        <servlet-class>Controller.sendLinkResetPass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -63,5 +71,13 @@
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
         <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendLinkResetPass</servlet-name>
+        <url-pattern>/SendLinkResetPass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendLinkResetPass</servlet-name>
+        <url-pattern>/sendLinkResetPass</url-pattern>
     </servlet-mapping>
 </web-app>
