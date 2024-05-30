@@ -14,7 +14,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Haircare</div>
             </a>
 
             <!-- Divider -->
@@ -41,7 +41,7 @@
                     <span>Tables</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="employees.jsp">
+                <a class="nav-link" href="employeesdetail">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Employees</span></a>
             </li>
