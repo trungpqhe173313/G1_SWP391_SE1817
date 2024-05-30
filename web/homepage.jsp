@@ -35,7 +35,6 @@
     <body>
         <jsp:include page="nav.jsp"></jsp:include>
         <!-- END nav -->
-
         <section class="hero-wrap js-fullheight" style="background-image: url(images/bg-2.jpg);" data-stellar-background-ratio="0.5">
             <div class="overlay"></div>
             <div class="container">

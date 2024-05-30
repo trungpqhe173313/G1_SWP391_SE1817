@@ -56,6 +56,14 @@
         <servlet-name>sendlink</servlet-name>
         <servlet-class>Controller.sendlink</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetAppointmentController</servlet-name>
+        <servlet-class>Controller.GetAppointmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelAppointmentController</servlet-name>
+        <servlet-class>Controller.CancelAppointmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -112,5 +120,13 @@
     <servlet-mapping>
         <servlet-name>sendlink</servlet-name>
         <url-pattern>/sendlink</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAppointmentController</servlet-name>
+        <url-pattern>/GetAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelAppointmentController</servlet-name>
+        <url-pattern>/CancelAppointment</url-pattern>
     </servlet-mapping>
 </web-app>
