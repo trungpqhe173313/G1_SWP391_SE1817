@@ -116,94 +116,98 @@
     </head>
     <body>
         <jsp:include page="nav.jsp"></jsp:include>
-        <!-- END nav -->
+            <!-- END nav -->
 
-        <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-                    <div class="col-md-9 ftco-animate pb-5 text-center">
-                        <h2 class="mb-0 bread">Booking</h2>
-                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
+            <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-1.jpg');" data-stellar-background-ratio="0.5">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+                        <div class="col-md-9 ftco-animate pb-5 text-center">
+                            <h2 class="mb-0 bread">Booking</h2>
+                            <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
 
-        <section class="ftco-section ftco-booking bg-light">
-            <div class="container ftco-relative">
-                <div class="row justify-content-center pb-3">
-                    <div class="col-md-10 heading-section text-center ftco-animate">
-                        <span class="subheading">Booking</span>
-                        <h2 class="mb-4">Make an Appointment</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+            <section class="ftco-section ftco-booking bg-light">
+                <div class="container ftco-relative">
+                    <div class="row justify-content-center pb-3">
+                        <div class="col-md-10 heading-section text-center ftco-animate">
+                            <span class="subheading">Booking</span>
+                            <h2 class="mb-4">Make an Appointment</h2>
+                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                        </div>
                     </div>
-                </div>
-                <h3 class="vr">Call Us: 012-3456-7890</h3>
-                <div class="row justify-content-center">
-                    <div class="col-md-10 ftco-animate">
+                    <h3 class="vr">Call Us: 012-3456-7890</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 ftco-animate">
                         <c:if test="${sessionScope.account != null}">
                             <c:set value="${sessionScope.account}" var="a"/>
                             <form action="appointment" method="post" class="appointment-form" onsubmit="return validateForm()">
-                                <div class="row">
+                                <div class="row" >
                                     <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="name" class="form-control" id="appointment_name" placeholder="Name" value="${a.getFullName()}" readonly="">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="email" class="form-control" id="appointment_email" placeholder="Email" value="${a.getEmail()}" readonly="">
-                                            <span id="email_error_message" class="error-message"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="date" id="" class="form-control">
-                                                    <c:forEach items="${listDate}" var="date">
-                                                        <option value="${date}">${date}</option>
-                                                    </c:forEach>
-                                                </select>
+
+                                        <!--                                    <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <input type="text" name="name" class="form-control" id="appointment_name" placeholder="Name" value="${a.getFullName()}" readonly="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <input type="text" name="email" class="form-control" id="appointment_email" placeholder="Email" value="${a.getEmail()}" readonly="">
+                                                                                    <span id="email_error_message" class="error-message"></span>
+                                                                                </div>
+                                                                            </div>-->
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <div class="select-wrap">
+                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                    <select name="date" id="" class="form-control">
+                                                        <c:forEach items="${listDate}" var="date">
+                                                            <option value="${date}">${date}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="shifts" id="" class="form-control">
-                                                    <c:forEach items="${listShift}" var="shifts">
-                                                        <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
-                                                    </c:forEach>
-                                                </select>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <div class="select-wrap">
+                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                    <select name="shifts" id="" class="form-control">
+                                                        <c:forEach items="${listShift}" var="shifts">
+                                                            <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="select-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="barber" id="" class="form-control">
-                                                    <c:forEach items="${listBarber}" var="baber">
-                                                        <option value="${baber.getId()}">${baber.getFullName()}</option>
-                                                    </c:forEach>
-                                                </select>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <div class="select-wrap">
+                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                    <select name="barber" id="" class="form-control">
+                                                        <<option value="">Select Barber</option>
+                                                        <c:forEach items="${listBarber}" var="baber">
+                                                            <option value="${baber.getId()}">${baber.getFullName()}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--                                    <div class="col-sm-9">
+                                                                                <div class="form-group">
+                                                                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" value="${a.getPhone()}" readonly="">
+                                                                                    <span id="phone_error_message" class="error-message"></span>
+                                                                                </div>
+                                                                            </div>-->
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" value="${a.getPhone()}" readonly="">
-                                            <span id="phone_error_message" class="error-message"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h2 class="mb-4">Choose Services</h2>
-                                        <div class="form-group">
+                                    <div class="col-sm-6" >
+                                        <h5 class="mb-4">Choose Services</h5>
+                                        <div class="form-group" style="overflow-y: auto; max-height: 195px">
 
                                             <ul class="list-group">
                                                 <c:forEach items="${listServices}" var="service" varStatus="status">
