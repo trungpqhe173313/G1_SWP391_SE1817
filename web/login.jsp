@@ -7,14 +7,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
         <title>JSP Page</title>
-        <stype>
-       
-    </stype>
+        
     </head>
     
     <body>
         
-        <section class="h-100 gradient-form" style="background-color: #000;">
+        <section class="h-100 gradient-form" style="background-color: #000">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-xl-10">
@@ -48,7 +46,7 @@
                                             </div>
 
                                             <div class="text-center pt-1 mb-5 pb-1">
-                                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"style="background: linear-gradient(45deg, #ffd700, #ffec5e); color: white;">Log
+                                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"style="background: linear-gradient(45deg, #ffd700, #ffec5e); color: white">Log
                                                     in</button>
                                                 <a class="text-muted" href="sendlink" style="color: #FFA500">Forgot password?</a><br><!-- comment -->
                                                 ${mess}

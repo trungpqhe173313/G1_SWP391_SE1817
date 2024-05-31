@@ -169,8 +169,8 @@ public class AccountDAO extends DBContext{
   
    public void insertAccount(Accounts account) {
         String sql = "INSERT INTO accounts (phone, password, fullName, email, "
-                + "avatar, isMale, roleId, isActive) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + "avatar, isMale, roleId, isActive, createdAt, updatedAt) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE())";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getPhone());
@@ -187,30 +187,29 @@ public class AccountDAO extends DBContext{
         }
     }
 
-//    public static void main(String[] args) {
-//        AccountDAO a = new AccountDAO();
-//        String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
-//        String password = "password1"; // Thay thế bằng mật khẩu thử nghiệm
-//         Accounts account = a.checkAuthentic(phone, password);
-//       
-//
-//            // In thông tin tài khoản nếu đăng nhập thành công
-//            if (account != null) {
-//                System.out.println("Login successful!");
-//                System.out.println("Account ID: " + account.getId());
-//                System.out.println("Phone: " + account.getPhone());
-//                System.out.println("Password: " + account.getPassword());
-//                System.out.println("Full Name: " + account.getFullName());
-//                System.out.println("Email: " + account.getEmail());
-//                System.out.println("Avatar: " + account.getAvatar());
-//                System.out.println("Is Male: " + account.getIsMale());
-//                System.out.println("Role ID: " + account.getRoleId());
-//                System.out.println("Is Active: " + account.getIsActive());
-//            } else {
-//                System.out.println("Login failed: Invalid phone or password");
-//            
-//            }
-//    }
+    public static void main(String[] args) {
+        AccountDAO a = new AccountDAO();
+        String phone = "0123456789"; // Thay thế bằng tên người dùng thử nghiệm
+        String password = "password1"; // Thay thế bằng mật khẩu thử nghiệm
+        Accounts account = a.checkAuthentic(phone, password);
+
+        // In thông tin tài khoản nếu đăng nhập thành công
+        if (account != null) {
+            System.out.println("Login successful!");
+            System.out.println("Account ID: " + account.getId());
+            System.out.println("Phone: " + account.getPhone());
+            System.out.println("Password: " + account.getPassword());
+            System.out.println("Full Name: " + account.getFullName());
+            System.out.println("Email: " + account.getEmail());
+            System.out.println("Avatar: " + account.getAvatar());
+            System.out.println("Is Male: " + account.getIsMale());
+            System.out.println("Role ID: " + account.getRoleId());
+            System.out.println("Is Active: " + account.getIsActive());
+        } else {
+            System.out.println("Login failed: Invalid phone or password");
+
+        }
+    }
 //    public static void main(String[] args) {
 //    String email = "quypdhe173508@fpt.edu.vn";
 //    AccountDAO dao = new AccountDAO();

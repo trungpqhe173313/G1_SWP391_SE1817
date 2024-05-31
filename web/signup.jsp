@@ -8,8 +8,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="signup">
-            <section class="h-100 gradient-form" style="background-color: #eee;">
+        
+            <section class="h-100 gradient-form" style="background-color: #000;">
                 <div class="container py-5 h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100">
                         <div class="col-xl-10">
@@ -18,73 +18,66 @@
                                     <div class="col-lg-12">
                                         <div class="card-body p-md-5 mx-md-4">
                                             <div class="text-md-left">
-                                                <a href="homepage" style="color: black"> Return to Home </a>
+                                                <a href="home" style="color: #ffaf00"> Return to Home </a>
                                             </div>
                                             <div class="text-center">
                                                 <img src=""
                                                      style="width: 185px" alt="logo">
                                             </div>
-                                            <p class="text-danger">${error}</p>
                                             
-                                            <form>
+                                            
+                                            <form action="signup"method="post">
                                                 <p>Please input your information</p>
                                                 
-                                               
-                                                <div class="form-outline mb-4">
-                                                    <input type="text" required name="username" class="form-control"/>
-                                                    <label class="form-label">Account Name(Phone number)</label>
+                                                
+                                                 <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Phone number</label>
+                                                    <input type="text" required name="phone" class="form-control"/>
                                                 </div>
+                                                <p class="text-danger">${error2}</p>
+                                                <p class="text-danger">${error3}</p>
+                                                
                                                 
                                                 <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Password</label>
                                                     <input type="text" required name="password"  class="form-control" />
-                                                    <label class="form-label">Password</label>
+                                                </div>
+                                                <p class="text-danger">${error1}</p>
+                                                
+                                                <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Confirm password</label>
+                                                    <input type="password" required name="re_pass"  class="form-control" />
+                                                    
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <input type="text" required name="pass"  class="form-control" />
-                                                    <label class="form-label">Confirm password</label>
-                                                </div>
-                                                
-                                                <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Full Name</label>
                                                     <input type="text" required name="fullName"  class="form-control" />
-                                                    <label class="form-label">Full Name</label>
+                                                    
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Email</label>
                                                     <input type="text" required name="email"  class="form-control" />
-                                                    <label class="form-label">Email</label>
-                                                </div>
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <input type="text" required name="avatar"  class="form-control" />
-                                                    <label class="form-label">Avatar</label>
-                                                </div>
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label">Gender</label>
-                                                    <select required name="isMale" class="form-select">
-                                                        <option value="1">Male</option>
-                                                        <option value="0">Female</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label">Role ID</label>
-                                                    <select required name="roleId" class="form-select">
-                                                        <option value="2">Customer</option>
-                                                        <option value="4">Barber</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label">Active Status</label>
-                                                    <select required name="isActive" class="form-select">
-                                                        <option value="1">Active</option>
-                                                    </select>
                                                     
                                                 </div>
                                                 
-                                                <div class="text-center pt-1 mb-5 pb-1">
+                                                <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Avatar</label>
+                                                    <input type="text" name="avatar"  class="form-control" />
+                                                    
+                                                </div>
+                                                
+                                                <div class="form-outline mb-4">
+                                                    <label class="form-label"style="color: #ffaf00">Gender</label>
+                                                    <div>
+                                                        <label><input type="radio" name="isMale" value="true" required> Male</label>
+                                                        <label><input type="radio" name="isMale" value="false" required> Female</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="text-center pt-1 mb-5 pb-1"style="color: white">
                                                     <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create new account</button>
 
                                                 </div>   
@@ -102,7 +95,6 @@
                     </div>
                 </div>
             </section>
-        </form>
-
+        
     </body>
 </html>
