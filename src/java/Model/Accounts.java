@@ -36,17 +36,7 @@ public class Accounts {
         this.isActive = isActive;
     }
 
-    public Accounts(int id, String phone, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive) {
-        this.id = id;
-        this.phone = phone;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.avatar = avatar;
-        this.isMale = isMale;
-        this.roleId = roleId;
-        this.isActive = isActive;
-    }
+    
 
     public int getId() {
         return id;

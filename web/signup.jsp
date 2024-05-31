@@ -46,7 +46,7 @@
                                                 
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label"style="color: #ffaf00">Confirm password</label>
-                                                    <input type="text" required name="re_pass"  class="form-control" />
+                                                    <input type="password" required name="re_pass"  class="form-control" />
                                                     
                                                 </div>
                                                 

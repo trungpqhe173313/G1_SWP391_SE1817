@@ -30,7 +30,7 @@
                             Hello ${sessionScope.account.getFullName()}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Personal Information</a>
+                            <a class="dropdown-item" href="cusprofile">Personal Information</a>
                             <a class="dropdown-item" href="GetAppointment">Appointment Schedule</a>
                             <a class="dropdown-item" href="bookingschedule">View history Booking</a>
                         </div>
