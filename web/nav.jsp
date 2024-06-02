@@ -29,7 +29,7 @@
                             Hello ${sessionScope.account.getFullName()}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Personal Information</a>
+                            <a class="dropdown-item" href="changepass">Change Pass</a>
                             <a class="dropdown-item" href="#">Appointment Schedule</a>
                         </div>
                     </li>

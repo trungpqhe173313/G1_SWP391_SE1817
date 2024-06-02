@@ -52,6 +52,10 @@
         <servlet-name>sendlink</servlet-name>
         <servlet-class>Controller.sendlink</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changepass</servlet-name>
+        <servlet-class>Controller.changepass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -103,5 +107,9 @@
     <servlet-mapping>
         <servlet-name>sendlink</servlet-name>
         <url-pattern>/sendlink</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changepass</servlet-name>
+        <url-pattern>/changepass</url-pattern>
     </servlet-mapping>
 </web-app>
