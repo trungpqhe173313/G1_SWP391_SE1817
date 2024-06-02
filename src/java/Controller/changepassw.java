@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
 import Dal.AccountDAO;
-import Dal.SendMail;
+import Model.Accounts;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,11 +20,11 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author admin
+ * @author LENOVO
  */
-public class SendLinkResetPass extends HttpServlet {
-
-   /** 
+public class changepassw extends HttpServlet {
+   
+    /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -38,10 +39,10 @@ public class SendLinkResetPass extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sendLinkResetPass</title>");  
+            out.println("<title>Servlet changepassw</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sendLinkResetPass at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet changepassw at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +59,7 @@ public class SendLinkResetPass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+        request.getRequestDispatcher("changePassReset.jsp").forward(request, response);
     } 
 
     /** 
@@ -71,26 +72,33 @@ public class SendLinkResetPass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         try ( PrintWriter out = response.getWriter()) {
-            /* sendLinkResetPass */
-            String emailReset = request.getParameter("emailInputReset");
-            SendMail sm = new SendMail();
-             AccountDAO dao = new AccountDAO();
-            boolean test = sm.sendEmailResetPass(emailReset);
-            HttpSession session = request.getSession();
-            session.setAttribute("emailReset", emailReset);
-            if (!dao.checkEmailExist(emailReset)) {
-                request.setAttribute("mess", "You have not registered for this email!! ");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
-            } else if (test) {
-                request.setAttribute("mess", "Check your mail");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
-            } else {
-                request.setAttribute("mess", "Server error");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+        String oldpass = request.getParameter("oldpassword");
+        String password = request.getParameter("password");
+        AccountDAO dao = new AccountDAO();
+        HttpSession session = request.getSession();
+
+        if (session != null) {
+            Accounts account = (Accounts) session.getAttribute("account");
+
+            if (account != null) {
+                String email = account.getEmail();
+
+                try {
+                    if (!dao.checkOldPass(email, oldpass)) {
+                        request.setAttribute("mess", "Sai Pass Cũ");
+                    } else {
+                        dao.changePass(email, password);
+                        request.setAttribute("mess", "Đặt lại mật khẩu thành công");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(changepassw.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("mess", password);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(changepassw.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                request.getRequestDispatcher("changePassReset.jsp").forward(request, response);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(SendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 

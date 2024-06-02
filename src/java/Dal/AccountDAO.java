@@ -144,6 +144,32 @@ public class AccountDAO extends DBContext{
         return false;
     }
    
+    public boolean checkOldPass(String email, String oldPassword) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        boolean isValid = false;
+
+        try {
+            conn = DBContext.connection; // Get connection
+            if (conn != null) {
+                String sql = "SELECT * FROM accounts WHERE email = ? AND password = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, email);
+                pstmt.setString(2, oldPassword);
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    isValid = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in checkOldPass: " + e.getMessage());
+        } 
+        
+
+        return isValid;
+    }
+   
    public void changePass(String email, String password)
             throws SQLException, ClassNotFoundException {
         Connection con = null;

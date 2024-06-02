@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="css/css/bootstrap.min.css"/>
         <style>
             body {
-                background: 
+                background:
                     linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000),
                     linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
                 background-size: 150px 150px; /* Điều chỉnh kích thước của các ô nhỏ */
@@ -59,7 +59,7 @@
                 border-radius: 5px; /* Góc cong cho nút */
                 margin-top: 20px; /* Khoảng cách trên của nút */
                 width: 100px;
-                height: 50px; 
+                height: 50px;
             }
             .btn-primary:hover {
                 background-color: #c0c000;
@@ -94,16 +94,21 @@
                         <label for="isMale">Gender: </label>
                         <td>${a.isMale ? 'Male' : 'Female'}</td>
                     </div>
+                    <a href="home" style="color: #ffaf00"> Back </a>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <button type="button" class="btn btn-primary" onclick="updateCustomer(${a.id})">Update</button>
+                <button type="button" class="btn btn-primary" onclick="changePassword(${a.id})">ChangePass</button>
             </div>
         </div>
 
         <script>
             function updateCustomer(id) {
                 window.location.href = 'customerupdate?id=' + id;
+            }
+            function changePassword(id) {
+                window.location.href = 'changepassw?id=' + id;
             }
         </script>
     </body>
