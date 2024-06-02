@@ -90,7 +90,7 @@ public class SendLinkResetPass extends HttpServlet {
                 request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
