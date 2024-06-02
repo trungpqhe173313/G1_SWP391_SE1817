@@ -57,10 +57,13 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts a = daoCustomer.getProfileByUsername(username);
+        //String phone = request.getParameter("phone");
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr); // Gán giá trị mặc định hoặc giá trị phù hợp khác
         
+        CustomerDAO daoCustomer = new CustomerDAO();
+        //Accounts a = daoCustomer.getProfileByPhone(phone);
+        Accounts a = daoCustomer.getProfileById(id);
         if (a != null) {
             request.setAttribute("account", a);
             request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
@@ -81,30 +84,34 @@ public class CustomerUpdatePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ form
-        String username = request.getParameter("username");
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr);
+            
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-        boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
+        Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
         
+        
+        int roleId = 2; // Giá trị mặc định là Username
+        boolean isActive = true; //Giá trị là active (hoặc 1)
         // Tạo một đối tượng Account với các thông tin mới cập nhật
-        CustomerDAO daoCustomer = new CustomerDAO();
-        Accounts existingAccount = daoCustomer.getProfileByUsername(username);
-        if (existingAccount != null) {
-            Accounts updatedAccount = new Accounts(existingAccount.getId(), 
-                    existingAccount.getUsername(), existingAccount.getPassword(), 
-                    fullName, email, avatar, isMale, existingAccount.getRoleId(), 
-                    existingAccount.getIsActive(), existingAccount.getCreatedAt(), 
-                    new Timestamp(System.currentTimeMillis()));
+        CustomerDAO daoC = new CustomerDAO();
+        try {
+            Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
+            daoC.updateProfile(newA);
             
-            // Cập nhật thông tin vào CSDL
-            daoCustomer.updateProfile(updatedAccount);
-            
-            // Điều hướng sau khi cập nhật
-            response.sendRedirect("customer-profile?username=" + updatedAccount.getUsername());
-        } else {
-            System.out.println("Error!");
+            response.sendRedirect("cusprofile");
+            //response.sendRedirect("cusprofile?phone=" + phone);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
+        
+        
+        
+        
     }
 
     /**

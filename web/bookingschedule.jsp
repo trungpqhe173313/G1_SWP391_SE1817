@@ -112,7 +112,7 @@
                 <div class="container">
                     <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
                         <div class="col-md-9 ftco-animate pb-5 text-center">
-                            <h2 class="mb-0 bread">Booking</h2>
+                            <h2 class="mb-0 bread">Booking Schedule</h2>
                             <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
                         </div>
                     </div>
@@ -141,33 +141,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <c:forEach items="${listBooking}" var="lb">
+
                                 <tr scope="row">
 
                                     <td>
-                                    ${newOrderId}
-                                </td>
-                                <td><a href="#">${sessionScope.account.getFullName()}</a></td>
-                                <td style="font-size: 16px; font-weight: 500;">
-                                    <c:forEach items="${listServicesAdded}" var="s">
-                                        - ${s.getName()} </br>
-                                    </c:forEach>
-                                </td>
-                                <td>
+                                        ${lb.getOrder().id}
+                                    </td>
+                                    <td><a href="#">${sessionScope.account.getFullName()}</a></td>
+                                    <td style="font-size: 16px; font-weight: 500;">
+                                        <c:forEach items="${lb.getListServices()}" var="s">
+                                            - ${s.getName()} </br>
+                                        </c:forEach>
+                                    </td>
+                                    <td>
 
-                                    <span style="font-size: 15px;">${ShiftsAdded.getStartTime()}-${ShiftsAdded.getEndTime()}</span>
-                                    </br>
-                                    <span style="font-size: 18px; font-weight: 500">${NewOrder.getOrderDate()}</span>
-                                </td>
-                                <td>${barberAdded.getFullName()}</td>
-                                <td>${sessionScope.account.getPhone()}</td>
-                                <td>${NewOrder.getTotalAmount()}K</td>
-                                <td>${status.getName()}</td>
-                            </tr>
-                            <tr class="spacer"><td colspan="100"></td></tr>
-                            <tr>
-                                <td colspan="100" style="text-align: center;
-                                    font-weight: bold; font-size: 30px; color: green;">${mss}</td>
-                            </tr>
+                                        <span style="font-size: 15px;">${lb.getShift().getStartTime()}-${lb.getShift().getEndTime()}</span>
+                                        </br>
+                                        <span style="font-size: 18px; font-weight: 500">${lb.getOrder().getOrderDate()}</span>
+                                    </td>
+                                    <td>${lb.getBarber().getFullName()}</td>
+                                    <td>${sessionScope.account.getPhone()}</td>
+                                    <td>${lb.getOrder().getTotalAmount()}K</td>
+                                    <td>${lb.getStatus().getName()}</td>
+                                </tr>
+                                <tr class="spacer"><td colspan="100"></td></tr>
+                                </c:forEach>
 
 
                         </tbody>

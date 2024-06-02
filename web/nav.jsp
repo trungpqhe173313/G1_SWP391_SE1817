@@ -17,24 +17,26 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a href="homepage.jsp" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="services.jsp" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
                 <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
-                <c:if test="${sessionScope.account==null}">
+                    <c:if test="${sessionScope.account==null}">
 
                     <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
-                </c:if>
-                <c:if test="${sessionScope.account!=null}">
+                    </c:if>
+                    <c:if test="${sessionScope.account!=null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Hello ${sessionScope.account.getFullName()}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="changepass">Change Pass</a>
-                            <a class="dropdown-item" href="#">Appointment Schedule</a>
+                            <a class="dropdown-item" href="cusprofile">Personal Information</a>
+                            <a class="dropdown-item" href="GetAppointment">Appointment Schedule</a>
+                            <a class="dropdown-item" href="bookingschedule">View history Booking</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
-                </c:if>
+                    </c:if>
             </ul>
         </div>
     </div>

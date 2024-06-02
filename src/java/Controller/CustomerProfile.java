@@ -18,24 +18,30 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class CustomerProfile extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String username = request.getParameter("username");
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        if (request.getSession().getAttribute("account") == null) {
+            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            response.sendRedirect("login.jsp");
+            return;
+        }
+        // Lấy số điện thoại của người dùng đã đăng nhập từ session
+        String phone = ((Accounts)request.getSession().getAttribute("account")).getPhone();
         CustomerDAO dc = new CustomerDAO();
-        Accounts a = dc.getProfileByUsername(username);
+        Accounts a = dc.getProfileByPhone(phone);
         
         if (a != null) {
             request.setAttribute("account", a);
             request.getRequestDispatcher("customer-profile.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Error system!!!");
-            request.getRequestDispatcher("customer-profile.jsp").forward(request, response);
+            request.getRequestDispatcher("homepage.jsp").forward(request, response);
         }
     
     }
+
 
     
 

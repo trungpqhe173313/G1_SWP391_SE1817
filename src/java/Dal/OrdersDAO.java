@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -242,6 +244,65 @@ public class OrdersDAO extends DBContext {
         return list;
     }
 
+    public List<Orders> getAllOrdersByAccountId(int id) {
+        List<Orders> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[accountID]\n"
+                + "      ,[employeeId]\n"
+                + "      ,[shiftsID]\n"
+                + "      ,[statusId]\n"
+                + "      ,[orderDate]\n"
+                + "      ,[totalAmount]\n"
+                + "  FROM [dbo].[orders] where accountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Orders m = new Orders();
+                m.setId(rs.getInt("id"));
+                m.setAccountID(rs.getInt("accountID"));
+                m.setEmployeeId(rs.getInt("employeeId"));
+                m.setShiftsID(rs.getInt("shiftsID"));
+                m.setStatusId(rs.getInt("statusId"));
+                m.setOrderDate(rs.getDate("orderDate"));
+                m.setTotalAmount(rs.getInt("totalAmount"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
+    public List<Services> getAllServicesByOrderId(int id) {
+        List<Services> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[name]\n"
+                + "      ,[image]\n"
+                + "      ,[description]\n"
+                + "      ,[price]\n"
+                + "  FROM [dbo].[services] s join dbo.order_services os\n"
+                + "  on os.serviceId = s.id where os.orderId = ? and os.isActive =1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Services m = new Services();
+                m.setId(rs.getInt("id"));
+                m.setName(rs.getString("name"));
+                m.setImage(rs.getString("image"));
+                m.setDescription(rs.getString("description"));
+                m.setPrice(rs.getInt("price"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
     public Services getServicesById(String id) {
 
         String sql = "SELECT [id]\n"
@@ -343,7 +404,27 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
-    public void AddOrder(Orders o, String[] sevicesId) {
+    public List<Integer> getSchedulesWorkId(int id, String date) {
+        List<Integer> listShiftId = new ArrayList<>();
+        String sql = "SELECT [shiftsID]\n"
+                + "  FROM [Barbershop].[dbo].[orders]\n"
+                + "where orders.employeeId= ? \n"
+                + "and orders.orderDate= ? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.setString(2, date);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                listShiftId.add(rs.getInt("shiftsID"));
+            }
+        } catch (SQLException e) {
+        }
+
+        return listShiftId;
+    }
+
+    public void AddOrder(Orders o) {
         String sql = "INSERT INTO [dbo].[orders]\n"
                 + "           ([accountID]\n"
                 + "           ,[employeeId]\n"
@@ -415,11 +496,66 @@ public class OrdersDAO extends DBContext {
         }
     }
 
+    public Orders getAppointment(int aid) {
+        String sql = "SELECT *\n"
+                + "  FROM [Barbershop].[dbo].[orders] \n"
+                + "  where orders.statusId = 1 and orders.accountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, aid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Orders order = new Orders(rs.getInt(1),
+                        rs.getInt(2), rs.getInt(3),
+                        rs.getInt(4), rs.getInt(5),
+                        rs.getDate(6), rs.getInt(7));
+                return order;
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public void updateOrder(Orders order) {
+        try {
+            String sql = "UPDATE [dbo].[orders]\n"
+                    + "   SET [employeeId] = ?\n"
+                    + "      ,[shiftsID] = ?\n"
+                    + "      ,[orderDate] = ?\n"
+                    + "      ,[totalAmount] = ?\n"
+                    + " WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, order.getEmployeeId());
+            stm.setInt(2, order.getShiftsID());
+            stm.setDate(3, order.getOrderDate());
+            stm.setInt(4, order.getTotalAmount());
+            stm.setInt(5, order.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cancelOrder(int id) {
+        try {
+            String sql = "UPDATE [dbo].[orders]\n"
+                    + "   SET [statusId] = ?\n"
+                    + " WHERE [id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, 4);
+            stm.setInt(2, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) {
         OrdersDAO d = new OrdersDAO();
-        List<Services> l = d.getAllServices();
-        for (Services a : l) {
-            System.out.println(a.toString());
+        
+        List<Integer> l = d.getSchedulesWorkId(6, "2024-05-31");
+        for (Integer a : l) {
+            System.out.println(a);
         }
         System.out.println(d.getShiftsById(5).toString());
     }

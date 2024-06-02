@@ -12,18 +12,18 @@ public class Accounts {
 
     private int id;
     private String phone;
+    
     private String password;
     private String fullName;
     private String email;
     private String avatar;
-
+    
     private Boolean isMale;
     private int roleId;
     private Boolean isActive;
-
     public Accounts() {
     }
-
+    
     public Accounts(int id, String phone, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive) {
         this.id = id;
         this.phone = phone;
@@ -35,6 +35,8 @@ public class Accounts {
         this.roleId = roleId;
         this.isActive = isActive;
     }
+
+    
 
     public int getId() {
         return id;

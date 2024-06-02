@@ -1,11 +1,12 @@
 <%-- 
-    Document   : services
-    Created on : May 25, 2024, 2:55:46 AM
+    Document   : appointment
+    Created on : May 28, 2024, 11:29:01 PM
     Author     : phamt
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -34,7 +35,18 @@
             .checkbox-item input[type="checkbox"] {
                 margin-right: 5px;
             }
-
+            .list-group-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .service-name {
+                flex-grow: 1;
+            }
+            .service-price {
+                white-space: nowrap;
+                margin-left: 10px;
+            }
         </style>
         <script>
             function validateEmail(email) {
@@ -122,64 +134,117 @@
 
 
             <section class="ftco-section ftco-booking bg-light">
-                <div class="container">
+                <div class="container ftco-relative">
+                    <div class="row justify-content-center pb-3">
+                        <div class="col-md-10 heading-section text-center ftco-animate">
+                            <span class="subheading">Booking</span>
+                            <h2 class="mb-4">Make an Appointment</h2>
+                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                        </div>
+                    </div>
+                    <h3 class="vr">Call Us: 012-3456-7890</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 ftco-animate">
+                        <c:if test="${sessionScope.account != null}">
+                            <c:set value="${sessionScope.account}" var="a"/>
+                            <form action="GetAppointment" method="post" class="appointment-form" onsubmit="return validateForm()">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="name" class="form-control" id="appointment_name" placeholder="Name" value="${a.getFullName()}" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="email" class="form-control" id="appointment_email" placeholder="Email" value="${a.getEmail()}" readonly="">
+                                            <span id="email_error_message" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    <input type="text" value="${o.getId()}" name="oid" hidden="">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="select-wrap">
+                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 
-                    <div class="table-responsive custom-table-responsive">
+                                                <select name="date" id="" class="form-control">
+                                                    <c:forEach items="${listDate}" var="date">
+                                                        <option ${(date == o.getOrderDate())?"selected = \"selected\"":""} value="${date}">${date}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="select-wrap">
+                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                <select name="shifts" id="" class="form-control">
+                                                    <c:forEach items="${listShift}" var="shifts">
+                                                        <option value="${shifts.getId()}"${(shifts.getId() == o.getShiftsID())?"selected = \"selected\"":""} >${shifts.getStartTime()}-${shifts.getEndTime()}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="select-wrap">
+                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                <select name="barber" id="" class="form-control">
+                                                    <c:forEach items="${listBarber}" var="baber">
+                                                        <option ${(baber.getId() == o.getEmployeeId())?"selected = \"selected\"":""} value="${baber.getId()}">${baber.getFullName()}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone" value="${a.getPhone()}" readonly="">
+                                            <span id="phone_error_message" class="error-message"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-12">
+                                        <h2 class="mb-4">Update Services</h2>
+                                        <div class="form-group">
+                                            <ul class="list-group">
+                                                <c:forEach items="${listServices}" var="service" varStatus="status">
+                                                    <li class="list-group-item form-control">
+                                                        <div class="custom-control custom-checkbox" style="display: flex; align-items: center; width: 100%;">
+                                                            <input class="custom-control-input" name="selectedServices" 
+                                                                   type="checkbox" id="selectedService${service.getId()}" value="${service.getId()}"
+                                                                   <c:if test="${selectedServiceIds.contains(service.getId())}">
+                                                                       checked="checked"
+                                                                   </c:if>>
+                                                            <label class="cursor-pointer d-block custom-control-label" 
+                                                                   for="selectedService${service.getId()}" style="flex-grow: 1;">
+                                                                <span class="service-name">${service.getName()}</span>
+                                                            </label>
+                                                            <span class="service-price">${service.getPrice()}K</span>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>        
+                                </div>
 
-                        <table class="table custom-table">
-                            <thead>
-                                <tr>  
-                                    <th scope="col">Order</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Services</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Barber</th>
-                                    <th scope="col"> Customer Contact</th>
-                                    <th scope="col"> Total Amount</th>
-                                    <th scope="col">Status</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr scope="row">
-
-                                    <td>
-                                    ${newOrderId}
-                                </td>
-                                <td><a href="#">${sessionScope.account.getFullName()}</a></td>
-                                <td style="font-size: 16px; font-weight: 500;">
-                                    <c:forEach items="${listServicesAdded}" var="s">
-                                        - ${s.getName()} </br>
-                                    </c:forEach>
-                                </td>
-                                <td>
-
-                                    <span style="font-size: 15px;">${ShiftsAdded.getStartTime()}-${ShiftsAdded.getEndTime()}</span>
-                                    </br>
-                                    <span style="font-size: 18px; font-weight: 500">${NewOrder.getOrderDate()}</span>
-                                </td>
-                                <td>${barberAdded.getFullName()}</td>
-                                <td>${sessionScope.account.getPhone()}</td>
-                                <td>${NewOrder.getTotalAmount()}K</td>
-                                <td>${status.getName()}</td>
-                            </tr>
-                            <tr class="spacer"><td colspan="100"></td></tr>
-                            <tr>
-                                <td colspan="100" style="text-align: center;
-                                    font-weight: bold; font-size: 30px; color: green;">${mss}</td>
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-10 ftco-animate">
-                        <form action="home" class="appointment-form">
+                                <div class="form-group">
+                                    <input type="submit" value="Update" class="btn btn-primary">
+                                </div>            
+                            </form>
                             <div class="form-group">
-                                <input type="submit" value="Back to HomePage" class="btn btn-primary">
+                                <a href="CancelAppointment" ><input value="Cancel" class="btn btn-primary"></a>
                             </div>
-                        </form>
+                        </c:if>
+                        <c:if test="${sessionScope.account == null}">
+                            <form action="login" class="appointment-form">
+                                <div class="form-group">
+                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </c:if>
                     </div>
                 </div>
             </div>
