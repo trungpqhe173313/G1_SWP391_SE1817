@@ -31,12 +31,12 @@ public class LoginController extends HttpServlet {
             request.setAttribute("error", "Accountname or password incorrect!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }else{
-            int sessionTimeoutSeconds = 2400;
+            int sessionTimeoutSeconds = 240000;
             //tao session
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
-            response.sendRedirect("appointment");
+            response.sendRedirect("home");
         }
     }
     @Override

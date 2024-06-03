@@ -64,6 +64,12 @@
         <servlet-name>CancelAppointmentController</servlet-name>
         <servlet-class>Controller.CancelAppointmentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FetchShiftsServlet</servlet-name>
+        <servlet-class>Controller.FetchShiftsServlet</servlet-class>
+        <servlet-name>changepassw</servlet-name>
+        <servlet-class>Controller.changepassw</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -112,7 +118,6 @@
         <servlet-name>DeleteEmployeesController</servlet-name>
         <url-pattern>/deleteemployees</url-pattern>
     </servlet-mapping>
-<!--</web-app>-->
     <servlet-mapping>
         <servlet-name>changepassreset</servlet-name>
         <url-pattern>/changepassreset</url-pattern>
@@ -128,5 +133,11 @@
     <servlet-mapping>
         <servlet-name>CancelAppointmentController</servlet-name>
         <url-pattern>/CancelAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FetchShiftsServlet</servlet-name>
+        <url-pattern>/fetchshifts</url-pattern>
+        <servlet-name>changepassw</servlet-name>
+        <url-pattern>/changepassw</url-pattern>
     </servlet-mapping>
 </web-app>

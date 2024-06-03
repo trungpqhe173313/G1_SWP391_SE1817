@@ -72,7 +72,7 @@ public class OrdersDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Employees m = new Employees ();
+                Employees m = new Employees();
                 m.setId(rs.getInt("id"));
                 m.setAccountId(rs.getInt("accountId"));
                 m.setIsActive(rs.getBoolean("isActive"));
@@ -116,8 +116,6 @@ public class OrdersDAO extends DBContext {
 
         return list;
     }
-
-    
 
     public List<Roles> getAllRoles() {
         List<Roles> list = new ArrayList<>();
@@ -261,7 +259,7 @@ public class OrdersDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Orders m = new Orders(); 
+                Orders m = new Orders();
                 m.setId(rs.getInt("id"));
                 m.setAccountID(rs.getInt("accountID"));
                 m.setEmployeeId(rs.getInt("employeeId"));
@@ -406,6 +404,53 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
+    public List<Shifts> getShiftsEmpty(String date, int barberId) {
+        List<Shifts> list = new ArrayList<>();
+        String sql = "SELECT s.id, s.startTime, s.endTime\n"
+                + "FROM shifts s\n"
+                + "WHERE s.id NOT IN (\n"
+                + "    SELECT o.shiftsID\n"
+                + "    FROM orders o\n"
+                + "    WHERE o.orderDate = ? AND o.employeeId = ? and o.statusId IN (1,2,3)\n"
+                + ");";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, date);
+            st.setInt(2, barberId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Shifts m = new Shifts();
+                m.setId(rs.getInt("id"));
+                m.setStartTime(rs.getString("startTime"));
+                m.setEndTime(rs.getString("endTime"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
+    public List<Integer> getSchedulesWorkId(int id, String date) {
+        List<Integer> listShiftId = new ArrayList<>();
+        String sql = "SELECT [shiftsID]\n"
+                + "  FROM [Barbershop].[dbo].[orders]\n"
+                + "where orders.employeeId= ? \n"
+                + "and orders.orderDate= ? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.setString(2, date);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                listShiftId.add(rs.getInt("shiftsID"));
+            }
+        } catch (SQLException e) {
+        }
+
+        return listShiftId;
+    }
+
     public void AddOrder(Orders o) {
         String sql = "INSERT INTO [dbo].[orders]\n"
                 + "           ([accountID]\n"
@@ -477,6 +522,7 @@ public class OrdersDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
+
     public Orders getAppointment(int aid) {
         String sql = "SELECT *\n"
                 + "  FROM [Barbershop].[dbo].[orders] \n"
@@ -530,12 +576,14 @@ public class OrdersDAO extends DBContext {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void main(String[] args) {
         OrdersDAO d = new OrdersDAO();
-        List<Orders> l = d.getAllOrdersByAccountId(2);
-        for (Orders a : l) {
+
+        List<Shifts> l = d.getShiftsEmpty("2024-05-30", 6);
+        for (Shifts a : l) {
             System.out.println(a.toString());
         }
-        System.out.println(d.getShiftsById(5).toString());
+//        System.out.println(d.getShiftsById(5).toString());
     }
 }
