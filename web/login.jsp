@@ -2,7 +2,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
@@ -21,7 +20,7 @@
                                 <div class="col-lg-12">
                                     <div class="card-body p-md-5 mx-md-4">
                                         <div class="text-md-left">
-                                            <a href="home" style="color: #ffaf00"> Return to Home </a>
+                                            <a href="home" style="color: #ffaf00"> Return to home </a>
                                         </div>
                                         <div class="text-center">
                                             <img src=""
@@ -34,7 +33,7 @@
                                             <p>Please login to your account</p>
 
                                             <div class="form-outline mb-4">
-                                                <label class="form-label"style="color: #ffaf00">Phone</label>
+                                                <label class="form-label"style="color: #ffaf00">Phone number</label>
                                                 <input type="text" required name="phone" class="form-control"/>
                                                 
                                             </div>
@@ -46,16 +45,15 @@
                                             </div>
 
                                             <div class="text-center pt-1 mb-5 pb-1">
-                                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"style="background: linear-gradient(45deg, #ffd700, #ffec5e); color: white">Log
-                                                    in</button>
+                                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign in</button>
                                                 <a class="text-muted" href="sendlink" style="color: #FFA500">Forgot password?</a><br><!-- comment -->
                                                 ${mess}
                                             </div>
 
                                             <div class="d-flex align-items-center justify-content-center pb-4">
-                                                <p class="mb-0 me-2 mr-5"style="color: #FFA500">Don't have an account?</p>
+                                                <p class="mb-0 me-2 mr-5"style="color: #FFA500">You don't have account?</p>
                                                 
-                                                <a href="signup"style="color: #000"/> Create new account
+                                                <a href="signup"style="color: #000"/> Create new account?
                                             </div>
 
                                             

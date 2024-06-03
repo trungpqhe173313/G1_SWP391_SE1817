@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.Accounts;
 import java.sql.Connection;
-
-
+/**
+ *
+ * @author LINHNTHE170290
+ */
 public class AccountDAO extends DBContext{
     public List<Accounts> getAllAccount() {
         List<Accounts> list = new ArrayList<>();
