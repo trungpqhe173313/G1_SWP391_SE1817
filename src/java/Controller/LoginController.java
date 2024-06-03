@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
-            response.sendRedirect("appointment");
+            response.sendRedirect("home");
         }
     }
     @Override
