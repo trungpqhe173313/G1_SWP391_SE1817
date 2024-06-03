@@ -5,27 +5,22 @@
 package Controller;
 
 import Dal.OrdersDAO;
-import Model.Accounts;
-import Model.Booking;
-import Model.Orders;
-import Model.Services;
 import Model.Shifts;
-import Model.Statuses;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
+import java.util.ArrayList;
 
 /**
  *
  * @author xdrag
  */
-public class BookingScheduleServlet extends HttpServlet {
+public class FetchShiftsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,44 +33,19 @@ public class BookingScheduleServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            response.sendRedirect("login");
-        }else{
-            
-        Accounts account = (Accounts) session.getAttribute("account");
-        OrdersDAO d = new OrdersDAO();
-        List<Orders> listOrders = d.getAllOrdersByAccountId(account.getId());
-        if (listOrders.isEmpty()) {
-            String mss = "Bạn chưa có lịch nào được đặt";
-            request.setAttribute("mss", mss);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
-        } else {
-            List<Booking> listBooking = new ArrayList<>();
-            for (Orders o : listOrders) {
-                Booking b = new Booking();
-                b.setOrder(o);
-
-                // lay Status order da dat
-                Statuses status = d.getStatusesById(o.getStatusId());
-                b.setStatus(status);
-                // lay barber da dat
-                Accounts barberAdded = d.getAccountsById(o.getEmployeeId());
-                b.setBarber(barberAdded);
-                // lay shifts da dat
-                Shifts shiftsAdded = d.getShiftsById(o.getShiftsID());
-                b.setShift(shiftsAdded);
-                //lay tat ca services da dat
-                List<Services> listServices = d.getAllServicesByOrderId(o.getId());
-                b.setListServices(listServices);
-                System.out.println(b.toString());
-                listBooking.add(b);
-            }
-            request.setAttribute("listBooking", listBooking);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet FetchShiftsServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet FetchShiftsServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,7 +60,23 @@ public class BookingScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String barberId = request.getParameter("barberId");
+        String date = request.getParameter("date");
+        OrdersDAO d = new OrdersDAO();
+        List<Shifts> availableShifts = new ArrayList<>();
+        if (barberId.equals("empty")) {
+            availableShifts = d.getAllShifts();
+        }
+        else{
+        // Lấy danh sách ca trống dựa trên barberId và date
+        availableShifts = d.getShiftsEmpty(date, Integer.parseInt(barberId)) ;
+        }
+        // Chuyển đổi danh sách sang JSON
+        Gson gson = new Gson();
+        String jsonResponse = gson.toJson(availableShifts);
+
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse);
     }
 
     /**

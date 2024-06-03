@@ -14,6 +14,8 @@
             .error-message {
                 color: red;
                 font-size: 18px;
+                text-align: center;
+                margin-top: 10px;
             }
             .is-invalid {
                 border-color: red;
@@ -172,6 +174,7 @@
                         </tbody>
                     </table>
                 </div>
+                    <div class="error-message">${mss}</div>
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate">
                         <form action="home" class="appointment-form">

@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Dal/DBContext.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/FetchShiftsServlet.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/bookingschedule.jsp</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/LoginController.java</file>
             <file>file:/D:/Project_SWP/G1_SWP391_SE1817/web/booking.jsp</file>
             <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/AppointmentServlet.java</file>
+            <file>file:/D:/Project_SWP/G1_SWP391_SE1817/src/java/Controller/BookingScheduleServlet.java</file>
         </group>
     </open-files>
 </project-private>
