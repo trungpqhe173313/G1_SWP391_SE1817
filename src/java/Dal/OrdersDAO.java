@@ -404,6 +404,33 @@ public class OrdersDAO extends DBContext {
         return null;
     }
 
+    public List<Shifts> getShiftsEmpty(String date, int barberId) {
+        List<Shifts> list = new ArrayList<>();
+        String sql = "SELECT s.id, s.startTime, s.endTime\n"
+                + "FROM shifts s\n"
+                + "WHERE s.id NOT IN (\n"
+                + "    SELECT o.shiftsID\n"
+                + "    FROM orders o\n"
+                + "    WHERE o.orderDate = ? AND o.employeeId = ? and o.statusId IN (1,2,3)\n"
+                + ");";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, date);
+            st.setInt(2, barberId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Shifts m = new Shifts();
+                m.setId(rs.getInt("id"));
+                m.setStartTime(rs.getString("startTime"));
+                m.setEndTime(rs.getString("endTime"));
+                list.add(m);
+            }
+        } catch (SQLException e) {
+        }
+
+        return list;
+    }
+
     public List<Integer> getSchedulesWorkId(int id, String date) {
         List<Integer> listShiftId = new ArrayList<>();
         String sql = "SELECT [shiftsID]\n"
@@ -552,11 +579,11 @@ public class OrdersDAO extends DBContext {
 
     public static void main(String[] args) {
         OrdersDAO d = new OrdersDAO();
-        
-        List<Integer> l = d.getSchedulesWorkId(6, "2024-05-31");
-        for (Integer a : l) {
-            System.out.println(a);
+
+        List<Shifts> l = d.getShiftsEmpty("2024-05-30", 6);
+        for (Shifts a : l) {
+            System.out.println(a.toString());
         }
-        System.out.println(d.getShiftsById(5).toString());
+//        System.out.println(d.getShiftsById(5).toString());
     }
 }

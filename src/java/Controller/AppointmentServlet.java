@@ -68,36 +68,43 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OrdersDAO d = new OrdersDAO();
-        
-        // lay ra cac ca de hien thi
-        List<Shifts> listShift = d.getAllShifts();
-        //lay ra cac barber hoat dong
-        List<Accounts> listBarber = d.getAllBarber();
-        //lay ra danh sach cac dich vu
-        List<Services> listServices = d.getAllServices();
-        //tao danh sach ngay de hien thi
-        List<String> listDate = new ArrayList<>();
-        HttpSession s = request.getSession();
-        Accounts account = (Accounts) s.getAttribute("account");
+        HttpSession session = request.getSession();
 
-        // Lấy ngày hôm nay
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String todayStr = today.format(formatter);
-        listDate.add(todayStr);
-        // Lấy hai ngày tiếp theo
-        for (int i = 0; i < 2; i++) {
-            today = today.plusDays(1);
-            String nextDayStr = today.format(formatter);
-            listDate.add(nextDayStr);
+        if (session.getAttribute("account") == null) {
+            response.sendRedirect("login");
+        } else {
+            OrdersDAO d = new OrdersDAO();
+
+            // lay ra cac ca de hien thi
+            List<Shifts> listShift = d.getAllShifts();
+            //lay ra cac barber hoat dong
+            List<Accounts> listBarber = d.getAllBarber();
+            //lay ra danh sach cac dich vu
+            List<Services> listServices = d.getAllServices();
+            //tao danh sach ngay de hien thi
+            List<String> listDate = new ArrayList<>();
+            HttpSession s = request.getSession();
+            Accounts account = (Accounts) s.getAttribute("account");
+
+            // Lấy ngày hôm nay
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String todayStr = today.format(formatter);
+            listDate.add(todayStr);
+            // Lấy hai ngày tiếp theo
+            for (int i = 0; i < 2; i++) {
+                today = today.plusDays(1);
+                String nextDayStr = today.format(formatter);
+                listDate.add(nextDayStr);
+            }
+
+            request.setAttribute("listShift", listShift);
+            request.setAttribute("listBarber", listBarber);
+            request.setAttribute("listServices", listServices);
+            request.setAttribute("listDate", listDate);
+            request.getRequestDispatcher("booking.jsp").forward(request, response);
         }
 
-        request.setAttribute("listShift", listShift);
-        request.setAttribute("listBarber", listBarber);
-        request.setAttribute("listServices", listServices);
-        request.setAttribute("listDate", listDate);
-        request.getRequestDispatcher("booking.jsp").forward(request, response);
     }
 
     /**
@@ -120,17 +127,15 @@ public class AppointmentServlet extends HttpServlet {
         String[] services_id = request.getParameterValues("services");
         Orders order = new Orders();
 
-        
-
         try {
             order.setAccountID(account.getId());
             order.setEmployeeId(Integer.parseInt(barber));
-            
+
             //ep kieu String sang date
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             //ep kieu string sang date truoc roi tao ra mot cai sql date
             Date date = new java.sql.Date(sdf.parse(date_raw).getTime());
-            
+
             order.setOrderDate(date);
             order.setShiftsID(Integer.parseInt(shifts));
             order.setStatusId(1);
@@ -167,8 +172,8 @@ public class AppointmentServlet extends HttpServlet {
             // lay shifts da dat
             Shifts shiftsAdded = d.getShiftsById(order.getShiftsID());
             //thong bao dat lich thanh cong
-            String mss ="Scheduled Successfully";
-            
+            String mss = "Scheduled Successfully";
+
             request.setAttribute("newOrderId", newOrderId);
             request.setAttribute("listServicesAdded", listServicesAdded);
             request.setAttribute("NewOrder", order);
