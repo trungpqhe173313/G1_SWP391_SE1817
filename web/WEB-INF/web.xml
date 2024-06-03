@@ -67,6 +67,9 @@
     <servlet>
         <servlet-name>FetchShiftsServlet</servlet-name>
         <servlet-class>Controller.FetchShiftsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        
         <servlet-name>changepassw</servlet-name>
         <servlet-class>Controller.changepassw</servlet-class>
     </servlet>
@@ -137,6 +140,8 @@
     <servlet-mapping>
         <servlet-name>FetchShiftsServlet</servlet-name>
         <url-pattern>/fetchshifts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>changepassw</servlet-name>
         <url-pattern>/changepassw</url-pattern>
     </servlet-mapping>
