@@ -64,6 +64,10 @@
         <servlet-name>CancelAppointmentController</servlet-name>
         <servlet-class>Controller.CancelAppointmentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changepassw</servlet-name>
+        <servlet-class>Controller.changepassw</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -127,5 +131,9 @@
     <servlet-mapping>
         <servlet-name>CancelAppointmentController</servlet-name>
         <url-pattern>/CancelAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changepassw</servlet-name>
+        <url-pattern>/changepassw</url-pattern>
     </servlet-mapping>
 </web-app>

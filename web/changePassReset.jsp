@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,32 +18,77 @@
     <body>
         <div class="mainDiv">
             <div class="cardStyle">
-                <form action="changepassreset" method="post" ">
+                <c:if test="${sessionScope.account==null}">
+                    <form action="changepassreset" method="post" ">
 
-                    <img src="" id="signupLogo"/>
+                        <img src="" id="signupLogo"/>
 
-                    <h2 class="formTitle">
-                        Login to your account
-                    </h2>
+                        <h2 class="formTitle">
+                            Login to your account
+                        </h2>
 
-                    <div class="inputDiv">
-                        <label class="inputLabel" for="password">New Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
+                        <div class="inputDiv">
+                            <label class="inputLabel" for="password">New Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
 
-                    <div class="inputDiv">
-                        <label class="inputLabel" for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword">
-                    </div>
+                        <div class="inputDiv">
+                            <label class="inputLabel" for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword">
+                        </div>
 
-                    <div class="buttonWrapper">
-                        <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
-                            <span>Continue</span>
-                            <span id="loader"></span>
-                        </button>
-                    </div>
+                        <div class="buttonWrapper">
+                            <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
+                                <span>Continue</span>
+                                <span id="loader"></span>
+                            </button>
+                        </div>
 
-                </form>
+                    </form>
+                </c:if>
+
+                <c:if test="${sessionScope.account!=null}">
+                    <form action="changepassw" method="post" ">
+
+                        <img src="" id="signupLogo"/>
+
+                        <h2 class="formTitle">
+                            Login to your account
+                        </h2>
+
+                        <div class="inputDiv">
+                            <label class="inputLabel" for="password">Old Password</label>
+                            <input type="password" id="oldpassword" name="oldpassword" required>
+                        </div>
+
+                        <div class="inputDiv">
+                            <label class="inputLabel" for="password">New Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+
+                        <div class="inputDiv">
+                            <label class="inputLabel" for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword">
+                        </div>
+
+                        <div class="buttonWrapper">
+                            <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
+                                <span>Continue</span>
+                                <span id="loader"></span>
+                            </button>
+                        </div> <br>
+                        <p class="text-danger" style="color: blue ; background-color: white ; width: auto ; margin: auto ;padding: auto ; text-align: center ; border-radius: 50px;">
+                            ${mess}
+                        </p>
+                        <div class="text-md-left">
+                            <p class="text-danger" style="color: blue ; background-color: white ; width: auto ; margin: auto ;padding: auto ; text-align: center ; border-radius: 50px;">
+                                ${mess} <br>
+                            <a href="cusprofile" style="color: #ffaf00"> Back </a>
+                            </p>
+                            
+                        </div>
+                    </form> 
+                </c:if>
             </div>
         </div>
 
