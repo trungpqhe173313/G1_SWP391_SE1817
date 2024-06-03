@@ -47,6 +47,41 @@
                 white-space: nowrap;
                 margin-left: 10px;
             }
+
+            .button-group .btn {
+                flex: 1; /* Đảm bảo các nút có cùng kích thước */
+                text-align: center; /* Căn giữa nội dung nút */
+                padding: 10px 20px; /* Đảm bảo kích thước nút đồng đều */
+            }
+            .button-group {
+                width: 100px; /* Thiết lập chiều rộng cố định */
+                padding: 70px 80px; /* Đảm bảo kích thước nút đồng đều */
+                text-align: center; /* Căn giữa nội dung nút */
+                display: inline-block; /* Đảm bảo các nút có cùng kiểu hiển thị */
+            }
+
+            .btn {
+                display: inline-block;
+                font-weight: 400;
+                color: #212529;
+                text-align: center;
+                vertical-align: middle;
+                user-select: none;
+                background-color: transparent;
+                border: 1px solid transparent;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: 0.25rem;
+                transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+
+            .btn-primary {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
         </style>
         <script>
             function validateEmail(email) {
@@ -138,7 +173,7 @@
                     <div class="row justify-content-center pb-3">
                         <div class="col-md-10 heading-section text-center ftco-animate">
                             <span class="subheading">Booking</span>
-                            <h2 class="mb-4">Make an Appointment</h2>
+                            <h2 class="mb-4">Appointment</h2>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                         </div>
                     </div>
@@ -204,7 +239,7 @@
                                             <span id="phone_error_message" class="error-message"></span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-sm-12">
                                         <h2 class="mb-4">Update Services</h2>
                                         <div class="form-group">
@@ -229,19 +264,17 @@
                                         </div>
                                     </div>        
                                 </div>
-
                                 <div class="form-group">
-                                    <input type="submit" value="Update" class="btn btn-primary">
-                                </div>            
-                            </form>
-                            <div class="form-group">
-                                <a href="CancelAppointment" ><input value="Cancel" class="btn btn-primary"></a>
-                            </div>
-                        </c:if>
-                        <c:if test="${sessionScope.account == null}">
-                            <form action="login" class="appointment-form">
-                                <div class="form-group">
-                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="text-align: left;">
+                                                <button type="submit" class="btn btn-primary button-group">Update</button>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <a href="CancelAppointment" class="btn btn-primary button-group">Cancel</a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </form>
                         </c:if>
