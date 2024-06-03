@@ -20,19 +20,28 @@
         }
         .container {
             width: 80%;
+            max-width: 800px;
             margin: auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
+        h1, h2 {
             text-align: center;
-            color: #333;
+            color: #007bff;
         }
         form {
-            max-width: 500px;
-            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-group {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+        .form-group.full-width {
+            width: 100%;
         }
         label {
             display: block;
@@ -43,21 +52,12 @@
         input[type="password"],
         input[type="email"],
         input[type="date"],
-        select {
+        input[type="file"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-        }
-        input[type="radio"],
-        input[type="checkbox"] {
-            margin-right: 5px;
-        }
-        .gender-group label {
-            display: inline-block;
-            margin-right: 20px;
         }
         input[type="submit"] {
             background-color: #007bff;
@@ -70,52 +70,93 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .gender-group {
+            display: flex;
+            align-items: center;
+        }
+        .gender-group label {
+            margin: 0 10px 0 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Add Account and Employee</h2>
-        <form action="addemployees" method="post">
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" name="phone" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="avatar">Avatar:</label>
-            <input type="text" id="avatar" name="avatar">
-            
-            <div class="gender-group">
-                <label for="isMale">Gender:</label>
-                <input type="radio" id="male" name="isMale" value="true" required>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="isMale" value="false">
-                <label for="female">Female</label>
+        <h1>Thêm Tài Khoản và Nhân Viên Mới</h1>
+        <form action="addemployees" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="phone">Số Điện Thoại:</label>
+                <input type="text" id="phone" name="phone" maxlength="10" required>
             </div>
-            
-            <label for="roleId">Role:</label>
-            <select id="roleId" name="roleId" required>
-                <option value="3">Thu ngân</option>
-                <option value="4">Thợ cắt tóc</option>
-            </select>
-            
+            <div class="form-group">
+                <label for="password">Mật Khẩu:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="fullName">Họ và Tên:</label>
+                <input type="text" id="fullName" name="fullName" maxlength="50" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group full-width">
+                <label for="avatar">Avatar:</label>
+                <input type="file" id="avatar" name="avatar">
+            </div>
+            <div class="form-group full-width gender-group">
+                <label>Giới Tính:</label>
+                <input type="radio" id="male" name="gender" value="male" required>
+                <label for="male">Nam</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Nữ</label>
+            </div>
+            <div class="form-group full-width">
+                <label for="roleId">Vai Trò:</label>
+                <select id="roleId" name="roleId" required>
+                    <option value="3">Thu ngân</option>
+                    <option value="4">Thợ cắt tóc</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Ngày Sinh:</label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+            </div>
+            <div class="form-group full-width">
+                <label for="address">Địa Chỉ:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
             <label for="isActive">Active:</label>
             <input type="checkbox" id="isActive" name="isActive" value="true" checked>
-            
-            <label for="dateOfBirth">Date of Birth:</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-            
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-            
-            <input type="submit" value="Submit">
+            <div class="form-group full-width">
+                <input type="submit" value="Gửi">
+            </div>
         </form>
     </div>
+
+    <script>
+        function validateForm() {
+            var phoneNumber = document.getElementById("phone").value;
+            if (!/^\d{10}$/.test(phoneNumber)) {
+                alert("Số điện thoại phải là 10 chữ số.");
+                return false;
+            }
+
+            var fullName = document.getElementById("fullName").value;
+            if (!/^[\p{L}\s]+$/u.test(fullName)) {
+                alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
+                return false;
+            }
+
+            return true;
+        }
+
+        document.getElementById('phone').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('fullName').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^\p{L}\s]/gu, '');
+        });
+    </script>
 </body>
 </html>
