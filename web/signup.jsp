@@ -18,7 +18,7 @@
                                     <div class="col-lg-12">
                                         <div class="card-body p-md-5 mx-md-4">
                                             <div class="text-md-left">
-                                                <a href="home" style="color: #ffaf00"> Return to Home </a>
+                                                <a href="home" style="color: #ffaf00"> Return to home </a>
                                             </div>
                                             <div class="text-center">
                                                 <img src=""
@@ -27,7 +27,7 @@
                                             
                                             
                                             <form action="signup"method="post">
-                                                <p>Please input your information</p>
+                                                <p>Please input information to your account</p>
                                                 
                                                 
                                                  <div class="form-outline mb-4">
@@ -45,40 +45,41 @@
                                                 <p class="text-danger">${error1}</p>
                                                 
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Confirm password</label>
+                                                    <label class="form-label"style="color: #ffaf00">Confirm Password</label>
                                                     <input type="password" required name="re_pass"  class="form-control" />
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label"style="color: #ffaf00">Full Name</label>
-                                                    <input type="text" required name="fullName"  class="form-control" />
-                                                    
+                                                    <input type="text" required name="fullName"  class="form-control" pattern="[a-zA-ZÀ-ỹ\s]+"/>
                                                 </div>
-                                                
+                                                  <p class="text-danger">${error4}</p>
+                                                  
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label"style="color: #ffaf00">Email</label>
                                                     <input type="text" required name="email"  class="form-control" />
                                                     
                                                 </div>
-                                                
+                                                  <p class="text-danger">${error5}</p>
+                                                  
                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Avatar</label>
-                                                    <input type="text" name="avatar"  class="form-control" />
+                                                    <label class="form-label"style="color: #ffaf00">Avarta</label>
+                                                    <input type="file" name="avatar" accept="image/*" class="form-control">
                                                     
                                                 </div>
                                                 
                                                 <div class="form-outline mb-4">
                                                     <label class="form-label"style="color: #ffaf00">Gender</label>
                                                     <div>
-                                                        <label><input type="radio" name="isMale" value="true" required> Male</label>
-                                                        <label><input type="radio" name="isMale" value="false" required> Female</label>
+                                                        <label><input type="radio" name="isMale" value="true" required> Male </label>
+                                                        <label><input type="radio" name="isMale" value="false" required> Female </label>
                                                     </div>
                                                 </div>
                                                 
                                                 
                                                 <div class="text-center pt-1 mb-5 pb-1"style="color: white">
-                                                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create new account</button>
+                                                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign up</button>
 
                                                 </div>   
 
@@ -98,3 +99,4 @@
         
     </body>
 </html>
+

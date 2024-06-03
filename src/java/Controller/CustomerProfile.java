@@ -11,10 +11,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class CustomerProfile extends HttpServlet {
 
