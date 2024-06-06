@@ -24,7 +24,6 @@
                 </library>
                 <library dirs="200">
                     <file>${libs.jakartaee-api-10.0.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javax.activation-1.2.0.jar-1}</file>
@@ -39,6 +38,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.gson-2.8.9.jar}</file>
                     <file>${file.reference.javax.activation-1.2.0.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>

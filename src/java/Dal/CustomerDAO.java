@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import Model.Accounts;
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class CustomerDAO extends DBContext{
     public Accounts getProfileByPhone(String phone) {

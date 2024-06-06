@@ -52,6 +52,13 @@ public class SignupController extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
         }
+        
+        // Kiểm tra email theo định dạng của Google
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+            request.setAttribute("error5", "Email must be a valid email address!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            return;
+        }
             AccountDAO d = new AccountDAO();
             Accounts a = d.checkAccountExist(phone);
             if (a == null) {

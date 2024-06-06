@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class CustomerUpdatePage extends HttpServlet {
 
@@ -59,18 +59,20 @@ public class CustomerUpdatePage extends HttpServlet {
             throws ServletException, IOException {
         //String phone = request.getParameter("phone");
         String idStr = request.getParameter("id");
-        int id = Integer.parseInt(idStr); // Gán giá trị mặc định hoặc giá trị phù hợp khác
-        
+        int id;
+
         CustomerDAO daoCustomer = new CustomerDAO();
-        //Accounts a = daoCustomer.getProfileByPhone(phone);
-        Accounts a = daoCustomer.getProfileById(id);
-        if (a != null) {
+
+        try {
+            id = Integer.parseInt(idStr);
+            Accounts a = daoCustomer.getProfileById(id);
             request.setAttribute("account", a);
             request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
-        } else {
-            System.out.println("Error!");
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
+       
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -85,30 +87,27 @@ public class CustomerUpdatePage extends HttpServlet {
             throws ServletException, IOException {
         // Lấy thông tin từ form
         String idStr = request.getParameter("id");
-        int id = Integer.parseInt(idStr);
-            
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
         Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
-        
-        
         int roleId = 2; // Giá trị mặc định là Username
         boolean isActive = true; //Giá trị là active (hoặc 1)
+        int id;
         // Tạo một đối tượng Account với các thông tin mới cập nhật
-        CustomerDAO daoC = new CustomerDAO();
-        try {
-            Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
-            daoC.updateProfile(newA);
-            
-            response.sendRedirect("cusprofile");
-            //response.sendRedirect("cusprofile?phone=" + phone);
-        } catch (NumberFormatException e) {
-            System.out.println(e);
-        }
-        
+//        CustomerDAO daoC = new CustomerDAO();
+//        try {
+//            id = Integer.parseInt(idStr);
+//            Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
+//            daoC.updateProfile(newA);
+//            response.sendRedirect("cusprofile");
+//            //response.sendRedirect("cusprofile?id=" + id);
+//        } catch (NumberFormatException e) {
+//            System.out.println(e);
+//        }
+        response.getWriter().println(email);
         
         
         
