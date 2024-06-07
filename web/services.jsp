@@ -64,7 +64,8 @@
                 </div>
                 <div class="row no-gutters d-flex">
                     <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services d-block text-center">
+                        <div class="media block-6 services d-block text-center">        
+                            
                             <div class="icon"><span class="flaticon-male-hair-of-head-and-face-shapes"></span></div>
                             <div class="media-body">
                                 <h3 class="heading mb-3">Haircut &amp; Styling</h3>
