@@ -2,92 +2,74 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>HomeController</servlet-name>
-        <servlet-class>Controller.HomeController</servlet-class>
         <servlet-class>Controller.common.HomeController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AppointmentServlet</servlet-name>
-        <servlet-class>Controller.AppointmentServlet</servlet-class>
         <servlet-class>Controller.customer.AppointmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>Controller.LoginController</servlet-class>
         <servlet-class>Controller.common.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
-        <servlet-class>Controller.LogoutController</servlet-class>
         <servlet-class>Controller.common.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignupController</servlet-name>
-        <servlet-class>Controller.SignupController</servlet-class>
         <servlet-class>Controller.common.SignupController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CustomerProfile</servlet-name>
-        <servlet-class>Controller.CustomerProfile</servlet-class>
         <servlet-class>Controller.common.CustomerProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CustomerUpdatePage</servlet-name>
-        <servlet-class>Controller.CustomerUpdatePage</servlet-class>
         <servlet-class>Controller.common.CustomerUpdatePage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeesController</servlet-name>
-        <servlet-class>Controller.EmployeesController</servlet-class>
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookingScheduleServlet</servlet-name>
-        <servlet-class>Controller.BookingScheduleServlet</servlet-class>
         <servlet-class>Controller.customer.BookingScheduleServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeesController</servlet-name>
-        <servlet-class>Controller.AddEmployeesController</servlet-class>
         <servlet-class>Controller.admin.AddEmployeesController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeesDetailController</servlet-name>
-        <servlet-class>Controller.EmployeesDetailController</servlet-class>
         <servlet-class>Controller.admin.EmployeesDetailController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteEmployeesController</servlet-name>
-        <servlet-class>Controller.DeleteEmployeesController</servlet-class>
         <servlet-class>Controller.admin.DeleteEmployeesController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassreset</servlet-name>
-        <servlet-class>Controller.changepassreset</servlet-class>
         <servlet-class>Controller.common.changepassreset</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>sendlink</servlet-name>
-        <servlet-class>Controller.sendlink</servlet-class>
         <servlet-class>Controller.common.sendlink</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GetAppointmentController</servlet-name>
-        <servlet-class>Controller.GetAppointmentController</servlet-class>
         <servlet-class>Controller.customer.GetAppointmentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CancelAppointmentController</servlet-name>
-        <servlet-class>Controller.CancelAppointmentController</servlet-class>
         <servlet-class>Controller.customer.CancelAppointmentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FetchShiftsServlet</servlet-name>
-        <servlet-class>Controller.FetchShiftsServlet</servlet-class>
         <servlet-class>Controller.customer.FetchShiftsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassw</servlet-name>
-        <servlet-class>Controller.changepassw</servlet-class>
         <servlet-class>Controller.common.changepassw</servlet-class>
     </servlet>
     <servlet-mapping>
