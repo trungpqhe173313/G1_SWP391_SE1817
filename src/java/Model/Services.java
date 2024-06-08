@@ -15,20 +15,20 @@ public class Services {
     private int price;
     private String description;
     private boolean isActive;
-    private int classificationId;
+//    private int classificationId;
     
 
     public Services() {
     }
 
-    public Services(int servicesId, String name, String image, int price, String description, boolean isActive, int classificationId) {
+    public Services(int servicesId, String name, String image, int price, String description, boolean isActive) {
         this.servicesId = servicesId;
         this.name = name;
         this.image = image;
         this.price = price;
         this.description = description;
         this.isActive = isActive;
-        this.classificationId = classificationId;
+//        this.classificationId = classificationId;
     }
 
     public int getServicesId() {
@@ -79,18 +79,20 @@ public class Services {
         this.isActive = isActive;
     }
 
-    public int getClassificationId() {
-        return classificationId;
-    }
-
-    public void setClassificationId(int classificationId) {
-        this.classificationId = classificationId;
-    }
+//    public int getClassificationId() {
+//        return classificationId;
+//    }
+//
+//    public void setClassificationId(int classificationId) {
+//        this.classificationId = classificationId;
+//    }
 
     @Override
     public String toString() {
-        return "Services{" + "servicesId=" + servicesId + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + ", isActive=" + isActive + ", classificationId=" + classificationId + '}';
+        return "Services{" + "servicesId=" + servicesId + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + ", isActive=" + isActive + '}';
     }
+
+    
 
     
     
