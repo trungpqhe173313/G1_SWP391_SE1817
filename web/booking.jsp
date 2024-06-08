@@ -14,6 +14,8 @@
             .error-message {
                 color: red;
                 font-size: 18px;
+                text-align: center;
+                margin-top: 10px;
             }
             .is-invalid {
                 border-color: red;
@@ -127,52 +129,56 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <h5 class="mb-4">Chọn ngày, giờ & barber</h5>
-                                        <div id="appointment-fields" style="display: none;">
-                                            <div class="col-sm-10">
-                                                <div class="form-group">
-                                                    <div class="select-wrap">
-                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                        <select name="barber" id="barber" class="form-control">
-                                                            <option value="">Select Barber</option>
-                                                            <c:forEach items="${listBarber}" var="baber">
-                                                                <option value="${baber.getId()}">${baber.getFullName()}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                        <div id="appointment-fields">
+                                            <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
+                                            <div id="appointment-details" style="display: none;">
+                                                <div class="col-sm-10">
+                                                    <div class="form-group">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="barber" id="barber" class="form-control" onchange="fetchShifts()">
+                                                                <option value="empty">Select Barber</option>
+                                                                <c:forEach items="${listBarber}" var="baber">
+                                                                    <option value="${baber.getId()}">${baber.getFullName()}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div class="form-group">
-                                                    <div class="select-wrap">
-                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                        <select name="date" id="date" class="form-control">
-                                                            <c:forEach items="${listDate}" var="date">
-                                                                <option value="${date}">${date}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                                <div class="col-sm-10">
+                                                    <div class="form-group">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="date" id="date" class="form-control" onchange="fetchShifts()">
+                                                                <c:forEach items="${listDate}" var="date">
+                                                                    <option value="${date}">${date}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div class="form-group">
-                                                    <div class="select-wrap">
-                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                        <select name="shifts" id="shifts" class="form-control">
-                                                            <c:forEach items="${listShift}" var="shifts">
-                                                                <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
-                                                            </c:forEach>
-                                                        </select>
+                                                <div class="col-sm-10">
+                                                    <div class="form-group">
+                                                        <div class="select-wrap">
+                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                            <select name="shifts" id="shifts" class="form-control">
+                                                                <c:forEach items="${listShift}" var="shifts">
+                                                                    <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Make an Appointment" class="btn btn-primary">
                                 </div>
+                                <div class="error-message" id="error-message"></div>
                             </form>
+
                         </c:if>
                         <c:if test="${sessionScope.account == null}">
                             <form action="login" class="appointment-form">
@@ -270,16 +276,65 @@
         <script>
                                 function toggleAppointmentFields() {
                                     var checkboxes = document.querySelectorAll('input[name="services"]:checked');
-                                    var appointmentFields = document.getElementById('appointment-fields');
+                                    var appointmentDetails = document.getElementById('appointment-details');
+                                    var pleaseSelectService = document.getElementById('please-select-service');
+
                                     if (checkboxes.length > 0) {
-                                        appointmentFields.style.display = 'block';
+                                        appointmentDetails.style.display = 'block';
+                                        pleaseSelectService.style.display = 'none';
                                     } else {
-                                        appointmentFields.style.display = 'none';
+                                        appointmentDetails.style.display = 'none';
+                                        pleaseSelectService.style.display = 'block';
                                         document.getElementById('barber').selectedIndex = 0;
                                         document.getElementById('date').selectedIndex = 0;
                                         document.getElementById('shifts').selectedIndex = 0;
                                     }
                                 }
+
+                                function fetchShifts() {
+                                    var barberId = document.getElementById('barber').value;
+                                    var date = document.getElementById('date').value;
+
+                                    if (barberId && date) {
+                                        $.ajax({
+                                            url: 'fetchshifts', // URL đến servlet của bạn
+                                            type: 'GET',
+                                            data: {
+                                                barberId: barberId,
+                                                date: date
+                                            },
+                                            success: function (response) {
+                                                var shiftsSelect = document.getElementById('shifts');
+                                                shiftsSelect.innerHTML = '';
+                                                response.forEach(function (shift) {
+                                                    var option = document.createElement('option');
+                                                    option.value = shift.id;
+                                                    option.text = shift.startTime + '-' + shift.endTime;
+                                                    shiftsSelect.appendChild(option);
+                                                });
+                                            },
+                                            error: function (error) {
+                                                console.log('Lỗi khi lấy ca:', error);
+                                            }
+                                        });
+                                    }
+                                }
+
+                                function validateForm() {
+                                    var barber = document.getElementById('barber').value;
+                                    var errorMessage = document.getElementById('error-message');
+
+                                    if (barber === 'empty') {
+                                        errorMessage.textContent = "Vui lòng chọn thợ cắt tóc.";
+                                        document.getElementById('barber').classList.add('is-invalid');
+                                        return false;
+                                    } else {
+                                        errorMessage.textContent = "";
+                                        document.getElementById('barber').classList.remove('is-invalid');
+                                        return true;
+                                    }
+                                }
         </script>
+
     </body>
 </html>
