@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author LENOVO
  */
-public class ServicesDAO {
+public class ServicesDAO extends DBContext{
     
      public List<Services> GetAllServices() {
         List<Services> s = new ArrayList<>();
@@ -31,9 +31,9 @@ public class ServicesDAO {
                 int price = rs.getInt(4);
                 String description = rs.getString(5);
                 boolean isActive = rs.getBoolean(6);
-                int classificationId = rs.getInt(7);
+//                int classificationId = rs.getInt(7);
                 
-                s.add(new Services(servicesId, name, image, price, description, isActive, classificationId));
+                s.add(new Services(servicesId, name, image, price, description, isActive));
             }
             rs.close();
         } catch (SQLException e) {
