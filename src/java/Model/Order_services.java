@@ -9,9 +9,9 @@ package Model;
  * @author phamt
  */
 public class Order_services {
-    private int orderId;
     private int serviceId;
-    private boolean isActive;
+    private int orderId;
+    
 
     public Order_services() {
     }
@@ -19,7 +19,6 @@ public class Order_services {
     public Order_services(int orderId, int serviceId, boolean isActive) {
         this.orderId = orderId;
         this.serviceId = serviceId;
-        this.isActive = isActive;
     }
 
     public int getOrderId() {
@@ -38,12 +37,5 @@ public class Order_services {
         this.serviceId = serviceId;
     }
 
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
     
 }
