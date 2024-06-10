@@ -72,6 +72,10 @@
         <servlet-name>changepassw</servlet-name>
         <servlet-class>Controller.common.changepassw</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServiceControl</servlet-name>
+        <servlet-class>Controller.Service.ServiceControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -143,5 +147,9 @@
     <servlet-mapping>
         <servlet-name>changepassw</servlet-name>
         <url-pattern>/changepassw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServiceControl</servlet-name>
+        <url-pattern>/service</url-pattern>
     </servlet-mapping>
 </web-app>
