@@ -118,9 +118,6 @@
                     <!-- Page Heading -->
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Employee Details</h6>
-                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -131,6 +128,7 @@
                                             <th>Email</th>
                                             <th>Giới Tính</th>
                                             <th>Dịch Vụ</th>
+                                            <th>Trạng Thái</th>
                                             <th>Xóa Nhân Viên</th>
                                         </tr>
                                     </thead>                                   
@@ -139,16 +137,19 @@
                                             List<Map<String, Object>> employeeServicesInfo = (List<Map<String, Object>>) request.getAttribute("employeeServicesInfo");
                                             if (employeeServicesInfo != null) {
                                                 for (Map<String, Object> employee : employeeServicesInfo) {
+                                                    if (Boolean.parseBoolean(String.valueOf(employee.get("isActive")))) {
                                         %>
-                                        <tr>
-                                            <td><%= employee.get("phone") %></td>
-                                            <td><%= employee.get("fullName") %></td>
-                                            <td><%= employee.get("email") %></td>
-                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
-                                            <td><%= employee.get("services") %></td>
-                                            <td><a href="deleteEmployee?id=<%= employee.get("id") %>">Xóa</a></td>
-                                        </tr>
+                                                        <tr>
+                                                            <td><%= employee.get("phone") %></td>
+                                                            <td><%= employee.get("fullName") %></td>
+                                                            <td><%= employee.get("email") %></td>
+                                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
+                                                            <td><%= employee.get("services") %></td>
+                                                            <td>Đang Hoạt Động</td>
+                                                            <td><a href="updateemployeesstatus?employeesId=<%= employee.get("employeesId") %>&isActive=<%= employee.get("isActive") %>">Xóa</a></td>
+                                                        </tr>
                                         <%
+                                                    }
                                                 }
                                             }
                                         %>

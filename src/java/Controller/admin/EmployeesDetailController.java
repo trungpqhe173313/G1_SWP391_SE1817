@@ -39,7 +39,7 @@ public class EmployeesDetailController extends HttpServlet {
         EmployeesDAO dao = new EmployeesDAO();
     
         try {
-            List<Map<String, Object>> employeeServicesInfo = dao.getEmployeeServicesInfoUsingMap();
+            List<Map<String, Object>> employeeServicesInfo = dao.getEmployeeServicesInfo();
             request.setAttribute("employeeServicesInfo", employeeServicesInfo);
             request.getRequestDispatcher("/employeesdetail.jsp").forward(request, response);
         } catch (Exception e) {
