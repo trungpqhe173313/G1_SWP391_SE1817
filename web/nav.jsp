@@ -9,15 +9,15 @@
 <!DOCTYPE html>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="homepage.jsp"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+        <a class="navbar-brand" href="home"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="homepage.jsp" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="services.jsp" class="nav-link">Services</a></li>
+                <li class="nav-item active"><a href="home" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="service" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
                 <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
                     <c:if test="${sessionScope.account==null}">
