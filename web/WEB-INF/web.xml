@@ -45,8 +45,8 @@
         <servlet-class>Controller.admin.EmployeesDetailController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteEmployeesController</servlet-name>
-        <servlet-class>Controller.admin.DeleteEmployeesController</servlet-class>
+        <servlet-name>UpdateEmployeesStatusController</servlet-name>
+        <servlet-class>Controller.admin.UpdateEmployeesStatusController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassreset</servlet-name>
@@ -121,8 +121,8 @@
         <url-pattern>/addemployees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteEmployeesController</servlet-name>
-        <url-pattern>/deleteemployees</url-pattern>
+        <servlet-name>UpdateEmployeesStatusController</servlet-name>
+        <url-pattern>/updateemployeesstatus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>changepassreset</servlet-name>
