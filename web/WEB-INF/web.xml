@@ -76,6 +76,10 @@
         <servlet-name>ServiceControl</servlet-name>
         <servlet-class>Controller.Service.ServiceControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicedetailControl</servlet-name>
+        <servlet-class>Controller.Service.ServicedetailControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -151,5 +155,9 @@
     <servlet-mapping>
         <servlet-name>ServiceControl</servlet-name>
         <url-pattern>/service</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicedetailControl</servlet-name>
+        <url-pattern>/servicedetail</url-pattern>
     </servlet-mapping>
 </web-app>

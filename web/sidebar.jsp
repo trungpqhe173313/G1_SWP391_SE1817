@@ -45,6 +45,11 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Employees</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="servicedetail">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Services</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
