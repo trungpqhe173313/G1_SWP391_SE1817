@@ -6,7 +6,7 @@
 package Controller;
 
 import Dal.AccountDAO;
-import Model.Accounts;
+import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,7 +78,7 @@ public class changepassw extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (session != null) {
-            Accounts account = (Accounts) session.getAttribute("account");
+            Account account = (Account) session.getAttribute("account");
 
             if (account != null) {
                 String email = account.getEmail();

@@ -5,7 +5,7 @@
 package Controller;
 
 import Dal.OrdersDAO;
-import Model.Accounts;
+import Model.Account;
 import Model.Booking;
 import Model.Orders;
 import Model.Services;
@@ -43,7 +43,7 @@ public class BookingScheduleServlet extends HttpServlet {
             response.sendRedirect("login");
         }else{
             
-        Accounts account = (Accounts) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("account");
         OrdersDAO d = new OrdersDAO();
         List<Orders> listOrders = d.getAllOrdersByAccountId(account.getId());
         if (listOrders.isEmpty()) {
@@ -60,7 +60,7 @@ public class BookingScheduleServlet extends HttpServlet {
                 Statuses status = d.getStatusesById(o.getStatusId());
                 b.setStatus(status);
                 // lay barber da dat
-                Accounts barberAdded = d.getAccountsById(o.getEmployeeId());
+                Account barberAdded = d.getAccountsById(o.getEmployeeId());
                 b.setBarber(barberAdded);
                 // lay shifts da dat
                 Shifts shiftsAdded = d.getShiftsById(o.getShiftsID());

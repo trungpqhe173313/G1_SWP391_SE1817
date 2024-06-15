@@ -5,7 +5,7 @@
 package Controller;
 
 import Dal.AccountDAO;
-import Model.Accounts;
+import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,11 +26,9 @@ public class SignupController extends HttpServlet {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String re_pass = request.getParameter("re_pass");
-        String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar");
-        Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
-        int roleId = 2; // Giá trị mặc định là Username
+        Boolean gender = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
+        int roleId = 3; // Giá trị mặc định là Username
 //        String roleIdParam = request.getParameter("roleId");
 //        if (roleIdParam != null && !roleIdParam.isEmpty()) {
 //            roleId = Integer.parseInt(roleIdParam);
@@ -60,16 +58,15 @@ public class SignupController extends HttpServlet {
             return;
         }
             AccountDAO d = new AccountDAO();
-            Accounts a = d.checkAccountExist(phone);
+            Account a = d.checkAccountExist(phone);
             if (a == null) {
-                Accounts newAccount = new Accounts();
+                Account newAccount = new Account();
                 newAccount.setPhone(phone);
-                newAccount.setPassword(password);
-                newAccount.setFullName(fullName);
-                newAccount.setEmail(email);
-                newAccount.setAvatar(avatar);
-                newAccount.setIsMale(isMale);
+                newAccount.setPass(password);
                 newAccount.setRoleId(roleId);
+                newAccount.setEmail(email);
+                newAccount.setGender(gender);
+                
                 newAccount.setIsActive(isActive);  
                 d.insertAccount(newAccount);
                 response.sendRedirect("login");

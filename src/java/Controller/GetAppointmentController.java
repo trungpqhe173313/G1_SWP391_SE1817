@@ -6,7 +6,7 @@ package Controller;
 
 import Dal.Order_servicesDAO;
 import Dal.OrdersDAO;
-import Model.Accounts;
+import Model.Account;
 import Model.Order_services;
 import Model.Orders;
 import Model.Services;
@@ -78,13 +78,13 @@ public class GetAppointmentController extends HttpServlet {
         // lay ra cac ca de hien thi
         List<Shifts> listShift = d.getAllShifts();
         //lay ra cac barber hoat dong
-        List<Accounts> listBarber = d.getAllBarber();
+        List<Account> listBarber = d.getAllBarber();
         //lay ra danh sach cac dich vu
         List<Services> listServices = d.getAllServices();
         //tao danh sach ngay de hien thi
         List<String> listDate = new ArrayList<>();
         HttpSession s = request.getSession();
-        Accounts account = (Accounts) s.getAttribute("account");
+        Account account = (Account) s.getAttribute("account");
         int aid = account.getId();
         //lay ra lich hen cat
         Orders order = d.getAppointment(aid);
@@ -135,7 +135,7 @@ public class GetAppointmentController extends HttpServlet {
             throws ServletException, IOException {
         OrdersDAO d = new OrdersDAO();
         HttpSession session = request.getSession();
-        Accounts account = (Accounts) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("account");
         String date_raw = request.getParameter("date");
         String shifts = request.getParameter("shifts");
         String barber = request.getParameter("barber");
@@ -210,7 +210,7 @@ public class GetAppointmentController extends HttpServlet {
             // lay Status order da dat
             Statuses status = d.getStatusesById(order.getStatusId());
             // lay barber da dat
-            Accounts barberAdded = d.getAccountsById(order.getEmployeeId());
+            Account barberAdded = d.getAccountsById(order.getEmployeeId());
             // lay shifts da dat
             Shifts shiftsAdded = d.getShiftsById(order.getShiftsID());
             //thong bao dat lich thanh cong

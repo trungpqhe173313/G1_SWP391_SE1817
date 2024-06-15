@@ -8,19 +8,25 @@ package Model;
  *
  * @author phamt
  */
-public class Accounts {
+public class Account {
 
     private int id;
     private String phone;
+<<<<<<< Updated upstream:src/java/Model/Accounts.java
     
     private String password;
     private String fullName;
+=======
+    private String pass;
+    private int roleId;
+>>>>>>> Stashed changes:src/java/Model/Account.java
     private String email;
     private String avatar;
     
     private Boolean isMale;
     private int roleId;
     private Boolean isActive;
+<<<<<<< Updated upstream:src/java/Model/Accounts.java
     public Accounts() {
     }
     
@@ -29,6 +35,13 @@ public class Accounts {
         this.phone = phone;
         this.password = password;
         this.fullName = fullName;
+=======
+
+    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive) {
+        this.phone = phone;
+        this.pass = pass;
+        this.roleId = roleId;
+>>>>>>> Stashed changes:src/java/Model/Account.java
         this.email = email;
         this.avatar = avatar;
         this.isMale = isMale;
@@ -36,6 +49,7 @@ public class Accounts {
         this.isActive = isActive;
     }
 
+<<<<<<< Updated upstream:src/java/Model/Accounts.java
     
 
     public int getId() {
@@ -44,6 +58,9 @@ public class Accounts {
 
     public void setId(int id) {
         this.id = id;
+=======
+    public Account() {
+>>>>>>> Stashed changes:src/java/Model/Account.java
     }
 
     public String getPhone() {
@@ -55,12 +72,12 @@ public class Accounts {
 
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getFullName() {
@@ -112,9 +129,14 @@ public class Accounts {
         this.isActive = isActive;
     }
 
+    
     @Override
     public String toString() {
+<<<<<<< Updated upstream:src/java/Model/Accounts.java
         return "Accounts{" + "id=" + id + ", phone=" + phone + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", avatar=" + avatar + ", isMale=" + isMale + ", roleId=" + roleId + ", isActive=" + isActive + '}';
+=======
+        return "Accounts{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
+>>>>>>> Stashed changes:src/java/Model/Account.java
     }
  
 }

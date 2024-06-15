@@ -5,7 +5,7 @@
 package Controller;
 
 import Dal.AccountDAO;
-import Model.Accounts;
+import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -23,12 +23,12 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
+         String phone = request.getParameter("phone");
+        String password = request.getParameter("pass");
         AccountDAO da = new AccountDAO();
-        Accounts a = da.checkAuthentic(phone, password);
+        Account a = da.login(phone, password);
         if(a == null){
-            request.setAttribute("error", "Accountname or password incorrect!!!");
+            request.setAttribute("error", "Phone or password incorrect!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }else{
             int sessionTimeoutSeconds = 240000;
@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
-            response.sendRedirect("home");
+            response.sendRedirect("appointment");
         }
     }
     @Override
