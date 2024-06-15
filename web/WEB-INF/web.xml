@@ -45,8 +45,8 @@
         <servlet-class>Controller.admin.EmployeesDetailController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteEmployeesController</servlet-name>
-        <servlet-class>Controller.admin.DeleteEmployeesController</servlet-class>
+        <servlet-name>UpdateEmployeesStatusController</servlet-name>
+        <servlet-class>Controller.admin.UpdateEmployeesStatusController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassreset</servlet-name>
@@ -71,6 +71,14 @@
     <servlet>
         <servlet-name>changepassw</servlet-name>
         <servlet-class>Controller.common.changepassw</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceControl</servlet-name>
+        <servlet-class>Controller.Service.ServiceControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicedetailControl</servlet-name>
+        <servlet-class>Controller.Service.ServicedetailControl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -117,8 +125,8 @@
         <url-pattern>/addemployees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteEmployeesController</servlet-name>
-        <url-pattern>/deleteemployees</url-pattern>
+        <servlet-name>UpdateEmployeesStatusController</servlet-name>
+        <url-pattern>/updateemployeesstatus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>changepassreset</servlet-name>
@@ -143,5 +151,13 @@
     <servlet-mapping>
         <servlet-name>changepassw</servlet-name>
         <url-pattern>/changepassw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServiceControl</servlet-name>
+        <url-pattern>/service</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicedetailControl</servlet-name>
+        <url-pattern>/servicedetail</url-pattern>
     </servlet-mapping>
 </web-app>

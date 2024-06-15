@@ -11,7 +11,7 @@ import java.util.Date;
  * @author ducth
  */
 public class Employee {
-    private int employeeId;
+    private int employeesId;
     private String fullName;
     private String phone;
 
@@ -19,17 +19,17 @@ public class Employee {
     }
 
     public Employee(int employeeId, String fullName, String phone) {
-        this.employeeId = employeeId;
+        this.employeesId = employeeId;
         this.fullName = fullName;
         this.phone = phone;
     }
 
     public int getEmployeeId() {
-        return employeeId;
+        return employeesId;
     }
 
     public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+        this.employeesId = employeeId;
     }
 
     public String getFullName() {
@@ -50,7 +50,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employees{" + "employeeId=" + employeeId + ", fullName=" + fullName + ", phone=" + phone + '}';
+        return "Employees{" + "employeeId=" + employeesId + ", fullName=" + fullName + ", phone=" + phone + '}';
     }
 
     
