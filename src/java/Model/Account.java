@@ -10,57 +10,23 @@ package Model;
  */
 public class Account {
 
-    private int id;
     private String phone;
-<<<<<<< Updated upstream:src/java/Model/Accounts.java
-    
-    private String password;
-    private String fullName;
-=======
     private String pass;
     private int roleId;
->>>>>>> Stashed changes:src/java/Model/Account.java
     private String email;
-    private String avatar;
-    
-    private Boolean isMale;
-    private int roleId;
+    private Boolean gender;
     private Boolean isActive;
-<<<<<<< Updated upstream:src/java/Model/Accounts.java
-    public Accounts() {
+
+    public Account() {
     }
-    
-    public Accounts(int id, String phone, String password, String fullName, String email, String avatar, Boolean isMale, int roleId, Boolean isActive) {
-        this.id = id;
-        this.phone = phone;
-        this.password = password;
-        this.fullName = fullName;
-=======
 
     public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive) {
         this.phone = phone;
         this.pass = pass;
         this.roleId = roleId;
->>>>>>> Stashed changes:src/java/Model/Account.java
         this.email = email;
-        this.avatar = avatar;
-        this.isMale = isMale;
-        this.roleId = roleId;
+        this.gender = gender;
         this.isActive = isActive;
-    }
-
-<<<<<<< Updated upstream:src/java/Model/Accounts.java
-    
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-=======
-    public Account() {
->>>>>>> Stashed changes:src/java/Model/Account.java
     }
 
     public String getPhone() {
@@ -69,7 +35,6 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
-
     }
 
     public String getPass() {
@@ -80,12 +45,12 @@ public class Account {
         this.pass = pass;
     }
 
-    public String getFullName() {
-        return fullName;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getEmail() {
@@ -96,29 +61,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public Boolean getGender() {
+        return gender;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Boolean getIsMale() {
-        return isMale;
-    }
-
-    public void setIsMale(Boolean isMale) {
-
-        this.isMale = isMale;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public Boolean getIsActive() {
@@ -129,14 +77,11 @@ public class Account {
         this.isActive = isActive;
     }
 
-    
     @Override
     public String toString() {
-<<<<<<< Updated upstream:src/java/Model/Accounts.java
-        return "Accounts{" + "id=" + id + ", phone=" + phone + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", avatar=" + avatar + ", isMale=" + isMale + ", roleId=" + roleId + ", isActive=" + isActive + '}';
-=======
-        return "Accounts{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
->>>>>>> Stashed changes:src/java/Model/Account.java
+        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
     }
- 
+    
+    
+
 }
