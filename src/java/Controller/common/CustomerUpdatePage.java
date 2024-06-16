@@ -5,7 +5,7 @@
 package Controller.common;
 
 import Dal.CustomerDAO;
-import Model.Accounts;
+import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -65,7 +65,7 @@ public class CustomerUpdatePage extends HttpServlet {
 
         try {
             id = Integer.parseInt(idStr);
-            Accounts a = daoCustomer.getProfileById(id);
+            Account a = daoCustomer.getProfileById(id);
             request.setAttribute("account", a);
             request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class CustomerUpdatePage extends HttpServlet {
 //        CustomerDAO daoC = new CustomerDAO();
 //        try {
 //            id = Integer.parseInt(idStr);
-//            Accounts newA = new Accounts(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
+//            Account newA = new Account(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
 //            daoC.updateProfile(newA);
 //            response.sendRedirect("cusprofile");
 //            //response.sendRedirect("cusprofile?id=" + id);

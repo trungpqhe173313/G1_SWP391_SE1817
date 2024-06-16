@@ -6,8 +6,17 @@
 package Controller.customer;
 
 import Dal.OrdersDAO;
+
 import Model.Accounts;
+
+
+
+import Model.Account;
 import Model.Order;
+import Model.Order;
+
+import Model.Order;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,7 +42,7 @@ public class CancelAppointmentController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          HttpSession s = request.getSession();
-        Accounts account = (Accounts) s.getAttribute("account");
+        Account account = (Account) s.getAttribute("account");
         int aid = account.getId();
         //lay ra lich hen cat
         Order order = new OrdersDAO().getAppointment(aid);
