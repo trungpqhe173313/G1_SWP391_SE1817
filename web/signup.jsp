@@ -1,102 +1,134 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Đăng ký</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-        <title>JSP Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+
+            .gradient-custom {
+                background-color: #EBE8DE;
+            }
+
+            .card-registration {
+                border-radius: 15px;
+                max-width: 600px; /* Thiết lập chiều rộng tối đa cho card */
+                margin: 0 auto; /* Căn giữa card trên màn hình */
+            }
+
+            .card-registration .form-label {
+                font-weight: bold; /* In đậm chữ trong label */
+            }
+
+            .btn-primary {
+                background-color: #BF925B !important; /* Màu nút Submit */
+                border-color: #BF925B !important;
+            }
+
+            /* Thêm padding cho phần nội dung của card */
+            .card-body {
+                padding: 2rem;
+            }
+
+            /* Giảm kích thước font cho các phần tử trong form */
+            .card-body h3 {
+                font-size: 1.25rem;
+            }
+
+            .card-body input[type="text"],
+            .card-body input[type="password"] {
+                font-size: 0.875rem;
+            }
+
+            .form-check-label {
+                font-size: 0.875rem;
+            }
+
+
+        </style>
     </head>
     <body>
-        
-            <section class="h-100 gradient-form" style="background-color: #000;">
-                <div class="container py-5 h-100">
-                    <div class="row d-flex justify-content-center align-items-center h-100">
-                        <div class="col-xl-10">
-                            <div class="card rounded-3 text-black">
-                                <div class="row g-0">
-                                    <div class="col-lg-12">
-                                        <div class="card-body p-md-5 mx-md-4">
-                                            <div class="text-md-left">
-                                                <a href="home" style="color: #ffaf00"> Return to home </a>
-                                            </div>
-                                            <div class="text-center">
-                                                <img src=""
-                                                     style="width: 185px" alt="logo">
-                                            </div>
-                                            
-                                            
-                                            <form action="signup"method="post">
-                                                <p>Please input information to your account</p>
-                                                
-                                                
-                                                 <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Phone number</label>
-                                                    <input type="text" required name="phone" class="form-control"/>
-                                                </div>
-                                                <p class="text-danger">${error2}</p>
-                                                <p class="text-danger">${error3}</p>
-                                                
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Password</label>
-                                                    <input type="text" required name="password"  class="form-control" />
-                                                </div>
-                                                <p class="text-danger">${error1}</p>
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Confirm Password</label>
-                                                    <input type="password" required name="re_pass"  class="form-control" />
-                                                    
-                                                </div>
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Full Name</label>
-                                                    <input type="text" required name="fullName"  class="form-control" pattern="[a-zA-ZÀ-ỹ\s]+"/>
-                                                </div>
-                                                  <p class="text-danger">${error4}</p>
-                                                  
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Email</label>
-                                                    <input type="text" required name="email"  class="form-control" />
-                                                    
-                                                </div>
-                                                  <p class="text-danger">${error5}</p>
-                                                  
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Avarta</label>
-                                                    <input type="file" name="avatar" accept="image/*" class="form-control">
-                                                    
-                                                </div>
-                                                
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label"style="color: #ffaf00">Gender</label>
-                                                    <div>
-                                                        <label><input type="radio" name="isMale" value="true" required> Male </label>
-                                                        <label><input type="radio" name="isMale" value="false" required> Female </label>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="text-center pt-1 mb-5 pb-1"style="color: white">
-                                                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign up</button>
-
-                                                </div>   
-
-                                                
-
-                                            </form>
-
+        <section class="h-100 h-custom" style="background-color: #EBE8DE;">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-8 col-xl-6">
+                        <div class="card rounded-3">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp"
+                                 class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+                                 alt="Sample photo">
+                            <div class="card-body p-4 p-md-5">
+                                <form action="signup" method="post">
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <h6 class="mb-0" for="phone">Số điện thoại</h6>
+                                            <input type="text" name="phone" required pattern="0[1-9]{9}" 
+                                                   title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0"class="form-control form-control-lg" />
+                                            <p class="text-danger">${error2}</p>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <h6 class="mb-0" for="email">Email</h6>
+                                            <input type="text" name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" 
+                                                   title="Địa chỉ email không hợp lệ" class="form-control form-control-lg" />
                                         </div>
                                     </div>
 
-                                </div>
+                                    
+
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <h6 class="mb-0" for="password">Mật khẩu</h6>
+                                                <input type="password" required name="password" class="form-control form-control-lg" />
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <h6 class="mb-0" for="re-pass">Xác Thực Mật khẩu</h6>
+                                                <input type="password" required name="re_pass" class="form-control form-control-lg" />
+                                            </div>
+                                        </div>
+                                        <p class="text-danger">${error1}</p>
+                                    </div>
+                                    
+
+
+
+
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h6 class="mb-0">Giới tính</h6>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="isMale" value="option1" />
+                                            <label class="form-check-label" for="female">Nữ</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="isMale" value="option2" />
+                                            <label class="form-check-label" for="male">Nam</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mt-4 pt-2">
+                                        <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Đăng ký" />
+                                    </div>
+
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        
+            </div>
+        </section>
     </body>
 </html>
 

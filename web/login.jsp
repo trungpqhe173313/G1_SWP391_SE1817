@@ -1,74 +1,67 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-        <title>JSP Page</title>
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="css/style_1.css">
+
     </head>
-    
     <body>
-        
-        <section class="h-100 gradient-form" style="background-color: #000">
-            <div class="container py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-xl-10">
-                        <div class="card rounded-3 text-black">
-                            <div class="row g-0">
-                                <div class="col-lg-12">
-                                    <div class="card-body p-md-5 mx-md-4">
-                                        <div class="text-md-left">
-                                            <a href="home" style="color: #ffaf00"> Return to home </a>
-                                        </div>
-                                        <div class="text-center">
-                                            <img src=""
-                                                 style="width: 185px" alt="logo">
-                                        </div>
-                                            <p class="text-danger">${error}</p>
-
-                                        <form action="login" method="post">
-                                            
-                                            <p>Please login to your account</p>
-
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label"style="color: #ffaf00">Phone number</label>
-                                                <input type="text" required name="phone" class="form-control"/>
-                                                
-                                            </div>
-
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label"style="color: #ffaf00">Password</label>
-                                                <input type="password" required name="password"  class="form-control" />
-                                                
-                                            </div>
-
-                                            <div class="text-center pt-1 mb-5 pb-1">
-                                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign in</button>
-                                                <a class="text-muted" href="sendlink" style="color: #FFA500">Forgot password?</a><br><!-- comment -->
-                                                ${mess}
-                                            </div>
-
-                                            <div class="d-flex align-items-center justify-content-center pb-4">
-                                                <p class="mb-0 me-2 mr-5"style="color: #FFA500">You don't have account?</p>
-                                                
-                                                <a href="signup"style="color: #000"/> Create new account?
-                                            </div>
-
-                                            
-
-                                        </form>
-
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center mb-5">
+                        <h2 class="heading-section"></h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="wrap d-md-flex">
+                            <div class="img" style="background-image: url(images/bg-1.jpg);">
+                            </div>
+                            <div class="login-wrap p-4 p-md-5">
+                                <form action="login" method="post" class="signin-form">
+                                    <p class="text-danger">${error}</p>
+                                    <div class="form-group mb-3">
+                                        <label class="label" for="phone">Số điện thoại</label>
+                                        <input type="text" class="form-control" placeholder="Số điện thoại" required name = "phone">
                                     </div>
+                                    <div class="form-group mb-3">
+                                        <label class="label" for="pass">Mật khẩu</label>
+                                        <input type="password" class="form-control" placeholder="Mật khẩu" required name = "pass">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng nhập</button>
+                                    </div>
+                                    <div class="form-group d-md-flex">
+                                        <div class="w-50 text-left">
+                                            <label class="checkbox-wrap checkbox-primary mb-0">Lưu tài khoản
+                                                <input type="checkbox" checked>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="w-50 text-md-right">
+                                            <a href="#">Quên mật khẩu</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <p class="text-center">Chưa có tài khoản?<a href="signup">Đăng ký</a></p>
+                                <div class="text-center">
+                                    <a href="home"> <- Quay lại trang chủ </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     </body>
 </html>
+

@@ -5,7 +5,7 @@
 package Controller.common;
 
 import Dal.CustomerDAO;
-import Model.Accounts;
+import Model.Account;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,9 +27,9 @@ public class CustomerProfile extends HttpServlet {
             return;
         }
         // Lấy số điện thoại của người dùng đã đăng nhập từ session
-        String phone = ((Accounts)request.getSession().getAttribute("account")).getPhone();
+        String phone = ((Account)request.getSession().getAttribute("account")).getPhone();
         CustomerDAO dc = new CustomerDAO();
-        Accounts a = dc.getProfileByPhone(phone);
+        Account a = dc.getProfileByPhone(phone);
         
         if (a != null) {
             request.setAttribute("account", a);

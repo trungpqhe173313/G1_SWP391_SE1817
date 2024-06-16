@@ -8,20 +8,21 @@ package Model;
  *
  * @author phamt
  */
-public class Accounts {
+public class Account {
 
     private String phone;
-    private String password;
+    private String pass;
     private int roleId;
     private String email;
     private Boolean gender;
     private Boolean isActive;
-    public Accounts() {
+
+    public Account() {
     }
 
-    public Accounts(String phone, String password, int roleId, String email, Boolean gender, Boolean isActive) {
+    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive) {
         this.phone = phone;
-        this.password = password;
+        this.pass = pass;
         this.roleId = roleId;
         this.email = email;
         this.gender = gender;
@@ -36,12 +37,12 @@ public class Accounts {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public int getRoleId() {
@@ -78,7 +79,9 @@ public class Accounts {
 
     @Override
     public String toString() {
-        return "Accounts{" + "phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
+        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
     }
     
-}    
+    
+
+}
