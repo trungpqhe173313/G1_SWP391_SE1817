@@ -6,17 +6,17 @@
 package Controller.customer;
 
 import Dal.OrdersDAO;
-<<<<<<< Updated upstream:src/java/Controller/CancelAppointmentController.java
+
 import Model.Accounts;
-<<<<<<< HEAD:src/java/Controller/CancelAppointmentController.java
-import Model.Orders;
-=======
+
+
+
 import Model.Account;
 import Model.Order;
->>>>>>> Stashed changes:src/java/Controller/customer/CancelAppointmentController.java
-=======
 import Model.Order;
->>>>>>> main:src/java/Controller/customer/CancelAppointmentController.java
+
+import Model.Order;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

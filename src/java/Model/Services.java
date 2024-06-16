@@ -9,29 +9,34 @@ package Model;
  * @author xdrag
  */
 public class Services {
-    private int  id;
+    private int  servicesId;
     private String name;
     private String image;
-    private String description;
     private int price;
+    private String description;
+    private boolean isActive;
+//    private int classificationId;
+    
 
     public Services() {
     }
 
-    public Services(int id, String name, String image, String description, int price) {
-        this.id = id;
+    public Services(int servicesId, String name, String image, int price, String description, boolean isActive) {
+        this.servicesId = servicesId;
         this.name = name;
         this.image = image;
-        this.description = description;
         this.price = price;
+        this.description = description;
+        this.isActive = isActive;
+//        this.classificationId = classificationId;
     }
 
-    public int getId() {
-        return id;
+    public int getServicesId() {
+        return servicesId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setServicesId(int servicesId) {
+        this.servicesId = servicesId;
     }
 
     public String getName() {
@@ -50,14 +55,6 @@ public class Services {
         this.image = image;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -66,10 +63,38 @@ public class Services {
         this.price = price;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+//    public int getClassificationId() {
+//        return classificationId;
+//    }
+//
+//    public void setClassificationId(int classificationId) {
+//        this.classificationId = classificationId;
+//    }
+
     @Override
     public String toString() {
-        return "Services{" + "id=" + id + ", name=" + name + ", image=" + image + ", description=" + description + ", price=" + price + '}';
+        return "Services{" + "servicesId=" + servicesId + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + ", isActive=" + isActive + '}';
     }
+
+    
+
+    
     
     
     

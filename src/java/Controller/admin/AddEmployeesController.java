@@ -1,17 +1,20 @@
 package Controller.admin;
 
 import Dal.EmployeesDAO;
-<<<<<<< Updated upstream:src/java/Controller/AddEmployeesController.java
+
 import Model.Accounts;
-<<<<<<< HEAD:src/java/Controller/AddEmployeesController.java
+
+
+
 import Model.Employees;
-=======
+
 import Model.Account;
 import Model.Employee;
->>>>>>> Stashed changes:src/java/Controller/admin/AddEmployeesController.java
-=======
+
 import Model.Employee;
->>>>>>> main:src/java/Controller/admin/AddEmployeesController.java
+
+import Model.Employee;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
