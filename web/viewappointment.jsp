@@ -97,7 +97,7 @@
                         <p>Hi vọng bạn sẽ có trải nghiệm tuyệt vời với những dịch vụ của chúng tôi</p>
                     </div>
                 </div>
-                <h3 class="vr">Call Us: 012-3456-7890</h3>
+                
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate">
                         <table class="appointment-info">
@@ -105,9 +105,10 @@
                                 <th>Ngày</th>
                                 <th>Ca</th>
                                 <th colspan="2">Dịch vụ</th>
-                                <th colspan="2">Thợ</th>
+                                
                                 <th>Trạng thái</th>
-                                <!--                            <th>Photo</th>-->
+                                <th>Tổng tiền</th>
+                                
                                 <th></th>
                             </tr>
                             <tr>
@@ -124,18 +125,14 @@
                                         </c:forEach>
                                 </ul>
                             </td>
-                            <td colspan="2">
-                                <ul>
-                                    <c:forEach items="${employee}" var="e">
-                                        <li>${e.getFullName()}</li>
-                                        </c:forEach>
-                                </ul>
-                            </td>
+                            
+                            
                             <c:forEach items="${status}" var="status"> 
-                                <c:if test="${status.getId() == order.getStatusId()}">
+                                <c:if test="${status.getId() == order.getStatusId()}"> 
                                     <td>${status.getName()}</td>
                                 </c:if>
                             </c:forEach>
+                                    <td>${order.getTotalAmount()} VND</td>
                             <!--                            <td><img src="https://via.placeholder.com/40" alt="Professional Photo"></td>-->
                         </tr>
                         <td><a href="#" class="details-button">Cập nhật</a></td>
