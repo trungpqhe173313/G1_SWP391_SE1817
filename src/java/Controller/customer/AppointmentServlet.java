@@ -5,7 +5,7 @@
 package Controller.customer;
 
 import Dal.OrderDAO;
-import Model.Accounts;
+import Model.Account;
 import Model.Order;
 import Model.Services;
 import Model.Shift;
@@ -78,13 +78,13 @@ public class AppointmentServlet extends HttpServlet {
             // lay ra cac ca de hien thi
             List<Shift> listShift = d.getAllShifts();
             //lay ra cac barber hoat dong
-            List<Accounts> listBarber = d.getAllBarber();
+            List<Account> listBarber = d.getAllBarber();
             //lay ra danh sach cac dich vu
             List<Services> listServices = d.getAllServices();
             //tao danh sach ngay de hien thi
             List<String> listDate = new ArrayList<>();
             HttpSession s = request.getSession();
-            Accounts account = (Accounts) s.getAttribute("account");
+            Account account = (Account) s.getAttribute("account");
 
             // Lấy ngày hôm nay
             LocalDate today = LocalDate.now();
@@ -120,7 +120,7 @@ public class AppointmentServlet extends HttpServlet {
             throws ServletException, IOException {
         OrdersDAO d = new OrdersDAO();
         HttpSession session = request.getSession();
-        Accounts account = (Accounts) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("account");
         String date_raw = request.getParameter("date");
         String shifts = request.getParameter("shifts");
         String barber = request.getParameter("barber");
@@ -168,7 +168,7 @@ public class AppointmentServlet extends HttpServlet {
             // lay Status order da dat
             Status status = d.getStatusesById(order.getStatusId());
             // lay barber da dat
-            Accounts barberAdded = d.getAccountsById(order.getEmployeeId());
+            Account barberAdded = d.getAccountsById(order.getEmployeeId());
             // lay shifts da dat
             Shift shiftsAdded = d.getShiftsById(order.getShiftsID());
             //thong bao dat lich thanh cong

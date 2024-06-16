@@ -6,10 +6,79 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Haircare - Free Bootstrap 4 Template by Colorlib</title>
+        <style>
+            .pricing-entry {
+                height: 450px;
+                position: relative; /* Make this container the reference for absolute positioning */
+            }
+            .pricing-entry img {
+                width: 100%;
+                height: auto;
+                max-width: 250px; /* Adjust as needed */
+                border-radius: 10px; /* Adjust the radius as needed */
+            }
+            .price-fixed {
+                position: absolute;
+                bottom: 30px; /* Adjust as needed */
+                left: 50%;
+                margin-top: 0px; /* Cách giá tiền và mô tả dịch vụ 20px */
+                padding-top: 10px;
+                transform: translateX(-50%);
+                font-weight: bold; /* Optional: make the text bold */
+            }
+
+            .service-description {
+                margin-top: 10px;
+                padding-bottom: 50px;
+                font-size: 14px; /* Adjust as needed */
+                color: #555; /* Adjust as needed */
+                overflow: hidden; /* Hide overflow */
+                text-overflow: ellipsis; /* Add ellipsis for overflow text */
+                display: -webkit-box; /* For multi-line ellipsis */
+                -webkit-line-clamp: 3; /* Increase number of lines to show */
+                -webkit-box-orient: vertical; /* Vertical box for ellipsis */
+                height: 100px; /* Adjust height as needed to fit the text */
+                position: absolute; /* Đặt vị trí tuyệt đối */
+                bottom: 20px; /* Cách bottom 20px */
+                left: 0; /* Dính vào bên trái */
+                right: 0; /* Dính vào bên phải */
+                margin-top: 10px; /* Khoảng cách phía trên */
+                padding: 0 20px; /* Padding trái và phải để tạo khoảng cách */
+                font-size: 14px; /* Kích thước font chữ */
+                color: #555; /* Màu chữ */
+            }
+
+            .col-md-3 {
+                padding-bottom: 50px;
+            }
+            .hero-wrap {
+                background-size: contain; /* Adjust background size */
+                background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+                background-position: center center; /* Center the background image */
+            }
+            .navbar {
+                background-color: #0F0C07 !important; /* Set navbar background to black */
+            }
+            .fixed-bottom-bar {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: #343a40;
+                color: #fff;
+                padding: 15px 0;
+                text-align: center;
+                box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+                z-index: 1000; /* Ensure it stays above other elements */
+            }
+            .fixed-bottom-bar .btn {
+                margin-left: 20px;
+            }
+        </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -54,6 +123,7 @@
         </section>
 
         <section class="services-section ftco-section">
+            
             <div class="container">
                 <div class="row justify-content-center pb-3">
                     <div class="col-md-10 heading-section text-center ftco-animate">
@@ -62,9 +132,29 @@
                         <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                     </div>
                 </div>
-                <div class="row no-gutters d-flex">
+                
+                <div class="row">
+                <c:forEach items="${listS}" var="s">
+                    <div class="col-md-3 ftco-animate" >
+                        <div class="pricing-entry pb-5 text-center">
+                            <div>
+                                <h3 class="mb-4">${s.name}</h3>
+                                <img src="${s.image}" width="width" height="height" alt="alt"/>
+                                <p class="service-description">${s.description}</p>
+                                
+                                <p class="price-fixed"><span class="price"><fmt:formatNumber value="${s.price}" type="number" pattern="###,###">
+
+                                            </fmt:formatNumber><sup>đ</sup></span></p>
+                            </div>
+                        </div>
+                    </div>
+                 </c:forEach>
+                </div>    
+                
+<!--                <div class="row no-gutters d-flex">
                     <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                        <div class="media block-6 services d-block text-center">
+                        <div class="media block-6 services d-block text-center">        
+                            
                             <div class="icon"><span class="flaticon-male-hair-of-head-and-face-shapes"></span></div>
                             <div class="media-body">
                                 <h3 class="heading mb-3">Haircut &amp; Styling</h3>
@@ -99,8 +189,9 @@
                             </div>
                         </div>      
                     </div>
-                </div>
+                </div>-->
             </div>
+           
         </section>
 
         <section class="ftco-section ftco-booking bg-light">

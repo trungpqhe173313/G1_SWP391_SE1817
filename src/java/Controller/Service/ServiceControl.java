@@ -3,21 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.admin;
+package Controller.Service;
 
-import Dal.EmployeesDAO;
+import Dal.ServicesDAO;
+import Model.Services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
- * @author ducth
+ * @author LENOVO
  */
-public class DeleteEmployeesController extends HttpServlet {
+public class ServiceControl extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +36,10 @@ public class DeleteEmployeesController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteEmployeesController</title>");  
+            out.println("<title>Servlet ServiceControl</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteEmployeesController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ServiceControl at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,6 +56,10 @@ public class DeleteEmployeesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        ServicesDAO dao = new ServicesDAO();
+        List<Services> se = dao.GetAllServices();
+        request.setAttribute("listS", se);
+        request.getRequestDispatcher("services.jsp").forward(request, response);
     } 
 
     /** 
@@ -66,14 +72,7 @@ public class DeleteEmployeesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    int accountId = Integer.parseInt(request.getParameter("accountId"));
-
-    EmployeesDAO dao = new EmployeesDAO();
-    boolean deleteSuccess = dao.deleteEmployeeById(accountId);
-
-    request.setAttribute("deleteSuccess", deleteSuccess);
-
-    response.sendRedirect("employeesdetail");
+        processRequest(request, response);
     }
 
     /** 

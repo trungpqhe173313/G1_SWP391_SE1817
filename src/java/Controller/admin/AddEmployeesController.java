@@ -1,8 +1,20 @@
 package Controller.admin;
 
 import Dal.EmployeesDAO;
+
 import Model.Accounts;
+
+
+
+import Model.Employees;
+
+import Model.Account;
 import Model.Employee;
+
+import Model.Employee;
+
+import Model.Employee;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -77,8 +89,8 @@ public class AddEmployeesController extends HttpServlet {
         Boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
         String address = request.getParameter("address");
 
-        // Tạo đối tượng Accounts và Employees
-        Accounts account = new Accounts();
+        // Tạo đối tượng Account và Employees
+        Account account = new Account();
         account.setPhone(phone);
         account.setPassword(password);
         account.setFullName(fullName);
