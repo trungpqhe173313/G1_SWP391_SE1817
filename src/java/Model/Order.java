@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,22 +14,48 @@ import java.sql.Date;
 public class Order {
     private int id;
     private int customerId;
-    private int shiftsID;
+    private int employeeId;
     private int statusId;
     private Date orderDate;
     private int totalAmount;
+    private int shiftsID;
+    private String updateTime;
 
     public Order() {
     }
 
-    public Order(int id, int customerId, int shiftsID, int statusId, Date orderDate, int totalAmount) {
+    public Order(int id, int customerId, int employeeId, int statusId, Date orderDate, int totalAmount, int shiftsID, String updateTime) {
         this.id = id;
         this.customerId = customerId;
-        this.shiftsID = shiftsID;
+        this.employeeId = employeeId;
         this.statusId = statusId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
+        this.shiftsID = shiftsID;
+        this.updateTime = updateTime;
     }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+    
+    
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    
+
+    
 
     public int getId() {
         return id;
