@@ -5,25 +5,15 @@
 
 package Controller.customer;
 
-import Dal.OrdersDAO;
 
-import Model.Accounts;
-
-
-
-import Model.Account;
-import Model.Order;
-import Model.Order;
-
-import Model.Order;
-
+import Dal.OrderDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -41,13 +31,9 @@ public class CancelAppointmentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession s = request.getSession();
-        Account account = (Account) s.getAttribute("account");
-        int aid = account.getId();
-        //lay ra lich hen cat
-        Order order = new OrdersDAO().getAppointment(aid);
-        new OrdersDAO().cancelOrder(order.getId());
-        response.sendRedirect("homepage.jsp");
+        String orderId = request.getParameter("oId");
+        new OrderDAO().cancelBooking(orderId);
+        response.sendRedirect("viewAppountController");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
