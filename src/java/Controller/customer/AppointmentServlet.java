@@ -4,7 +4,7 @@
  */
 package Controller.customer;
 
-import Dal.OrdersDAO;
+import Dal.OrderDAO;
 import Model.Accounts;
 import Model.Order;
 import Model.Services;

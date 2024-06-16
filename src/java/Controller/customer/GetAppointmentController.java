@@ -73,7 +73,7 @@ public class GetAppointmentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OrdersDAO d = new OrdersDAO();
+//        OrdersDAO d = new OrdersDAO();
 
         // lay ra cac ca de hien thi
         List<Shift> listShift = d.getAllShifts();
