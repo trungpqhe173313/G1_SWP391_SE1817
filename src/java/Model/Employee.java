@@ -14,6 +14,7 @@ public class Employee {
     private int employeesId;
     private String fullName;
     private String phone;
+    private String updateTime;
 
     public Employee() {
     }
@@ -23,6 +24,14 @@ public class Employee {
         this.fullName = fullName;
         this.phone = phone;
     }
+
+    public Employee(int employeesId, String fullName, String phone, String updateTime) {
+        this.employeesId = employeesId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.updateTime = updateTime;
+    }
+    
 
     public int getEmployeeId() {
         return employeesId;

@@ -4,15 +4,22 @@
  */
 package Model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author xdrag
  */
 public class Shift {
     private int id;
-    private  String startTime;
+    private String startTime;
 
     public Shift() {
+    }
+
+    public Shift(int id, String startTime) {
+        this.id = id;
+        this.startTime = startTime;
     }
 
     public int getId() {
