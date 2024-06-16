@@ -27,17 +27,6 @@
                             <div class="img" style="background-image: url(images/bg-1.jpg);">
                             </div>
                             <div class="login-wrap p-4 p-md-5">
-                                <div class="d-flex">
-                                    <div class="w-100">
-                                        <h3 class="mb-4">Đăng nhập</h3>
-                                    </div>
-                                    <div class="w-100">
-                                        <p class="social-media d-flex justify-content-end">
-                                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-                                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-                                        </p>
-                                    </div>
-                                </div>
                                 <form action="login" method="post" class="signin-form">
                                     <p class="text-danger">${error}</p>
                                     <div class="form-group mb-3">
