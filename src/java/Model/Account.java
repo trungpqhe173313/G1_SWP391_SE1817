@@ -21,16 +21,18 @@ public class Account {
     public Account() {
     }
 
-    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive) {
+    public Account(String phone, String pass, int roleId, String email,
+            Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;
         this.roleId = roleId;
         this.email = email;
         this.gender = gender;
         this.isActive = isActive;
+        this.avatar = avatar;
     }
 
-    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avata) {
+    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;
         this.roleId = roleId;
@@ -62,6 +64,14 @@ public class Account {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getAvatar(String avatar) {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getRoleId() {
