@@ -16,7 +16,7 @@ public class Account {
     private String email;
     private Boolean gender;
     private Boolean isActive;
-    private String avata;
+    private String avatar;
 
     public Account() {
     }
@@ -37,18 +37,17 @@ public class Account {
         this.email = email;
         this.gender = gender;
         this.isActive = isActive;
-        this.avata = avata;
+        this.avatar = avatar;
     }
 
-    public String getAvata() {
-        return avata;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAvata(String avata) {
-        this.avata = avata;
+    public void setAvata(String avatar) {
+        this.avatar = avatar;
     }
     
-
     public String getPhone() {
         return phone;
     }
@@ -99,9 +98,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
+        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + ", avatar=" + avatar + '}';
     }
-    
-    
-
 }
