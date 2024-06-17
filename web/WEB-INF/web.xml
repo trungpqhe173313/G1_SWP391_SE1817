@@ -95,6 +95,8 @@
     <servlet>
         <servlet-name>ViewSaleServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewAppountController</servlet-name>
         <servlet-class>Controller.customer.ViewAppountController</servlet-class>
     </servlet>
@@ -193,6 +195,8 @@
     <servlet-mapping>
         <servlet-name>ViewSaleServlet</servlet-name>
         <url-pattern>/viewsale</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewAppountController</servlet-name>
         <url-pattern>/viewAppountController</url-pattern>
     </servlet-mapping>

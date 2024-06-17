@@ -16,7 +16,7 @@ public class Account {
     private String email;
     private Boolean gender;
     private Boolean isActive;
-    private String avata;
+    private String avatar;
 
     public Account() {
     }
@@ -32,23 +32,9 @@ public class Account {
         this.avatar = avatar;
     }
 
-    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avata) {
-        this.phone = phone;
-        this.pass = pass;
-        this.roleId = roleId;
-        this.email = email;
-        this.gender = gender;
-        this.isActive = isActive;
-        this.avata = avata;
-    }
+    
 
-    public String getAvata() {
-        return avata;
-    }
-
-    public void setAvata(String avata) {
-        this.avata = avata;
-    }
+    
     
 
     public String getPhone() {
