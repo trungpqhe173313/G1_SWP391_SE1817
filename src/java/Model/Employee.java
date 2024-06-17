@@ -31,14 +31,13 @@ public class Employee {
         this.phone = phone;
         this.updateTime = updateTime;
     }
-    
 
-    public int getEmployeeId() {
+    public int getEmployeesId() {
         return employeesId;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeesId = employeeId;
+    public void setEmployeesId(int employeesId) {
+        this.employeesId = employeesId;
     }
 
     public String getFullName() {
@@ -57,11 +56,16 @@ public class Employee {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return "Employees{" + "employeeId=" + employeesId + ", fullName=" + fullName + ", phone=" + phone + '}';
+    public String getUpdateTime() {
+        return updateTime;
     }
 
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
     
+
+  
+
     
 }

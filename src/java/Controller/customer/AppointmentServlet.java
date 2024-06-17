@@ -4,18 +4,9 @@
  */
 package Controller.customer;
 
-import Dal.OrdersDAO;
-<<<<<<< Updated upstream:src/java/Controller/AppointmentServlet.java
-import Model.Accounts;
-<<<<<<<< HEAD:src/java/Controller/AppointmentServlet.java
-import Model.Orders;
-=======
+import Dal.OrderDAO;
 import Model.Account;
 import Model.Order;
->>>>>>> Stashed changes:src/java/Controller/customer/AppointmentServlet.java
-========
-import Model.Order;
->>>>>>>> main:src/java/Controller/customer/AppointmentServlet.java
 import Model.Services;
 import Model.Shift;
 import Model.Status;

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  * @author xdrag
  */
 public class Order {
+
     private int id;
     private int customerId;
     private int employeeId;
@@ -43,8 +44,6 @@ public class Order {
         this.updateTime = updateTime;
     }
     
-    
-
     public int getEmployeeId() {
         return employeeId;
     }
@@ -52,10 +51,6 @@ public class Order {
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
-
-    
-
-    
 
     public int getId() {
         return id;
@@ -107,8 +102,9 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Orders{" + "id=" + id + ", customerId=" + customerId + ", shiftsID=" + shiftsID + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + '}';
+        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", shiftsID=" + shiftsID + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
     }
 
     
+
 }
