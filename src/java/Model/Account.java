@@ -16,37 +16,25 @@ public class Account {
     private String email;
     private Boolean gender;
     private Boolean isActive;
-    private String avata;
+    private String avatar;
 
     public Account() {
     }
 
-    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive) {
+    public Account(String phone, String pass, int roleId, String email,
+            Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;
         this.roleId = roleId;
         this.email = email;
         this.gender = gender;
         this.isActive = isActive;
+        this.avatar = avatar;
     }
 
-    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avata) {
-        this.phone = phone;
-        this.pass = pass;
-        this.roleId = roleId;
-        this.email = email;
-        this.gender = gender;
-        this.isActive = isActive;
-        this.avata = avata;
-    }
+    
 
-    public String getAvata() {
-        return avata;
-    }
-
-    public void setAvata(String avata) {
-        this.avata = avata;
-    }
+    
     
 
     public String getPhone() {
@@ -63,6 +51,14 @@ public class Account {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getRoleId() {
@@ -99,9 +95,9 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + '}';
+        return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + ", avatar=" + avatar + '}';
     }
-    
-    
+
+   
 
 }
