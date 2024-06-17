@@ -54,10 +54,6 @@ public class Order {
         this.employeeId = employeeId;
     }
 
-    
-
-    
-
     public int getId() {
         return id;
     }
