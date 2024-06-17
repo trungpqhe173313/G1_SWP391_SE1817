@@ -6,7 +6,6 @@ import Model.Order;
 import Model.Services;
 import Model.Shift;
 import Model.Status;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -180,7 +179,7 @@ public class ShopDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                c.setEmployeeId(rs.getInt("employeeId"));
+                c.setEmployeesId(rs.getInt("employeeId"));
                 c.setFullName(rs.getString("fullName"));
                 c.setPhone(rs.getString("phone"));
                 return c;
@@ -283,10 +282,10 @@ public class ShopDAO extends DBContext {
 
     public static void main(String[] args) {
         ShopDAO d = new ShopDAO();
-        List<Order> e = d.getOrderByMonth(5);
-        System.out.println(d.getOrderById(3).toString());
-        for (Order o : e) {
-            System.out.println(e.toString());
-        }
+        System.out.println(d.getOrderByMonth(6));
+//        List<Order> e = d.getOrderByMonth(2);
+//        for (Order o : e) {
+//            System.out.println(e.toString());
+//        }
     }
 }
