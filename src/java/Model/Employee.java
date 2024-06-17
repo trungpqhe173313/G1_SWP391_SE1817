@@ -11,7 +11,7 @@ import java.util.Date;
  * @author ducth
  */
 public class Employee {
-    private int employeesId;
+    private int employeeId;
     private String fullName;
     private String phone;
     private String updateTime;
@@ -20,24 +20,24 @@ public class Employee {
     }
 
     public Employee(int employeeId, String fullName, String phone) {
-        this.employeesId = employeeId;
+        this.employeeId = employeeId;
         this.fullName = fullName;
         this.phone = phone;
     }
 
-    public Employee(int employeesId, String fullName, String phone, String updateTime) {
-        this.employeesId = employeesId;
+    public Employee(int employeeId, String fullName, String phone, String updateTime) {
+        this.employeeId = employeeId;
         this.fullName = fullName;
         this.phone = phone;
         this.updateTime = updateTime;
     }
 
-    public int getEmployeesId() {
-        return employeesId;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeesId(int employeesId) {
-        this.employeesId = employeesId;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFullName() {
@@ -63,9 +63,10 @@ public class Employee {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
-    
 
-  
-
+    @Override
+    public String toString() {
+        return "Employee{" + "employeeId=" + employeeId + ", fullName=" + fullName + ", phone=" + phone + ", updateTime=" + updateTime + '}';
+    }
     
 }

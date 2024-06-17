@@ -24,7 +24,7 @@ public class UpdateEmployeesStatusController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateEmployeesStatusController</title>");  
+            out.println("<title>Servlet UpdateEmployeesStatusController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateEmployeesStatusController at " + request.getContextPath() + "</h1>");
@@ -34,43 +34,39 @@ public class UpdateEmployeesStatusController extends HttpServlet {
     }
 
     @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    String employeesIdStr = request.getParameter("employeesId");
-    String isActiveStr = request.getParameter("isActive");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String employeesIdStr = request.getParameter("employeeId");
+        String isActiveStr = request.getParameter("isActive");
 
-    try {
-        if (employeesIdStr != null && isActiveStr != null) {
-            int employeesId = Integer.parseInt(employeesIdStr);
-            boolean isActive = Boolean.parseBoolean(isActiveStr);
+        try {
+            if (employeesIdStr != null && isActiveStr != null) {
+                int employeeId = Integer.parseInt(employeesIdStr);
+                boolean isActive = Boolean.parseBoolean(isActiveStr);
 
-            EmployeesDAO employeesDAO = new EmployeesDAO();
-            boolean success = employeesDAO.updateEmployeeActiveStatus(employeesId, !isActive);
+                EmployeesDAO employeesDAO = new EmployeesDAO();
+                boolean success = employeesDAO.updateEmployeeActiveStatus(employeeId, !isActive);
 
-            if (success) {
-                request.setAttribute("updateStatus", "success");
+                if (success) {
+                    // Truyền dữ liệu đến JSP nếu cần thiết
+                    request.setAttribute("updateemployeesstatus.jsp", "success");
+                    // Chuyển hướng đến trang employeesDetail.jsp sau khi cập nhật thành công
+                    response.sendRedirect(request.getContextPath() + "/employeesdetail.jsp");
+                } else {
+                    // Trường hợp không cập nhật thành công
+                    request.setAttribute("updateemployeesstatus.jsp", "error");
+                    response.sendRedirect(request.getContextPath() + "/error.jsp");
+                }
             } else {
-                request.setAttribute("updateStatus", "error");
+                // Trường hợp thiếu tham số
+                response.sendRedirect(request.getContextPath() + "/error.jsp");
             }
-
-            // Truyền dữ liệu đến JSP
-            // request.getRequestDispatcher("/employeesdetail.jsp").forward(request, response);
-
-            // Chuyển hướng đến trang employeesDetail.jsp sau khi cập nhật thành công
-            response.sendRedirect(request.getContextPath() + "/employeesdetail");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/admin/error.jsp");
+        } catch (NumberFormatException | SQLException ex) {
+            // Xử lý ngoại lệ
+            ex.printStackTrace(); // Hoặc sử dụng logging để ghi lại lỗi
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
         }
-    } catch (NumberFormatException ex) {
-        ex.printStackTrace();
-        response.sendRedirect(request.getContextPath() + "/admin/error.jsp");
-    } catch (SQLException ex) {
-        Logger.getLogger(UpdateEmployeesStatusController.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendRedirect(request.getContextPath() + "/admin/error.jsp");
     }
-}
-
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
