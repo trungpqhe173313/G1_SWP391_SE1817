@@ -80,6 +80,22 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controller.common.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewRevenueServlet</servlet-name>
+        <servlet-class>Controller.admin.ViewRevenueServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetRevenueByMonthServlet</servlet-name>
+        <servlet-class>Controller.admin.GetRevenueByMonthServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewRevenueOrderServlet</servlet-name>
+        <servlet-class>Controller.admin.ViewRevenueOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewSaleServlet</servlet-name>
+        <servlet-class>Controller.admin.ViewSaleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -159,5 +175,21 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewRevenueServlet</servlet-name>
+        <url-pattern>/viewrevenue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetRevenueByMonthServlet</servlet-name>
+        <url-pattern>/getrevenuebymonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewRevenueOrderServlet</servlet-name>
+        <url-pattern>/viewrevenueorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSaleServlet</servlet-name>
+        <url-pattern>/viewsale</url-pattern>
     </servlet-mapping>
 </web-app>

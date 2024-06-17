@@ -11,23 +11,29 @@ import java.sql.Date;
  * @author xdrag
  */
 public class Order {
+
     private int id;
     private int customerId;
+    private int employeeId;
     private int shiftsID;
     private int statusId;
     private Date orderDate;
     private int totalAmount;
+    private String updateTime;
 
     public Order() {
     }
 
-    public Order(int id, int customerId, int shiftsID, int statusId, Date orderDate, int totalAmount) {
+    public Order(int id, int customerId, int employeeId, int shiftsID, 
+            int statusId, Date orderDate, int totalAmount, String updateTime) {
         this.id = id;
         this.customerId = customerId;
+        this.employeeId = employeeId;
         this.shiftsID = shiftsID;
         this.statusId = statusId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
+        this.updateTime = updateTime;
     }
 
     public int getId() {
@@ -62,6 +68,22 @@ public class Order {
         this.statusId = statusId;
     }
 
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public Date getOrderDate() {
         return orderDate;
     }
@@ -80,8 +102,9 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Orders{" + "id=" + id + ", customerId=" + customerId + ", shiftsID=" + shiftsID + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + '}';
+        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", shiftsID=" + shiftsID + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
     }
 
     
+
 }
