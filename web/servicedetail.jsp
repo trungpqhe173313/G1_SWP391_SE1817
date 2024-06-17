@@ -120,6 +120,12 @@
                             <!-- Page Heading -->
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
+                                        Thêm Dịch Vụ
+                                    </a>
+                                  
+                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

@@ -199,7 +199,7 @@
                                             <input type="file" id="img" name="img" class="form-control-file mx-auto d-block">
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Thêm" class="btn btn-primary btn-block">
+                                            <input type="submit" value="Thêm" class="btn btn-primary btn-block"style="background-color: #bf925b;">
                                         </div>
                                     </form>
                                     <button onclick="window.location.href = 'servicedetail'" class="btn btn-secondary btn-block mt-3">Quay lại</button>

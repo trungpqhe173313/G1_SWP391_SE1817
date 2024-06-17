@@ -100,6 +100,10 @@
         <servlet-name>ViewAppountController</servlet-name>
         <servlet-class>Controller.customer.ViewAppountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddService</servlet-name>
+        <servlet-class>Controller.Service.AddService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -199,5 +203,9 @@
     <servlet-mapping>
         <servlet-name>ViewAppountController</servlet-name>
         <url-pattern>/viewAppountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddService</servlet-name>
+        <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
 </web-app>
