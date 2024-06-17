@@ -21,17 +21,6 @@ public class Account {
     public Account() {
     }
 
-    public Account(String phone, String pass, int roleId, String email,
-            Boolean gender, Boolean isActive, String avatar) {
-        this.phone = phone;
-        this.pass = pass;
-        this.roleId = roleId;
-        this.email = email;
-        this.gender = gender;
-        this.isActive = isActive;
-        this.avatar = avatar;
-    }
-
     public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;

@@ -44,8 +44,6 @@ public class Order {
         this.updateTime = updateTime;
     }
     
-    
-
     public int getEmployeeId() {
         return employeeId;
     }
