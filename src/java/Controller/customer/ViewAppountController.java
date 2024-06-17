@@ -5,9 +5,19 @@
 
 package Controller.customer;
 
-
+import Dal.CustomerDAO;
 import Dal.OrderDAO;
+import Dal.ServicesDAO;
+import Dal.ShiftsDAO;
+import Dal.StatusDAO;
+import Model.Account;
+import Model.Customer;
+import Model.Order;
+import Model.Services;
+import Model.Shift;
+import Model.Status;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +29,7 @@ import java.util.List;
  *
  * @author phamt
  */
-public class CancelAppointmentController extends HttpServlet {
+public class ViewAppountController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,9 +41,29 @@ public class CancelAppointmentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String orderId = request.getParameter("oId");
-        new OrderDAO().cancelBooking(orderId);
-        response.sendRedirect("viewAppountController");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") == null) {
+            response.sendRedirect("login");
+        } else{
+            Account account =(Account) session.getAttribute("account");
+            //get info customer
+            Customer customer = new CustomerDAO().getCustomerByP(account.getPhone());
+            //get info order of customer
+            Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
+            //get info shift
+            List<Shift> Shift = new ShiftsDAO().getAll();
+            //get info sevices of order
+            List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
+            //get info status
+            List<Status> status = new StatusDAO().getAll();
+            request.setAttribute("order", order);
+            request.setAttribute("status", status);
+            request.setAttribute("services", services);
+            request.setAttribute("shift", Shift);
+            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
+        }
+                
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

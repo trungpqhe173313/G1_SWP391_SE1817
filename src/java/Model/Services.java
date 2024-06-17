@@ -15,7 +15,6 @@ public class Services {
     private int price;
     private String description;
     private boolean isActive;
-//    private int classificationId;
     
 
     public Services() {
@@ -28,7 +27,6 @@ public class Services {
         this.price = price;
         this.description = description;
         this.isActive = isActive;
-//        this.classificationId = classificationId;
     }
 
     public int getServicesId() {
