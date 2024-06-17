@@ -5,12 +5,25 @@
 
 package Controller.customer;
 
+import Dal.CustomerDAO;
+import Dal.OrderDAO;
+import Dal.ServicesDAO;
+import Dal.ShiftsDAO;
+import Dal.StatusDAO;
+import Model.Account;
+import Model.Customer;
+import Model.Order;
+import Model.Services;
+import Model.Shift;
+import Model.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -28,18 +41,29 @@ public class ViewAppountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewAppountController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewAppountController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") == null) {
+            response.sendRedirect("login");
+        } else{
+            Account account =(Account) session.getAttribute("account");
+            //get info customer
+            Customer customer = new CustomerDAO().getCustomerByP(account.getPhone());
+            //get info order of customer
+            Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
+            //get info shift
+            List<Shift> Shift = new ShiftsDAO().getAll();
+            //get info sevices of order
+            List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
+            //get info status
+            List<Status> status = new StatusDAO().getAll();
+            request.setAttribute("order", order);
+            request.setAttribute("status", status);
+            request.setAttribute("services", services);
+            request.setAttribute("shift", Shift);
+            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
         }
+                
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
