@@ -5,13 +5,23 @@
 
 package Controller.Service;
 
+import Controller.common.addimg;
+import Dal.ServicesDAO;
+import Model.Services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, //1mb
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 20)
 /**
  *
  * @author LENOVO
@@ -66,7 +76,35 @@ public class AddService extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+          // Lấy thông tin từ form
+        String name = request.getParameter("name");
+        String priceStr = request.getParameter("price");
+        String description = request.getParameter("description");
+//        String image = request.getParameter("img");
+
+        // Chuyển đổi kiểu dữ liệu
+        int price = Integer.parseInt(priceStr);
+        addimg img=new addimg();        
+        Part part = request.getPart("img");
+        String fileName = img.extractFileName(part);
+        fileName = new File(fileName).getName();
+        if (fileName != null && !fileName.isEmpty()) {
+            String uploadPath = img.getFolderUploadStaff().getAbsolutePath() + File.separator + fileName;
+            part.write(uploadPath);
+        }
+        String image = (fileName != null && !fileName.isEmpty()) ? fileName : request.getParameter("img");
+
+        // Tạo đối tượng ServicesDAO và thêm dịch vụ mới
+        ServicesDAO dao = new ServicesDAO();
+        try {
+            dao.AddService(name, image, price, description);
+            // Chuyển hướng tới trang danh sách dịch vụ sau khi thêm thành công
+            response.sendRedirect("servicedetail");
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Hiển thị thông báo lỗi nếu có vấn đề xảy ra
+            response.getWriter().write("Có lỗi xảy ra khi chèn dữ liệu.");
+        }
     }
 
     /** 

@@ -6,9 +6,11 @@ package Dal;
 
 import static Dal.DBContext.connection;
 import Model.Services;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,12 +48,59 @@ public class ServicesDAO extends DBContext {
 
     }
 
-    public static void main(String[] args) {
+    public void AddService(String name, String image, int price, String description) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "INSERT INTO Services (name, image, price, description, isActive) VALUES (?, ?, ?, ?, 1)";
+                stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, name);
+                stm.setString(2, image);
+                stm.setInt(3, price);
+                stm.setString(4, description);
+                
+                int rowsAffected = stm.executeUpdate();
 
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.getServicesInOrder(2);
-        System.out.println(se.size());
+                // Retrieve the generated service ID
+                
+                if (rowsAffected > 0) {
+                    try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int serviceId = generatedKeys.getInt(1);
+                            System.out.println("Service ID: " + serviceId);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace(); // In ra stack trace để gỡ lỗi
+                        System.out.println("Error retrieving generated service ID: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra stack trace để gỡ lỗi
+            System.out.println("Error: " + e.getMessage());
+        } 
+        
     }
+
+//  public static void main(String[] args) {
+//        // Tạo đối tượng ServicesDAO
+//        ServicesDAO dao = new ServicesDAO();
+//        
+//        // Thêm một dịch vụ mới
+//        String name = "Test Service";
+//        String image = "test_image.jpg";
+//        int price = 100;
+//        String description = "This is a test service";
+//       
+//
+//        dao.AddService(name, image, price, description);
+//
+//        // Lấy danh sách các dịch vụ để kiểm tra xem dịch vụ mới đã được thêm chưa
+//        
+//    }
 
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
