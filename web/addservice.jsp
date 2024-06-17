@@ -181,7 +181,8 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <h1 class="text-center">Thêm Dịch Vụ</h1>
-                                    <form action="addemployees" method="post" onsubmit="return validateForm()">
+                                    
+                                    <form action="addservice" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="name">Tên Dịch Vụ</label>
                                             <input type="text" id="name" name="name" maxlength="50" class="form-control" required>
