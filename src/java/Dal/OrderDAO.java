@@ -28,9 +28,9 @@ public class OrderDAO extends DBContext {
             stm.setInt(1, customerId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Order order = new Order(rs.getInt(1), rs.getInt(2)
-                        , rs.getInt(3), rs.getInt(4), 
-                        rs.getDate(5), rs.getInt(6), 
+                Order order = new Order(rs.getInt(1), rs.getInt(2),
+                         rs.getInt(3), rs.getInt(4),
+                        rs.getDate(5), rs.getInt(6),
                         rs.getInt(7), rs.getString(8));
                 return order;
             }
@@ -39,19 +39,39 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
+
     public static void main(String[] args) {
         Order o = new OrderDAO().getOrderByAId(1);
         System.out.println(o.getUpdateTime());
     }
 
     public void cancelBooking(String orderId) {
-         try {
+        try {
             String sql = "UPDATE [dbo].[order]\n"
                     + "   SET [statusID] = 5\n"
                     + "    \n"
                     + " WHERE [order].orderId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, orderId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void upDateOrder(String date, String shift, String oId, int total) {
+        try {
+            String sql = "UPDATE [dbo].[order]\n"
+                    + "   SET [orderDate] = ?\n"
+                    + "      ,[totalAmount] = ?\n"
+                    + "      ,[shiftId] = ?\n"
+                    + "      \n"
+                    + " WHERE [order].orderId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, date);
+            stm.setInt(2, total);
+            stm.setString(3, shift);
+            stm.setString(4, oId);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
