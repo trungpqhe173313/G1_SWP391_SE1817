@@ -21,8 +21,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String phone, String pass, int roleId, String email,
-            Boolean gender, Boolean isActive, String avatar) {
+    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;
         this.roleId = roleId;
@@ -32,11 +31,14 @@ public class Account {
         this.avatar = avatar;
     }
 
-    
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvata(String avatar) {
+        this.avatar = avatar;
+    }
     
-    
-
     public String getPhone() {
         return phone;
     }
@@ -53,7 +55,7 @@ public class Account {
         this.pass = pass;
     }
 
-    public String getAvatar() {
+    public String getAvatar(String avatar) {
         return avatar;
     }
 
@@ -97,7 +99,4 @@ public class Account {
     public String toString() {
         return "Account{" + "phone=" + phone + ", pass=" + pass + ", roleId=" + roleId + ", email=" + email + ", gender=" + gender + ", isActive=" + isActive + ", avatar=" + avatar + '}';
     }
-
-   
-
 }
