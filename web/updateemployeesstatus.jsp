@@ -19,55 +19,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Update Employee Status</title>
+    <title>Cập Nhật Trạng Thái Nhân Viên</title>
 </head>
 
 <body id="page-top">
-    <%-- Perform the update here --%>
-    <%-- Get the parameters passed from the URL --%>
-    <% String employeesIdStr = request.getParameter("employeesId"); %>
+    <%-- Lấy các tham số từ URL --%>
+    <% String employeesIdStr = request.getParameter("employeeId"); %>
     <% String isActiveStr = request.getParameter("isActive"); %>
-    
-    <%-- Check if both parameters are not null --%>
+
+    <%-- Kiểm tra nếu cả hai tham số đều không null --%>
     <% if (employeesIdStr != null && isActiveStr != null) { %>
-        <%-- Parse the parameters to appropriate data types --%>
-        <% int employeesId = Integer.parseInt(employeesIdStr); %>
+        <%-- Chuyển đổi các tham số sang các kiểu dữ liệu phù hợp --%>
+        <% int employeeId = Integer.parseInt(employeesIdStr); %>
         <% boolean isActive = Boolean.parseBoolean(isActiveStr); %>
 
-        <%-- Create an instance of EmployeesDAO to update the status --%>
-        <% EmployeesDAO employeesDAO = new EmployeesDAO(); %>
-        
-        <%-- Try to update the status and handle any exceptions --%>
-        <% try { %>
-            <% boolean success = employeesDAO.updateEmployeeActiveStatus(employeesId, !isActive); %>
-            <% if (success) { %>
-                <h1>Employee status updated successfully!</h1>
-                <%-- Redirect to employeesDetail.jsp after successful update --%>
-                <% 
-                    // Get the RequestDispatcher for employeesDetail.jsp
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/employeesdetail.jsp");
-                    // Forward the request to employeesDetail.jsp
-                    dispatcher.forward(request, response);
-                %>
-            <% } else { %>
-                <h1>Failed to update employee status!</h1>
-                <%-- Redirect to error.jsp or appropriate error page --%>
+        <%-- Kiểm tra nếu yêu cầu này đã được xác nhận từ người dùng --%>
+        <% String confirmed = request.getParameter("confirmed"); %>
+        <% if ("true".equals(confirmed)) { %>
+            <%-- Tạo một thể hiện của EmployeesDAO để cập nhật trạng thái --%>
+            <% EmployeesDAO employeesDAO = new EmployeesDAO(); %>
+            <%-- Thử cập nhật trạng thái và xử lý các ngoại lệ có thể xảy ra --%>
+            <% try { %>
+                <% boolean success = employeesDAO.updateEmployeeActiveStatus(employeeId, !isActive); %>
+                <% if (success) { %>
+                    <h1>Cập nhật trạng thái nhân viên thành công!</h1>
+                    <%-- Chuyển hướng đến employeesdetail.jsp sau khi cập nhật thành công --%>
+                    <% 
+                        // Lấy RequestDispatcher cho employeesdetail.jsp
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/employeesdetail.jsp");
+                        // Chuyển tiếp yêu cầu đến employeesdetail.jsp
+                        dispatcher.forward(request, response);
+                    %>
+                <% } else { %>
+                    <h1>Không thể cập nhật trạng thái nhân viên!</h1>
+                    <%-- Chuyển hướng đến error.jsp hoặc trang lỗi thích hợp --%>
+                    <% response.sendRedirect("error.jsp"); %>
+                <% } %>
+            <% } catch (Exception ex) { %>
+                <h1>Có lỗi xảy ra trong quá trình cập nhật trạng thái nhân viên!</h1>
+                <% ex.printStackTrace(); %>
+                <%-- Chuyển hướng đến error.jsp hoặc trang lỗi thích hợp --%>
                 <% response.sendRedirect("error.jsp"); %>
             <% } %>
-        <% } catch (Exception ex) { %>
-            <h1>Error occurred while updating employee status!</h1>
-            <% ex.printStackTrace(); %>
-            <%-- Redirect to error.jsp or appropriate error page --%>
-            <% response.sendRedirect("error.jsp"); %>
+        <% } else { %>
+            <h1>Cần xác nhận từ người dùng!</h1>
+            <script>
+                // Chuyển hướng đến chính nó với cờ xác nhận
+                var employeeId = '<%= employeeId %>';
+                var isActive = '<%= isActive %>';
+                window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=' + isActive + '&confirmed=true';
+            </script>
         <% } %>
     <% } else { %>
-        <h1>Missing parameters!</h1>
-        <%-- Redirect to error.jsp or appropriate error page --%>
+        <h1>Thiếu tham số!</h1>
+        <%-- Chuyển hướng đến error.jsp hoặc trang lỗi thích hợp --%>
         <% response.sendRedirect("error.jsp"); %>
     <% } %>
 </body>
 
 </html>
+
 
 
 
