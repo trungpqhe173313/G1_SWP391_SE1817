@@ -57,19 +57,20 @@ public class ViewAppountController extends HttpServlet {
             List<Status> status = new StatusDAO().getAll();
             //get all services for update
             List<Services> listServices = new ServicesDAO().GetAllServices();
-            if (order == null) {
-                request.setAttribute("ms", "Lịch đang chờ trống");
-            } else {
+            
+             request.setAttribute("order", order);
+            request.setAttribute("ls", listServices);
+            request.setAttribute("status", status);
+            request.setAttribute("shift", Shift);
+            if(order != null){
                 //get info sevices of order
                 List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
-                request.setAttribute("order", order);
-                request.setAttribute("ls", listServices);
-                request.setAttribute("status", status);
                 request.setAttribute("services", services);
-                request.setAttribute("shift", Shift);
-                request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
             }
-
+            
+           
+            //request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
+            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
         }
 
     }

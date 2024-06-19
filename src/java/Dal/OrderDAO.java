@@ -20,16 +20,15 @@ public class OrderDAO extends DBContext {
 
     public Order getOrderByAId(int customerId) {
         try {
-
             String sql = "SELECT *\n"
                     + "  FROM [Barber].[dbo].[order]\n"
-                    + "  where [order].customerId = ?";
+                    + "  where [order].customerId = ? and [order].statusID = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, customerId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Order order = new Order(rs.getInt(1), rs.getInt(2),
-                         rs.getInt(3), rs.getInt(4),
+                        rs.getInt(3), rs.getInt(4),
                         rs.getDate(5), rs.getInt(6),
                         rs.getInt(7), rs.getString(8));
                 return order;

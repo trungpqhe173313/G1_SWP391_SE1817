@@ -159,7 +159,16 @@
                             <p>Hi vọng bạn sẽ có trải nghiệm tuyệt vời với những dịch vụ của chúng tôi</p>
                         </div>
                     </div>
+                    <!-- JavaScript Alert for Null Order -->
+                <c:if test="${order == null}">
+                    <script type="text/javascript">
+                        alert("Lịch trống!");
+                        window.location.href = "home"; // Thay "home" bằng URL trang chủ của bạn
+                    </script>
+                </c:if>
 
+                <!-- Rest of your JSP content -->
+                <c:if test="${order != null}">
                     <div class="row justify-content-center">
                         <div class="col-md-10 ftco-animate">
                             <table class="appointment-info">
@@ -173,34 +182,35 @@
 
                                     <th></th>
                                 </tr>
+
+
                                 <tr>
                                     <td>${order.getOrderDate()}</td>
-                                <c:forEach items="${shift}" var="shift"> 
-                                    <c:if test="${shift.getId() == order.getShiftsID()}">
-                                        <td>${shift.getStartTime()}</td>
-                                    </c:if>
-                                </c:forEach>
-                                <td colspan="2">
-                                    <ul>
-                                        <c:forEach items="${services}" var="s">
-                                            <li>${s.getName()}</li>
-                                            </c:forEach>
-                                    </ul>
-                                </td>
-
-
-                                <c:forEach items="${status}" var="status"> 
-                                    <c:if test="${status.getId() == order.getStatusId()}"> 
-                                        <td>${status.getName()}</td>
-                                    </c:if>
-                                </c:forEach>
-                                <td>${order.getTotalAmount()} VND</td>
-                            </tr>
-                            <td><button id="showFormUpdate" class="details-button">Cập nhật</button></td>
-                            <td><a href="CancelAppointment?oId=${order.getId()}" class="details-button">Hủy</a></td>
-                        </table>
+                                    <c:forEach items="${shift}" var="shift"> 
+                                        <c:if test="${shift.getId() == order.getShiftsID()}">
+                                            <td>${shift.getStartTime()}</td>
+                                        </c:if>
+                                    </c:forEach>
+                                    <td colspan="2">
+                                        <ul>
+                                            <c:forEach items="${services}" var="s">
+                                                <li>${s.getName()}</li>
+                                                </c:forEach>
+                                        </ul>
+                                    </td>
+                                    <c:forEach items="${status}" var="status"> 
+                                        <c:if test="${status.getId() == order.getStatusId()}"> 
+                                            <td>${status.getName()}</td>
+                                        </c:if>
+                                    </c:forEach>
+                                    <td>${order.getTotalAmount()} VND</td>
+                                </tr>
+                                <td><button id="showFormUpdate" class="details-button">Cập nhật</button></td>
+                                <td><a href="CancelAppointment?oId=${order.getId()}" class="details-button">Hủy</a></td>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                </c:if>
             </div>
         </section>
 
@@ -214,7 +224,7 @@
                         <label for="date">Ngày</label>
                         <input type="date" id="date" name="date" value="${order.getOrderDate()}" required>
                     </div>
-                        <input type="hidden" name="orderID" value="${order.getId()}">
+                    <input type="hidden" name="orderID" value="${order.getId()}">
                     <div class="form-group">
                         <label for="services">Dịch Vụ</label>
                         <select id="services" name="services" multiple="multiple" required>
@@ -231,7 +241,7 @@
                             </c:forEach>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="time">Thời Gian</label>
                         <select id="shift" name="shift" required>
@@ -262,7 +272,6 @@
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                     stroke="#F96D00" />
             </svg></div>
-
         <script>
             $(document).ready(function () {
                 // Khởi tạo Select2 với allowClear và placeholder
