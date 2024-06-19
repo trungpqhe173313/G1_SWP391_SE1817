@@ -139,7 +139,7 @@
                         <div class="pricing-entry pb-5 text-center">
                             <div>
                                 <h3 class="mb-4">${s.name}</h3>
-                                <img src="${s.image}" width="width" height="height" alt="alt"/>
+                                <img src="img/service/${s.image}" width="width" height="height" alt="alt"/>
                                 <p class="service-description">${s.description}</p>
                                 
                                 <p class="price-fixed"><span class="price"><fmt:formatNumber value="${s.price}" type="number" pattern="###,###">

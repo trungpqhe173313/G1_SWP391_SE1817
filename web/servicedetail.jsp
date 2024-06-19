@@ -145,7 +145,7 @@
                                             <tr>
                                                 <td>${o.servicesId}</td>
                                                 <td>${o.name}</td>
-                                                <td><img src="img/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
+                                                <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
                                                 <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
 
                                                  </fmt:formatNumber><sup>đ</sup></td>
