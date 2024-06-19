@@ -42,6 +42,45 @@ public class ShopDAO extends DBContext {
         return revenue;
     }
 
+    public int getRevenueByBarber(int month, int employeeId) {
+        int revenue = 0;
+        String sql = "SELECT COALESCE(SUM([totalAmount]), 0) AS TotalRevenue\n"
+                + "FROM [order]\n"
+                + "WHERE [employeeId] = ?\n"
+                + "  AND MONTH([orderDate]) = ?\n"
+                + "  AND YEAR([orderDate]) = YEAR(GETDATE())\n"
+                + "  AND [statusID] IN (4);";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(2, month);
+            st.setInt(1, employeeId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                revenue = rs.getInt("TotalRevenue");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return revenue;
+    }
+
+    public String getAvatarByEmployeeId(int employeeId) {
+        String avatar = "";
+        String sql = "SELECT a.[avatar]\n"
+                + "FROM [employee] e\n"
+                + "JOIN [account] a ON e.[phone] = a.[phone]\n"
+                + "WHERE e.[employeeId] = ?;";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, employeeId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                avatar = rs.getString("avatar");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return avatar;
+    }
+
     public int getRevenueThisYear() {
         int revenue = 0;
         String sql = "SELECT SUM(totalAmount) AS Revenue\n"
@@ -68,6 +107,27 @@ public class ShopDAO extends DBContext {
                 + "GROUP BY MONTH(orderDate);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                a = rs.getInt("TotalOrders");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return a;
+    }
+
+    public int getNumberOrderByBarber(int month, int employeeId) {
+        int a = 0;
+        String sql = "SELECT COUNT(*) AS TotalOrders\n"
+                + "FROM [order]\n"
+                + "WHERE [employeeId] = ?\n"
+                + "  AND MONTH([orderDate]) = ?\n"
+                + "  AND YEAR([orderDate]) = YEAR(GETDATE())\n"
+                + "  AND [statusID] IN (4);";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, employeeId);
+            st.setInt(2, month);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 a = rs.getInt("TotalOrders");
@@ -179,7 +239,7 @@ public class ShopDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                c.setEmployeesId(rs.getInt("employeeId"));
+                c.setEmployeeId(rs.getInt("employeeId"));
                 c.setFullName(rs.getString("fullName"));
                 c.setPhone(rs.getString("phone"));
                 return c;
@@ -188,6 +248,59 @@ public class ShopDAO extends DBContext {
             LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
         }
         return c;
+    }
+
+    public List<Employee> getAllEmployee() {
+        List<Employee> list = new ArrayList<>();
+        String sql = "SELECT [employeeId]\n"
+                + "      ,[fullName]\n"
+                + "      ,[phone]\n"
+                + "      ,[statusEmployee]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[employee]";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Employee c = new Employee();
+                c.setEmployeeId(rs.getInt("employeeId"));
+                c.setFullName(rs.getString("fullName"));
+                c.setPhone(rs.getString("phone"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return list;
+    }
+
+    public List<Employee> getAllTop3Barber(int month) {
+        List<Employee> list = new ArrayList<>();
+        String sql = "SELECT TOP 3\n"
+                + "    e.[employeeId],\n"
+                + "    e.[fullName],\n"
+                + "	e.phone,\n"
+                + "    SUM(o.[totalAmount]) AS TotalRevenue\n"
+                + "FROM [order] o\n"
+                + "JOIN [employee] e ON o.[employeeId] = e.[employeeId]\n"
+                + "WHERE MONTH(o.[orderDate]) = ?\n"
+                + "  AND YEAR(o.[orderDate]) = YEAR(GETDATE())\n"
+                + "  AND o.[statusID] IN (4)\n"
+                + "GROUP BY e.[employeeId], e.[fullName], e.phone\n"
+                + "ORDER BY TotalRevenue DESC;";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, month);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Employee c = new Employee();
+                c.setEmployeeId(rs.getInt("employeeId"));
+                c.setFullName(rs.getString("fullName"));
+                c.setPhone(rs.getString("phone"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return list;
     }
 
     public List<Services> getServicesByOrderId(int id) {
@@ -268,7 +381,7 @@ public class ShopDAO extends DBContext {
                 + "GROUP BY \n"
                 + "    MONTH(orderDate)\n"
                 + "ORDER BY \n"
-                + "    MONTH(orderDate);";
+                + "    MONTH(orderDate) DESC;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -282,10 +395,10 @@ public class ShopDAO extends DBContext {
 
     public static void main(String[] args) {
         ShopDAO d = new ShopDAO();
-        System.out.println(d.getOrderByMonth(6));
-//        List<Order> e = d.getOrderByMonth(2);
-//        for (Order o : e) {
-//            System.out.println(e.toString());
-//        }
+        System.out.println(d.getAvatarByEmployeeId(4));
+        List<Employee> e = d.getAllTop3Barber(6);
+        for (Employee o : e) {
+            System.out.println(o.toString());
+        }
     }
 }
