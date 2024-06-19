@@ -22,7 +22,8 @@ public class addimg {
         }
         return "";
     }
-
+    
+    
      public File getFolderUploadStaff(String contextPath) {
         File folderUpload = new File(contextPath + File.separator + "img" + File.separator + "service");
         if (!folderUpload.exists()) {
