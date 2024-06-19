@@ -100,6 +100,18 @@
         <servlet-name>ViewAppountController</servlet-name>
         <servlet-class>Controller.customer.ViewAppountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeesResignController</servlet-name>
+        <servlet-class>Controller.admin.EmployeesResignController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAppointmentController</servlet-name>
+        <servlet-class>Controller.customer.UpdateAppointmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddService</servlet-name>
+        <servlet-class>Controller.Service.AddService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -199,5 +211,17 @@
     <servlet-mapping>
         <servlet-name>ViewAppountController</servlet-name>
         <url-pattern>/viewAppountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeesResignController</servlet-name>
+        <url-pattern>/employeesresign</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>   
+        <servlet-name>UpdateAppointmentController</servlet-name>
+        <url-pattern>/updateAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddService</servlet-name>
+        <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
 </web-app>

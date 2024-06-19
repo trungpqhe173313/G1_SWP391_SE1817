@@ -3,33 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.customer;
+package Controller.admin;
 
-import Dal.CustomerDAO;
-import Dal.OrderDAO;
-import Dal.ServicesDAO;
-import Dal.ShiftsDAO;
-import Dal.StatusDAO;
-import Model.Account;
-import Model.Customer;
-import Model.Order;
-import Model.Services;
-import Model.Shift;
-import Model.Status;
+import Dal.EmployeesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
- * @author phamt
+ * @author ducth
  */
-public class ViewAppountController extends HttpServlet {
+public class EmployeesResignController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,32 +31,18 @@ public class ViewAppountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            response.sendRedirect("login");
-        } else{
-            Account account =(Account) session.getAttribute("account");
-            //get info customer
-            Customer customer = new CustomerDAO().getCustomerByP(account.getPhone());
-            //get info order of customer
-            Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
-            //get info shift
-            List<Shift> Shift = new ShiftsDAO().getAll();
-            //get info sevices of order
-            List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
-            //get info status
-            List<Status> status = new StatusDAO().getAll();
-            //get all services for update
-            List<Services> listServices = new ServicesDAO().GetAllServices();
-            request.setAttribute("order", order);
-            request.setAttribute("ls", listServices);
-            request.setAttribute("status", status);
-            request.setAttribute("services", services);
-            request.setAttribute("shift", Shift);
-            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EmployeesResignController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EmployeesResignController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-                
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,7 +56,15 @@ public class ViewAppountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        EmployeesDAO dao = new EmployeesDAO();
+    
+        try {
+            List<Map<String, Object>> employeeResign = dao.getEmployeeResign();
+            request.setAttribute("employeeResign", employeeResign);
+            request.getRequestDispatcher("/employeesResign.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     } 
 
     /** 
