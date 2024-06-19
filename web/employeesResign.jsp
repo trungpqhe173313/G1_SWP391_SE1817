@@ -1,6 +1,6 @@
 <%-- 
-    Document   : employeesDetail
-    Created on : Jun 9, 2024, 7:37:15 AM
+    Document   : employeesResign
+    Created on : Jun 17, 2024, 4:48:09 PM
     Author     : ducth
 --%>
 
@@ -119,11 +119,8 @@
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="addemployees" style="background-color: #bf925b;">
-                                        Thêm Nhân Viên
-                                    </a>
-                                    <a class="btn btn-primary btn-sm" href="employeesresign" style="background-color: #bf925b;">
-                                        Đã Nghỉ Việc
+                                    <a class="btn btn-primary btn-sm mr-2" href="employeesdetail" style="background-color: #bf925b;">
+                                        Quay Lại
                                     </a>
                                 </div>
                                 <div class="card-body">
@@ -136,15 +133,14 @@
                                                     <th>Họ Và Tên</th>
                                                     <th>Giới Tính</th>
                                                     <th>Email</th>
-                                                    <th>Trạng Thái</th>
-                                                    <th>Xóa Nhân Viên</th>
+                                                    <th>Khôi Phục</th>
                                                 </tr>
                                             </thead>                                   
                                             <tbody>
                                             <%
-                                                List<Map<String, Object>> employeeServicesInfo = (List<Map<String, Object>>) request.getAttribute("employeeServicesInfo");
-                                                if (employeeServicesInfo != null) {
-                                                    for (Map<String, Object> employee : employeeServicesInfo) {
+                                                List<Map<String, Object>> employeeResign = (List<Map<String, Object>>) request.getAttribute("employeeResign");
+                                                if (employeeResign != null) {
+                                                    for (Map<String, Object> employee : employeeResign) {
                                             %>
                                             <tr>
                                                 <td><%= employee.get("avatar") %></td>
@@ -152,8 +148,7 @@
                                                 <td><%= employee.get("fullName") %></td>
                                                 <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
                                                 <td><%= employee.get("email") %></td>
-                                                <td><%= employee.get("status") %></td>
-                                                <td><a href="updateemployeesstatus?employeesId=<%= employee.get("employeesId") %>&isActive=<%= employee.get("isActive") %>">Xóa</a></td>
+                                                <td><a href="updateemployeesstatus?employeesId=<%= employee.get("employeesId") %>&isActive=<%= employee.get("isActive") %>">Khôi Phục</a></td>
                                             </tr>
                                             <%
                                                     }
@@ -220,18 +215,5 @@
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script>
-            function confirmDelete(employeeId, isActive) {
-                var confirmation = confirm("Bạn có chắc chắn muốn xóa nhân viên này?");
-                if (confirmation) {
-                    // Chuyển hướng đến URL cập nhật với các tham số
-                    window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=' + isActive;
-                } else {
-                    // Không làm gì hoặc xử lý khi người dùng huỷ bỏ
-                    return false;
-                }
-            }
-        </script>
-
     </body>
 </html>

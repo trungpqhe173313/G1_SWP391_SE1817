@@ -27,19 +27,22 @@ public class EmployeesDAO extends DBContext {
     public List<Map<String, Object>> getEmployeeServicesInfo() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
-        String sql =    "SELECT " +
-                        "   a.avatar, " +
-                        "   a.phone, " +
-                        "   e.fullName, " +
-                        "   a.email, " +
-                        "   a.gender, " +
-                        "   se.status AS status " +
-                        "FROM " +
-                        "   [account] a " +
-                        "JOIN " +
-                        "   [employee] e ON a.phone = e.phone " +
-                        "LEFT JOIN " +
-                        "   [statusEmployee] se ON e.statusEmployee = se.id";
+            String sql = "SELECT " +
+                         "   a.avatar, " +
+                         "   a.phone, " +
+                         "   e.fullName, " +
+                         "   a.email, " +
+                         "   a.isActive," +
+                         "   a.gender, " +
+                         "   se.status AS status " +
+                         "FROM " +
+                         "   [account] a " +
+                         "JOIN " +
+                         "   [employee] e ON a.phone = e.phone " +
+                         "LEFT JOIN " +
+                         "   [statusEmployee] se ON e.statusEmployee = se.id " +
+                         "WHERE " +
+                         "   a.isActive = 1";
 
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -59,13 +62,53 @@ public class EmployeesDAO extends DBContext {
 
         return resultList;
     }
-    public boolean updateEmployeeActiveStatus(int employeesId, boolean isActive) throws SQLException {
+    
+        public List<Map<String, Object>> getEmployeeResign() throws SQLException {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+            String sql = "SELECT " +
+                         "   a.avatar, " +
+                         "   a.phone, " +
+                         "   e.fullName, " +
+                         "   a.email, " +
+                         "   a.isActive," +
+                         "   a.gender, " +
+                         "   se.status AS status " +
+                         "FROM " +
+                         "   [account] a " +
+                         "JOIN " +
+                         "   [employee] e ON a.phone = e.phone " +
+                         "LEFT JOIN " +
+                         "   [statusEmployee] se ON e.statusEmployee = se.id " +
+                         "WHERE " +
+                         "   a.isActive = 0";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("avatar", rs.getString("avatar"));
+                row.put("phone", rs.getString("phone"));
+                row.put("fullName", rs.getString("fullName"));
+                row.put("email", rs.getString("email"));
+                row.put("gender", rs.getBoolean("gender"));
+                row.put("status", rs.getString("status"));
+
+                resultList.add(row);
+            }
+        }
+
+        return resultList;
+    }
+    
+    public boolean updateEmployeeActiveStatus(int employeeId, boolean isActive) throws SQLException {
         String sql = "UPDATE account SET isActive = ? " +
                      "WHERE phone = (SELECT phone FROM employee WHERE employeeId = ?)";
         
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setBoolean(1, isActive);
-            pstmt.setInt(2, employeesId);
+            pstmt.setInt(2, employeeId);
             int rowsUpdated = pstmt.executeUpdate();
             return rowsUpdated > 0;
             }
