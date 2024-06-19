@@ -22,10 +22,10 @@ public class addimg {
         }
         return "";
     }
-
-    public File getFolderUploadStaff() {
-        //mn tu doi lai thanh duong dan cua mn nhe
-        File folderUpload = new File("E:\\SWP\\G1_SWP391_SE1817\\web\\img");
+    
+    
+     public File getFolderUploadStaff(String contextPath) {
+        File folderUpload = new File(contextPath + File.separator + "img" + File.separator + "service");
         if (!folderUpload.exists()) {
             folderUpload.mkdirs();
         }
