@@ -4,6 +4,7 @@
     Author     : xdrag
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -275,70 +276,72 @@
                             <div class="row justify-content-around" style="width: 1600px;">
                                 <!-- Earnings (Monthly) Card Example -->
                                 <div class="col-lg-4">
+                                    <c:set var="top2" value="${listViewSaleTop3[1]}" />
                                     <div class="card mb-4 shadow" style="border-radius: 10px;
                                          background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg');
                                          background-size: cover; background-position: center;">
                                         <h3 id="topSale">Top 2</h3>
                                         <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
+                                            <img src="${top2.getAvatar()}"
                                                  alt="avatar" class="fixed-size-img border rounded-circle"
                                                  style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">John Smith</h5>
+                                            <h5 class="my-3" id="nameTopBarber">${top2.getEmployee().getFullName()}</h5>
                                             <p class="text-muted mb-1" style="font-size: 1.8rem;
                                                font-weight: 700; color: #d89313;">Doanh Số</p>
                                             <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">500K</p>
+                                               font-weight: 700; color: #d89313;">${top2.getRevenue()}đ</p>
                                             <div class="d-flex justify-content-center mb-2">
                                                 <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top2.getEmployee().getEmployeeId()}">Detail</a></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
+                                    <c:set var="top1" value="${listViewSaleTop3[0]}" />
                                     <div class="card mb-4 shadow" style="border-radius: 10px; position: relative; top: -20px;
                                          background-image: url('https://img.freepik.com/premium-vector/top-5-best-podium-award-sign-golden-object-vector_3482-9236.jpg');
                                          background-size: cover; background-position: center;">
                                         <h3 id="topSale"> Best Barber of the Month </h3>
                                         <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
+                                            <img src="${top1.getAvatar()}"
                                                  alt="avatar" class="fixed-size-img border rounded-circle"
                                                  style="width: 15rem; height: 17rem;">
-                                            <div style="background-image: url('\img\Screenshot 2024-06-16 114728.png');
-                                                 background-size: cover; background-position: center;
-                                                 border-radius: 5px;">
-                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">John Smith
+                                            <div>
+                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">
+                                                    ${top1.getEmployee().getFullName()}
                                                 </h5>
                                                 <p class="text-muted mb-1" style="font-size: 1.8rem;
                                                    font-weight: 700; color: #d89313;">Doanh Số</p>
                                                 <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                                   font-weight: 700; color: #d89313;">500K</p>
+                                                   font-weight: 700; color: #d89313;">${top1.getRevenue()}đ</p>
                                             </div>
 
                                             <div class="d-flex justify-content-center mb-2">
                                                 <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top1.getEmployee().getEmployeeId()}">Detail</a></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
+                                    <c:set var="top3" value="${listViewSaleTop3[2]}" />
                                     <div class="card mb-4 shadow"
                                          style="border-radius: 10px;
                                          background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg'); background-size: cover; background-position: center;">
                                         <h3 id="topSale">Top 3</h3>
                                         <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
+                                            <img src="${top3.getAvatar()}"
                                                  alt="avatar" class="fixed-size-img border rounded-circle"
                                                  style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">John Smith</h5>
+                                            <h5 class="my-3" id="nameTopBarber">${top3.getEmployee().getFullName()}</h5>
                                             <p class="text-muted mb-1" style="font-size: 1.8rem;
                                                font-weight: 700; color: #d89313;">Doanh Số</p>
                                             <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">500K</p>
+                                               font-weight: 700; color: #d89313;">${top3.getRevenue()}đ</p>
                                             <div class="d-flex justify-content-center mb-2">
                                                 <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top3.getEmployee().getEmployeeId()}">Detail</a></button>
                                             </div>
                                         </div>
                                     </div>
@@ -387,105 +390,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
+                                                    <c:forEach items="${listViewSale}" var="vs">
 
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
+                                                        <tr scope="row">
+                                                            <td style="color: #3D63D2;
+                                                                font-size: 1.2rem;">
+                                                                ${vs.getEmployee().getFullName()}
 
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
+                                                            </td>
+                                                            <td>${vs.getEmployee().getPhone()}</td>
+                                                            <td>${vs.getTotalOrder()}</td>
+                                                            <td id="totalMoney">${vs.getRevenue()}đ</td>
+                                                            <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}" class="more">Details</a></td>
+                                                        </tr>
+                                                    </c:forEach>
 
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
