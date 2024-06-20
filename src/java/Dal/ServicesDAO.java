@@ -112,23 +112,58 @@ public class ServicesDAO extends DBContext {
             System.out.println("Error: " + e.getMessage());
         }
     }
+    
+     public Services getServiceById(int serviceId) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Services service = null;
 
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "SELECT * FROM Services WHERE servicesId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, serviceId);
+                rs = stm.executeQuery();
+                
+                if (rs.next()) {
+                    service = new Services();
+                    service.setServicesId(rs.getInt("servicesId"));
+                    service.setName(rs.getString("name"));
+                    service.setImage(rs.getString("image"));
+                    service.setPrice(rs.getInt("price"));
+                    service.setDescription(rs.getString("description"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return service;
+    }
+
+
+
+    
 //    public static void main(String[] args) {
 //        // Tạo đối tượng ServicesDAO
 //        ServicesDAO dao = new ServicesDAO();
 //
-//        // Cập nhật một dịch vụ
-//        String name = "Test Service";
-//        String image = "test_image.jpg";
-//        int price = 100;
-//        String description = "This is a test service";
+//        // ID của dịch vụ muốn lấy thông tin
 //        int id = 32;
 //
-//        dao.UpdateService(id, name, image, price, description);
+//        // Lấy thông tin dịch vụ
+//        Services service = dao.getServiceById(id);
 //
-//    
-//        
+//        // In thông tin dịch vụ ra console
+//        if (service != null) {
+//            System.out.println("Service Details: ");
+//            System.out.println(service);
+//        } else {
+//            System.out.println("Service not found with ID: " + id);
+//        }
 //    }
+
 
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
@@ -166,4 +201,5 @@ public class ServicesDAO extends DBContext {
         }
         return s;
     }
+
 }
