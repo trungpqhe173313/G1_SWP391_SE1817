@@ -269,6 +269,16 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Top Barber Tháng</h1>
+                            <span class="select-fixff" >
+                                Tháng
+                                <select name="month" onchange="onMonthChange(this)" style="width: 5rem;
+                                        padding: 4px; border: 2px solid #636363;
+                                        border-radius: 5px">
+                                    <c:forEach items="${listMonthRevenue}" var="m">
+                                        <option value="${m}" ${m == monthSelect ? 'selected' : ''}>${m}</option>
+                                    </c:forEach>
+                                </select>
+                            </span>
                         </div>
 
                         <!-- Content Row -->
@@ -401,7 +411,8 @@
                                                             <td>${vs.getEmployee().getPhone()}</td>
                                                             <td>${vs.getTotalOrder()}</td>
                                                             <td id="totalMoney">${vs.getRevenue()}đ</td>
-                                                            <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}" class="more">Details</a></td>
+                                                            <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}&month=${monthSelect}" class="more">
+                                                                    Details</a></td>
                                                         </tr>
                                                     </c:forEach>
 
@@ -475,7 +486,12 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
-
+            <script>
+                                    function onMonthChange(selectElement) {
+                                        var selectedMonth = selectElement.value;
+                                        window.location.href = 'getsalebymonth?month=' + selectedMonth;
+                                    }
+            </script>
     </body>
 
 </html>

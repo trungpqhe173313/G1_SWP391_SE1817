@@ -116,6 +116,14 @@
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetSaleByMonthServlet</servlet-name>
+        <servlet-class>Controller.admin.GetSaleByMonthServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
+        <servlet-class>Controller.admin.GetSaleDetailByMonthServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -231,5 +239,13 @@
     <servlet-mapping>
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <url-pattern>/viewsaledetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSaleByMonthServlet</servlet-name>
+        <url-pattern>/getsalebymonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
+        <url-pattern>/getsaledetailbymonth</url-pattern>
     </servlet-mapping>
 </web-app>
