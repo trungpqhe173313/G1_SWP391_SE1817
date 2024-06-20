@@ -27,6 +27,28 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <style>
+            .table-responsive {
+                overflow: hidden;
+            }
+
+            .table-responsive tbody {
+                display: block;
+                max-height: 400px; /* Adjust the height as needed */
+                overflow-y: auto;
+                width: 100%;
+            }
+
+            .table-responsive thead, .table-responsive tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            .table-responsive thead {
+                width: calc(100% - 1em);
+            }
+        </style>
     </head>
 
     <body id="page-top">
@@ -57,7 +79,7 @@
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
-                                        
+
                                     </div>
                                 </div>
                             </form>
@@ -124,11 +146,12 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
                                         Thêm Dịch Vụ
                                     </a>
-                                  
+
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" >
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -136,26 +159,39 @@
                                                     <th>Hình Ảnh</th>
                                                     <th>Giá</th>
                                                     <th>Mô tả</th>
-                                                    <th>Cập Nhật</th>
-                                                    <th>Xóa Dịch Vụ</th>
+                                                    <th>Chỉnh sửa</th>
+                                                    
                                                 </tr>
-                                            </thead>                                   
-                                            <tbody>
-                                            <c:forEach items="${listS}" var="o">
-                                            <tr>
-                                                <td>${o.servicesId}</td>
-                                                <td>${o.name}</td>
-                                                <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
-                                                <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
+                                            </thead> 
 
-                                                 </fmt:formatNumber><sup>đ</sup></td>
-                                                <td>${o.description}</td>
-                                                <td>cập nhật</td>
-                                                <td>xóa</td>
-                        
-                                            </tr>
+
+                                            <tbody >
+
+                                            <c:forEach items="${listS}" var="o">
+                                                <tr>
+                                                    <td>${o.servicesId}</td>
+                                                    <td>${o.name}</td>
+                                                    <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
+                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
+
+                                                        </fmt:formatNumber><sup>đ</sup></td>
+                                                    <td>${o.description}</td>
+                                                    <td>
+                                                        <a href="updateservice?sid=${o.servicesId}">   
+                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" style="background-color: #bf925b;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button></a>
+                                                    
+                                                        <a href="deleteControl?pid=${o.servicesId}">  
+                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" style="background-color: #bf925b;" onclick="myFunction(this)"><i class="fas fa-trash-alt" ></i>
+                                                        </button></a>
+                                                    </td>
+
+                                                </tr>
                                             </c:forEach>
+
                                         </tbody>
+
                                     </table>
                                 </div>
                             </div>
