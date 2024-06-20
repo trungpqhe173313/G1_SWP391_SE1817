@@ -61,11 +61,10 @@ public class ServicesDAO extends DBContext {
                 stm.setString(2, image);
                 stm.setInt(3, price);
                 stm.setString(4, description);
-                
+
                 int rowsAffected = stm.executeUpdate();
 
                 // Retrieve the generated service ID
-                
                 if (rowsAffected > 0) {
                     try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
@@ -81,26 +80,90 @@ public class ServicesDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace(); // In ra stack trace để gỡ lỗi
             System.out.println("Error: " + e.getMessage());
-        } 
-        
+        }
+
     }
 
-//  public static void main(String[] args) {
+    public void UpdateService(int servicesId, String name, String image, int price, String description) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "update Services set name = ?, image = ?, price = ?, description = ?, isActive = 1 where servicesId = ?";
+                stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, name);
+                stm.setString(2, image);
+                stm.setInt(3, price);
+                stm.setString(4, description);
+                stm.setInt(5, servicesId);
+
+                int rowsAffected = stm.executeUpdate();
+                System.out.println("Rows affected: " + rowsAffected);
+
+                // Normally, no new key is generated during an update operation
+                // The following part is redundant and hence removed
+                // if (rowsAffected > 0) {
+                //     // Logic here is not required for update operation
+                // }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for debugging
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+     public Services getServiceById(int serviceId) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Services service = null;
+
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "SELECT * FROM Services WHERE servicesId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, serviceId);
+                rs = stm.executeQuery();
+                
+                if (rs.next()) {
+                    service = new Services();
+                    service.setServicesId(rs.getInt("servicesId"));
+                    service.setName(rs.getString("name"));
+                    service.setImage(rs.getString("image"));
+                    service.setPrice(rs.getInt("price"));
+                    service.setDescription(rs.getString("description"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return service;
+    }
+
+
+
+    
+//    public static void main(String[] args) {
 //        // Tạo đối tượng ServicesDAO
 //        ServicesDAO dao = new ServicesDAO();
-//        
-//        // Thêm một dịch vụ mới
-//        String name = "Test Service";
-//        String image = "test_image.jpg";
-//        int price = 100;
-//        String description = "This is a test service";
-//       
 //
-//        dao.AddService(name, image, price, description);
+//        // ID của dịch vụ muốn lấy thông tin
+//        int id = 32;
 //
-//        // Lấy danh sách các dịch vụ để kiểm tra xem dịch vụ mới đã được thêm chưa
-//        
+//        // Lấy thông tin dịch vụ
+//        Services service = dao.getServiceById(id);
+//
+//        // In thông tin dịch vụ ra console
+//        if (service != null) {
+//            System.out.println("Service Details: ");
+//            System.out.println(service);
+//        } else {
+//            System.out.println("Service not found with ID: " + id);
+//        }
 //    }
+
 
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
@@ -138,4 +201,5 @@ public class ServicesDAO extends DBContext {
         }
         return s;
     }
+
 }

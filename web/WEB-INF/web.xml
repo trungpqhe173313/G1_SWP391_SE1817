@@ -124,6 +124,10 @@
         <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
         <servlet-class>Controller.admin.GetSaleDetailByMonthServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateService</servlet-name>
+        <servlet-class>Controller.Service.UpdateService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -247,5 +251,9 @@
     <servlet-mapping>
         <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
         <url-pattern>/getsaledetailbymonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateService</servlet-name>
+        <url-pattern>/updateservice</url-pattern>
     </servlet-mapping>
 </web-app>

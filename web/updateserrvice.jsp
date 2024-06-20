@@ -1,11 +1,9 @@
 <%-- 
-    Document   : servicedetail
-    Created on : Jun 12, 2024, 3:49:09 PM
+    Document   : updateserrvice
+    Created on : Jun 20, 2024, 1:41:06 PM
     Author     : LENOVO
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,26 +26,63 @@
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
-            .table-responsive {
-                overflow: hidden;
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
             }
 
-            .table-responsive tbody {
+            .container-fluid {
+                max-width: 600px;
+                padding: 20px;
+                margin: 0 auto;
+            }
+
+            .card {
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
                 display: block;
-                max-height: 400px; /* Adjust the height as needed */
-                overflow-y: auto;
-                width: 100%;
+                margin-bottom: 5px;
+                font-weight: bold;
             }
 
-            .table-responsive thead, .table-responsive tbody tr {
-                display: table;
+            .form-group input[type="text"],
+            .form-group input[type="file"],
+            .form-group textarea {
                 width: 100%;
-                table-layout: fixed;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
             }
 
-            .table-responsive thead {
-                width: calc(100% - 1em);
+            .form-group input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #4e73df;
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 4px;
+                cursor: pointer;
             }
+
+            .form-group input[type="submit"]:hover {
+                background-color: #3b5bcc;
+            }
+
         </style>
     </head>
 
@@ -79,7 +114,6 @@
                                         <button class="btn btn-primary" type="button">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
-
                                     </div>
                                 </div>
                             </form>
@@ -142,58 +176,39 @@
                             <!-- Page Heading -->
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
-                                        Thêm Dịch Vụ
-                                    </a>
-
-                                </div>
-                                <div class="card-body" >
+                                <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <h1 class="text-center">Cập Nhật Dịch Vụ</h1>
 
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Tên Dịch </th>
-                                                    <th>Hình Ảnh</th>
-                                                    <th>Giá</th>
-                                                    <th>Mô tả</th>
-                                                    <th>Chỉnh sửa</th>
-                                                    
-                                                </tr>
-                                            </thead> 
-
-
-                                            <tbody >
-
-                                            <c:forEach items="${listS}" var="o">
-                                                <tr>
-                                                    <td>${o.servicesId}</td>
-                                                    <td>${o.name}</td>
-                                                    <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
-                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
-
-                                                        </fmt:formatNumber><sup>đ</sup></td>
-                                                    <td>${o.description}</td>
-                                                    <td>
-                                                        <a href="updateservice?sid=${o.servicesId}">   
-                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" style="background-color: #bf925b;">
-                                                                <i class="fas fa-edit"></i>
-                                                            </button></a>
-                                                    
-                                                        <a href="deleteControl?pid=${o.servicesId}">  
-                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" style="background-color: #bf925b;" onclick="myFunction(this)"><i class="fas fa-trash-alt" ></i>
-                                                        </button></a>
-                                                    </td>
-
-                                                </tr>
-                                            </c:forEach>
-
-                                        </tbody>
-
-                                    </table>
+                                        <form action="updateservice" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+                                            <input type="hidden" name="serviceId" value="${sid}">
+                                        <div class="form-group">
+                                            <label for="name">Tên Dịch Vụ</label>
+                                            <input type="text" id="name" name="name" maxlength="50" class="form-control" value="${service.name}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">Giá</label>
+                                            <input type="text" id="price" name="price" class="form-control" value="${service.price}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Mô tả</label>
+                                            <input type="text" id="description" name="description" maxlength="255" class="form-control" value="${service.description}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="img">Hình ảnh</label>
+                                            <input type="file" id="img"  name="img" class="form-control-file mx-auto d-block">
+                                            <img src="img/service/${service.image}" alt="${service.name}" class="img-thumbnail" style="margin-top: 10px; width: 150px; height: auto;">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Cập Nhật" class="btn btn-primary btn-block" style="background-color: #bf925b;">
+                                        </div>
+                                        <div class="form-group">
+                                            ${mess}
+                                        </div>
+                                    </form>
+                                    <button onclick="window.location.href = 'servicedetail'" class="btn btn-secondary btn-block mt-3">Quay lại</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -252,5 +267,13 @@
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
+        <!--        <script>
+                    function goBack(){
+                        Window.location.href = "servicedetail";
+                    }
+                </script>-->
     </body>
 </html>
