@@ -4,6 +4,7 @@
     Author     : xdrag
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +45,17 @@
                 font-size: 1.2rem;
                 font-weight: 700;
                 color: #3D63D2;
+            }
+            .table span {
+                color: #155BDA;
+                font-size: 1rem;
+                font-weight: 550;
+                border: 2px solid #A8AAC5;
+                border-radius: 5px;
+                background-color: #FFF;
+                padding: 0px 3px;
+                margin: 4px;
+                text-wrap: nowrap;
             }
         </style>
         <!-- Custom fonts for this template-->
@@ -266,6 +278,16 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Doanh Thu Trong Tháng</h1>
+                            <span class="select-fixff" >
+                                Tháng
+                                <select name="month" onchange="onMonthChange(this)" style="width: 5rem;
+                                        padding: 4px; border: 2px solid #636363;
+                                        border-radius: 5px">
+                                    <c:forEach items="${listMonthRevenue}" var="m">
+                                        <option value="${m}" ${m == monthSelect ? 'selected' : ''}>${m}</option>
+                                    </c:forEach>
+                                </select>
+                            </span>
                         </div>
 
                         <!-- Content Row -->
@@ -277,17 +299,19 @@
                                     <div class="card mb-4 shadow" style="border-radius: 10px;;
                                          ">
                                         <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
+                                            <img src="${vs.getAvatar()}"
                                                  alt="avatar" class="fixed-size-img border rounded-circle"
                                                  style="width: 15rem; height: 17rem;">
                                             <div style="background-image: url('\img\Screenshot 2024-06-16 114728.png');
                                                  background-size: cover; background-position: center;
                                                  border-radius: 5px;">
-                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">John Smith</h5>
+                                                <!-- Hidden input to store employeeId -->
+                                                <input type="hidden" id="employeeId" value="${vs.getEmployee().getEmployeeId()}">
+                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">${vs.getEmployee().getFullName()}</h5>
                                                 <p class="text-muted mb-1" style="font-size: 1.5rem;
-                                                   font-weight: 700;">0398521155</p>
+                                                   font-weight: 700;">${vs.getEmployee().getPhone()}</p>
                                                 <p class="text-muted mb-4" style="font-size: 1.8rem;
-                                                   font-weight: 700;">Lương Ước Tính: <span style="color: green; font-weight: 800;">500K</span></p>
+                                                   font-weight: 700;">Lương Ước Tính: <span style="color: green; font-weight: 800;">${vs.getSalary()}đ</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -342,204 +366,30 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td>20</td>
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>
-                                                            <span id="services">sfsdfsdf</span>
-                                                            <span id="services">sfsdfsdfiouiou</span>
-                                                            <span id="services">sfsdf</span>
-                                                            <span id="services">sfsd453656</span>
-                                                            <span id="services">sfsdfsôi</span>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td>Hoàn Thành</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
+                                                    <c:forEach items="${listOrder}" var="o">
+
+                                                        <tr scope="row">
+                                                            <td>${o.getOrder().id}</td>
+                                                            <td class="pl-0">
+                                                                <div class="d-flex align-items-center">
+                                                                    <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                </div>
+                                                            </td>
+                                                            <td>${o.getCustomer().phone}</td>
+                                                            <td>
+                                                                <c:forEach items="${o.getServices()}" var="s">
+
+                                                                    <span>${s.getName()}</span>
+                                                                </c:forEach> 
+                                                            </td>
+                                                            <td>${o.getOrder().orderDate}</td>
+                                                            <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                            <td>${o.getStatus().name}</td>
+                                                            <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" 
+                                                                   class="more">Details</a></td>
+                                                        </tr>
+                                                    </c:forEach>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -610,7 +460,16 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
+            <script>
+                                    function onMonthChange(selectElement) {
+                                        var selectedMonth = selectElement.value;
+                                        var employeeId = document.getElementById('employeeId').value;
+                                        // If using a data attribute:
+                                        // var employeeId = selectElement.getAttribute('data-employee-id');
 
+                                        window.location.href = 'viewsaledetail?employeeId=' + employeeId + '&month=' + selectedMonth;
+                                    }
+            </script>
     </body>
 
 </html>
