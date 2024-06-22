@@ -112,8 +112,8 @@ public class ServicesDAO extends DBContext {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    
-     public Services getServiceById(int serviceId) {
+
+    public Services getServiceById(int serviceId) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -126,7 +126,7 @@ public class ServicesDAO extends DBContext {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, serviceId);
                 rs = stm.executeQuery();
-                
+
                 if (rs.next()) {
                     service = new Services();
                     service.setServicesId(rs.getInt("servicesId"));
@@ -138,13 +138,32 @@ public class ServicesDAO extends DBContext {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return service;
     }
 
+    public void toggleVisibility(int serviceId) {
+        Connection con = null;
+        PreparedStatement ps = null;
 
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "UPDATE Services \n"
+                        + "SET isActive = CASE \n"
+                        + "                 WHEN isActive = 1 THEN 0 \n"
+                        + "                 ELSE 1 \n"
+                        + "               END \n"
+                        + "WHERE servicesId = ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, serviceId);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    
 //    public static void main(String[] args) {
 //        // Tạo đối tượng ServicesDAO
 //        ServicesDAO dao = new ServicesDAO();
@@ -163,8 +182,6 @@ public class ServicesDAO extends DBContext {
 //            System.out.println("Service not found with ID: " + id);
 //        }
 //    }
-
-
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
         try {

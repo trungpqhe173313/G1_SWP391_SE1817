@@ -48,6 +48,50 @@
             .table-responsive thead {
                 width: calc(100% - 1em);
             }
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 25px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 25px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 17px;
+                width: 17px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(24px);
+            }
         </style>
     </head>
 
@@ -72,17 +116,17 @@
                             </form>
 
                             <!-- Topbar Search -->
-<!--                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </form>-->
+                            <!--                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-primary" type="button">
+                                                                        <i class="fas fa-search fa-sm"></i>
+                                                                    </button>
+                            
+                                                                </div>
+                                                            </div>
+                                                        </form>-->
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -171,17 +215,17 @@
                                                     <td>${o.description}</td>
                                                     <td>
                                                         <a href="updateservice?sid=${o.servicesId}">
-                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" style="background-color: #bf925b;">
-                                                                <i class="fas fa-edit"></i>
+                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
+                                                                <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
                                                             </button>
                                                         </a>
-                                                        <a href="deleteControl?pid=${o.servicesId}">
-                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" style="background-color: #bf925b;" onclick="myFunction(this)">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+
+                                                        <label class="switch">
+                                                            <input type="checkbox" onclick="toggleVisibility(${o.servicesId})" <c:if test="${o.isActive}">checked</c:if>>
+                                                                <span class="slider"></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -265,6 +309,9 @@
                                                                             }
                                                                         }
                                                                     }
+                                                                }
+                                                                function toggleVisibility(serviceId) {
+                                                                    window.location.href = 'deleteservice?sid=' + serviceId;
                                                                 }
         </script>
     </body>
