@@ -30,16 +30,39 @@ public class ShiftsDAO extends DBContext {
             while (rs.next()) {
                 Shift s = new Shift(rs.getInt(1), rs.getString(2));
                 Shift.add(s);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ShiftsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Shift;
     }
-    public static void main(String[] args) {
-        System.out.println(new ShiftsDAO().getAll().size());
+
+    public List<Shift> getAllShiftFromNow() {
+        List<Shift> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[startTime]\n"
+                + "  FROM [dbo].[shift]\n"
+                + "  WHERE CONVERT(TIME, [startTime], 120) >= CONVERT(TIME, GETDATE(), 120);";
+        try (PreparedStatement stm = connection.prepareStatement(sql);) {
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Shift s = new Shift(rs.getInt(1), rs.getString(2));
+                list.add(s);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
-            
+
+    public static void main(String[] args) {
+        ShiftsDAO d = new ShiftsDAO();
+        List<Shift> l = d.getAllShiftFromNow();
+        for (Shift s : l) {
+            System.out.println(s.toString());
+        }
+    }
 
 }

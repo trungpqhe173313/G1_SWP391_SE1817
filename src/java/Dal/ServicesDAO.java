@@ -35,7 +35,6 @@ public class ServicesDAO extends DBContext {
                 int price = rs.getInt(4);
                 String description = rs.getString(5);
                 boolean isActive = rs.getBoolean(6);
-//                int classificationId = rs.getInt(7);
 
                 s.add(new Services(servicesId, name, image, price, description, isActive));
             }
@@ -112,8 +111,8 @@ public class ServicesDAO extends DBContext {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    
-     public Services getServiceById(int serviceId) {
+
+    public Services getServiceById(int serviceId) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -126,7 +125,7 @@ public class ServicesDAO extends DBContext {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, serviceId);
                 rs = stm.executeQuery();
-                
+
                 if (rs.next()) {
                     service = new Services();
                     service.setServicesId(rs.getInt("servicesId"));
@@ -135,16 +134,14 @@ public class ServicesDAO extends DBContext {
                     service.setPrice(rs.getInt("price"));
                     service.setDescription(rs.getString("description"));
                 }
+                stm.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return service;
     }
 
-
-
-    
 //    public static void main(String[] args) {
 //        // Tạo đối tượng ServicesDAO
 //        ServicesDAO dao = new ServicesDAO();
@@ -163,8 +160,6 @@ public class ServicesDAO extends DBContext {
 //            System.out.println("Service not found with ID: " + id);
 //        }
 //    }
-
-
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
         try {

@@ -62,6 +62,7 @@ public class ViewSaleServlet extends HttpServlet {
         }
         List<Integer> listMonthRevenue = d.getMonthRevenue();
         request.setAttribute("listMonthRevenue", listMonthRevenue);
+        request.setAttribute("monthSelect", currentMonthNumber);
         request.setAttribute("listViewSaleTop3", listViewSaleTop3);
         request.setAttribute("listViewSale", listViewSale);
         request.getRequestDispatcher("viewSale.jsp").forward(request, response);
