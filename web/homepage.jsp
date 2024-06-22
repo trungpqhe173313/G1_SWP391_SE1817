@@ -3,11 +3,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Haircare - Free Bootstrap 4 Template by Colorlib</title>
-               <style>
+        <style>
             .pricing-entry {
                 height: 450px;
                 position: relative; /* Make this container the reference for absolute positioning */
@@ -74,13 +75,52 @@
             .fixed-bottom-bar .btn {
                 margin-left: 20px;
             }
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 5%;
+            }
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                background-color: black; /* Change this to your preferred color */
+                padding: 20px; /* Adjust size as needed */
+                border-radius: 50%;
+            }
+
+            .carousel-control-prev {
+                left: -5%; /* Move the left arrow further to the left */
+            }
+
+            .carousel-control-next {
+                right: -5%; /* Move the right arrow further to the right */
+            }
+
+            .carousel-inner {
+                display: flex;
+                align-items: center;
+            }
+
+            .carousel-indicators {
+                bottom: -50px; /* Adjust this value to move the indicators further down */
+            }
+
+            .carousel-indicators li {
+                background-color: black; /* Change this to your preferred color */
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+            }
+
+            .carousel-indicators .active {
+                background-color: grey; /* Change this to your preferred active color */
+            }
         </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:500,600,700&display=swap" rel="stylesheet">
-
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
         <link rel="stylesheet" href="css/animate.css">
 
@@ -102,128 +142,149 @@
     </head>
     <body>
         <jsp:include page="nav.jsp"></jsp:include>
-        <!-- END nav -->
-        <section class="hero-wrap js-fullheight" style="background-image: url(images/bg-2.jpg);" data-stellar-background-ratio="0.5">
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
-                    <div class="col-lg-12 ftco-animate d-flex align-items-center">
-                        <div class="text text-center">
-                            <span class="subheading">Welcome to Haircare</span>
-                            <h1 class="mb-4">We are professional care for your hair</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-no-pt ftco-no-pb">
-        <div class="container-fluid px-0">
-            <div class="row no-gutters">
-                <div class="col-md text-center d-flex align-items-stretch">
-                    <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
-                        <div class="text">
-                            <h3>For Men</h3>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center d-flex align-items-stretch">
-                    <div class="text-about py-5 px-4">
-                        <h1 class="logo">
-                            <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                        </h1>
-                        <h2>Welcome to our Salon</h2>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        
-                    </div>
-                </div>
-                <div class="col-md text-center d-flex align-items-stretch">
-                    <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/forwomen.jpg);">
-                        <div class="text">
-                            <h3>For Women</h3>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="services-section ftco-section">
-        <div class="container">
-            <div class="row justify-content-center pb-3">
-                <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Services</span>
-                    <h2 class="mb-4">Services Menu</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-                </div>
-            </div>
-           
-             <div class="row">
-                 
-                <c:forEach items="${listS}" var="s">
-                    
-                    <div class="col-md-3 ftco-animate" >
-                        <div class="pricing-entry pb-5 text-center ">
-                            
-                            <div>
-                                
-                                <h3 class="mb-4">${s.name}</h3>
-                                <img src="img/service/${s.image}" width="width" height="height" alt="alt"/>
-                                <p class="service-description">${s.description}</p>
-                                
-                                <p class="price-fixed"><span class="price"><fmt:formatNumber value="${s.price}" type="number" pattern="###,###">
-
-                                            </fmt:formatNumber><sup>đ</sup></span></p>
+            <!-- END nav -->
+            <section class="hero-wrap js-fullheight" style="background-image: url(images/bg-2.jpg);" data-stellar-background-ratio="0.5">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
+                        <div class="col-lg-12 ftco-animate d-flex align-items-center">
+                            <div class="text text-center">
+                                <span class="subheading">Welcome to Haircare</span>
+                                <h1 class="mb-4">We are professional care for your hair</h1>
                             </div>
                         </div>
-                             
                     </div>
-                         
-                 </c:forEach>
-                   
-                </div>   
-            
-<!--            <div class="row no-gutters d-flex">
-                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon"><span class="flaticon-male-hair-of-head-and-face-shapes"></span></div>
-                        <div class="media-body">
-                            <h3 class="heading mb-3">Haircut &amp; Styling</h3>
-                            <p>A small river named Duden flows by their place and supplies.</p>
-                        </div>
-                    </div>    
                 </div>
-                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon"><span class="flaticon-beard"></span></div>
-                        <div class="media-body">
-                            <h3 class="heading mb-3">Beard</h3>
-                            <p>A small river named Duden flows by their place and supplies.</p>
+            </div>
+        </section>
+
+        <section class="ftco-section ftco-no-pt ftco-no-pb">
+            <div class="container-fluid px-0">
+                <div class="row no-gutters">
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
+                            <div class="text">
+                                <h3>For Men</h3>
+
+                            </div>
                         </div>
-                    </div>      
-                </div>
-                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon"><span class="flaticon-beauty-products"></span></div>
-                        <div class="media-body">
-                            <h3 class="heading mb-3">Makeup</h3>
-                            <p>A small river named Duden flows by their place and supplies.</p>
+                    </div>
+                    <div class="col-md-3 text-center d-flex align-items-stretch">
+                        <div class="text-about py-5 px-4">
+                            <h1 class="logo">
+                                <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+                            </h1>
+                            <h2>Welcome to our Salon</h2>
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+
                         </div>
-                    </div>      
-                </div>
-                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon"><span class="flaticon-healthy-lifestyle-logo"></span></div>
-                        <div class="media-body">
-                            <h3 class="heading mb-3">Body Treatment</h3>
-                            <p>A small river named Duden flows by their place and supplies.</p>
+                    </div>
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/forwomen.jpg);">
+                            <div class="text">
+                                <h3>For Women</h3>
+
+                            </div>
                         </div>
-                    </div>      
+                    </div>
                 </div>
-            </div>-->
+            </div>
+        </section>
+
+        <section class="services-section ftco-section">
+            <div class="container">
+                <div class="row justify-content-center pb-3">
+                    <div class="col-md-10 heading-section text-center ftco-animate">
+                        <span class="subheading">Services</span>
+                        <h2 class="mb-4">Services Menu</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                    </div>
+                </div>
+
+
+
+                <!-- Carousel items -->
+                <div id="serviceCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                    <c:forEach items="${listS}" var="s" varStatus="status">
+                        <c:if test="${s.isActive && status.index % 4 == 0}">
+                            <li data-target="#serviceCarousel" data-slide-to="${status.index / 4}" class="${status.index == 0 ? 'active' : ''}"></li>
+                            </c:if>
+                        </c:forEach>
+                </ol>
+
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    <c:forEach items="${listS}" var="s" varStatus="status">
+                        <c:if test="${s.isActive && status.index % 4 == 0}">
+                            <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                <div class="row">
+                                </c:if>
+
+                                <c:if test="${s.isActive}">
+                                    <div class="col-md-3 ftco-animate">
+                                        <div class="pricing-entry pb-5 text-center">
+                                            <div>
+                                                <h3 class="mb-4">${s.name}</h3>
+                                                <img src="img/service/${s.image}" width="300" height="300" alt="${s.name}"/>
+                                                <p class="service-description">${s.description}</p>
+                                                <p class="price-fixed">
+                                                    <span class="price">
+                                                        <fmt:formatNumber value="${s.price}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </c:if>
+
+                                <c:if test="${status.index % 4 == 3 || status.index == fn:length(listS) - 1}">
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </div>
+
+            <!--            <div class="row no-gutters d-flex">
+                            <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+                                <div class="media block-6 services d-block text-center">
+                                    <div class="icon"><span class="flaticon-male-hair-of-head-and-face-shapes"></span></div>
+                                    <div class="media-body">
+                                        <h3 class="heading mb-3">Haircut &amp; Styling</h3>
+                                        <p>A small river named Duden flows by their place and supplies.</p>
+                                    </div>
+                                </div>    
+                            </div>
+                            <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+                                <div class="media block-6 services d-block text-center">
+                                    <div class="icon"><span class="flaticon-beard"></span></div>
+                                    <div class="media-body">
+                                        <h3 class="heading mb-3">Beard</h3>
+                                        <p>A small river named Duden flows by their place and supplies.</p>
+                                    </div>
+                                </div>      
+                            </div>
+                            <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+                                <div class="media block-6 services d-block text-center">
+                                    <div class="icon"><span class="flaticon-beauty-products"></span></div>
+                                    <div class="media-body">
+                                        <h3 class="heading mb-3">Makeup</h3>
+                                        <p>A small river named Duden flows by their place and supplies.</p>
+                                    </div>
+                                </div>      
+                            </div>
+                            <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
+                                <div class="media block-6 services d-block text-center">
+                                    <div class="icon"><span class="flaticon-healthy-lifestyle-logo"></span></div>
+                                    <div class="media-body">
+                                        <h3 class="heading mb-3">Body Treatment</h3>
+                                        <p>A small river named Duden flows by their place and supplies.</p>
+                                    </div>
+                                </div>      
+                            </div>
+                        </div>-->
         </div>
     </section>
 
@@ -673,6 +734,15 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+                            $(document).ready(function () {
+                                $('#serviceCarousel').carousel({
+                                    interval: 3000
+                                });
+                            });
+    </script>
 </body>
 </html>

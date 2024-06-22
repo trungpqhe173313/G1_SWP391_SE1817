@@ -136,6 +136,10 @@
         <servlet-name>ServicesBookingAjaxServlet</servlet-name>
         <servlet-class>Controller.customer.ServicesBookingAjaxServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteservice</servlet-name>
+        <servlet-class>Controller.Service.deleteservice</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -271,5 +275,9 @@
     <servlet-mapping>
         <servlet-name>ServicesBookingAjaxServlet</servlet-name>
         <url-pattern>/servicesbookingajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteservice</servlet-name>
+        <url-pattern>/deleteservice</url-pattern>
     </servlet-mapping>
 </web-app>
