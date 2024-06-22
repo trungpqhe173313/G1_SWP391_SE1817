@@ -128,6 +128,10 @@
         <servlet-name>UpdateService</servlet-name>
         <servlet-class>Controller.Service.UpdateService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteservice</servlet-name>
+        <servlet-class>Controller.Service.deleteservice</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -255,5 +259,9 @@
     <servlet-mapping>
         <servlet-name>UpdateService</servlet-name>
         <url-pattern>/updateservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteservice</servlet-name>
+        <url-pattern>/deleteservice</url-pattern>
     </servlet-mapping>
 </web-app>
