@@ -182,26 +182,33 @@
 
                                         <form action="updateservice" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                                             <input type="hidden" name="serviceId" value="${sid}">
+                                        <input type="hidden" name="currentImage" value="${service.image}">
+
                                         <div class="form-group">
                                             <label for="name">Tên Dịch Vụ</label>
                                             <input type="text" id="name" name="name" maxlength="50" class="form-control" value="${service.name}" required>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="price">Giá</label>
                                             <input type="text" id="price" name="price" class="form-control" value="${service.price}" required>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="description">Mô tả</label>
                                             <input type="text" id="description" name="description" maxlength="255" class="form-control" value="${service.description}" required>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="img">Hình ảnh</label>
-                                            <input type="file" id="img"  name="img" class="form-control-file mx-auto d-block">
+                                            <input type="file" id="img" name="img" class="form-control-file mx-auto d-block">
                                             <img src="img/service/${service.image}" alt="${service.name}" class="img-thumbnail" style="margin-top: 10px; width: 150px; height: auto;">
                                         </div>
+
                                         <div class="form-group">
                                             <input type="submit" value="Cập Nhật" class="btn btn-primary btn-block" style="background-color: #bf925b;">
                                         </div>
+
                                         <div class="form-group">
                                             ${mess}
                                         </div>

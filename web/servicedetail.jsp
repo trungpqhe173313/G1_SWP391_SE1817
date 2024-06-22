@@ -72,7 +72,7 @@
                             </form>
 
                             <!-- Topbar Search -->
-                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+<!--                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                 <div class="input-group">
                                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
@@ -82,7 +82,7 @@
 
                                     </div>
                                 </div>
-                            </form>
+                            </form>-->
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -146,12 +146,11 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
                                         Thêm Dịch Vụ
                                     </a>
-
+                                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Tìm kiếm dịch vụ..." class="form-control" style="width: 300px; display: inline-block;">
                                 </div>
-                                <div class="card-body" >
+                                <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -160,44 +159,36 @@
                                                     <th>Giá</th>
                                                     <th>Mô tả</th>
                                                     <th>Chỉnh sửa</th>
-                                                    
                                                 </tr>
-                                            </thead> 
-
-
-                                            <tbody >
-
+                                            </thead>
+                                            <tbody>
                                             <c:forEach items="${listS}" var="o">
                                                 <tr>
                                                     <td>${o.servicesId}</td>
                                                     <td>${o.name}</td>
                                                     <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
-                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
-
-                                                        </fmt:formatNumber><sup>đ</sup></td>
+                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup></td>
                                                     <td>${o.description}</td>
                                                     <td>
-                                                        <a href="updateservice?sid=${o.servicesId}">   
+                                                        <a href="updateservice?sid=${o.servicesId}">
                                                             <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" style="background-color: #bf925b;">
                                                                 <i class="fas fa-edit"></i>
-                                                            </button></a>
-                                                    
-                                                        <a href="deleteControl?pid=${o.servicesId}">  
-                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" style="background-color: #bf925b;" onclick="myFunction(this)"><i class="fas fa-trash-alt" ></i>
-                                                        </button></a>
+                                                            </button>
+                                                        </a>
+                                                        <a href="deleteControl?pid=${o.servicesId}">
+                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" style="background-color: #bf925b;" onclick="myFunction(this)">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </a>
                                                     </td>
-
                                                 </tr>
                                             </c:forEach>
-
                                         </tbody>
-
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
 
@@ -252,5 +243,29 @@
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script>
+                                                                function filterTable() {
+                                                                    var input, filter, table, tr, td, i, j, txtValue;
+                                                                    input = document.getElementById("searchInput");
+                                                                    filter = input.value.toLowerCase();
+                                                                    table = document.getElementById("dataTable");
+                                                                    tr = table.getElementsByTagName("tr");
+
+                                                                    for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                                                                        tr[i].style.display = "none"; // Ẩn tất cả các hàng
+
+                                                                        td = tr[i].getElementsByTagName("td");
+                                                                        for (j = 0; j < td.length; j++) {
+                                                                            if (td[j]) {
+                                                                                txtValue = td[j].textContent || td[j].innerText;
+                                                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                                                                    tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+        </script>
     </body>
 </html>

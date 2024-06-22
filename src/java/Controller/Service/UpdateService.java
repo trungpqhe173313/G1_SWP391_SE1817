@@ -85,41 +85,49 @@ public class UpdateService extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    String serviceIdStr = request.getParameter("serviceId");
-    String name = request.getParameter("name");
+        String serviceIdStr = request.getParameter("serviceId");
+        String name = request.getParameter("name");
+        String priceStr = request.getParameter("price");
+        String description = request.getParameter("description");
+        String currentImage = request.getParameter("currentImage"); // Hình ảnh hiện tại
 
-    String priceStr = request.getParameter("price");
-    String description = request.getParameter("description");
-    addimg img = new addimg();
+        // Lớp helper để xử lý tệp tải lên
+        addimg imgHelper = new addimg();
         Part part = request.getPart("img");
-        String fileName = img.extractFileName(part);
+        String fileName = imgHelper.extractFileName(part);
         fileName = new File(fileName).getName();
+        
+        // Kiểm tra nếu có tệp tải lên mới
         if (fileName != null && !fileName.isEmpty()) {
             String uploadPath = request.getServletContext().getRealPath("/") + "img/service" + File.separator + fileName;
             part.write(uploadPath);
         }
-        String image = (fileName != null && !fileName.isEmpty()) ? fileName : request.getParameter("img");
-    // Validate parameters
-    if (serviceIdStr == null || serviceIdStr.isEmpty() || 
-        priceStr == null || priceStr.isEmpty() || 
-        name == null || description == null) {
-        request.setAttribute("mess", "đéo có");
+
+        // Sử dụng hình ảnh mới nếu có, nếu không sử dụng hình ảnh hiện tại
+        String image = (fileName != null && !fileName.isEmpty()) ? fileName : currentImage;
+
+        // Validate parameters
+        if (serviceIdStr == null || serviceIdStr.isEmpty() || 
+            priceStr == null || priceStr.isEmpty() || 
+            name == null || description == null) {
+            request.setAttribute("mess", "Các trường không được để trống.");
+            request.getRequestDispatcher("updateserrvice.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(serviceIdStr);
+            int price = Integer.parseInt(priceStr);
+
+            // Update service
+            ServicesDAO serviceDAO = new ServicesDAO();
+            serviceDAO.UpdateService(id, name, image, price, description);
+            request.setAttribute("mess", "Cập nhật thành công.");
+        } catch (NumberFormatException e) {
+            request.setAttribute("mess", "Giá trị không hợp lệ.");
+        } 
+
         request.getRequestDispatcher("updateserrvice.jsp").forward(request, response);
-        return;
-    }
-
-    try {
-        int id = Integer.parseInt(serviceIdStr);
-        int price = Integer.parseInt(priceStr);
-
-        // Update service
-        ServicesDAO serviceDAO = new ServicesDAO();
-        serviceDAO.UpdateService(id, name, image, price, description);
-        request.setAttribute("mess", "Cập nhật thành công");
-    } catch (NumberFormatException e) {
-        request.setAttribute("mess", "ngu");
-    } 
-    request.getRequestDispatcher("updateserrvice.jsp").forward(request, response);
     }
 
     /**
