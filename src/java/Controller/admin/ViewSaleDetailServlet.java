@@ -40,9 +40,12 @@ public class ViewSaleDetailServlet extends HttpServlet {
         String month_str = request.getParameter("month");
         ShopDAO d = new ShopDAO();
 
+        //kiem tra xem employeeId va month co phai la chu so khong
         if (NumberUtils.isNumber(employeeId_str) == true
                 && NumberUtils.isNumber(month_str) == true) {
             int month = Integer.parseInt(month_str);
+
+            //lay ra nhan vien va add vao doi tuong viewsale de hien thi thong tin
             Employee e = d.getEmployeeById(Integer.parseInt(employeeId_str));
             ViewSale vs = new ViewSale();
             vs.setEmployee(e);
@@ -51,6 +54,7 @@ public class ViewSaleDetailServlet extends HttpServlet {
             vs.setAvatar(d.getAvatarByEmployeeId(e.getEmployeeId()));
             vs.setSalary(vs.getRevenue() * 0.3);
 
+            //lay ra order cua nhan vien trong thang
             List<Order> listOrderDefault = d.getOrderByBarber(month, e.getEmployeeId());
             List<OrderRevenue> listOrder = new ArrayList<>();
             for (Order o : listOrderDefault) {
@@ -63,6 +67,7 @@ public class ViewSaleDetailServlet extends HttpServlet {
                 or.setStatus(d.getStatusById(o.getStatusId()));
                 listOrder.add(or);
             }
+            //lay ra cac thang da qua trong nam
             List<Integer> listMonthRevenue = d.getMonthRevenue();
             request.setAttribute("listMonthRevenue", listMonthRevenue);
             request.setAttribute("monthSelect", month);

@@ -9,6 +9,7 @@ import Model.Order;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +30,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Order order = new Order(rs.getInt(1), rs.getInt(2),
-                         rs.getInt(3), rs.getInt(4),
+                        rs.getInt(3), rs.getInt(4),
                         rs.getDate(5), rs.getInt(6),
                         rs.getInt(7), rs.getString(8));
                 return order;
@@ -40,9 +41,27 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
+    public int getNewOrderId() {
+        int id = 0;
+        try {
+
+            String sql = "SELECT TOP 1 orderId\n"
+                    + "FROM [order]\n"
+                    + "ORDER BY orderId DESC;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
     public static void main(String[] args) {
-        Order o = new OrderDAO().getOrderByAId(1);
-        System.out.println(o.getUpdateTime());
+        OrderDAO o = new OrderDAO();
+        System.out.println(o.getNewOrderId());
     }
 
     public void cancelBooking(String orderId) {
@@ -56,6 +75,49 @@ public class OrderDAO extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void AddOrder(Order o) {
+        String sql = "INSERT INTO [dbo].[order]\n"
+                + "           ([customerId]\n"
+                + "           ,[statusID]\n"
+                + "           ,[orderDate]\n"
+                + "           ,[totalAmount]\n"
+                + "           ,[shiftId]\n"
+                + "           ,[updateTime])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,GETDATE())";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+
+            st.setInt(1, o.getCustomerId());
+            st.setInt(2, o.getStatusId());
+            st.setDate(3, o.getOrderDate());
+            st.setInt(4, o.getTotalAmount());
+            st.setInt(5, o.getShiftsID());
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public void AddOrder_services(int servicesId, int orderId) {
+        String sql = "INSERT INTO [dbo].[Order_services]\n"
+                + "           ([servicesId]\n"
+                + "           ,[OrderId])\n"
+                + "     VALUES\n"
+                + "           (?,?)";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+
+            st.setInt(1, servicesId);
+            st.setInt(2, orderId);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+
         }
     }
 

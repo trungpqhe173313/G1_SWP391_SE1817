@@ -4,16 +4,17 @@
  */
 package Controller.customer;
 
-import Dal.ShiftsDAO;
+import Dal.ServicesDAO;
+import Model.Services;
+import Model.ServicesBooking;
 import Model.Shift;
-import Model.Time;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  * @author xdrag
  */
-public class FetchShiftsServlet extends HttpServlet {
+public class ServicesBookingAjaxServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,49 +37,49 @@ public class FetchShiftsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ShiftsDAO d = new ShiftsDAO();
         HttpSession session = request.getSession();
-        // Đọc thông tin ngày từ request
-        String selectedDate = request.getParameter("date");
-        // Lấy ngày hôm nay
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String todayStr = today.format(formatter);
-        
-        List<Shift> shifts;
-        if (selectedDate.equals(todayStr)) {
-            shifts = d.getAllShiftFromNow();
-        }else
-            shifts = d.getAll();
-        session.setAttribute("time", new Time(selectedDate, shifts));
-        // Set content type và encoding của response
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        ServicesDAO d = new ServicesDAO();
+        System.out.println("day la servicesbooking ajax");
+        // Nhận dữ liệu từ yêu cầu
+        String soDichVuStr = request.getParameter("soDichVu");
+        String tongGiaStr = request.getParameter("tongGia");
+        String[] dichVu = request.getParameterValues("dichVu[]");
 
-        // Convert danh sách shifts sang JSON và gửi về client
-        PrintWriter out = response.getWriter();
-        out.print(buildJSONResponse(shifts));
-        out.flush();
-    }
+        // Check if dichVu is null or empty
+        if (dichVu == null || dichVu.length < 1) {
+            // Clear the session attribute and redirect to appointment
+            session.removeAttribute("services");
+            request.getRequestDispatcher("appointment").forward(request, response);
+        } else {
+            // Clear any existing services attribute in the session
+            if (session.getAttribute("services") != null) {
+                session.removeAttribute("services");
+            }
 
-    // Hàm để xây dựng JSON response từ danh sách Shift
-    private String buildJSONResponse(List<Shift> shifts) {
-        StringBuilder json = new StringBuilder("[");
-        for (int i = 0; i < shifts.size(); i++) {
-            Shift shift = shifts.get(i);
-            json.append("{");
-            json.append("\"id\":").append(shift.getId()).append(",");
-            json.append("\"startTime\":\"").append(shift.getStartTime()).append("\"");
-            json.append("}");
-            if (i < shifts.size() - 1) {
-                json.append(",");
+            try {
+                // Chuyển đổi dữ liệu từ chuỗi sang số nguyên
+                int soDichVu = Integer.parseInt(soDichVuStr);
+                int tongGia = Integer.parseInt(tongGiaStr);
+                List<Services> listServices = new ArrayList<>();
+
+                for (String s : dichVu) {
+                    listServices.add(d.getServiceById(Integer.parseInt(s)));
+                }
+
+                ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
+                session.setAttribute("services", sb);
+                System.out.println("day la servicesbooking ajax" + sb.toString());
+                // Chuyển tiếp đến trang đặt lịch
+                request.getRequestDispatcher("appointment").forward(request, response);
+            } catch (NumberFormatException e) {
+                // Xử lý lỗi nếu có
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Dữ liệu không hợp lệ");
             }
         }
-        json.append("]");
-        return json.toString();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

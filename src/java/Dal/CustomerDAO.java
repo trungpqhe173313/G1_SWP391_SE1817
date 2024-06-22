@@ -39,7 +39,7 @@ public class CustomerDAO extends DBContext{
         return null;
     }
     public static void main(String[] args) {
-        Customer c = new CustomerDAO().getCustomerByPhone("0912345669");
+        Customer c = new CustomerDAO().getCustomerByP("0912345669");
         System.out.println(c.getFullName());
     }
 }

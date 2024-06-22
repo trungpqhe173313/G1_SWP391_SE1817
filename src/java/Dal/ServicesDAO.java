@@ -35,7 +35,6 @@ public class ServicesDAO extends DBContext {
                 int price = rs.getInt(4);
                 String description = rs.getString(5);
                 boolean isActive = rs.getBoolean(6);
-//                int classificationId = rs.getInt(7);
 
                 s.add(new Services(servicesId, name, image, price, description, isActive));
             }
@@ -135,6 +134,7 @@ public class ServicesDAO extends DBContext {
                     service.setPrice(rs.getInt("price"));
                     service.setDescription(rs.getString("description"));
                 }
+                stm.close();
             }
         } catch (Exception e) {
             e.printStackTrace();

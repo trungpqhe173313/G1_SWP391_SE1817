@@ -129,6 +129,14 @@
         <servlet-class>Controller.Service.UpdateService</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServicesBookingServlet</servlet-name>
+        <servlet-class>Controller.customer.ServicesBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicesBookingAjaxServlet</servlet-name>
+        <servlet-class>Controller.customer.ServicesBookingAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>deleteservice</servlet-name>
         <servlet-class>Controller.Service.deleteservice</servlet-class>
     </servlet>
@@ -259,6 +267,14 @@
     <servlet-mapping>
         <servlet-name>UpdateService</servlet-name>
         <url-pattern>/updateservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesBookingServlet</servlet-name>
+        <url-pattern>/servicesbooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesBookingAjaxServlet</servlet-name>
+        <url-pattern>/servicesbookingajax</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>deleteservice</servlet-name>
