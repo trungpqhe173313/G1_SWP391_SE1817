@@ -172,6 +172,10 @@
         <servlet-name>ReOrderServlet</servlet-name>
         <servlet-class>Controller.customer.ReOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -343,5 +347,9 @@
     <servlet-mapping>
         <servlet-name>ReOrderServlet</servlet-name>
         <url-pattern>/reorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <url-pattern>/viewfeedback</url-pattern>
     </servlet-mapping>
 </web-app>

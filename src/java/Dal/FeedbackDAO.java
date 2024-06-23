@@ -76,7 +76,7 @@ public class FeedbackDAO extends DBContext {
 
     // Method to update feedback
     public void updateFeedback(Feedback feedback) {
-        String sql = "UPDATE feedback SET noidung = ?, isActive = 1 WHERE id = ?";
+        String sql = "UPDATE feedback SET noidung = ?, isActive = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, feedback.getNoidung());
             stmt.setBoolean(2, feedback.isActive());
