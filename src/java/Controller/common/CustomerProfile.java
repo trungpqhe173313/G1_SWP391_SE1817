@@ -6,11 +6,14 @@ package Controller.common;
 
 import Dal.CustomerDAO;
 import Model.Account;
+import Model.Customer;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 /**
  *
  * @author LINHNTHE170290
@@ -20,28 +23,34 @@ public class CustomerProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Kiểm tra xem người dùng đã đăng nhập chưa
-        if (request.getSession().getAttribute("account") == null) {
-            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-            response.sendRedirect("login.jsp");
-            return;
+        HttpSession session = request.getSession(false); // do not create new session
+        if (session != null) {
+            // Lấy số điện thoại của người dùng đã đăng nhập từ session
+            Account account = (Account) session.getAttribute("account");
+            if (account != null) {
+                CustomerDAO customerDAO = new CustomerDAO();
+                Customer customer = customerDAO.getCustomerProfile(account.getPhone());
+                if (customer != null) {
+                    request.setAttribute("customer", customer);
+                    request.getRequestDispatcher("CustomerProfile.jsp").forward(request, response);
+                    return;
+                } else {
+                    request.setAttribute("error", "Error system!!!");
+                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                }
+            }
         }
-        // Lấy số điện thoại của người dùng đã đăng nhập từ session
-        String phone = ((Account)request.getSession().getAttribute("account")).getPhone();
-        CustomerDAO dc = new CustomerDAO();
-        Account a = dc.getProfileByPhone(phone);
-        
-        if (a != null) {
-            request.setAttribute("account", a);
-            request.getRequestDispatcher("customer-profile.jsp").forward(request, response);
-        } else {
-            request.setAttribute("error", "Error system!!!");
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        }
-    
+        // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        response.sendRedirect("login.jsp");
+
+
+
+
     }
 
-
-    
-
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

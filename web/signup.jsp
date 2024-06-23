@@ -65,58 +65,58 @@
                                  alt="Sample photo">
                             <div class="card-body p-4 p-md-5">
                                 <form action="signup" method="post">
-                                    
+
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h6 class="mb-0" for="phone">Số điện thoại</h6>
-                                            <input type="text" name="phone" required pattern="0[1-9]{9}" 
+                                            <input type="text" name="phone" required value="${param.phone}" pattern="0[1-9]{9}" 
                                                    title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0"class="form-control form-control-lg" />
                                             <p class="text-danger">${error2}</p>
                                         </div>
-                                        
+
                                         <div class="col-md-6">
                                             <h6 class="mb-0" for="email">Email</h6>
-                                            <input type="text" name="email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$" 
+                                            <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]$" 
                                                    title="Địa chỉ email không hợp lệ" class="form-control form-control-lg" />
                                         </div>
                                     </div>
 
-                                    
+
 
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div data-mdb-input-init class="form-outline">
-                                                <h6 class="mb-0" for="password">Mật khẩu</h6>
-                                                <input type="password" required name="password" class="form-control form-control-lg" />
+                                                <h6 class="mb-0" for="pass">Mật khẩu</h6>
+                                                <input type="password" required value="${param.pass}" name="pass" class="form-control form-control-lg" />
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6">
                                             <div data-mdb-input-init class="form-outline">
-                                                <h6 class="mb-0" for="re-pass">Xác Thực Mật khẩu</h6>
-                                                <input type="password" required name="re_pass" class="form-control form-control-lg" />
+                                                <h6 class="mb-0" for="re_pass">Xác Thực Mật khẩu</h6>
+                                                <input type="password" required value="${param.re_pass}" name="re_pass" class="form-control form-control-lg" />
                                             </div>
                                         </div>
                                         <p class="text-danger">${error1}</p>
                                     </div>
-                                    
-
-
-
-
 
                                     <div class="d-flex justify-content-between align-items-center mb-4">
                                         <h6 class="mb-0">Giới tính</h6>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="isMale" value="option1" />
+                                            <input class="form-check-input" type="radio" name="gender" value="${param.gender}" />
                                             <label class="form-check-label" for="female">Nữ</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="isMale" value="option2" />
+                                            <input class="form-check-input" type="radio" name="gender" value="${param.gender}" />
                                             <label class="form-check-label" for="male">Nam</label>
                                         </div>
                                     </div>
-
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <h6 class="mb-0">Avatar</h6>
+                                            <input type="file" required value="${param.avatar}" name="avatar" accept="image/*"class="form-control form-control-lg">
+                                        </div>
+                                    </div>
 
                                     <div class="mt-4 pt-2">
                                         <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Đăng ký" />
