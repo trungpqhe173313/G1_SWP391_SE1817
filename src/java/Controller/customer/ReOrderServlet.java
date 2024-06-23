@@ -4,27 +4,23 @@
  */
 package Controller.customer;
 
-import Dal.ServicesDAO;
+import Dal.ShopDAO;
 import Model.Services;
 import Model.ServicesBooking;
-import Model.Shift;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
  * @author xdrag
  */
-public class ServicesBookingAjaxServlet extends HttpServlet {
+public class ReOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,47 +33,28 @@ public class ServicesBookingAjaxServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String orderId_str = request.getParameter("orderId");
+        ShopDAO d = new ShopDAO();
         HttpSession session = request.getSession();
-        ServicesDAO d = new ServicesDAO();
-        // Nhận dữ liệu từ yêu cầu
-        String soDichVuStr = request.getParameter("soDichVu");
-        String tongGiaStr = request.getParameter("tongGia");
-        String[] dichVu = request.getParameterValues("dichVu[]");
-
-        // Check if dichVu is null or empty
-        if (dichVu == null || dichVu.length < 1) {
-            // Clear the session attribute and redirect to appointment
-            session.removeAttribute("services");
+        if (NumberUtils.isNumber(orderId_str) == true) {
+            int orderId = Integer.parseInt(orderId_str);
+            List<Services> listServices = d.getServicesByOrderId(orderId);
+            int soDichVu = 0;
+            int tongGia = 0;
+            for (Services s : listServices) {
+                soDichVu++;
+                tongGia += s.getPrice();
+            }
+            ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
+            session.setAttribute("services", sb);
+            // Chuyển tiếp đến trang đặt lịch
             request.getRequestDispatcher("appointment").forward(request, response);
-        } else {
-            // Clear any existing services attribute in the session
-            if (session.getAttribute("services") != null) {
-                session.removeAttribute("services");
-            }
-
-            try {
-                // Chuyển đổi dữ liệu từ chuỗi sang số nguyên
-                int soDichVu = Integer.parseInt(soDichVuStr);
-                int tongGia = Integer.parseInt(tongGiaStr);
-                List<Services> listServices = new ArrayList<>();
-
-                for (String s : dichVu) {
-                    listServices.add(d.getServiceById(Integer.parseInt(s)));
-                }
-
-                ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
-                session.setAttribute("services", sb);
-                // Chuyển tiếp đến trang đặt lịch
-                request.getRequestDispatcher("appointment").forward(request, response);
-            } catch (NumberFormatException e) {
-                // Xử lý lỗi nếu có
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Dữ liệu không hợp lệ");
-            }
+        }else{
+            request.getRequestDispatcher("viewhistorybooking").forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

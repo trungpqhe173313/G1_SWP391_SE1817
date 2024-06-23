@@ -29,8 +29,8 @@
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BookingScheduleServlet</servlet-name>
-        <servlet-class>Controller.customer.BookingScheduleServlet</servlet-class>
+        <servlet-name>ViewHistoryBooking</servlet-name>
+        <servlet-class>Controller.customer.ViewHistoryBooking</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeesController</servlet-name>
@@ -140,6 +140,10 @@
         <servlet-name>deleteservice</servlet-name>
         <servlet-class>Controller.Service.deleteservice</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReOrderServlet</servlet-name>
+        <servlet-class>Controller.customer.ReOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -169,8 +173,8 @@
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BookingScheduleServlet</servlet-name>
-        <url-pattern>/bookingschedule</url-pattern>
+        <servlet-name>ViewHistoryBooking</servlet-name>
+        <url-pattern>/viewhistorybooking</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesDetailController</servlet-name>
@@ -279,5 +283,9 @@
     <servlet-mapping>
         <servlet-name>deleteservice</servlet-name>
         <url-pattern>/deleteservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReOrderServlet</servlet-name>
+        <url-pattern>/reorder</url-pattern>
     </servlet-mapping>
 </web-app>
