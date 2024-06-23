@@ -16,11 +16,10 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String fullName, String phone, Account account) {
+    public Customer(int customerId, String fullName, String phone) {
         this.customerId = customerId;
         this.fullName = fullName;
         this.phone = phone;
-        this.account = account;
     }
 
    
