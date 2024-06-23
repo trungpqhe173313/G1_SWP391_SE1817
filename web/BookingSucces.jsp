@@ -36,48 +36,7 @@
             }
 
         </style>
-        <script>
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
-
-            function validatePhone(phone) {
-                const re = /^\d{10}$/;
-                return re.test(phone);
-            }
-
-            function validateForm() {
-                const name = document.getElementById('appointment_name').value;
-                const email = document.getElementById('appointment_email').value;
-                const phone = document.getElementById('phone').value;
-
-                const emailInput = document.getElementById('appointment_email');
-                const phoneInput = document.getElementById('phone');
-
-                let isValid = true;
-
-                if (!validateEmail(email)) {
-                    document.getElementById('email_error_message').innerText = 'Please enter a valid email address.';
-                    emailInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    document.getElementById('email_error_message').innerText = '';
-                    emailInput.classList.remove('is-invalid');
-                }
-
-                if (!validatePhone(phone)) {
-                    document.getElementById('phone_error_message').innerText = 'Please enter a valid 10-digit phone number.';
-                    phoneInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    document.getElementById('phone_error_message').innerText = '';
-                    phoneInput.classList.remove('is-invalid');
-                }
-
-                return isValid;
-            }
-        </script>
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -128,39 +87,28 @@
 
                         <table class="table custom-table">
                             <thead>
-                                <tr>  
-                                    <th scope="col">Order</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Services</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Barber</th>
-                                    <th scope="col"> Customer Contact</th>
-                                    <th scope="col"> Total Amount</th>
-                                    <th scope="col">Status</th>
+                                <tr>
+                                    <th scope="col">Dịch vụ</th>
+                                    <th scope="col">Giờ Đặt</th>
+                                    <th scope="col">Tổng Tiền</th>
+                                    <th scope="col">Trạng Thái</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr scope="row">
-
-                                    <td>
-                                    ${newOrderId}
-                                </td>
-                                <td><a href="#">${sessionScope.account.getFullName()}</a></td>
-                                <td style="font-size: 16px; font-weight: 500;">
-                                    <c:forEach items="${listServicesAdded}" var="s">
+                                <tr scope="row" style="font-size: 1rem;">
+                                <td style="font-size: 1.1rem; font-weight: 500;">
+                                    <c:forEach items="${listServices}" var="s">
                                         - ${s.getName()} </br>
                                     </c:forEach>
                                 </td>
                                 <td>
 
-                                    <span style="font-size: 15px;">${ShiftsAdded.getStartTime()}-${ShiftsAdded.getEndTime()}</span>
+                                    <span style="font-size: 1.1rem;">${shifts.getStartTime()}</span>
                                     </br>
-                                    <span style="font-size: 18px; font-weight: 500">${NewOrder.getOrderDate()}</span>
+                                    <span style="font-size: 1.2rem; font-weight: 460">${order.getOrderDate()}</span>
                                 </td>
-                                <td>${barberAdded.getFullName()}</td>
-                                <td>${sessionScope.account.getPhone()}</td>
-                                <td>${NewOrder.getTotalAmount()}K</td>
+                                <td>${order.getTotalAmount()}đ</td>
                                 <td>${status.getName()}</td>
                             </tr>
                             <tr class="spacer"><td colspan="100"></td></tr>
@@ -177,7 +125,7 @@
                     <div class="col-md-10 ftco-animate">
                         <form action="home" class="appointment-form">
                             <div class="form-group">
-                                <input type="submit" value="Back to HomePage" class="btn btn-primary">
+                                <input type="submit" value="Trang Chủ" class="btn btn-primary">
                             </div>
                         </form>
                     </div>

@@ -2,25 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.customer;
+package Controller.admin;
 
+import Dal.CustomerDAO;
 import Dal.OrderDAO;
-import Dal.Order_servicesDAO;
-import Dal.ServicesDAO;
-import Model.Services;
+import Model.Customer;
+import Model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author phamt
  */
-public class UpdateAppointmentController extends HttpServlet {
+public class CheckInController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,34 +33,16 @@ public class UpdateAppointmentController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String date = request.getParameter("date");
-        String[] idServices = request.getParameterValues("services");
-        String shift = request.getParameter("shift");
-        String oId = request.getParameter("orderID");
-        List<Services> services = new ServicesDAO().GetAllServices();
-        PrintWriter out = response.getWriter();
-        
-
-        //total new order
-        int total = 0;
-        for (String idService : idServices) {
-            int id = Integer.parseInt(idService);
-            for (Services service : services) {
-                if(id == service.getServicesId()){
-                    total += service.getPrice();
-                    break;
-                }
-            }
+        String phone = request.getParameter("phoneNumber");
+        Customer customer = new CustomerDAO().getCustomerByP(phone);
+        Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
+        if (order == null) {
+            request.setAttribute("errorMessage", "Order not found");
+            request.getRequestDispatcher("errorPage.jsp").forward(request, response);
+        } else {
+            int oId = order.getId();
+            response.sendRedirect("viewOrderDetatailUpdate?Oid=" + oId);
         }
-        //update order with new info
-        new OrderDAO().upDateOrder(date,shift,oId,total);
-        //delete old services before update
-        new Order_servicesDAO().deleteAllServices(oId);
-        //insert new services to order
-        for (String id : idServices) {
-            new Order_servicesDAO().InsertServices(oId, id);
-        }
-        response.sendRedirect("viewAppountController");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -38,6 +38,23 @@ public class ShiftsDAO extends DBContext {
         return Shift;
     }
 
+    public Shift getShiftById(int id) {
+        Shift s = new Shift();
+        String sql = "SELECT *\n"
+                + "  FROM [Barber].[dbo].[shift] where id = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql);) {
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                s.setId(rs.getInt(1));
+                s.setStartTime(rs.getString(2));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+    }
+
     public List<Shift> getAllShiftFromNow() {
         List<Shift> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
@@ -59,10 +76,12 @@ public class ShiftsDAO extends DBContext {
 
     public static void main(String[] args) {
         ShiftsDAO d = new ShiftsDAO();
-        List<Shift> l = d.getAllShiftFromNow();
-        for (Shift s : l) {
-            System.out.println(s.toString());
-        }
+        
+        System.out.println(d.getShiftById(1));
+//        List<Shift> l = d.getAllShiftFromNow();
+//        for (Shift s : l) {
+//            System.out.println(s.toString());
+//        }
     }
 
 }

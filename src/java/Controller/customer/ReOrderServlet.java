@@ -4,23 +4,23 @@
  */
 package Controller.customer;
 
-import Dal.OrderDAO;
-import Dal.Order_servicesDAO;
-import Dal.ServicesDAO;
+import Dal.ShopDAO;
 import Model.Services;
+import Model.ServicesBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
- * @author phamt
+ * @author xdrag
  */
-public class UpdateAppointmentController extends HttpServlet {
+public class ReOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,35 +33,25 @@ public class UpdateAppointmentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String date = request.getParameter("date");
-        String[] idServices = request.getParameterValues("services");
-        String shift = request.getParameter("shift");
-        String oId = request.getParameter("orderID");
-        List<Services> services = new ServicesDAO().GetAllServices();
-        PrintWriter out = response.getWriter();
-        
-
-        //total new order
-        int total = 0;
-        for (String idService : idServices) {
-            int id = Integer.parseInt(idService);
-            for (Services service : services) {
-                if(id == service.getServicesId()){
-                    total += service.getPrice();
-                    break;
-                }
+        String orderId_str = request.getParameter("orderId");
+        ShopDAO d = new ShopDAO();
+        HttpSession session = request.getSession();
+        if (NumberUtils.isNumber(orderId_str) == true) {
+            int orderId = Integer.parseInt(orderId_str);
+            List<Services> listServices = d.getServicesByOrderId(orderId);
+            int soDichVu = 0;
+            int tongGia = 0;
+            for (Services s : listServices) {
+                soDichVu++;
+                tongGia += s.getPrice();
             }
+            ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
+            session.setAttribute("services", sb);
+            // Chuyển tiếp đến trang đặt lịch
+            request.getRequestDispatcher("appointment").forward(request, response);
+        }else{
+            request.getRequestDispatcher("viewhistorybooking").forward(request, response);
         }
-        //update order with new info
-        new OrderDAO().upDateOrder(date,shift,oId,total);
-        //delete old services before update
-        new Order_servicesDAO().deleteAllServices(oId);
-        //insert new services to order
-        for (String id : idServices) {
-            new Order_servicesDAO().InsertServices(oId, id);
-        }
-        response.sendRedirect("viewAppountController");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
