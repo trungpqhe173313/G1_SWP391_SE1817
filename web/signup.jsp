@@ -65,6 +65,7 @@
                                  alt="Sample photo">
                             <div class="card-body p-4 p-md-5">
                                 <form action="signup" method="post">
+                                    
 
                                     <div class="row mb-4">
                                         <div class="col-md-6">
