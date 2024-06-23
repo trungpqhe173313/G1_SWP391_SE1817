@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Project_SWP/web/nav.jsp</file>
             <file>file:/D:/Project_SWP/src/java/Controller/customer/ServicesBookingAjaxServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/CustomerDAO.java</file>
-            <file>file:/D:/Project_SWP/web/booking.jsp</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/customer/ViewHistoryBooking.java</file>
+            <file>file:/D:/Project_SWP/web/viewhistorybooking.jsp</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentServlet.java</file>
+            <file>file:/D:/Project_SWP/src/java/Model/Employee.java</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/admin/ViewRevenueOrderServlet.java</file>
             <file>file:/D:/Project_SWP/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/Project_SWP/web/servicesbooking.jsp</file>
+            <file>file:/D:/Project_SWP/src/java/Dal/ShopDAO.java</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/customer/ReOrderServlet.java</file>
         </group>
     </open-files>
 </project-private>
