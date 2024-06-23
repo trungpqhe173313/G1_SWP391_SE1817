@@ -7,6 +7,7 @@ package Controller.customer;
 import Dal.CustomerDAO;
 import Dal.OrderDAO;
 import Dal.ShiftsDAO;
+import Dal.ShopDAO;
 import Model.Account;
 import Model.Order;
 import Model.Services;
@@ -94,14 +95,11 @@ public class AppointmentServlet extends HttpServlet {
             throws ServletException, IOException {
         String date_str = request.getParameter("date");
         String shift_str = request.getParameter("shifts");
-        System.out.println("day la tu appointment: " + date_str);
-        System.out.println("day la tu appointment: " + shift_str);
         try {
             HttpSession session = request.getSession();
             CustomerDAO cd = new CustomerDAO();
             Account a = (Account) session.getAttribute("account");
             int customerId = cd.getCustomerByP(a.getPhone()).getCustomerId();
-            System.out.println("day la tu appointment cusId: " + customerId);
 
             OrderDAO d = new OrderDAO();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -110,22 +108,26 @@ public class AppointmentServlet extends HttpServlet {
 
             date = new java.sql.Date(sdf.parse(date_str).getTime());
             ServicesBooking sb = (ServicesBooking) session.getAttribute("services");
-            System.out.println("day la tu appointment sb: " + sb.toString());
             Order o = new Order(customerId, 1, date, sb.getTotalMoney(), Integer.parseInt(shift_str));
-            System.out.println("day la tu appointment order: " + o.toString());
             d.AddOrder(o);
             int orderId = d.getNewOrderId();
-            System.out.println("day la tu appointment orderId: " + orderId);
             List<Services> listServices = sb.getListServices();
             for (Services s : listServices) {
                 d.AddOrder_services(s.getServicesId(), orderId);
             }
+            ShiftsDAO sd = new ShiftsDAO();
+            ShopDAO shopDao = new ShopDAO();
             session.removeAttribute("time");
             session.removeAttribute("services");
-            System.out.println("day la tu appointment: add thành công");
+            request.setAttribute("listServices", listServices);
+            request.setAttribute("shifts", sd.getShiftById(o.getShiftsID()));
+            request.setAttribute("order", o);
+            request.setAttribute("status", shopDao.getStatusById(o.getStatusId()));
+            request.setAttribute("mss", "Đặt Thành Công");
         } catch (Exception e) {
         }
-        request.getRequestDispatcher("home").forward(request, response);
+        
+        request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
 
     }
 

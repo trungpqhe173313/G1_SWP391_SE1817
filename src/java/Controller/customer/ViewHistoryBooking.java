@@ -4,15 +4,13 @@
  */
 package Controller.customer;
 
-import Dal.OrdersDAO;
+import Dal.CustomerDAO;
+import Dal.ShopDAO;
 import Model.Account;
-import Model.Booking;
+import Model.Customer;
 import Model.Order;
-import Model.Services;
-import Model.Shift;
-import Model.Status;
+import Model.OrderRevenue;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +23,7 @@ import java.util.List;
  *
  * @author xdrag
  */
-public class BookingScheduleServlet extends HttpServlet {
+public class ViewHistoryBooking extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,44 +36,26 @@ public class BookingScheduleServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ShopDAO d = new ShopDAO();
+        CustomerDAO cd = new CustomerDAO();
         HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            response.sendRedirect("login");
-        }else{
-            
-        Account account = (Account) session.getAttribute("account");
-        OrdersDAO d = new OrdersDAO();
-        List<Order> listOrders = d.getAllOrdersByAccountId(account.getId());
-        if (listOrders.isEmpty()) {
-            String mss = "Bạn chưa có lịch nào được đặt";
-            request.setAttribute("mss", mss);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
-        } else {
-            List<Booking> listBooking = new ArrayList<>();
-            for (Order o : listOrders) {
-                Booking b = new Booking();
-                b.setOrder(o);
-
-                // lay Status order da dat
-                Status status = d.getStatusesById(o.getStatusId());
-                b.setStatus(status);
-                // lay barber da dat
-                Account barberAdded = d.getAccountsById(o.getEmployeeId());
-                b.setBarber(barberAdded);
-                // lay shifts da dat
-                Shift shiftsAdded = d.getShiftsById(o.getShiftsID());
-                b.setShift(shiftsAdded);
-                //lay tat ca services da dat
-                List<Services> listServices = d.getAllServicesByOrderId(o.getId());
-                b.setListServices(listServices);
-                System.out.println(b.toString());
-                listBooking.add(b);
-            }
-            request.setAttribute("listBooking", listBooking);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
+        Account account = (Account)session.getAttribute("account");
+        Customer customer = cd.getCustomerByP(account.getPhone());
+        List<Order> listOrderDefault = d.getOrderByCustomerId(customer.getCustomerId());
+        List<OrderRevenue> listOrder = new ArrayList<>();
+        
+        for (Order o : listOrderDefault) {
+            OrderRevenue or = new OrderRevenue();
+            or.setOrder(o);
+            or.setCustomer(d.getCustomerById(o.getCustomerId()));
+            or.setEmployee(d.getEmployeeById(o.getEmployeeId()));
+            or.setServices(d.getServicesByOrderId(o.getId()));
+            or.setShift(d.getShiftById(o.getShiftsID()));
+            or.setStatus(d.getStatusById(o.getStatusId()));
+            listOrder.add(or);
         }
-        }
-
+        request.setAttribute("listOrder", listOrder);
+        request.getRequestDispatcher("viewhistorybooking.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
