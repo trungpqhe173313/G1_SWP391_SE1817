@@ -23,6 +23,13 @@ public class Customer {
         this.account = account;
     }
 
+    public Customer(int customerId, String fullName, String phone) {
+        this.customerId = customerId;
+        this.fullName = fullName;
+        this.phone = phone;
+    }
+    
+
    
 
     public int getCustomerId() {

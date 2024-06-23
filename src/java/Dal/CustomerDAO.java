@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class CustomerDAO extends DBContext {
 
     public Customer getCustomerByP(String phone) {
-
+        Customer customer = new Customer();
         try {
 
             String sql = "SELECT *\n"
@@ -34,7 +34,7 @@ public class CustomerDAO extends DBContext {
             stm.setString(1, phone);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Customer customer = new Customer(rs.getInt(1),
+                customer = new Customer(rs.getInt(1),
                         rs.getString(2), rs.getString(3));
                 return customer;
             }
