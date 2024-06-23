@@ -21,7 +21,6 @@ import java.util.logging.Logger;
  */
 public class CustomerDAO extends DBContext {
 
-    
     public CustomerDAO() {
         super();
     }
@@ -75,6 +74,76 @@ public class CustomerDAO extends DBContext {
         }
 
         return customer;
+    }
+
+    public Customer getCustomerProfileByID(int customerId) {
+        String sql = "SELECT "
+                + "   c.customerId, "
+                + "   c.fullName, "
+                + "   a.phone, "
+                + "   a.pass, "
+                + "   a.roleId, "
+                + "   a.email, "
+                + "   a.gender, "
+                + "   a.isActive, "
+                + "   a.avatar "
+                + "FROM "
+                + "   account a "
+                + "JOIN "
+                + "   customer c ON a.phone = c.phone "
+                + "WHERE "
+                + "   c.customerId = ?";
+
+        Customer customer = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, customerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retrieve account information
+                    Account account = new Account();
+                    account.setPhone(rs.getString("phone"));
+                    account.setPass(rs.getString("pass"));
+                    account.setRoleId(rs.getInt("roleId"));
+                    account.setEmail(rs.getString("email"));
+                    account.setGender(rs.getBoolean("gender"));
+                    account.setIsActive(rs.getBoolean("isActive"));
+                    account.setAvatar(rs.getString("avatar"));
+
+                    // Retrieve customer information
+                    customer = new Customer();
+                    customer.setCustomerId(rs.getInt("customerId"));
+                    customer.setFullName(rs.getString("fullName"));
+                    customer.setPhone(rs.getString("phone")); // Phone from accounts table
+
+                    // Set the account object into customer
+                    customer.setAccount(account);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customer;
+    }
+
+    public boolean updateCustomer(Customer customer) {
+        String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, customer.getCustomerId());
+            stmt.setString(2, customer.getFullName());
+            stmt.setString(3, customer.getPhone());
+            stmt.setString(4, customer.getAccount().getEmail());
+            stmt.setBoolean(5, customer.getAccount().getGender());
+            stmt.setInt(6, customer.getCustomerId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     public static void main(String[] args) {

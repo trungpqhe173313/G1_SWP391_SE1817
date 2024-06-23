@@ -6,6 +6,7 @@ package Controller.common;
 
 import Dal.CustomerDAO;
 import Model.Account;
+import Model.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+
 /**
  *
  * @author LINHNTHE170290
@@ -36,7 +38,7 @@ public class CustomerUpdatePage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerUpdatePage</title>");            
+            out.println("<title>Servlet CustomerUpdatePage</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CustomerUpdatePage at " + request.getContextPath() + "</h1>");
@@ -58,21 +60,20 @@ public class CustomerUpdatePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //String phone = request.getParameter("phone");
-        String idStr = request.getParameter("id");
-        int id;
+        String idStr = request.getParameter("customerid");
+        int customerid;
 
         CustomerDAO daoCustomer = new CustomerDAO();
 
         try {
-            id = Integer.parseInt(idStr);
-            Account a = daoCustomer.getProfileById(id);
-            request.setAttribute("account", a);
-            request.getRequestDispatcher("update-customerfile.jsp").forward(request, response);
+            customerid = Integer.parseInt(idStr);
+            Customer c = daoCustomer.getCustomerProfileByID(customerid);
+            request.setAttribute("customer", c);
+            request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-       
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -86,31 +87,37 @@ public class CustomerUpdatePage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ form
-        String idStr = request.getParameter("id");
+        String idStr = request.getParameter("customerid");
         String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
-        Boolean isMale = request.getParameter("isMale")!= null ? Boolean.valueOf(request.getParameter("isMale")) : null;
-        int roleId = 2; // Giá trị mặc định là Username
+        Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
+        int roleId = 3; // Giá trị mặc định là Username
         boolean isActive = true; //Giá trị là active (hoặc 1)
-        int id;
+        int customerId = Integer.parseInt(idStr);
+
         // Tạo một đối tượng Account với các thông tin mới cập nhật
-//        CustomerDAO daoC = new CustomerDAO();
-//        try {
-//            id = Integer.parseInt(idStr);
-//            Account newA = new Account(id, phone, password, fullName, email, avatar, isMale, roleId, isActive);
-//            daoC.updateProfile(newA);
-//            response.sendRedirect("cusprofile");
-//            //response.sendRedirect("cusprofile?id=" + id);
-//        } catch (NumberFormatException e) {
-//            System.out.println(e);
-//        }
-        response.getWriter().println(email);
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setCustomerId(customerId);
+        updatedCustomer.setFullName(fullName);
+        updatedCustomer.setPhone(phone);
+        updatedCustomer.getAccount().setEmail(email);
+        updatedCustomer.getAccount().setGender(gender);
+        updatedCustomer.getAccount().setAvatar(avatar);
         
-        
-        
+        // lưu vào data
+        CustomerDAO customerDAO = new CustomerDAO();
+        boolean updateSuccessful = customerDAO.updateCustomer(updatedCustomer);
+
+        if (updateSuccessful) {
+            // Redirect to customer profile page or success page
+            response.sendRedirect("CustomerProfile.jsp");
+        } else {
+            // Handle update failure scenario
+            response.getWriter().println("Failed to update customer information.");
+        }
+
     }
 
     /**
