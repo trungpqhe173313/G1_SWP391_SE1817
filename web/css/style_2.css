@@ -1,64 +1,99 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-body{margin-top:20px;
-background-color:#f2f6fc;
-color:#69707a;
-}
-.img-account-profile {
-    height: 10rem;
-}
-.rounded-circle {
-    border-radius: 50% !important;
-}
-.card {
-    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
-}
-.card .card-header {
-    font-weight: 500;
-}
-.card-header:first-child {
-    border-radius: 0.35rem 0.35rem 0 0;
-}
-.card-header {
-    padding: 1rem 1.35rem;
-    margin-bottom: 0;
-    background-color: rgba(33, 40, 50, 0.03);
-    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-}
-.form-control, .dataTable-input {
-    display: block;
-    width: 100%;
-    padding: 0.875rem 1.125rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1;
-    color: #69707a;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #c5ccd6;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.35rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.nav-borders .nav-link.active {
-    color: #0061f2;
-    border-bottom-color: #0061f2;
-}
-.nav-borders .nav-link {
-    color: #69707a;
-    border-bottom-width: 0.125rem;
-    border-bottom-style: solid;
-    border-bottom-color: transparent;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 1rem;
-    margin-right: 1rem;
+body {
+  padding: 0;
+  margin: 0;
 }
 
+#notfound {
+  position: relative;
+  height: 100vh;
+}
+
+#notfound .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.notfound .notfound-404 {
+  height: 190px;
+}
+
+.notfound .notfound-404 h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 146px;
+  font-weight: 700;
+  margin: 0px;
+  color: #232323;
+}
+
+.notfound .notfound-404 h1>span {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  background-image: url('../img/emoji.png');
+  background-size: cover;
+  -webkit-transform: scale(1.4);
+      -ms-transform: scale(1.4);
+          transform: scale(1.4);
+  z-index: -1;
+}
+
+.notfound h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  color: #232323;
+}
+
+.notfound p {
+  font-family: 'Montserrat', sans-serif;
+  color: #787878;
+  font-weight: 300;
+}
+
+.notfound a {
+  font-family: 'Montserrat', sans-serif;
+  display: inline-block;
+  padding: 12px 30px;
+  font-weight: 700;
+  background-color: #f99827;
+  color: #fff;
+  border-radius: 40px;
+  text-decoration: none;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.notfound a:hover {
+  opacity: 0.8;
+}
+
+@media only screen and (max-width: 767px) {
+  .notfound .notfound-404 {
+    height: 115px;
+  }
+  .notfound .notfound-404 h1 {
+    font-size: 86px;
+  }
+  .notfound .notfound-404 h1>span {
+    width: 86px;
+    height: 86px;
+  }
+}

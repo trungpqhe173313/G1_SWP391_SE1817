@@ -207,6 +207,39 @@ public class ShopDAO extends DBContext {
         return list;
     }
 
+    public List<Order> getOrderByCustomerId(int id) {
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT [orderId]\n"
+                + "      ,[customerId]\n"
+                + "      ,[employeeId]\n"
+                + "      ,[statusID]\n"
+                + "      ,[orderDate]\n"
+                + "      ,[totalAmount]\n"
+                + "      ,[shiftId]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[order]\n"
+                + "  WHERE customerId = ? ";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("orderId"));
+                o.setCustomerId(rs.getInt("customerId"));
+                o.setEmployeeId(rs.getInt("employeeId"));
+                o.setStatusId(rs.getInt("statusID"));
+                o.setOrderDate(rs.getDate("orderDate"));
+                o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setShiftsID(rs.getInt("shiftId"));
+                o.setUpdateTime(rs.getString("updateTime"));
+                list.add(o);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return list;
+    }
+
     public Order getOrderById(int id) {
         Order o = new Order();
         String sql = "SELECT [orderId]\n"
@@ -430,8 +463,7 @@ public class ShopDAO extends DBContext {
 
     public static void main(String[] args) {
         ShopDAO d = new ShopDAO();
-        System.out.println(d.getAvatarByEmployeeId(4));
-        List<Order> e = d.getOrderByBarber(6, 5);
+        List<Order> e = d.getOrderByCustomerId(4);
         for (Order o : e) {
             System.out.println(o.toString());
         }

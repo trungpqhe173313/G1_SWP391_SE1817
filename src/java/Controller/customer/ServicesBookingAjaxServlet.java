@@ -39,7 +39,6 @@ public class ServicesBookingAjaxServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServicesDAO d = new ServicesDAO();
-        System.out.println("day la servicesbooking ajax");
         // Nhận dữ liệu từ yêu cầu
         String soDichVuStr = request.getParameter("soDichVu");
         String tongGiaStr = request.getParameter("tongGia");
@@ -68,7 +67,6 @@ public class ServicesBookingAjaxServlet extends HttpServlet {
 
                 ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
                 session.setAttribute("services", sb);
-                System.out.println("day la servicesbooking ajax" + sb.toString());
                 // Chuyển tiếp đến trang đặt lịch
                 request.getRequestDispatcher("appointment").forward(request, response);
             } catch (NumberFormatException e) {
