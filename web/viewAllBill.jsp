@@ -244,7 +244,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -261,7 +260,6 @@
             <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
             <script>
                 $(document).ready(function () {
                     $('#allTable').DataTable();

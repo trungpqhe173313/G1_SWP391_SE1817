@@ -50,7 +50,7 @@
                             </button>
 
                             <!-- Topbar Search -->
-                            <form id="checkInForm" action="checkIn" method="post" 
+                            <form id="checkInForm" action="checkIn" 
                                   class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" onsubmit="return validatePhoneNumber()">
                                 <div class="input-group">
                                     <input type="tel" class="form-control bg-light border-0 small" placeholder="Nhập số điện thoại"
