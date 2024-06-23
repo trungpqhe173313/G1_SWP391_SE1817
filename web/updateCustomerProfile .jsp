@@ -42,7 +42,7 @@
                     <div class="col-xl-8">
                         <!-- Account details card-->
                         <div class="card mb-4">
-                            <div class="card-header">Account Details</div>
+                            <div class="card-header">Thông tin tài khoản</div>
                             <div class="card-body">
                                 <form>
                                     <div class="col-md-6">
@@ -61,7 +61,7 @@
                                         <!-- Form Group (phone number)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="phone">Số điện thoại</label>
-                                            <input class="form-control" readonly="" id="phone" value="$customer.phone}">
+                                            <input class="form-control" readonly="" id="phone" value="${customer.phone}">
                                         </div>
                                     </div>
                                     <!-- Form Row        -->
