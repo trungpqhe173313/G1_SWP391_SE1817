@@ -112,7 +112,7 @@
 
             .myform span {
                 color: #155BDA;
-                font-size: 1.3rem;
+                font-size: 1.2rem;
                 font-weight: 550;
                 border: 2px solid #A8AAC5;
                 border-radius: 5px;

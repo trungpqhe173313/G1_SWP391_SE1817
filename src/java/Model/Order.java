@@ -35,6 +35,13 @@ public class Order {
         this.shiftsID = shiftsID;
         this.updateTime = updateTime;
     }
+    public Order(int customerId, int statusId, Date orderDate, int totalAmount, int shiftsID) {
+        this.customerId = customerId;
+        this.statusId = statusId;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.shiftsID = shiftsID;
+    }
 
     public String getUpdateTime() {
         return updateTime;

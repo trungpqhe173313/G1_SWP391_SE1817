@@ -2,23 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.common;
+package Controller.customer;
 
-import Dal.ServicesDAO;
+import Dal.ShopDAO;
 import Model.Services;
+import Model.ServicesBooking;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
- * @author phamt
+ * @author xdrag
  */
-public class HomeController extends HttpServlet {
+public class ReOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +33,25 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        String orderId_str = request.getParameter("orderId");
+        ShopDAO d = new ShopDAO();
+        HttpSession session = request.getSession();
+        if (NumberUtils.isNumber(orderId_str) == true) {
+            int orderId = Integer.parseInt(orderId_str);
+            List<Services> listServices = d.getServicesByOrderId(orderId);
+            int soDichVu = 0;
+            int tongGia = 0;
+            for (Services s : listServices) {
+                soDichVu++;
+                tongGia += s.getPrice();
+            }
+            ServicesBooking sb = new ServicesBooking(tongGia, soDichVu, listServices);
+            session.setAttribute("services", sb);
+            // Chuyển tiếp đến trang đặt lịch
+            request.getRequestDispatcher("appointment").forward(request, response);
+        }else{
+            request.getRequestDispatcher("viewhistorybooking").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,10 +66,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

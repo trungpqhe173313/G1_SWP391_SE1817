@@ -1,11 +1,9 @@
 <%-- 
-    Document   : servicedetail
-    Created on : Jun 12, 2024, 3:49:09 PM
+    Document   : updateserrvice
+    Created on : Jun 20, 2024, 1:41:06 PM
     Author     : LENOVO
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,29 +178,38 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <h1 class="text-center">Thêm Dịch Vụ</h1>
+                                        <h1 class="text-center">Cập Nhật Dịch Vụ</h1>
 
-                                        <form action="addservice" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label for="name">Tên Dịch Vụ</label>
-                                                <input type="text" id="name" name="name" maxlength="50" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="price">Giá</label>
-                                                <input type="text" id="price" name="price" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Mô tả</label>
-                                                <input type="text" id="description" name="description" maxlength="255" class="form-control" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="img">Hình ảnh</label>
-                                                <input type="file" id="img" name="img" class="form-control-file mx-auto d-block">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" value="Thêm" class="btn btn-primary btn-block"style="background-color: #bf925b;">
-                                            </div>
-                                            <div class="form-group">
+                                        <form action="updateservice" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+                                            <input type="hidden" name="serviceId" value="${sid}">
+                                        <input type="hidden" name="currentImage" value="${service.image}">
+
+                                        <div class="form-group">
+                                            <label for="name">Tên Dịch Vụ</label>
+                                            <input type="text" id="name" name="name" maxlength="50" class="form-control" value="${service.name}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="price">Giá</label>
+                                            <input type="text" id="price" name="price" class="form-control" value="${service.price}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description">Mô tả</label>
+                                            <input type="text" id="description" name="description" maxlength="255" class="form-control" value="${service.description}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="img">Hình ảnh</label>
+                                            <input type="file" id="img" name="img" class="form-control-file mx-auto d-block">
+                                            <img src="img/service/${service.image}" alt="${service.name}" class="img-thumbnail" style="margin-top: 10px; width: 150px; height: auto;">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="submit" value="Cập Nhật" class="btn btn-primary btn-block" style="background-color: #bf925b;">
+                                        </div>
+
+                                        <div class="form-group">
                                             ${mess}
                                         </div>
                                     </form>
@@ -271,40 +278,38 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
         <script>
-                                        function validateForm() {
-                                            // Validate price
-                                            const price = document.getElementById('price').value;
-                                            if (isNaN(price) || price <= 0) {
-                                                alert('Giá phải là một số dương.');
-                                                return false;
-                                            }
+                                       function validateForm() {
+            // Validate price
+            const price = document.getElementById('price').value;
+            if (isNaN(price) || price <= 0) {
+                alert('Giá phải là một số dương.');
+                return false;
+            }
 
-                                            // Validate image file
-                                            const imgInput = document.getElementById('img');
-                                            if (imgInput.files.length === 0) {
-                                                alert('Vui lòng chọn một tệp hình ảnh.');
-                                                return false;
-                                            }
-                                            const file = imgInput.files[0];
-                                            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                                            if (!validImageTypes.includes(file.type)) {
-                                                alert('Vui lòng chọn một tệp hình ảnh hợp lệ (jpg, png, gif).');
-                                                return false;
-                                            }
+            // Validate image file
+            const imgInput = document.getElementById('img');
+            if (imgInput.files.length > 0) {
+                const file = imgInput.files[0];
+                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!validImageTypes.includes(file.type)) {
+                    alert('Vui lòng chọn một tệp hình ảnh hợp lệ (jpg, png, gif).');
+                    return false;
+                }
+            }
 
-                                            // Validate no consecutive spaces
-                                            const fields = ['name', 'description'];
-                                            for (const field of fields) {
-                                                const value = document.getElementById(field).value;
-                                                if (/ {2,}/.test(value)) {
-                                                    alert('Không được để nhiều dấu cách trong ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
-                                                    return false;
-                                                }
-                                            }
+            // Optionally, validate name and description for spaces
+            const fields = ['name', 'description'];
+            for (const field of fields) {
+                const value = document.getElementById(field).value;
+                if (/ {2,}/.test(value)) {
+                    alert('Vui lòng nhập đúng ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
+                    return false;
+                }
+            }
 
-                                            // If all validations pass
-                                            return true;
-                                        }
+            // If all validations pass
+            return true;
+        }
 
         </script>
     </body>

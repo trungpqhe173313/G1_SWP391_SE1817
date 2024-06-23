@@ -14,8 +14,6 @@
             .error-message {
                 color: red;
                 font-size: 18px;
-                text-align: center;
-                margin-top: 10px;
             }
             .is-invalid {
                 border-color: red;
@@ -36,50 +34,21 @@
             .checkbox-item input[type="checkbox"] {
                 margin-right: 5px;
             }
-
+            .icon-center {
+                text-align: center;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+            .icon-center a {
+                display: inline-block;
+                color: inherit;
+                text-decoration: none;
+            }
+            .icon-center a:hover .bi {
+                color: #BF925B;
+            }
         </style>
-        <script>
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
 
-            function validatePhone(phone) {
-                const re = /^\d{10}$/;
-                return re.test(phone);
-            }
-
-            function validateForm() {
-                const name = document.getElementById('appointment_name').value;
-                const email = document.getElementById('appointment_email').value;
-                const phone = document.getElementById('phone').value;
-
-                const emailInput = document.getElementById('appointment_email');
-                const phoneInput = document.getElementById('phone');
-
-                let isValid = true;
-
-                if (!validateEmail(email)) {
-                    document.getElementById('email_error_message').innerText = 'Please enter a valid email address.';
-                    emailInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    document.getElementById('email_error_message').innerText = '';
-                    emailInput.classList.remove('is-invalid');
-                }
-
-                if (!validatePhone(phone)) {
-                    document.getElementById('phone_error_message').innerText = 'Please enter a valid 10-digit phone number.';
-                    phoneInput.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    document.getElementById('phone_error_message').innerText = '';
-                    phoneInput.classList.remove('is-invalid');
-                }
-
-                return isValid;
-            }
-        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -104,6 +73,7 @@
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
         <jsp:include page="nav.jsp"></jsp:include>
@@ -114,8 +84,8 @@
                 <div class="container">
                     <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
                         <div class="col-md-9 ftco-animate pb-5 text-center">
-                            <h2 class="mb-0 bread">Booking Schedule</h2>
-                            <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Booking</span></p>
+                            <h2 class="mb-0 bread">Lịch Sử Đặt</h2>
+                            <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Trang chủ <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Lịch sử đặt</span></p>
                         </div>
                     </div>
                 </div>
@@ -130,42 +100,50 @@
 
                         <table class="table custom-table">
                             <thead>
-                                <tr>  
-                                    <th scope="col">Order</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Services</th>
-                                    <th scope="col">Time</th>
+                                <tr> 
+                                    <th scope="col">Đơn</th>
+                                    <th scope="col">Dịch Vụ</th>
+                                    <th scope="col">Giờ Đặt</th>
                                     <th scope="col">Barber</th>
-                                    <th scope="col"> Customer Contact</th>
-                                    <th scope="col"> Total Amount</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Tổng Tiền</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col" style="text-align: center">Đặt Lại</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${listBooking}" var="lb">
+                            <c:forEach items="${listOrder}" var="lb">
 
-                                <tr scope="row">
+                                <tr scope="row" style="font-size: 1rem;">
 
                                     <td>
-                                        ${lb.getOrder().id}
+                                        ${lb.getOrder().getId()}
                                     </td>
-                                    <td><a href="#">${sessionScope.account.getFullName()}</a></td>
-                                    <td style="font-size: 16px; font-weight: 500;">
-                                        <c:forEach items="${lb.getListServices()}" var="s">
+                                    <td style="font-size: 1rem; font-weight: 500;">
+                                        <c:forEach items="${lb.getServices()}" var="s">
                                             - ${s.getName()} </br>
                                         </c:forEach>
                                     </td>
                                     <td>
 
-                                        <span style="font-size: 15px;">${lb.getShift().getStartTime()}-${lb.getShift().getEndTime()}</span>
+                                        <span style="font-size: 1rem;">${lb.getShift().getStartTime()}</span>
                                         </br>
-                                        <span style="font-size: 18px; font-weight: 500">${lb.getOrder().getOrderDate()}</span>
+                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getOrder().getOrderDate()}</span>
                                     </td>
-                                    <td>${lb.getBarber().getFullName()}</td>
-                                    <td>${sessionScope.account.getPhone()}</td>
-                                    <td>${lb.getOrder().getTotalAmount()}K</td>
+                                    <td>
+                                        <span style="font-size: 1.1rem; font-weight: 460">
+                                            ${lb.getEmployee().getFullName()}</span>
+                                        </br>
+                                        <span style="font-size: 1rem;">
+                                            ${lb.getEmployee().getPhone()}</span>
+                                    </td>
+                                    <td style="color: green">${lb.getOrder().getTotalAmount()}đ</td>
                                     <td>${lb.getStatus().getName()}</td>
+                                    <td class="icon-center">
+                                        <a href="reorder?orderId=${lb.getOrder().getId()}">
+                                            <i class="bi bi-calendar-plus"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr class="spacer"><td colspan="100"></td></tr>
                                 </c:forEach>
@@ -174,12 +152,11 @@
                         </tbody>
                     </table>
                 </div>
-                    <div class="error-message">${mss}</div>
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate">
                         <form action="home" class="appointment-form">
                             <div class="form-group">
-                                <input type="submit" value="Back to HomePage" class="btn btn-primary">
+                                <input type="submit" value="Trang Chủ" class="btn btn-primary">
                             </div>
                         </form>
                     </div>

@@ -122,9 +122,10 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="addemployees" style="background-color: #bf925b;">
                                         Thêm Nhân Viên
                                     </a>
-                                    <a class="btn btn-primary btn-sm" href="employeesresign" style="background-color: #bf925b;">
+                                    <a class="btn btn-primary btn-sm mr-2" href="employeesresign" style="background-color: #bf925b;">
                                         Đã Nghỉ Việc
                                     </a>
+                                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Tìm kiếm nhân viên..." class="form-control" style="width: 300px; display: inline-block;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -139,7 +140,7 @@
                                                     <th>Trạng Thái</th>
                                                     <th>Xóa Nhân Viên</th>
                                                 </tr>
-                                            </thead>                                   
+                                            </thead>
                                             <tbody>
                                             <%
                                                 List<Map<String, Object>> employeeServicesInfo = (List<Map<String, Object>>) request.getAttribute("employeeServicesInfo");
@@ -165,73 +166,93 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
-                </div>
-                <!-- End of Main Content -->
+                    <!-- End of Main Content -->
 
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2020</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+                </div>
+                <!-- End of Content Wrapper -->
+            </div>
+            <!-- End of Page Wrapper -->
+
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="#">Logout</a>
                         </div>
                     </div>
-                </footer>
-                <!-- End of Footer -->
-            </div>
-            <!-- End of Content Wrapper -->
-        </div>
-        <!-- End of Page Wrapper -->
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="#">Logout</a>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script>
-            function confirmDelete(employeeId, isActive) {
-                var confirmation = confirm("Bạn có chắc chắn muốn xóa nhân viên này?");
-                if (confirmation) {
-                    // Chuyển hướng đến URL cập nhật với các tham số
-                    window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=' + isActive;
-                } else {
-                    // Không làm gì hoặc xử lý khi người dùng huỷ bỏ
-                    return false;
-                }
-            }
-        </script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script>
+                                        function confirmDelete(employeeId, isActive) {
+                                            var confirmation = confirm("Bạn có chắc chắn muốn xóa nhân viên này?");
+                                            if (confirmation) {
+                                                // Chuyển hướng đến URL cập nhật với các tham số
+                                                window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=' + isActive;
+                                            } else {
+                                                // Không làm gì hoặc xử lý khi người dùng huỷ bỏ
+                                                return false;
+                                            }
+                                        }
+                                        function filterTable() {
+                                            var input, filter, table, tr, td, i, j, txtValue;
+                                            input = document.getElementById("searchInput");
+                                            filter = input.value.toLowerCase();
+                                            table = document.getElementById("dataTable");
+                                            tr = table.getElementsByTagName("tr");
+
+                                            for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                                                tr[i].style.display = "none"; // Ẩn tất cả các hàng
+
+                                                td = tr[i].getElementsByTagName("td");
+                                                for (j = 0; j < td.length; j++) {
+                                                    if (td[j]) {
+                                                        txtValue = td[j].textContent || td[j].innerText;
+                                                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                                            tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+            </script>
 
     </body>
 </html>
