@@ -5,6 +5,8 @@
 package Dal;
 
 import static Dal.DBContext.connection;
+
+import Model.Account;
 import Model.Customer;
 import Model.Services;
 import java.sql.PreparedStatement;
@@ -17,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author phamt
+ * @author LINHNTHE170290
  */
 public class CustomerDAO extends DBContext {
 
@@ -39,7 +41,8 @@ public class CustomerDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+
+        return customer;
     }
 
     public static void main(String[] args) {
@@ -65,4 +68,5 @@ public class CustomerDAO extends DBContext {
         }
         return customer;
     }
+
 }

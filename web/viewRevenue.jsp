@@ -29,6 +29,8 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
 
@@ -347,45 +349,55 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <div class="table-responsive" style="max-height: 800px; overflow-y: scroll;">
+                                        <div class="table-responsive" style="max-height: 860px; 
+                                             overflow-y: scroll; font-size: 1.1rem">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <c:forEach items="${listOrder}" var="o">
 
-                                            <table class="table table-striped custom-table" style="font-size: 1.1rem;
-                                                   font-weight: 600;">
-                                                <thead>
-                                                    <tr>
-
-                                                        <th scope="col">Đơn Hàng</th>
-                                                        <th scope="col">Tên Khách Hàng</th>
-                                                        <th scope="col">SĐT</th>
-                                                        <th scope="col">Ngày Đặt Lịch</th>
-                                                        <th scope="col">Tổng Thanh Toán</th>
-                                                        <th scope="col">Trạng Thái</th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${listOrder}" var="o">
-
-                                                        <tr scope="row">
-                                                            <td>
-                                                                ${o.getOrder().id}
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <div class="d-flex align-items-center">
-                                                                    <a href="#">${o.getCustomer().getFullName()}</a>
-                                                                </div>
-                                                            </td>
-
-                                                            <td>${o.getCustomer().phone}</td>
-                                                            <td>${o.getOrder().orderDate}</td>
-                                                            <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                                            <td>${o.getStatus().name}</td>
-                                                            <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" 
-                                                                   class="more">Details</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" 
+                                                                           class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -496,6 +508,10 @@
         <script src="vendor/chart.js/Chart.min.js"></script>
 
         <script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 
         <!-- Page level custom scripts -->
         <script>
@@ -539,6 +555,9 @@
                                         var selectedMonth = selectElement.value;
                                         window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
                                     }
+                                    $(document).ready(function () {
+                                        $('#dataTable').DataTable();
+                                    });
         </script>
 
     </body>

@@ -2,24 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.common;
+package Controller.customer;
 
-import Dal.CustomerDAO;
+import Dal.FeedbackDAO;
 import Model.Account;
 import Model.Customer;
+import Model.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LINHNTHE170290
+ * @author admin
  */
-public class CustomerUpdatePage extends HttpServlet {
+public class CustomerFeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class CustomerUpdatePage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerUpdatePage</title>");
+            out.println("<title>Servlet CustomerFeedbackController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CustomerUpdatePage at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerFeedbackController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,20 +60,7 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //String phone = request.getParameter("phone");
-        String idStr = request.getParameter("customerid");
-        int customerid;
-
-        CustomerDAO daoCustomer = new CustomerDAO();
-
-        try {
-            customerid = Integer.parseInt(idStr);
-            Customer c = daoCustomer.getCustomerProfileByID(customerid);
-            request.setAttribute("customer", c);
-            request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
     }
 
     /**
@@ -86,38 +74,29 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy thông tin từ form
-        String idStr = request.getParameter("customerid");
-        String phone = request.getParameter("phone");
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar");
-        Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
-        int roleId = 3; // Giá trị mặc định là Username
-        boolean isActive = true; //Giá trị là active (hoặc 1)
-        int customerId = Integer.parseInt(idStr);
+        String noidung = request.getParameter("noidung");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
 
-        // Tạo một đối tượng Account với các thông tin mới cập nhật
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerId(customerId);
-        updatedCustomer.setFullName(fullName);
-        updatedCustomer.setPhone(phone);
-        updatedCustomer.getAccount().setEmail(email);
-        updatedCustomer.getAccount().setGender(gender);
-        updatedCustomer.getAccount().setAvatar(avatar);
-        
-        // lưu vào data
-        CustomerDAO customerDAO = new CustomerDAO();
-        boolean updateSuccessful = customerDAO.updateCustomer(updatedCustomer);
+        if (account != null) {
+            String phone = account.getPhone();
+            boolean isActive = true;  
 
-        if (updateSuccessful) {
-            // Redirect to customer profile page or success page
-            response.sendRedirect("CustomerProfile.jsp");
+            Customer customer = new Customer();
+            customer.setPhone(phone);
+
+            Feedback feedback = new Feedback();
+            feedback.setNoidung(noidung);
+            feedback.setCustomer(customer);
+            feedback.setIsActive(isActive);
+
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            feedbackDAO.addFeedback(feedback);
+
+            response.sendRedirect("ViewFeedback.jsp");
         } else {
-            // Handle update failure scenario
-            response.getWriter().println("Failed to update customer information.");
+            response.sendRedirect("login.jsp");
         }
-
     }
 
     /**

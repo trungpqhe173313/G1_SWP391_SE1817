@@ -10,18 +10,19 @@ package Model;
  */
 public class Feedback {
     private int id;
-    private String content;
+    private String noidung;
     private int customerId;
     private boolean isActive;
-
+    private Customer customer;
     public Feedback() {
     }
 
-    public Feedback(int id, String content, int customerId, boolean isActive) {
+    public Feedback(int id, String noidung, int customerId, boolean isActive, Customer customer) {
         this.id = id;
-        this.content = content;
+        this.noidung = noidung;
         this.customerId = customerId;
         this.isActive = isActive;
+        this.customer = customer;
     }
 
     
@@ -34,14 +35,14 @@ public class Feedback {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getNoidung() {
+        return noidung;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setNoidung(String noidung) {
+        this.noidung = noidung;
     }
-
+    
     public int getCustomerId() {
         return customerId;
     }
@@ -50,7 +51,7 @@ public class Feedback {
         this.customerId = customerId;
     }
 
-    public boolean isIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 
@@ -58,14 +59,17 @@ public class Feedback {
         this.isActive = isActive;
     }
 
-    @Override
-    public String toString() {
-        return "Feedback{" + "id=" + id + ", content=" + content + ", customerId=" + customerId + ", isActive=" + isActive + '}';
+    public Customer getCustomer() {
+        return customer;
     }
 
-    
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Feedback{" + "id=" + id + ", noidung=" + noidung + ", customerId=" + customerId + ", isActive=" + isActive + ", customer=" + customer + '}';
+    }
+   
 }
