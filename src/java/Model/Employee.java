@@ -14,6 +14,7 @@ public class Employee {
     private int employeeId;
     private String fullName;
     private String phone;
+    private int statusId;
     private String updateTime;
 
     public Employee() {
@@ -32,6 +33,22 @@ public class Employee {
         this.updateTime = updateTime;
     }
 
+    public Employee(int employeeId, String fullName, String phone, int statusId, String updateTime) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.statusId = statusId;
+        this.updateTime = updateTime;
+    }
+    
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+    
     public int getEmployeeId() {
         return employeeId;
     }

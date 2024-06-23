@@ -10,7 +10,7 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #bf925b;" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="viewOrder">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -22,7 +22,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.jsp">
+        <a class="nav-link" href="viewOrder">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -49,6 +49,16 @@
         <a class="nav-link" href="servicedetail">
             <i class="fas fa-fw fa-table"></i>
             <span>Services</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="getOrderManager">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Lịch hẹn</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="viewAllBill">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Thanh toán</span></a>
     </li>
 
     <!-- Divider -->

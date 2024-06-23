@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/addservice.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/homepage.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/employeesdetail.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/AddService.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/services.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/servicedetail.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/common/addimg.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/admin/ViewOrderController.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Model/Status.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Model/Order.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/index.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/viewappointment.jsp</file>
         </group>
     </open-files>
 </project-private>
