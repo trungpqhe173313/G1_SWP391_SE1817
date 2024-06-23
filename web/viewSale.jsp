@@ -46,7 +46,7 @@
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 font-weight: 850;
-                font-size: 2.8rem;
+                font-size: 1.3rem;
             }
         </style>
         <!-- Custom fonts for this template-->
@@ -57,7 +57,8 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
 
     <body id="page-top">
@@ -287,72 +288,74 @@
                                 <!-- Earnings (Monthly) Card Example -->
                                 <div class="col-lg-4">
                                     <c:set var="top2" value="${listViewSaleTop3[1]}" />
-                                    <div class="card mb-4 shadow" style="border-radius: 10px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg');
-                                         background-size: cover; background-position: center;">
-                                        <h3 id="topSale">Top 2</h3>
-                                        <div class="card-body text-center">
-                                            <img src="${top2.getAvatar()}"
-                                                 alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">${top2.getEmployee().getFullName()}</h5>
-                                            <p class="text-muted mb-1" style="font-size: 1.8rem;
-                                               font-weight: 700; color: #d89313;">Doanh Số</p>
-                                            <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">${top2.getRevenue()}đ</p>
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top2.getEmployee().getEmployeeId()}">Detail</a></button>
+                                    <div class="card mb-4 shadow container" style="border-radius: 10px;">
+                                        <h4 id="topSale">Top 2</h4>
+                                        <div class="card-body text-center row">
+                                            <div class="col-md-4">
+
+                                                <img src="${top2.getAvatar()}"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 15rem; height: 17rem;">
                                             </div>
+                                            <div class="col-md-8">
+
+                                                <p class="my-3" id="nameTopBarber">${top2.getEmployee().getFullName()}</p>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
+                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top2.getRevenue()}đ</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <c:set var="top1" value="${listViewSaleTop3[0]}" />
-                                    <div class="card mb-4 shadow" style="border-radius: 10px; position: relative; top: -20px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-5-best-podium-award-sign-golden-object-vector_3482-9236.jpg');
-                                         background-size: cover; background-position: center;">
-                                        <h3 id="topSale"> Best Barber of the Month </h3>
-                                        <div class="card-body text-center">
-                                            <img src="${top1.getAvatar()}"
+                                    <div class="card mb-4 shadow container" style="border-radius: 10px; position: relative; top: -20px;">
+                                        <h4 id="topSale">Top 1</h4>
+                                        <div class="card-body text-center row">
+<!--                                            <img src="${top1.getAvatar()}"
                                                  alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <div>
-                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">
-                                                    ${top1.getEmployee().getFullName()}
-                                                </h5>
-                                                <p class="text-muted mb-1" style="font-size: 1.8rem;
-                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
-                                                <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                                   font-weight: 700; color: #d89313;">${top1.getRevenue()}đ</p>
+                                                 style="width: 15rem; height: 17rem;">-->
+                                            <div class="col-md-4">
+                                                <img src="https://i.vgt.vn/2022/8/11/kha-banh-nay-da-khac-luon-nghi-ve-me-bo-mat-cung-khong-duoc-gap-mat-lan-cuoi-8ff-6588712.jpg"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 7rem; height: 7rem;">
                                             </div>
 
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top1.getEmployee().getEmployeeId()}">Detail</a></button>
+                                            <div class="col-md-8">
+                                                <p class="my-3" id="nameTopBarber" style="margin-top: -20px;">
+                                                    ${top1.getEmployee().getFullName()}
+                                                </p>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
+                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top1.getRevenue()}đ</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <c:set var="top3" value="${listViewSaleTop3[2]}" />
-                                    <div class="card mb-4 shadow"
-                                         style="border-radius: 10px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg'); background-size: cover; background-position: center;">
-                                        <h3 id="topSale">Top 3</h3>
-                                        <div class="card-body text-center">
-                                            <img src="${top3.getAvatar()}"
-                                                 alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">${top3.getEmployee().getFullName()}</h5>
-                                            <p class="text-muted mb-1" style="font-size: 1.8rem;
-                                               font-weight: 700; color: #d89313;">Doanh Số</p>
-                                            <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">${top3.getRevenue()}đ</p>
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1"><a href="viewsaledetail?employeeId=${top3.getEmployee().getEmployeeId()}">Detail</a></button>
+                                    <div class="card mb-4 shadow container"
+                                         style="border-radius: 10px;">
+                                        <h4 id="topSale">Top 3</h4>
+                                        <div class="card-body text-center row">
+                                            <div class="col-md-4">
+
+                                                <img src="${top3.getAvatar()}"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 15rem; height: 17rem;">
                                             </div>
+                                            <div class="col-md-8">
+
+                                                <h5 class="my-3" id="nameTopBarber">${top3.getEmployee().getFullName()}</h5>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
+                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top3.getRevenue()}đ</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -388,36 +391,47 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="table-responsive" style="max-height: 500px; overflow-y: scroll;">
-                                            <table class="table table-striped custom-table"
-                                                   style="font-size: 1.1rem; font-weight: 600;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Tên Nhân Viên</th>
-                                                        <th scope="col">SĐT</th>
-                                                        <th scope="col">Tổng Số Đơn</th>
-                                                        <th scope="col">Doanh Thu</th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${listViewSale}" var="vs">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tên Nhân Viên</th>
+                                                                <th>SĐT</th>
+                                                                <th>Tổng Số Đơn</th>
+                                                                <th>Doanh Thu</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Tên Nhân Viên</th>
+                                                                <th>SĐT</th>
+                                                                <th>Tổng Số Đơn</th>
+                                                                <th>Doanh Thu</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <c:forEach items="${listViewSale}" var="vs">
 
-                                                        <tr scope="row">
-                                                            <td style="color: #3D63D2;
-                                                                font-size: 1.2rem;">
-                                                                ${vs.getEmployee().getFullName()}
+                                                                <tr>
+                                                                    <td style="color: #3D63D2;
+                                                                        font-size: 1.2rem;">
+                                                                        ${vs.getEmployee().getFullName()}
 
-                                                            </td>
-                                                            <td>${vs.getEmployee().getPhone()}</td>
-                                                            <td>${vs.getTotalOrder()}</td>
-                                                            <td id="totalMoney">${vs.getRevenue()}đ</td>
-                                                            <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}&month=${monthSelect}" class="more">
-                                                                    Details</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-
-                                                </tbody>
-                                            </table>
+                                                                    </td>
+                                                                    <td>${vs.getEmployee().getPhone()}</td>
+                                                                    <td>${vs.getTotalOrder()}</td>
+                                                                    <td id="totalMoney">${vs.getRevenue()}đ</td>
+                                                                    <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}&month=${monthSelect}" class="more">
+                                                                            Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -486,11 +500,17 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
             <script>
                                     function onMonthChange(selectElement) {
                                         var selectedMonth = selectElement.value;
                                         window.location.href = 'getsalebymonth?month=' + selectedMonth;
                                     }
+                                    $(document).ready(function () {
+                                        $('#dataTable').DataTable();
+                                    });
             </script>
     </body>
 
