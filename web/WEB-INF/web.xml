@@ -113,6 +113,32 @@
         <servlet-class>Controller.Service.AddService</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ViewOrderController</servlet-name>
+        <servlet-class>Controller.admin.ViewOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>Controller.admin.NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetOrderManager</servlet-name>
+        <servlet-class>Controller.admin.GetOrderManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllBillController</servlet-name>
+        <servlet-class>Controller.admin.ViewAllBillController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateStatusEmployeeController</servlet-name>
+        <servlet-class>Controller.admin.UpdateStatusEmployeeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrderDetatailUpdateController</servlet-name>
+        <servlet-class>Controller.admin.ViewOrderDetatailUpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckInController</servlet-name>
+        <servlet-class>Controller.admin.CheckInController</servlet-class>
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleDetailServlet</servlet-class>
     </servlet>
@@ -257,6 +283,32 @@
         <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ViewOrderController</servlet-name>
+        <url-pattern>/viewOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOrderManager</servlet-name>
+        <url-pattern>/getOrderManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllBillController</servlet-name>
+        <url-pattern>/viewAllBill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStatusEmployeeController</servlet-name>
+        <url-pattern>/updateStatusEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderDetatailUpdateController</servlet-name>
+        <url-pattern>/viewOrderDetatailUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckInController</servlet-name>
+        <url-pattern>/checkIn</url-pattern>
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <url-pattern>/viewsaledetail</url-pattern>
     </servlet-mapping>
