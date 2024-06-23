@@ -139,6 +139,8 @@
     <servlet>
         <servlet-name>CheckInController</servlet-name>
         <servlet-class>Controller.admin.CheckInController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleDetailServlet</servlet-class>
     </servlet>
@@ -169,6 +171,10 @@
     <servlet>
         <servlet-name>ReOrderServlet</servlet-name>
         <servlet-class>Controller.customer.ReOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -309,6 +315,8 @@
     <servlet-mapping>
         <servlet-name>CheckInController</servlet-name>
         <url-pattern>/checkIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewSaleDetailServlet</servlet-name>
         <url-pattern>/viewsaledetail</url-pattern>
     </servlet-mapping>
@@ -339,5 +347,9 @@
     <servlet-mapping>
         <servlet-name>ReOrderServlet</servlet-name>
         <url-pattern>/reorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <url-pattern>/viewfeedback</url-pattern>
     </servlet-mapping>
 </web-app>

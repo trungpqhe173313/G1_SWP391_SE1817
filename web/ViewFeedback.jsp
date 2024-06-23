@@ -36,7 +36,7 @@
                                     <div class="card-body p-4">
                                         <div class="">
                                             <h5>${feedback.customer.fullName}</h5>
-                                            
+                                            <p class="small">${feedback.createdAt}</p>
                                             <p>${feedback.noidung}</p>
 
                                             <div class="d-flex justify-content-between align-items-center">
