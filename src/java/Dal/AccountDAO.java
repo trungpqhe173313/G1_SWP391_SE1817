@@ -4,6 +4,7 @@
  */
 package Dal;
 
+import static Dal.DBContext.connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,16 +14,39 @@ import Model.Account;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author LINHNTHE170290
  */
-public class AccountDAO extends DBContext{
-   public List<Account> getAllAccount() {
+public class AccountDAO extends DBContext {
+
+    public String getCustomerByPhone(String phone) {
+
+        try {
+
+            String sql = "SELECT fullName\n"
+                    + "  FROM [Barber].[dbo].[customer]\n"
+                    + "  where phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString("fullName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select * from account where role != 1";
         try {
-            
+
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -32,15 +56,16 @@ public class AccountDAO extends DBContext{
                 account.setRoleId(rs.getInt("roleId"));
                 account.setEmail(rs.getString("email"));
                 account.setGender(rs.getBoolean("gender"));
-                account.setIsActive(rs.getBoolean("isActive"));      
+                account.setIsActive(rs.getBoolean("isActive"));
+                account.setAvatar(rs.getString("avatar"));
                 list.add(account);
             }
         } catch (SQLException e) {
-            
+
         }
         return list;
     }
-    
+
     public Account checkAuthentic(String phone, String pass) {
         String sql = "SELECT * FROM account WHERE phone = ? and pass = ?";
         try {
@@ -49,24 +74,25 @@ public class AccountDAO extends DBContext{
             st.setString(2, pass);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                
-                    Account account = new Account();
-                    account.setPhone(rs.getString("phone"));
-                    account.setPass(rs.getString("pass"));
-                    account.setRoleId(rs.getInt("roleId"));
-                    account.setEmail(rs.getString("email"));
-                    account.setGender(rs.getBoolean("gender"));
-                    account.setIsActive(rs.getBoolean("isActive"));
-                    return account;
-                
+
+                Account account = new Account();
+                account.setPhone(rs.getString("phone"));
+                account.setPass(rs.getString("pass"));
+                account.setRoleId(rs.getInt("roleId"));
+                account.setEmail(rs.getString("email"));
+                account.setGender(rs.getBoolean("gender"));
+                account.setIsActive(rs.getBoolean("isActive"));
+                account.setAvatar(rs.getString("avatar"));
+                return account;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
-     public Account login(String phone, String pass) {
+
+    public Account login(String phone, String pass) {
         String sql = "SELECT * FROM account WHERE phone = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -82,6 +108,7 @@ public class AccountDAO extends DBContext{
                     account.setEmail(rs.getString("email"));
                     account.setGender(rs.getBoolean("gender"));
                     account.setIsActive(rs.getBoolean("isActive"));
+                    account.setAvatar(rs.getString("avatar"));
                     return account;
                 }
             }
@@ -104,10 +131,7 @@ public class AccountDAO extends DBContext{
             throw new RuntimeException(e);
         }
     }
-   
 
-   
-    
     public Account checkAccountExist(String phone) {
         try {
             String sql = "SELECT * FROM account WHERE phone = ?";
@@ -121,7 +145,8 @@ public class AccountDAO extends DBContext{
                 account.setRoleId(rs.getInt("roleId"));
                 account.setEmail(rs.getString("email"));
                 account.setGender(rs.getBoolean("gender"));
-                account.setIsActive(rs.getBoolean("isActive"));  
+                account.setIsActive(rs.getBoolean("isActive"));
+                account.setAvatar(rs.getString("avatar"));
                 return account;
             }
         } catch (SQLException ex) {
@@ -129,7 +154,7 @@ public class AccountDAO extends DBContext{
         }
         return null;
     }
-    
+
     public void insertAccount(Account account) {
         String sql = "INSERT INTO account (phone, pass, roleId, email, "
                 + "gender, isActive) VALUES (?, ?, ?, ?, ?, ?)";
@@ -146,8 +171,8 @@ public class AccountDAO extends DBContext{
             ex.printStackTrace();
         }
     }
-    
-   public boolean checkEmailExist(String email) throws SQLException {
+
+    public boolean checkEmailExist(String email) throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -170,7 +195,7 @@ public class AccountDAO extends DBContext{
         }
         return false;
     }
-   
+
     public boolean checkOldPass(String email, String oldPassword) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -191,13 +216,12 @@ public class AccountDAO extends DBContext{
             }
         } catch (SQLException e) {
             System.out.println("Error in checkOldPass: " + e.getMessage());
-        } 
-        
+        }
 
         return isValid;
     }
-   
-   public void changePass(String email, String password)
+
+    public void changePass(String email, String password)
             throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -219,9 +243,8 @@ public class AccountDAO extends DBContext{
         }
 
     }
-  
-   
-   public static void main(String[] args) {
+
+    public static void main(String[] args) {
         AccountDAO a = new AccountDAO();
         String phone = "0912345666"; // Thay thế bằng tên người dùng thử nghiệm
         String pass = "password13"; // Thay thế bằng mật khẩu thử nghiệm
@@ -236,6 +259,7 @@ public class AccountDAO extends DBContext{
             System.out.println("Email: " + account.getEmail());
             System.out.println("Gender: " + account.getGender());
             System.out.println("Is Active: " + account.getIsActive());
+            System.out.println("Avatar: " + account.getAvatar());
         } else {
             System.out.println("Login failed: Invalid phone or pass");
 
@@ -253,12 +277,5 @@ public class AccountDAO extends DBContext{
 //        e.printStackTrace();
 //    }
 //}
-   
+
 }
-
-
-
-    
-    
-    
-

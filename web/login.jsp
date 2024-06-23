@@ -31,11 +31,11 @@
                                     <p class="text-danger">${error}</p>
                                     <div class="form-group mb-3">
                                         <label class="label" for="phone">Số điện thoại</label>
-                                        <input type="text" class="form-control" placeholder="Số điện thoại" required name = "phone">
+                                        <input type="text" class="form-control" placeholder="Số điện thoại" required name = "phone" value="${param.phone}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="label" for="pass">Mật khẩu</label>
-                                        <input type="password" class="form-control" placeholder="Mật khẩu" required name = "pass">
+                                        <input type="password" class="form-control" placeholder="Mật khẩu" required name = "pass" value="${param.pass}">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng nhập</button>
