@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/ServicesBookingAjaxServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/CustomerDAO.java</file>
-            <file>file:/D:/Project_SWP/web/booking.jsp</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/Project_SWP/web/servicesbooking.jsp</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/src/java/Controller/customer/CustomerFeedbackController.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/web/ViewFeedback.jsp</file>
         </group>
     </open-files>
 </project-private>
