@@ -73,6 +73,9 @@
                                 </div>
                                 <button class="btn btn-primary" type="button" onclick="updateCustomer(${c.customerId})">Cập nhập thông tin</button>
                                 <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
+                                <br>
+                                <br>
+                                <a href="home"><- Quay lại trang chủ </a>
                             </form>
                         </div>
                     </div>

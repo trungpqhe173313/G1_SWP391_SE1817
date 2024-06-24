@@ -65,7 +65,7 @@
                                  alt="Sample photo">
                             <div class="card-body p-4 p-md-5">
                                 <form action="signup" method="post">
-                                    
+
 
                                     <div class="row mb-4">
                                         <div class="col-md-6">
@@ -121,6 +121,9 @@
 
                                     <div class="mt-4 pt-2">
                                         <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Đăng ký" />
+                                        <br>
+                                        <br>
+                                        <a href="home"><- Quay lại trang chủ </a>
                                     </div>
 
                                 </form>
