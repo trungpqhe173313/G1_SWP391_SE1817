@@ -287,17 +287,31 @@
                                             }
                                             const file = imgInput.files[0];
                                             const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                            const maxSize = 2048000; // 2MB in bytes
+
                                             if (!validImageTypes.includes(file.type)) {
                                                 alert('Vui lòng chọn một tệp hình ảnh hợp lệ (jpg, png, gif).');
                                                 return false;
                                             }
 
-                                            // Validate no consecutive spaces
+                                            if (file.size > maxSize) {
+                                                alert('Kích thước tệp hình ảnh không được vượt quá 2MB.');
+                                                return false;
+                                            }
+
+                                            // Validate no consecutive spaces and no leading spaces
                                             const fields = ['name', 'description'];
                                             for (const field of fields) {
                                                 const value = document.getElementById(field).value;
+                                                // Check for leading spaces
+                                                if (/^ /.test(value)) {
+                                                    alert((field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + ' không được bắt đầu bằng dấu cách.');
+                                                    return false;
+                                                }
+
+                                                // Check for consecutive spaces
                                                 if (/ {2,}/.test(value)) {
-                                                    alert('Không được để nhiều dấu cách trong ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
+                                                    alert('Vui lòng nhập đúng ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
                                                     return false;
                                                 }
                                             }

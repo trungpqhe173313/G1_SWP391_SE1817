@@ -135,6 +135,7 @@
                             </c:forEach>
                         </c:if>
                         <div class="col-md-3 ftco-animate">
+                            <c:if test="${s.isActive}">
                             <div class="pricing-entry pb-5 text-center">
                                 <div>
                                     <h3 class="mb-4">${s.name}</h3>
@@ -148,6 +149,7 @@
                                     </a>
                                 </p>
                             </div>
+                            </c:if>        
                         </div>
                     </c:forEach>
                 </div>
