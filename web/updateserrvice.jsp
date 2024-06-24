@@ -278,38 +278,51 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
         <script>
-                                       function validateForm() {
-            // Validate price
-            const price = document.getElementById('price').value;
-            if (isNaN(price) || price <= 0) {
-                alert('Giá phải là một số dương.');
-                return false;
-            }
+                                        function validateForm() {
+                                            // Validate price
+                                            const price = document.getElementById('price').value;
+                                            if (isNaN(price) || price <= 0) {
+                                                alert('Giá phải là một số dương.');
+                                                return false;
+                                            }
 
-            // Validate image file
-            const imgInput = document.getElementById('img');
-            if (imgInput.files.length > 0) {
-                const file = imgInput.files[0];
-                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!validImageTypes.includes(file.type)) {
-                    alert('Vui lòng chọn một tệp hình ảnh hợp lệ (jpg, png, gif).');
-                    return false;
-                }
-            }
+                                            // Validate image file
+                                            const imgInput = document.getElementById('img');
+                                            if (imgInput.files.length > 0) {
+                                                const file = imgInput.files[0];
+                                                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                                                const maxSize = 2048000; // 2MB in bytes
 
-            // Optionally, validate name and description for spaces
-            const fields = ['name', 'description'];
-            for (const field of fields) {
-                const value = document.getElementById(field).value;
-                if (/ {2,}/.test(value)) {
-                    alert('Vui lòng nhập đúng ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
-                    return false;
-                }
-            }
+                                                if (!validImageTypes.includes(file.type)) {
+                                                    alert('Vui lòng chọn một tệp hình ảnh hợp lệ (jpg, png, gif).');
+                                                    return false;
+                                                }
 
-            // If all validations pass
-            return true;
-        }
+                                                if (file.size > maxSize) {
+                                                    alert('Kích thước tệp hình ảnh không được vượt quá 2MB.');
+                                                    return false;
+                                                }
+                                            }
+
+                                            // Validate name and description for spaces
+                                            const fields = ['name', 'description'];
+                                            for (const field of fields) {
+                                                const value = document.getElementById(field).value;
+                                                // Check for leading spaces
+                                                if (/^ /.test(value)) {
+                                                    alert((field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + ' không được bắt đầu bằng dấu cách.');
+                                                    return false;
+                                                }
+                                                // Check for consecutive spaces
+                                                if (/ {2,}/.test(value)) {
+                                                    alert('Vui lòng nhập đúng ' + (field === 'name' ? 'Tên Dịch Vụ' : 'Mô tả') + '.');
+                                                    return false;
+                                                }
+                                            }
+
+                                            // If all validations pass
+                                            return true;
+                                        }
 
         </script>
     </body>
