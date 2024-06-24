@@ -25,7 +25,7 @@ public class addimg {
 
     public File getFolderUploadStaff() {
         //mn tu doi lai thanh duong dan cua mn nhe
-        File folderUpload = new File("E:\\SWP\\G1_SWP391_SE1817\\web\\img");
+        File folderUpload = new File("D:\\FPT\\Ky5FPTU\\SWP391\\Project\\G1_SWP391_SE1817\\web\\img");
         if (!folderUpload.exists()) {
             folderUpload.mkdirs();
         }

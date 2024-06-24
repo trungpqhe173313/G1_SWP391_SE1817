@@ -1,7 +1,7 @@
 <%-- 
-    Document   : sidebar
-    Created on : May 26, 2024, 1:26:28 AM
-    Author     : phamt
+    Document   : sidebarEmployees
+    Created on : Jun 20, 2024, 1:20:40 AM
+    Author     : ducth
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,40 +20,24 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.jsp">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.jsp">
+        <a class="nav-link" href="employeesprofile">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Thông Tin Cá Nhân</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="employeesdetail">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-table"></i>
-            <span>Employees</span></a>
+            <span>Lương Tháng</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="workscheduleemployees">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-table"></i>
-            <span>Employee Schedule</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="servicedetail">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Services</span></a>
+            <span>Lịch Sử Công Việc</span></a>
     </li>
 
     <!-- Divider -->
@@ -66,4 +50,5 @@
 
 </ul>
 <!-- End of Sidebar -->
+
 
