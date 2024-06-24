@@ -32,7 +32,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="employeesprofile">Personal Information</a>
                             <a class="dropdown-item" href="viewAppountController">Appointment Schedule</a>
-                            <a class="dropdown-item" href="bookingschedule">View history Booking</a>
+                            <a class="dropdown-item" href="viewhistorybooking">View history Booking</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>

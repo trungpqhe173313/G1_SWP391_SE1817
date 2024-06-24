@@ -29,6 +29,8 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
 
@@ -38,123 +40,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-laugh-wink"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Interface
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Components</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Components:</h6>
-                            <a class="collapse-item" href="buttons.html">Buttons</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Utilities:</h6>
-                            <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Addons
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
-                </li>
-
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
-
-
-            </ul>
+            <jsp:include page="sidebar.jsp"></jsp:include>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -347,45 +233,55 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <div class="table-responsive" style="max-height: 800px; overflow-y: scroll;">
+                                        <div class="table-responsive" style="max-height: 860px; 
+                                             overflow-y: scroll; font-size: 1.1rem">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <c:forEach items="${listOrder}" var="o">
 
-                                            <table class="table table-striped custom-table" style="font-size: 1.1rem;
-                                                   font-weight: 600;">
-                                                <thead>
-                                                    <tr>
-
-                                                        <th scope="col">Đơn Hàng</th>
-                                                        <th scope="col">Tên Khách Hàng</th>
-                                                        <th scope="col">SĐT</th>
-                                                        <th scope="col">Ngày Đặt Lịch</th>
-                                                        <th scope="col">Tổng Thanh Toán</th>
-                                                        <th scope="col">Trạng Thái</th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${listOrder}" var="o">
-
-                                                        <tr scope="row">
-                                                            <td>
-                                                                ${o.getOrder().id}
-                                                            </td>
-                                                            <td class="pl-0">
-                                                                <div class="d-flex align-items-center">
-                                                                    <a href="#">${o.getCustomer().getFullName()}</a>
-                                                                </div>
-                                                            </td>
-
-                                                            <td>${o.getCustomer().phone}</td>
-                                                            <td>${o.getOrder().orderDate}</td>
-                                                            <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                                            <td>${o.getStatus().name}</td>
-                                                            <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" 
-                                                                   class="more">Details</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" 
+                                                                           class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -496,6 +392,10 @@
         <script src="vendor/chart.js/Chart.min.js"></script>
 
         <script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 
         <!-- Page level custom scripts -->
         <script>
@@ -539,6 +439,9 @@
                                         var selectedMonth = selectElement.value;
                                         window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
                                     }
+                                    $(document).ready(function () {
+                                        $('#dataTable').DataTable();
+                                    });
         </script>
 
     </body>

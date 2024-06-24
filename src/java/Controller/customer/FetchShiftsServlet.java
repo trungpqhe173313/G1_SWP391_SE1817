@@ -4,17 +4,20 @@
  */
 package Controller.customer;
 
-import Dal.OrdersDAO;
+import Dal.ShiftsDAO;
 import Model.Shift;
+import Model.Time;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import com.google.gson.Gson;
+import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -33,19 +36,46 @@ public class FetchShiftsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FetchShiftsServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FetchShiftsServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        ShiftsDAO d = new ShiftsDAO();
+        HttpSession session = request.getSession();
+        // Đọc thông tin ngày từ request
+        String selectedDate = request.getParameter("date");
+        // Lấy ngày hôm nay
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String todayStr = today.format(formatter);
+        
+        List<Shift> shifts;
+        if (selectedDate.equals(todayStr)) {
+            shifts = d.getAllShiftFromNow();
+        }else
+            shifts = d.getAll();
+        session.setAttribute("time", new Time(selectedDate, shifts));
+        // Set content type và encoding của response
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Convert danh sách shifts sang JSON và gửi về client
+        PrintWriter out = response.getWriter();
+        out.print(buildJSONResponse(shifts));
+        out.flush();
+    }
+
+    // Hàm để xây dựng JSON response từ danh sách Shift
+    private String buildJSONResponse(List<Shift> shifts) {
+        StringBuilder json = new StringBuilder("[");
+        for (int i = 0; i < shifts.size(); i++) {
+            Shift shift = shifts.get(i);
+            json.append("{");
+            json.append("\"id\":").append(shift.getId()).append(",");
+            json.append("\"startTime\":\"").append(shift.getStartTime()).append("\"");
+            json.append("}");
+            if (i < shifts.size() - 1) {
+                json.append(",");
+            }
         }
+        json.append("]");
+        return json.toString();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,23 +90,7 @@ public class FetchShiftsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String barberId = request.getParameter("barberId");
-        String date = request.getParameter("date");
-        OrdersDAO d = new OrdersDAO();
-        List<Shift> availableShifts = new ArrayList<>();
-        if (barberId.equals("empty")) {
-            availableShifts = d.getAllShifts();
-        }
-        else{
-        // Lấy danh sách ca trống dựa trên barberId và date
-        availableShifts = d.getShiftsEmpty(date, Integer.parseInt(barberId)) ;
-        }
-        // Chuyển đổi danh sách sang JSON
-        Gson gson = new Gson();
-        String jsonResponse = gson.toJson(availableShifts);
-
-        response.setContentType("application/json");
-        response.getWriter().write(jsonResponse);
+        processRequest(request, response);
     }
 
     /**

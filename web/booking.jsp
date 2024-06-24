@@ -1,11 +1,5 @@
-<%-- 
-    Document   : services
-    Created on : May 25, 2024, 2:55:46 AM
-    Author     : ducAnh
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -48,6 +42,49 @@
                 white-space: nowrap;
                 margin-left: 10px;
             }
+            .appointment-form .form-group a {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background: transparent !important;
+                color: #563b4c !important;
+                font-size: 16px;
+                padding: 0 20px !important;
+                height: 60px !important;
+                border: none;
+                border: 2px solid #bf925b;
+                font-weight: 500;
+                margin-bottom: 30px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: relative;
+            }
+            .form-group span {
+                border: #bf925b solid 2px;
+                border-radius: 5px;
+                color: #563b4c !important;
+                font-size: 17px;
+                margin: 5px;
+            }
+            .form-group a span {
+                border: none;
+            }
+
+            .form-group .icon-chevron {
+                position: absolute;
+                right: 20px;
+            }
+            /* Đảm bảo thẻ span có thể xuống dòng khi nội dung dài */
+            .service-name span {
+                display: inline-block;
+                white-space: nowrap; /* Ngăn không cho văn bản xuống dòng tự động */
+                word-wrap: break-word; /* Tự động ngắt dòng nếu cần */
+            }
         </style>
 
         <meta charset="utf-8">
@@ -58,6 +95,8 @@
 
         <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
         <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+
 
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
@@ -109,74 +148,74 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h5 class="mb-4">Chọn dịch vụ</h5>
-                                        <div class="form-group" style="overflow-y: auto; max-height: 195px">
-                                            <ul class="list-group">
-                                                <c:forEach items="${listServices}" var="service" varStatus="status">
-                                                    <li class="list-group-item form-control">
-                                                        <div class="custom-control custom-checkbox" style="display: flex; align-items: center; width: 100%;">
-                                                            <input class="custom-control-input" name="services" 
-                                                                   type="checkbox" id="customCheck${status.index}" value="${service.id}" onclick="toggleAppointmentFields()">
-                                                            <label class="cursor-pointer d-block custom-control-label" 
-                                                                   for="customCheck${status.index}" style="flex-grow: 1;">
-                                                                <span class="service-name">${service.name}</span>
-                                                            </label>
-                                                            <span class="service-price">${service.getPrice()}K</span>
-                                                        </div>
-                                                    </li>
+                                        <div class="form-group">
+                                            <c:if test="${sessionScope.services == null}">
+                                                <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
+                                                    <span class="bi bi-scissors mr-2"></span>
+                                                    <span>Chọn dịch vụ</span>
+                                                    <span class="bi bi-chevron-right icon-chevron"></span>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${sessionScope.services != null}">
+                                                <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
+                                                    <span class="bi bi-scissors mr-2"></span>
+                                                    <span>Bạn đã chọn ${sessionScope.services.getQuantityServices()} dịch vụ</span>
+                                                    <span class="bi bi-chevron-right icon-chevron"></span>
+                                                </a>
+                                                <c:forEach items="${sessionScope.services.getListServices()}" var="s">
+                                                    <span class="service-name">${s.getName()}</span>
+
                                                 </c:forEach>
-                                            </ul>
+                                                <div style="font-size: 19px; color: #19692c">Tổng số tiền cần thanh toán: ${sessionScope.services.getTotalMoney()}K</div>
+                                            </c:if>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <h5 class="mb-4">Chọn ngày, giờ & barber</h5>
                                         <div id="appointment-fields">
-                                            <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
-                                            <div id="appointment-details" style="display: none;">
-                                                <div class="col-sm-10">
-                                                    <div class="form-group">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="barber" id="barber" class="form-control" onchange="fetchShifts()">
-                                                                <option value="empty">Select Barber</option>
-                                                                <c:forEach items="${listBarber}" var="baber">
-                                                                    <option value="${baber.getId()}">${baber.getFullName()}</option>
-                                                                </c:forEach>
-                                                            </select>
+                                            <c:if test="${sessionScope.services == null}">
+
+                                                <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
+                                            </c:if>
+                                            <c:if test="${sessionScope.services != null}">
+                                                <div id="appointment-details" >
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <select name="date" id="date" class="form-control">
+                                                                    <c:forEach items="${listDate}" var="date">
+                                                                        <option value="${date}" ${date == sessionScope.time.getDate() ? 'selected' : ''}>${date}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <div class="form-group">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="date" id="date" class="form-control" onchange="fetchShifts()">
-                                                                <c:forEach items="${listDate}" var="date">
-                                                                    <option value="${date}">${date}</option>
-                                                                </c:forEach>
-                                                            </select>
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <select name="shifts" id="shifts" class="form-control" >
+                                                                    <c:forEach items="${sessionScope.time.getShift()}" var="shifts">
+                                                                        <option value="${shifts.getId()}">
+                                                                            ${shifts.getStartTime()}</option>
+                                                                        </c:forEach>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
+
+
                                                 </div>
-                                                <div class="col-sm-10">
-                                                    <div class="form-group">
-                                                        <div class="select-wrap">
-                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                            <select name="shifts" id="shifts" class="form-control">
-                                                                <c:forEach items="${listShift}" var="shifts">
-                                                                    <option value="${shifts.getId()}">${shifts.getStartTime()}-${shifts.getEndTime()}</option>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </c:if>
+
                                         </div>
                                     </div>
                                 </div>
+                                <div class="error-message" id="error-message"></div>
                                 <div class="form-group">
                                     <input type="submit" value="Make an Appointment" class="btn btn-primary">
                                 </div>
-                                <div class="error-message" id="error-message"></div>
                             </form>
 
                         </c:if>
@@ -274,67 +313,57 @@
         <script src="js/main.js"></script>
 
         <script>
-                                function toggleAppointmentFields() {
-                                    var checkboxes = document.querySelectorAll('input[name="services"]:checked');
-                                    var appointmentDetails = document.getElementById('appointment-details');
-                                    var pleaseSelectService = document.getElementById('please-select-service');
-
-                                    if (checkboxes.length > 0) {
-                                        appointmentDetails.style.display = 'block';
-                                        pleaseSelectService.style.display = 'none';
-                                    } else {
-                                        appointmentDetails.style.display = 'none';
-                                        pleaseSelectService.style.display = 'block';
-                                        document.getElementById('barber').selectedIndex = 0;
-                                        document.getElementById('date').selectedIndex = 0;
-                                        document.getElementById('shifts').selectedIndex = 0;
+                                function validateForm() {
+                                    // Check if services are selected
+                                    var servicesSelected = ${sessionScope.services != null ? true : false};
+                                    if (!servicesSelected) {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn dịch vụ.";
+                                        return false;
                                     }
+
+                                    // Check if date is selected
+                                    var date = document.getElementById("date").value;
+                                    if (date === "") {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn ngày.";
+                                        return false;
+                                    }
+
+                                    // Check if shifts are selected
+                                    var shifts = document.getElementById("shifts").value;
+                                    if (shifts === "") {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn ca làm việc.";
+                                        return false;
+                                    }
+
+                                    return true; // All validations passed
                                 }
+                                $(document).ready(function () {
+                                    // Khi người dùng thay đổi ngày
+                                    $('#date').change(function () {
+                                        var selectedDate = $(this).val();
 
-                                function fetchShifts() {
-                                    var barberId = document.getElementById('barber').value;
-                                    var date = document.getElementById('date').value;
-
-                                    if (barberId && date) {
+                                        // Gửi yêu cầu AJAX để lấy danh sách ca làm việc mới
                                         $.ajax({
-                                            url: 'fetchshifts', // URL đến servlet của bạn
-                                            type: 'GET',
-                                            data: {
-                                                barberId: barberId,
-                                                date: date
-                                            },
+                                            url: 'fetchshifts', // Đường dẫn tới Servlet của bạn để lấy danh sách ca làm việc
+                                            method: 'GET',
+                                            data: {date: selectedDate},
                                             success: function (response) {
-                                                var shiftsSelect = document.getElementById('shifts');
-                                                shiftsSelect.innerHTML = '';
-                                                response.forEach(function (shift) {
-                                                    var option = document.createElement('option');
-                                                    option.value = shift.id;
-                                                    option.text = shift.startTime + '-' + shift.endTime;
-                                                    shiftsSelect.appendChild(option);
+                                                // Xóa các option cũ trong dropdown shifts
+                                                $('#shifts').empty();
+
+                                                // Thêm các option mới từ response vào dropdown shifts
+                                                $.each(response, function (index, shift) {
+                                                    $('#shifts').append('<option value="' + shift.id + '">' + shift.startTime + '</option>');
                                                 });
                                             },
                                             error: function (error) {
-                                                console.log('Lỗi khi lấy ca:', error);
+                                                console.log('Error fetching shifts:', error);
                                             }
                                         });
-                                    }
-                                }
-
-                                function validateForm() {
-                                    var barber = document.getElementById('barber').value;
-                                    var errorMessage = document.getElementById('error-message');
-
-                                    if (barber === 'empty') {
-                                        errorMessage.textContent = "Vui lòng chọn thợ cắt tóc.";
-                                        document.getElementById('barber').classList.add('is-invalid');
-                                        return false;
-                                    } else {
-                                        errorMessage.textContent = "";
-                                        document.getElementById('barber').classList.remove('is-invalid');
-                                        return true;
-                                    }
-                                }
+                                    });
+                                });
         </script>
+
 
     </body>
 </html>

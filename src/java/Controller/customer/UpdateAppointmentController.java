@@ -7,7 +7,6 @@ package Controller.customer;
 import Dal.OrderDAO;
 import Dal.Order_servicesDAO;
 import Dal.ServicesDAO;
-import Model.Order;
 import Model.Services;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import javax.swing.plaf.metal.MetalIconFactory;
 
 /**
  *

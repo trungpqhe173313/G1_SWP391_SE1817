@@ -27,6 +27,72 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <style>
+            .table-responsive {
+                overflow: hidden;
+            }
+
+            .table-responsive tbody {
+                display: block;
+                max-height: 400px; /* Adjust the height as needed */
+                overflow-y: auto;
+                width: 100%;
+            }
+
+            .table-responsive thead, .table-responsive tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            .table-responsive thead {
+                width: calc(100% - 1em);
+            }
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 25px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 25px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 17px;
+                width: 17px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(24px);
+            }
+        </style>
     </head>
 
     <body id="page-top">
@@ -50,17 +116,17 @@
                             </form>
 
                             <!-- Topbar Search -->
-                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                        
-                                    </div>
-                                </div>
-                            </form>
+                            <!--                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-primary" type="button">
+                                                                        <i class="fas fa-search fa-sm"></i>
+                                                                    </button>
+                            
+                                                                </div>
+                                                            </div>
+                                                        </form>-->
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -124,7 +190,7 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
                                         Thêm Dịch Vụ
                                     </a>
-                                  
+                                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Tìm kiếm dịch vụ..." class="form-control" style="width: 300px; display: inline-block;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -136,24 +202,31 @@
                                                     <th>Hình Ảnh</th>
                                                     <th>Giá</th>
                                                     <th>Mô tả</th>
-                                                    <th>Cập Nhật</th>
-                                                    <th>Xóa Dịch Vụ</th>
+                                                    <th>Chỉnh sửa</th>
                                                 </tr>
-                                            </thead>                                   
+                                            </thead>
                                             <tbody>
                                             <c:forEach items="${listS}" var="o">
-                                            <tr>
-                                                <td>${o.servicesId}</td>
-                                                <td>${o.name}</td>
-                                                <td><img src="img/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
-                                                <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###">
+                                                <tr>
+                                                    <td>${o.servicesId}</td>
+                                                    <td>${o.name}</td>
+                                                    <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
+                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup></td>
+                                                    <td>${o.description}</td>
+                                                    <td>
+                                                        <a href="updateservice?sid=${o.servicesId}">
+                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
+                                                                <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
+                                                            </button>
+                                                        </a>
 
-                                                 </fmt:formatNumber><sup>đ</sup></td>
-                                                <td>${o.description}</td>
-                                                <td>cập nhật</td>
-                                                <td>xóa</td>
-                        
-                                            </tr>
+                                                        <label class="switch">
+                                                            <input type="checkbox" onclick="toggleVisibility(${o.servicesId})" <c:if test="${o.isActive}">checked</c:if>>
+                                                                <span class="slider"></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -161,7 +234,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
 
@@ -216,5 +288,32 @@
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script>
+                                                                function filterTable() {
+                                                                    var input, filter, table, tr, td, i, j, txtValue;
+                                                                    input = document.getElementById("searchInput");
+                                                                    filter = input.value.toLowerCase();
+                                                                    table = document.getElementById("dataTable");
+                                                                    tr = table.getElementsByTagName("tr");
+
+                                                                    for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                                                                        tr[i].style.display = "none"; // Ẩn tất cả các hàng
+
+                                                                        td = tr[i].getElementsByTagName("td");
+                                                                        for (j = 0; j < td.length; j++) {
+                                                                            if (td[j]) {
+                                                                                txtValue = td[j].textContent || td[j].innerText;
+                                                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                                                                    tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                function toggleVisibility(serviceId) {
+                                                                    window.location.href = 'deleteservice?sid=' + serviceId;
+                                                                }
+        </script>
     </body>
 </html>

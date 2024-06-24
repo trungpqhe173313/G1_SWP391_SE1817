@@ -12,14 +12,41 @@ public class ViewSale {
     private Employee employee;
     private int totalOrder;
     private int revenue;
+    private String avatar;
+    private double salary;
 
     public ViewSale() {
     }
 
-    public ViewSale(Employee employee, int totalOrder, int revenue) {
+    public ViewSale(Employee employee, int totalOrder, int revenue, String avatar) {
         this.employee = employee;
         this.totalOrder = totalOrder;
         this.revenue = revenue;
+        this.avatar = avatar;
+    }
+
+    public ViewSale(Employee employee, int totalOrder, int revenue, String avatar, double salary) {
+        this.employee = employee;
+        this.totalOrder = totalOrder;
+        this.revenue = revenue;
+        this.avatar = avatar;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+    
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Employee getEmployee() {
@@ -48,8 +75,12 @@ public class ViewSale {
 
     @Override
     public String toString() {
-        return "ViewSale{" + "employee=" + employee + ", totalOrder=" + totalOrder + ", revenue=" + revenue + '}';
+        return "ViewSale{" + "employee=" + employee + ", totalOrder=" + totalOrder + ", revenue=" + revenue + ", avatar=" + avatar + ", salary=" + salary + '}';
     }
+
+    
+
+    
     
     
 }

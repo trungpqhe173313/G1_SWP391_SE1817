@@ -12,8 +12,15 @@ public class Customer {
     private int customerId;
     private String fullName;
     private String phone;
-
+    private Account account;
     public Customer() {
+    }
+
+    public Customer(int customerId, String fullName, String phone, Account account) {
+        this.customerId = customerId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.account = account;
     }
 
     public Customer(int customerId, String fullName, String phone) {
@@ -21,6 +28,9 @@ public class Customer {
         this.fullName = fullName;
         this.phone = phone;
     }
+    
+
+   
 
     public int getCustomerId() {
         return customerId;
@@ -46,10 +56,20 @@ public class Customer {
         this.phone = phone;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     @Override
     public String toString() {
-        return "Customer{" + "customerId=" + customerId + ", fullName=" + fullName + ", phone=" + phone + '}';
+        return "Customer{" + "customerId=" + customerId + ", fullName=" + fullName + ", phone=" + phone + ", account=" + account + '}';
     }
+
+    
     
     
 }

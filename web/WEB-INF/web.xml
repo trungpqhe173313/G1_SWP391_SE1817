@@ -29,8 +29,8 @@
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BookingScheduleServlet</servlet-name>
-        <servlet-class>Controller.customer.BookingScheduleServlet</servlet-class>
+        <servlet-name>ViewHistoryBooking</servlet-name>
+        <servlet-class>Controller.customer.ViewHistoryBooking</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeesController</servlet-name>
@@ -113,16 +113,64 @@
         <servlet-class>Controller.Service.AddService</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EmployeesProfileController</servlet-name>
-        <servlet-class>Controller.Employee.EmployeesProfileController</servlet-class>
+        <servlet-name>ViewOrderController</servlet-name>
+        <servlet-class>Controller.admin.ViewOrderController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WorkScheduleEmployees</servlet-name>
-        <servlet-class>Controller.admin.WorkScheduleEmployees</servlet-class>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>Controller.admin.NewServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EmployeeRecoveryController</servlet-name>
-        <servlet-class>Controller.admin.EmployeeRecoveryController</servlet-class>
+        <servlet-name>GetOrderManager</servlet-name>
+        <servlet-class>Controller.admin.GetOrderManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllBillController</servlet-name>
+        <servlet-class>Controller.admin.ViewAllBillController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateStatusEmployeeController</servlet-name>
+        <servlet-class>Controller.admin.UpdateStatusEmployeeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrderDetatailUpdateController</servlet-name>
+        <servlet-class>Controller.admin.ViewOrderDetatailUpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckInController</servlet-name>
+        <servlet-class>Controller.admin.CheckInController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewSaleDetailServlet</servlet-name>
+        <servlet-class>Controller.admin.ViewSaleDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetSaleByMonthServlet</servlet-name>
+        <servlet-class>Controller.admin.GetSaleByMonthServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
+        <servlet-class>Controller.admin.GetSaleDetailByMonthServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateService</servlet-name>
+        <servlet-class>Controller.Service.UpdateService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicesBookingServlet</servlet-name>
+        <servlet-class>Controller.customer.ServicesBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicesBookingAjaxServlet</servlet-name>
+        <servlet-class>Controller.customer.ServicesBookingAjaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteservice</servlet-name>
+        <servlet-class>Controller.Service.deleteservice</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReOrderServlet</servlet-name>
+        <servlet-class>Controller.customer.ReOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -153,8 +201,8 @@
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BookingScheduleServlet</servlet-name>
-        <url-pattern>/bookingschedule</url-pattern>
+        <servlet-name>ViewHistoryBooking</servlet-name>
+        <url-pattern>/viewhistorybooking</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesDetailController</servlet-name>
@@ -237,15 +285,63 @@
         <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EmployeesProfileController</servlet-name>
-        <url-pattern>/employeesprofile</url-pattern>
+        <servlet-name>ViewOrderController</servlet-name>
+        <url-pattern>/viewOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WorkScheduleEmployees</servlet-name>
-        <url-pattern>/workscheduleemployees</url-pattern>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EmployeeRecoveryController</servlet-name>
-        <url-pattern>/employeerecovery</url-pattern>
+        <servlet-name>GetOrderManager</servlet-name>
+        <url-pattern>/getOrderManager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllBillController</servlet-name>
+        <url-pattern>/viewAllBill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStatusEmployeeController</servlet-name>
+        <url-pattern>/updateStatusEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderDetatailUpdateController</servlet-name>
+        <url-pattern>/viewOrderDetatailUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckInController</servlet-name>
+        <url-pattern>/checkIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSaleDetailServlet</servlet-name>
+        <url-pattern>/viewsaledetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSaleByMonthServlet</servlet-name>
+        <url-pattern>/getsalebymonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetSaleDetailByMonthServlet</servlet-name>
+        <url-pattern>/getsaledetailbymonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateService</servlet-name>
+        <url-pattern>/updateservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesBookingServlet</servlet-name>
+        <url-pattern>/servicesbooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesBookingAjaxServlet</servlet-name>
+        <url-pattern>/servicesbookingajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteservice</servlet-name>
+        <url-pattern>/deleteservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReOrderServlet</servlet-name>
+        <url-pattern>/reorder</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -4,13 +4,10 @@
  */
 package Controller.customer;
 
-import Dal.OrdersDAO;
+import Dal.FeedbackDAO;
 import Model.Account;
-import Model.Booking;
-import Model.Order;
-import Model.Services;
-import Model.Shift;
-import Model.Status;
+import Model.Customer;
+import Model.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,14 +15,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author xdrag
+ * @author admin
  */
-public class BookingScheduleServlet extends HttpServlet {
+public class CustomerFeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,44 +33,19 @@ public class BookingScheduleServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            response.sendRedirect("login");
-        }else{
-            
-        Account account = (Account) session.getAttribute("account");
-        OrdersDAO d = new OrdersDAO();
-        List<Order> listOrders = d.getAllOrdersByAccountId(account.getId());
-        if (listOrders.isEmpty()) {
-            String mss = "Bạn chưa có lịch nào được đặt";
-            request.setAttribute("mss", mss);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
-        } else {
-            List<Booking> listBooking = new ArrayList<>();
-            for (Order o : listOrders) {
-                Booking b = new Booking();
-                b.setOrder(o);
-
-                // lay Status order da dat
-                Status status = d.getStatusesById(o.getStatusId());
-                b.setStatus(status);
-                // lay barber da dat
-                Account barberAdded = d.getAccountsById(o.getEmployeeId());
-                b.setBarber(barberAdded);
-                // lay shifts da dat
-                Shift shiftsAdded = d.getShiftsById(o.getShiftsID());
-                b.setShift(shiftsAdded);
-                //lay tat ca services da dat
-                List<Services> listServices = d.getAllServicesByOrderId(o.getId());
-                b.setListServices(listServices);
-                System.out.println(b.toString());
-                listBooking.add(b);
-            }
-            request.setAttribute("listBooking", listBooking);
-            request.getRequestDispatcher("bookingschedule.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CustomerFeedbackController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CustomerFeedbackController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,7 +60,7 @@ public class BookingScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
     }
 
     /**
@@ -104,7 +74,29 @@ public class BookingScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String noidung = request.getParameter("noidung");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            String phone = account.getPhone();
+            boolean isActive = true;  
+
+            Customer customer = new Customer();
+            customer.setPhone(phone);
+
+            Feedback feedback = new Feedback();
+            feedback.setNoidung(noidung);
+            feedback.setCustomer(customer);
+            feedback.setIsActive(isActive);
+
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            feedbackDAO.addFeedback(feedback);
+
+            response.sendRedirect("ViewFeedback.jsp");
+        } else {
+            response.sendRedirect("login.jsp");
+        }
     }
 
     /**

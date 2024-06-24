@@ -4,6 +4,7 @@
     Author     : xdrag
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +46,7 @@
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 font-weight: 850;
-                font-size: 2.8rem;
+                font-size: 1.3rem;
             }
         </style>
         <!-- Custom fonts for this template-->
@@ -56,7 +57,8 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
 
     <body id="page-top">
@@ -65,123 +67,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-laugh-wink"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Interface
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Components</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Components:</h6>
-                            <a class="collapse-item" href="buttons.html">Buttons</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Utilities:</h6>
-                            <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Addons
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
-                </li>
-
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
-
-
-            </ul>
+            <jsp:include page="sidebar.jsp"></jsp:include>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -268,6 +154,16 @@
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800">Top Barber Tháng</h1>
+                            <span class="select-fixff" >
+                                Tháng
+                                <select name="month" onchange="onMonthChange(this)" style="width: 5rem;
+                                        padding: 4px; border: 2px solid #636363;
+                                        border-radius: 5px">
+                                    <c:forEach items="${listMonthRevenue}" var="m">
+                                        <option value="${m}" ${m == monthSelect ? 'selected' : ''}>${m}</option>
+                                    </c:forEach>
+                                </select>
+                            </span>
                         </div>
 
                         <!-- Content Row -->
@@ -275,71 +171,75 @@
                             <div class="row justify-content-around" style="width: 1600px;">
                                 <!-- Earnings (Monthly) Card Example -->
                                 <div class="col-lg-4">
-                                    <div class="card mb-4 shadow" style="border-radius: 10px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg');
-                                         background-size: cover; background-position: center;">
-                                        <h3 id="topSale">Top 2</h3>
-                                        <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
-                                                 alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">John Smith</h5>
-                                            <p class="text-muted mb-1" style="font-size: 1.8rem;
-                                               font-weight: 700; color: #d89313;">Doanh Số</p>
-                                            <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">500K</p>
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                    <c:set var="top2" value="${listViewSaleTop3[1]}" />
+                                    <div class="card mb-4 shadow container" style="border-radius: 10px;">
+                                        <h4 id="topSale">Top 2</h4>
+                                        <div class="card-body text-center row">
+                                            <div class="col-md-4">
+
+                                                <img src="${top2.getAvatar()}"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 15rem; height: 17rem;">
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card mb-4 shadow" style="border-radius: 10px; position: relative; top: -20px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-5-best-podium-award-sign-golden-object-vector_3482-9236.jpg');
-                                         background-size: cover; background-position: center;">
-                                        <h3 id="topSale"> Best Barber of the Month </h3>
-                                        <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
-                                                 alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <div style="background-image: url('\img\Screenshot 2024-06-16 114728.png');
-                                                 background-size: cover; background-position: center;
-                                                 border-radius: 5px;">
-                                                <h5 class="my-3" id="nameTopBarber" style="margin-top: -20px;">John Smith
-                                                </h5>
-                                                <p class="text-muted mb-1" style="font-size: 1.8rem;
+                                            <div class="col-md-8">
+
+                                                <p class="my-3" id="nameTopBarber">${top2.getEmployee().getFullName()}</p>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
                                                    font-weight: 700; color: #d89313;">Doanh Số</p>
-                                                <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                                   font-weight: 700; color: #d89313;">500K</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top2.getRevenue()}đ</p>
                                             </div>
 
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <c:set var="top1" value="${listViewSaleTop3[0]}" />
+                                    <div class="card mb-4 shadow container" style="border-radius: 10px; position: relative; top: -20px;">
+                                        <h4 id="topSale">Top 1</h4>
+                                        <div class="card-body text-center row">
+<!--                                            <img src="${top1.getAvatar()}"
+                                                 alt="avatar" class="fixed-size-img border rounded-circle"
+                                                 style="width: 15rem; height: 17rem;">-->
+                                            <div class="col-md-4">
+                                                <img src="https://i.vgt.vn/2022/8/11/kha-banh-nay-da-khac-luon-nghi-ve-me-bo-mat-cung-khong-duoc-gap-mat-lan-cuoi-8ff-6588712.jpg"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 7rem; height: 7rem;">
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <p class="my-3" id="nameTopBarber" style="margin-top: -20px;">
+                                                    ${top1.getEmployee().getFullName()}
+                                                </p>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
+                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top1.getRevenue()}đ</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="card mb-4 shadow"
-                                         style="border-radius: 10px;
-                                         background-image: url('https://img.freepik.com/premium-vector/top-1-best-podium-award-sign-golden-object-vector_3482-10783.jpg'); background-size: cover; background-position: center;">
-                                        <h3 id="topSale">Top 3</h3>
-                                        <div class="card-body text-center">
-                                            <img src="https://static.tintuc.com.vn/images/ver3/2022/08/10/1660106455288-1660102460808-kha-banh-234.jpg"
-                                                 alt="avatar" class="fixed-size-img border rounded-circle"
-                                                 style="width: 15rem; height: 17rem;">
-                                            <h5 class="my-3" id="nameTopBarber">John Smith</h5>
-                                            <p class="text-muted mb-1" style="font-size: 1.8rem;
-                                               font-weight: 700; color: #d89313;">Doanh Số</p>
-                                            <p class="text-muted mb-4" style="font-size: 1.5rem;
-                                               font-weight: 700; color: #d89313;">500K</p>
-                                            <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                        class="btn btn-outline-primary ms-1">Detail</button>
+                                    <c:set var="top3" value="${listViewSaleTop3[2]}" />
+                                    <div class="card mb-4 shadow container"
+                                         style="border-radius: 10px;">
+                                        <h4 id="topSale">Top 3</h4>
+                                        <div class="card-body text-center row">
+                                            <div class="col-md-4">
+
+                                                <img src="${top3.getAvatar()}"
+                                                     alt="avatar" class="fixed-size-img border rounded-circle"
+                                                     style="width: 15rem; height: 17rem;">
                                             </div>
+                                            <div class="col-md-8">
+
+                                                <h5 class="my-3" id="nameTopBarber">${top3.getEmployee().getFullName()}</h5>
+                                                <p class="text-muted mb-1" style="font-size: 1.2rem;
+                                                   font-weight: 700; color: #d89313;">Doanh Số</p>
+                                                <p class="text-muted mb-4" style="font-size: 1rem;
+                                                   font-weight: 700; color: #d89313;">${top3.getRevenue()}đ</p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -375,119 +275,47 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="table-responsive" style="max-height: 500px; overflow-y: scroll;">
-                                            <table class="table table-striped custom-table"
-                                                   style="font-size: 1.1rem; font-weight: 600;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Tên Nhân Viên</th>
-                                                        <th scope="col">SĐT</th>
-                                                        <th scope="col">Tổng Số Đơn</th>
-                                                        <th scope="col">Doanh Thu</th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tên Nhân Viên</th>
+                                                                <th>SĐT</th>
+                                                                <th>Tổng Số Đơn</th>
+                                                                <th>Doanh Thu</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Tên Nhân Viên</th>
+                                                                <th>SĐT</th>
+                                                                <th>Tổng Số Đơn</th>
+                                                                <th>Doanh Thu</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <c:forEach items="${listViewSale}" var="vs">
 
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
+                                                                <tr>
+                                                                    <td style="color: #3D63D2;
+                                                                        font-size: 1.2rem;">
+                                                                        ${vs.getEmployee().getFullName()}
 
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                    <tr scope="row">
-                                                        <td style="color: #3D63D2;
-                                                            font-size: 1.2rem;">
-                                                            James Yates
-
-                                                        </td>
-                                                        <td>+63 983 0962 971</td>
-                                                        <td>2024-06-15</td>
-                                                        <td id="totalMoney">200K</td>
-                                                        <td><a href="#" class="more">Details</a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                                    </td>
+                                                                    <td>${vs.getEmployee().getPhone()}</td>
+                                                                    <td>${vs.getTotalOrder()}</td>
+                                                                    <td id="totalMoney">${vs.getRevenue()}đ</td>
+                                                                    <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}&month=${monthSelect}" class="more">
+                                                                            Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -556,7 +384,18 @@
             <!-- Page level custom scripts -->
             <script src="js/demo/chart-area-demo.js"></script>
             <script src="js/demo/chart-pie-demo.js"></script>
-
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script>
+                                    function onMonthChange(selectElement) {
+                                        var selectedMonth = selectElement.value;
+                                        window.location.href = 'getsalebymonth?month=' + selectedMonth;
+                                    }
+                                    $(document).ready(function () {
+                                        $('#dataTable').DataTable();
+                                    });
+            </script>
     </body>
 
 </html>
