@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class ViewFeedbackController extends HttpServlet {
 

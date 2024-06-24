@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.common;
+package Controller.customer;
 
 import Dal.CustomerDAO;
-import Model.Account;
 import Model.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +12,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
 
 /**
  *
  * @author LINHNTHE170290
  */
-public class CustomerUpdatePage extends HttpServlet {
+public class UpdateCustomerProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +36,10 @@ public class CustomerUpdatePage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerUpdatePage</title>");
+            out.println("<title>Servlet UpdateCustomerProfileController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CustomerUpdatePage at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateCustomerProfileController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,20 +57,7 @@ public class CustomerUpdatePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //String phone = request.getParameter("phone");
-        String idStr = request.getParameter("customerid");
-        int customerid;
-
-        CustomerDAO daoCustomer = new CustomerDAO();
-
-        try {
-            customerid = Integer.parseInt(idStr);
-            Customer c = daoCustomer.getCustomerProfileByID(customerid);
-            request.setAttribute("customer", c);
-            request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+      request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
     }
 
     /**
@@ -93,11 +78,15 @@ public class CustomerUpdatePage extends HttpServlet {
         String email = request.getParameter("email");
         String avatar = request.getParameter("avatar");
         Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
-        int roleId = 3; // Giá trị mặc định là Username
-        boolean isActive = true; //Giá trị là active (hoặc 1)
         int customerId = Integer.parseInt(idStr);
 
-        // Tạo một đối tượng Account với các thông tin mới cập nhật
+        // Kiểm tra xem các tham số đã được cung cấp chưa
+        if (phone == null || fullName == null || email == null || avatar == null) {
+            response.getWriter().println("Missing required parameters.");
+            return;
+        }
+
+        // Tạo đối tượng Customer mới
         Customer updatedCustomer = new Customer();
         updatedCustomer.setCustomerId(customerId);
         updatedCustomer.setFullName(fullName);
@@ -105,19 +94,18 @@ public class CustomerUpdatePage extends HttpServlet {
         updatedCustomer.getAccount().setEmail(email);
         updatedCustomer.getAccount().setGender(gender);
         updatedCustomer.getAccount().setAvatar(avatar);
-        
-        // lưu vào data
+
+        // Cập nhật thông tin khách hàng
         CustomerDAO customerDAO = new CustomerDAO();
         boolean updateSuccessful = customerDAO.updateCustomer(updatedCustomer);
 
         if (updateSuccessful) {
-            // Redirect to customer profile page or success page
+            // Chuyển hướng đến trang CustomerProfile.jsp sau khi cập nhật thành công
             response.sendRedirect("CustomerProfile.jsp");
         } else {
-            // Handle update failure scenario
+            // Xử lý trường hợp cập nhật thất bại
             response.getWriter().println("Failed to update customer information.");
         }
-
     }
 
     /**

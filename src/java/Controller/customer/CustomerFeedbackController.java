@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class CustomerFeedbackController extends HttpServlet {
 
