@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.admin;
+package Controller.customer;
 
 import Dal.CustomerDAO;
 import Dal.FeedbackDAO;
@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
@@ -41,7 +40,7 @@ public class CustomerFeedbackController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerFeedbackController</title>");
+            out.println("<title>Servlet CustomerFeedbackController</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CustomerFeedbackController at " + request.getContextPath() + "</h1>");
@@ -105,7 +104,6 @@ public class CustomerFeedbackController extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
     }
-
     /**
      * Returns a short description of the servlet.
      *
