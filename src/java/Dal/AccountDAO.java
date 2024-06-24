@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Account;
+import Model.Employee;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -243,6 +244,27 @@ public class AccountDAO extends DBContext {
         }
 
     }
+public Account getAllAccounts(String phone) throws SQLException {
+    Account account = null;
+    try {
+        String sql = "SELECT * FROM account WHERE phone = ?";
+        PreparedStatement stm = connection.prepareStatement(sql);
+        stm.setString(1, phone);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            account = new Account();
+            account.setPhone(rs.getString("phone"));
+            account.setRoleId(rs.getInt("roleId"));
+            account.setEmail(rs.getString("email"));
+            account.setGender(rs.getBoolean("gender"));
+            account.setAvatar(rs.getString("avatar"));
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return account;
+}
+
 
     public static void main(String[] args) {
         AccountDAO a = new AccountDAO();
