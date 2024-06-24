@@ -97,7 +97,6 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
         List<Status> status = new StatusDAO().getAll();
         //get info services
         List<Services> ListServices = new ServicesDAO().GetAllServices();
-        
         request.setAttribute("services", services);
         request.setAttribute("infoCustumer", infoCustumer);
         request.setAttribute("detailOrder", detailOrder);
@@ -121,11 +120,33 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
             throws ServletException, IOException {
         String[] idServices = request.getParameterValues("services");
         String status = request.getParameter("status");
+        int IdStatus = Integer.parseInt(status);
         String oId = request.getParameter("Oid");
         String Eid = request.getParameter("employee") + "";
         List<Services> services = new ServicesDAO().GetAllServices();
         PrintWriter out = response.getWriter();
-        if (Eid.equals("")) {
+        if (Eid.equals("")&& IdStatus == 1) {
+            //total new order
+            int total = 0;
+            for (String idService : idServices) {
+                int id = Integer.parseInt(idService);
+                for (Services service : services) {
+                    if (id == service.getServicesId()) {
+                        total += service.getPrice();
+                        break;
+                    }
+                }
+            }
+            //update new status of barber
+            new EmployeesDAO().updateStatusBarber(2, Eid);
+            //update order with new info
+            new OrderDAO().upDateOrderAdmin(Eid,"2", oId, total);
+            //delete old services before update
+            new Order_servicesDAO().deleteAllServices(oId);
+            //insert new services to order
+            for (String id : idServices) {
+                new Order_servicesDAO().InsertServices(oId, id);
+            }
             response.sendRedirect("getOrderManager");
         } else {
             //total new order
@@ -142,7 +163,7 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
             //update new status of barber
             new EmployeesDAO().updateStatusBarber(2, Eid);
             //update order with new info
-            new OrderDAO().upDateOrderAdmin(Eid,status, oId, total);
+            new OrderDAO().upDateOrderAdmin(Eid,"3", oId, total);
             //delete old services before update
             new Order_servicesDAO().deleteAllServices(oId);
             //insert new services to order

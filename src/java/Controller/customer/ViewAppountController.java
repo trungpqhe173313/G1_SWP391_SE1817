@@ -57,8 +57,7 @@ public class ViewAppountController extends HttpServlet {
             List<Status> status = new StatusDAO().getAll();
             //get all services for update
             List<Services> listServices = new ServicesDAO().GetAllServices();
-            
-             request.setAttribute("order", order);
+            request.setAttribute("order", order);
             request.setAttribute("ls", listServices);
             request.setAttribute("status", status);
             request.setAttribute("shift", Shift);
