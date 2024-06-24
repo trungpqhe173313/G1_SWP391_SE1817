@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author ducth
  */
-public class UpdateEmployeesStatusController extends HttpServlet {
+public class EmployeesRecoveryController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,6 +36,7 @@ public class UpdateEmployeesStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Chuyển hướng tới POST để xử lý
         doPost(request, response);
     }
 
@@ -49,7 +50,7 @@ public class UpdateEmployeesStatusController extends HttpServlet {
         try {
             boolean updated = dao.updateEmployeeActiveStatus(employeeId, isActive);
             if (updated) {
-                response.sendRedirect(request.getContextPath() + "/employeesdetail");
+                response.sendRedirect(request.getContextPath() + "/employeesresign");
             } else {
                 response.getWriter().println("Update failed.");
             }
