@@ -149,7 +149,7 @@ public class ShopDAO extends DBContext {
                 + "      ,[shiftId]\n"
                 + "      ,[updateTime]\n"
                 + "  FROM [dbo].[order]\n"
-                + "  WHERE MONTH(orderDate) = ? \n"
+                + "  WHERE MONTH(orderDate) = ? and statusID=4\n"
                 + "  AND YEAR(orderDate) = YEAR(GETDATE());";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
@@ -184,7 +184,7 @@ public class ShopDAO extends DBContext {
                 + "      ,[updateTime]\n"
                 + "  FROM [dbo].[order]\n"
                 + "  WHERE MONTH(orderDate) = ? and employeeId = ?\n"
-                + "  AND YEAR(orderDate) = YEAR(GETDATE());";
+                + "  AND YEAR(orderDate) = YEAR(GETDATE()) and statusID=4;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
             st.setInt(2, employeeId);
@@ -218,7 +218,7 @@ public class ShopDAO extends DBContext {
                 + "      ,[shiftId]\n"
                 + "      ,[updateTime]\n"
                 + "  FROM [dbo].[order]\n"
-                + "  WHERE customerId = ? ";
+                + "  WHERE customerId = ? and statusID=4";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
