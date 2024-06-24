@@ -33,22 +33,21 @@ public class ViewFeedbackController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
+        //HttpSession session = request.getSession();
+        //Account account = (Account) session.getAttribute("account");
 
-        if (account != null) {
-            // Assuming FeedbackDAO has method to retrieve all feedbacks
-            FeedbackDAO feedbackDAO = new FeedbackDAO();
-            List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks(); // Adjust based on your DAO method
+        //if (account != null) {
+        // Assuming FeedbackDAO has method to retrieve all feedbacks
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks(); // Adjust based on your DAO method
 
-            // Set feedback list as attribute to be accessed in JSP
-            request.setAttribute("feedbackList", feedbackList);
+        // Set feedback list as attribute to be accessed in JSP
+        request.setAttribute("feedbackList", feedbackList);
 
-            // Forward to JSP for rendering
-            request.getRequestDispatcher("ViewFeedback.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("login.jsp");
-        }
+        // Forward to JSP for rendering
+        request.getRequestDispatcher("ViewFeedback.jsp").forward(request, response);
+        //} else {
+        //response.sendRedirect("login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

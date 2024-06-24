@@ -19,6 +19,25 @@
             .link-muted:hover {
                 color: #1266f1;
             }
+            /* Định nghĩa kiểu cho lớp btn và btn-primary */
+            .btn {
+                width: 20%;
+                border-radius: 5px;
+                padding: 1.5%;
+                color: #fff;
+                background-color: #BF925B;
+                border: none;
+                cursor: pointer;
+            }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+            .nav-link {
+                padding: 0;
+                margin: 0;
+            }
         </style>
     </head>
     <body>
@@ -27,7 +46,7 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-11 col-lg-9 col-xl-7">
                         <h2 class="text-center mb-4">Danh sách phản hồi</h2>
-                        <c:forEach var="feedback" items="${requestScope.feedbackList}">
+                        <c:forEach var="feedback" items="${feedbackList}">
                             <div class="d-flex flex-start mb-4">
                                 <img class="rounded-circle shadow-1-strong me-3"
                                      src="" alt="avatar" width="65"
@@ -46,6 +65,8 @@
                                 </div>
                             </div>
                         </c:forEach>
+                        <a href="cusfeedback" class="btn btn-primary nav-link">Đánh giá của bạn</a>
+                        <a href="home"><- Quay lại trang chủ </a>
                     </div>
                 </div>
             </div>

@@ -116,18 +116,18 @@ public class FeedbackDAO extends DBContext {
 
     public static void main(String[] args) {
         FeedbackDAO fb = new FeedbackDAO();
-        Feedback feedback = fb.getFeedbackByCustomerId(1);
+        Feedback feedback = new Feedback();
+        feedback.setNoidung("Cắt đẹp.");
+        feedback.setCustomerId(2); // Thay thế bằng customerId thực tế
+        feedback.setIsActive(true);
 
         // In thông tin tài khoản nếu đăng nhập thành công
-        if (feedback != null) {
-            System.out.println("Login successful!");
-            System.out.println("ID: " + feedback.getId());
-            System.out.println("Content: " + feedback.getNoidung());
-            System.out.println("Customer ID: " + feedback.getCustomerId());
-            System.out.println("Is Active: " + feedback.isActive());
-        } else {
-            System.out.println("Login failed: Invalid!");
-
+         // Gọi phương thức addFeedback của FeedbackDAO để thêm feedback vào cơ sở dữ liệu
+        try {
+            fb.addFeedback(feedback);
+            System.out.println("Thêm phản hồi thành công!");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi thêm phản hồi: " + e.getMessage());
         }
     }
 }
