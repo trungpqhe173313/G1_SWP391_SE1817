@@ -4,6 +4,7 @@
  */
 package Dal;
 
+import Model.Customer;
 import Model.Feedback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,48 +36,63 @@ public class FeedbackDAO extends DBContext {
 
     // Method to get feedback by customer ID
     public Feedback getFeedbackByCustomerId(int customerId) {
-    String sql = "SELECT * FROM feedback WHERE customerId = ?";
-    try {
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, customerId); // Thiếu dòng này trong mã của bạn
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            Feedback feedback = new Feedback();
-            feedback.setId(rs.getInt("id"));
-            feedback.setNoidung(rs.getString("noidung"));
-            feedback.setCustomerId(rs.getInt("customerId"));
-            feedback.setIsActive(rs.getBoolean("isActive"));
-            return feedback;
-        }
-    } catch (SQLException ex) {
-        Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return null;
-}
-
-
-    // Method to get all feedbacks
-    public List<Feedback> getAllFeedbacks() {
-        List<Feedback> feedbackList = new ArrayList<>();
-        String sql = "SELECT * FROM feedback";
-        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
+        String sql = "SELECT * FROM feedback WHERE customerId = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, customerId); // Thiếu dòng này trong mã của bạn
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
                 Feedback feedback = new Feedback();
                 feedback.setId(rs.getInt("id"));
                 feedback.setNoidung(rs.getString("noidung"));
                 feedback.setCustomerId(rs.getInt("customerId"));
                 feedback.setIsActive(rs.getBoolean("isActive"));
-                feedbackList.add(feedback);
+                return feedback;
             }
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return feedbackList;
+        return null;
+    }
+
+    // Method to get all feedbacks
+    public List<Feedback> getAllFeedbacks() {
+        List<Feedback> feedbacks = new ArrayList<>();
+
+        String query = "SELECT f.id, f.noidung, f.customerId, f.isActive, "
+                + "c.customerId, c.fullName, c.phone "
+                + "FROM feedback f "
+                + "JOIN customer c ON f.customerId = c.customerId;";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String noidung = rs.getString("noidung");
+                int customerId = rs.getInt("customerId");
+                boolean isActive = rs.getBoolean("isActive");
+
+                int cId = rs.getInt("customerId");
+                String fullName = rs.getString("fullName");
+                String phone = rs.getString("phone");
+
+                Customer customer = new Customer(cId, fullName, phone, null); // Assuming Account is not retrieved here
+                Feedback feedback = new Feedback(id, noidung, customerId, isActive, customer);
+                feedbacks.add(feedback);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return feedbacks;
     }
 
     // Method to update feedback
     public void updateFeedback(Feedback feedback) {
-        String sql = "UPDATE feedback SET noidung = ?, isActive = 1 WHERE id = ?";
+        String sql = "UPDATE feedback SET noidung = ?, isActive = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, feedback.getNoidung());
             stmt.setBoolean(2, feedback.isActive());
@@ -100,18 +116,18 @@ public class FeedbackDAO extends DBContext {
 
     public static void main(String[] args) {
         FeedbackDAO fb = new FeedbackDAO();
-        Feedback feedback = fb.getFeedbackByCustomerId(1);
+        Feedback feedback = new Feedback();
+        feedback.setNoidung("Cắt đẹp.");
+        feedback.setCustomerId(2); // Thay thế bằng customerId thực tế
+        feedback.setIsActive(true);
 
         // In thông tin tài khoản nếu đăng nhập thành công
-        if (feedback != null) {
-            System.out.println("Login successful!");
-             System.out.println("ID: " + feedback.getId());
-            System.out.println("Content: " + feedback.getNoidung());
-            System.out.println("Customer ID: " + feedback.getCustomerId());
-            System.out.println("Is Active: " + feedback.isActive());
-        } else {
-            System.out.println("Login failed: Invalid!");
-
+         // Gọi phương thức addFeedback của FeedbackDAO để thêm feedback vào cơ sở dữ liệu
+        try {
+            fb.addFeedback(feedback);
+            System.out.println("Thêm phản hồi thành công!");
+        } catch (Exception e) {
+            System.err.println("Lỗi khi thêm phản hồi: " + e.getMessage());
         }
     }
 }
