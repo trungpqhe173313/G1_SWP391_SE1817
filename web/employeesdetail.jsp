@@ -74,10 +74,10 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a class="btn btn-primary btn-sm mr-2" href="addemployees" style="background-color: #bf925b;">
+                            <a class="btn btn-primary btn-sm mr-2" href="addemployees" >
                                 Thêm Nhân Viên
                             </a>
-                            <a class="btn btn-primary btn-sm" href="employeesresign" style="background-color: #bf925b;">
+                            <a class="btn btn-primary btn-sm" href="employeesresign" >
                                 Đã Nghỉ Việc
                             </a>
                         </div>

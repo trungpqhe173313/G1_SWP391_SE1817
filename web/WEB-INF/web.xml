@@ -183,6 +183,9 @@
     <servlet>
         <servlet-name>EmployeesRecoveryController</servlet-name>
         <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
+    </servlet>
+    <servlet>
+        
         <servlet-name>ViewFeedbackController</servlet-name>
         <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
     </servlet>
@@ -373,6 +376,9 @@
     <servlet-mapping>
         <servlet-name>EmployeesRecoveryController</servlet-name>
         <url-pattern>/employeerecovery</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        
         <servlet-name>ViewFeedbackController</servlet-name>
         <url-pattern>/viewfeedback</url-pattern>
     </servlet-mapping>

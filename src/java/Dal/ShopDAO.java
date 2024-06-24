@@ -28,7 +28,7 @@ public class ShopDAO extends DBContext {
                 + "    SUM(totalAmount) AS TotalRevenue\n"
                 + "FROM [order]\n"
                 + "WHERE YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "and MONTH(orderDate) = ?\n"
+                + "and MONTH(orderDate) = ? and statusID=4\n"
                 + "GROUP BY MONTH(orderDate)";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
@@ -85,7 +85,7 @@ public class ShopDAO extends DBContext {
         int revenue = 0;
         String sql = "SELECT SUM(totalAmount) AS Revenue\n"
                 + "FROM [order]\n"
-                + "WHERE YEAR(orderDate) = YEAR(GETDATE());";
+                + "WHERE YEAR(orderDate) = YEAR(GETDATE()) and statusID=4;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -103,7 +103,7 @@ public class ShopDAO extends DBContext {
                 + "    COUNT(orderId) AS TotalOrders\n"
                 + "FROM [order]\n"
                 + "WHERE YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "and MONTH(orderDate) = ?\n"
+                + "and MONTH(orderDate) = ?\n and statusID=4"
                 + "GROUP BY MONTH(orderDate);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
