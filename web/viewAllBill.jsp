@@ -49,13 +49,14 @@
                             </button>
 
                             <!-- Topbar Search -->
-                            <form
-                                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <form id="checkInForm" action="checkIn" 
+                                  class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" onsubmit="return validatePhoneNumber()">
                                 <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                           aria-label="Search" aria-describedby="basic-addon2">
+                                    <input type="tel" class="form-control bg-light border-0 small" placeholder="Nhập số điện thoại"
+                                           aria-label="Phone Number" aria-describedby="basic-addon2" name="phoneNumber" id="phoneNumber" 
+                                           pattern="(0|\+84)[3|5|7|8|9][0-9]{8}" inputmode="numeric" required>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
+                                        <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search fa-sm"></i>
                                         </button>
                                     </div>
@@ -261,9 +262,19 @@
             <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script>
-                $(document).ready(function () {
-                    $('#allTable').DataTable();
-                });
+                                      $(document).ready(function () {
+                                          $('#allTable').DataTable();
+                                      });
+                                      function validatePhoneNumber() {
+                                          const phoneInput = document.getElementById('phoneNumber').value;
+                                          const phonePattern = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+
+                                          if (!phonePattern.test(phoneInput)) {
+                                              alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại di động Việt Nam hợp lệ.');
+                                              return false; // Ngăn không cho form submit
+                                          }
+                                          return true; // Cho phép form submit
+                                      }
             </script>
     </body>
 </html>
