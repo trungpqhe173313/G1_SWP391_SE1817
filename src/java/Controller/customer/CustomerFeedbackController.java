@@ -4,6 +4,7 @@
  */
 package Controller.customer;
 
+import Dal.CustomerDAO;
 import Dal.FeedbackDAO;
 import Model.Account;
 import Model.Customer;
@@ -18,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author LINHNTHE170290
  */
 public class CustomerFeedbackController extends HttpServlet {
 
@@ -61,6 +62,7 @@ public class CustomerFeedbackController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
+
     }
 
     /**
@@ -79,26 +81,29 @@ public class CustomerFeedbackController extends HttpServlet {
         Account account = (Account) session.getAttribute("account");
 
         if (account != null) {
-            String phone = account.getPhone();
-            boolean isActive = true;  
+            CustomerDAO customerDAO = new CustomerDAO();
+            Customer customer = customerDAO.getCustomerByP(account.getPhone());
 
-            Customer customer = new Customer();
-            customer.setPhone(phone);
+            if (customer != null) {
+                int customerId = customer.getCustomerId();
 
-            Feedback feedback = new Feedback();
-            feedback.setNoidung(noidung);
-            feedback.setCustomer(customer);
-            feedback.setIsActive(isActive);
+                Feedback feedback = new Feedback();
+                feedback.setNoidung(noidung);
+                feedback.setCustomerId(customerId);
+                feedback.setIsActive(true); // Giả sử mặc định isActive là true
 
-            FeedbackDAO feedbackDAO = new FeedbackDAO();
-            feedbackDAO.addFeedback(feedback);
+                FeedbackDAO feedbackDAO = new FeedbackDAO();
+                feedbackDAO.addFeedback(feedback);
 
-            response.sendRedirect("ViewFeedback.jsp");
+                response.sendRedirect("viewfeedback");
+            } else {
+                // Handle case where customer not found (optional)
+                response.sendRedirect("login.jsp");
+            }
         } else {
             response.sendRedirect("login.jsp");
         }
     }
-
     /**
      * Returns a short description of the servlet.
      *

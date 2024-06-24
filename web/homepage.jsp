@@ -671,6 +671,7 @@
                             <li><a href="#" class="py-2 d-block">FAQs</a></li>
                             <li><a href="#" class="py-2 d-block">Privacy</a></li>
                             <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
+                            <li><a href="viewfeedback" class="py-2 d-block">Feedback</a></li>
                         </ul>
                     </div>
                 </div>

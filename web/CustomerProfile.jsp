@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <<!-- Latest compiled and minified CSS -->
+        <!-- Latest compiled and minified CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Latest compiled JavaScript -->
@@ -71,8 +71,11 @@
                                         <input class="form-control" id="gender" value="${c.account.gender ? 'Male' : 'Female'}">
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="updateCustomer(${c.customerId})">Cập nhập thông tin</button>
+                                <button class="btn btn-primary" type="button" onclick="updateCustomer()">Cập nhập thông tin</button>
                                 <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
+                                <br>
+                                <br>
+                                <a href="home"><- Quay lại trang chủ </a>
                             </form>
                         </div>
                     </div>
@@ -82,8 +85,8 @@
     </div>
 
     <script>
-        function updateCustomer(customerId) {
-            window.location.href = 'customerupdate?customerId=' + customerId;
+        function updateCustomer() {
+            window.location.href = 'customerupdate';
         }
         function changePassword(customerId) {
             window.location.href = 'changepassw?customerId=' + customerId;

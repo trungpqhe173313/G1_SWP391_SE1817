@@ -44,7 +44,7 @@
                         <div class="card mb-4">
                             <div class="card-header">Thông tin tài khoản</div>
                             <div class="card-body">
-                                <form>
+                                <form method="post" action="updatecusprofile">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="customerId">ID</label>
                                         <input class="form-control" type="text" id="customerId" value="${customer.customerId}">
