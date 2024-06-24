@@ -27,24 +27,19 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-11 col-lg-9 col-xl-7">
                         <h2 class="text-center mb-4">Danh sách phản hồi</h2>
-                        <c:forEach var="feedback" items="${feedbackList}">
+                        <c:forEach var="feedback" items="${requestScope.feedbackList}">
                             <div class="d-flex flex-start mb-4">
                                 <img class="rounded-circle shadow-1-strong me-3"
-                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="65"
+                                     src="" alt="avatar" width="65"
                                      height="65" />
                                 <div class="card w-100">
                                     <div class="card-body p-4">
                                         <div class="">
                                             <h5>${feedback.customer.fullName}</h5>
-                                            <p class="small">${feedback.createdAt}</p>
                                             <p>${feedback.noidung}</p>
 
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <a href="#!" class="link-muted me-2"><i class="fas fa-thumbs-up me-1"></i>132</a>
-                                                    <a href="#!" class="link-muted"><i class="fas fa-thumbs-down me-1"></i>15</a>
-                                                </div>
-                                                <a href="#!" class="link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
+                                                <a href="#" class="link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
                                             </div>
                                         </div>
                                     </div>
