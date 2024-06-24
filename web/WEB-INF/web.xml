@@ -176,6 +176,14 @@
         <servlet-name>ViewSaleOrderServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <servlet-class>Controller.customer.CustomerFeedbackController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -351,5 +359,13 @@
     <servlet-mapping>
         <servlet-name>ViewSaleOrderServlet</servlet-name>
         <url-pattern>/viewsaleorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <url-pattern>/viewfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <url-pattern>/cusfeedback</url-pattern>
     </servlet-mapping>
 </web-app>
