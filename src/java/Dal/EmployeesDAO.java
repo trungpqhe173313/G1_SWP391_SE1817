@@ -5,8 +5,7 @@
 package Dal;
 
 import static Dal.DBContext.connection;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import Model.Employee;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -15,16 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ducth
  */
 public class EmployeesDAO extends DBContext {
-
-    public EmployeesDAO() {
-        super();
-    }
 
     public List<Map<String, Object>> getEmployeeServicesInfo() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
@@ -219,6 +216,60 @@ public class EmployeesDAO extends DBContext {
 
         return resultList;
     }
-    
+
+    public List<Employee> getAllEmployee() {
+        List<Employee> employee = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[employee]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                employee.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
+
+    public static void main(String[] args) {
+        List<Employee> e = new EmployeesDAO().getBarberFree();
+        System.out.println(e.size());
+    }
+
+    public void updateStatusBarber(int i, String Eid) {
+        try {
+            String sql = "UPDATE [dbo].[employee]\n"
+                    + "   SET [statusEmployee] = ?\n"
+                    + " WHERE [employeeId] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, i);
+            stm.setString(2, Eid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public List<Employee> getBarberFree() {
+        List<Employee> employee = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "FROM [Barber].[dbo].[employee]\n"
+                    + "WHERE [statusEmployee] = 1\n"
+                    + "ORDER BY [updateTime] DESC;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                employee.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
 
 }
