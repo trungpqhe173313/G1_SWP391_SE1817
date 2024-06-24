@@ -199,7 +199,7 @@
                                         </p>
                                     </div>
                                     <div class="button">
-                                        <a href="viewrevenue">
+                                        <a href="viewsaledetail?month=${month}&employeeId=${employeeId}">
                                             <button>Quay Lại</button>
                                         </a>
                                     </div>

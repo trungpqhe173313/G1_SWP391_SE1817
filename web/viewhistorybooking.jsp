@@ -1,9 +1,3 @@
-<%-- 
-    Document   : services
-    Created on : May 25, 2024, 2:55:46 AM
-    Author     : phamt
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -47,6 +41,18 @@
             .icon-center a:hover .bi {
                 color: #BF925B;
             }
+            .table-container {
+                max-height: 500px;
+                overflow-y: auto;
+                display: block;
+            }
+            .table th {
+                margin-top: 20px;
+                position: sticky;
+                top: 0;
+                background: white;
+                z-index: 1;
+            }
         </style>
 
         <meta charset="utf-8">
@@ -69,7 +75,6 @@
         <link rel="stylesheet" href="css/bootstrap-datepicker.css">
         <link rel="stylesheet" href="css/jquery.timepicker.css">
 
-
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
@@ -91,51 +96,47 @@
                 </div>
             </section>
 
-
-
             <section class="ftco-section ftco-booking bg-light">
                 <div class="container">
-
-                    <div class="table-responsive custom-table-responsive">
-
-                        <table class="table custom-table">
+                    <div class="table-container">
+                        <table class="table custom-table" id="dataTable" style="border-radius: 5px;">
                             <thead>
-                                <tr> 
-                                    <th scope="col">Đơn</th>
-                                    <th scope="col">Dịch Vụ</th>
-                                    <th scope="col">Giờ Đặt</th>
-                                    <th scope="col">Barber</th>
-                                    <th scope="col">Tổng Tiền</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col" style="text-align: center">Đặt Lại</th>
-
+                                <tr>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Đơn</th>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Dịch Vụ</th>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Giờ Đặt</th>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Barber</th>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Tổng Tiền</th>
+                                    <th scope="col" style="
+                                        background-color: #EBE8DE;">Trạng Thái</th>
+                                    <th scope="col" style="text-align: center;
+                                        background-color: #EBE8DE;">Đặt Lại</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${listOrder}" var="lb">
-
                                 <tr scope="row" style="font-size: 1rem;">
-
-                                    <td>
-                                        ${lb.getOrder().getId()}
-                                    </td>
+                                    <td>${lb.getOrder().getId()}</td>
                                     <td style="font-size: 1rem; font-weight: 500;">
                                         <c:forEach items="${lb.getServices()}" var="s">
                                             - ${s.getName()} </br>
                                         </c:forEach>
                                     </td>
                                     <td>
-
                                         <span style="font-size: 1rem;">${lb.getShift().getStartTime()}</span>
                                         </br>
                                         <span style="font-size: 1.1rem; font-weight: 460">${lb.getOrder().getOrderDate()}</span>
                                     </td>
                                     <td>
-                                        <span style="font-size: 1.1rem; font-weight: 460">
-                                            ${lb.getEmployee().getFullName()}</span>
+                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getEmployee().getFullName()}</span>
                                         </br>
-                                        <span style="font-size: 1rem;">
-                                            ${lb.getEmployee().getPhone()}</span>
+                                        <span style="font-size: 1rem;">${lb.getEmployee().getPhone()}</span>
                                     </td>
                                     <td style="color: green">${lb.getOrder().getTotalAmount()}đ</td>
                                     <td>${lb.getStatus().getName()}</td>
@@ -147,8 +148,6 @@
                                 </tr>
                                 <tr class="spacer"><td colspan="100"></td></tr>
                                 </c:forEach>
-
-
                         </tbody>
                     </table>
                 </div>
@@ -163,9 +162,6 @@
                 </div>
             </div>
         </section>
-
-
-
 
         <footer class="ftco-footer ftco-section">
             <div class="container">
@@ -219,7 +215,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
-
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
@@ -228,11 +223,8 @@
             </div>
         </footer>
 
-
-
         <!-- loader -->
         <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -251,6 +243,5 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
-
     </body>
 </html>

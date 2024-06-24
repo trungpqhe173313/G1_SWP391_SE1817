@@ -173,16 +173,8 @@
         <servlet-class>Controller.customer.ReOrderServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WorkScheduleEmployees</servlet-name>
-        <servlet-class>Controller.admin.WorkScheduleEmployees</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EmployeeRecoveryController</servlet-name>
-        <servlet-class>Controller.admin.EmployeeRecoveryController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EmployeesProfileController</servlet-name>
-        <servlet-class>Controller.Employee.EmployeesProfileController</servlet-class>
+        <servlet-name>ViewSaleOrderServlet</servlet-name>
+        <servlet-class>Controller.admin.ViewSaleOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -357,15 +349,7 @@
         <url-pattern>/reorder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WorkScheduleEmployees</servlet-name>
-        <url-pattern>/workscheduleemployees</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EmployeeRecoveryController</servlet-name>
-        <url-pattern>/employeerecovery</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EmployeesProfileController</servlet-name>
-        <url-pattern>/employeesprofile</url-pattern>
+        <servlet-name>ViewSaleOrderServlet</servlet-name>
+        <url-pattern>/viewsaleorder</url-pattern>
     </servlet-mapping>
 </web-app>
