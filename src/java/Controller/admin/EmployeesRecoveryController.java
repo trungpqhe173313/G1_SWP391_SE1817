@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author ducth
  */
-public class EmployeeRecoveryController extends HttpServlet {
+public class EmployeesRecoveryController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -176,6 +176,14 @@
         <servlet-name>ViewSaleOrderServlet</servlet-name>
         <servlet-class>Controller.admin.ViewSaleOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WorkScheduleEmployees</servlet-name>
+        <servlet-class>Controller.admin.WorkScheduleEmployees</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeesRecoveryController</servlet-name>
+        <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -351,5 +359,13 @@
     <servlet-mapping>
         <servlet-name>ViewSaleOrderServlet</servlet-name>
         <url-pattern>/viewsaleorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkScheduleEmployees</servlet-name>
+        <url-pattern>/workscheduleemployees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeesRecoveryController</servlet-name>
+        <url-pattern>/employeerecovery</url-pattern>
     </servlet-mapping>
 </web-app>
