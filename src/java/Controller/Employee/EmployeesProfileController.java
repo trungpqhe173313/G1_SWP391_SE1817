@@ -4,7 +4,10 @@
  */
 package Controller.Employee;
 
+import Dal.AccountDAO;
 import Dal.EmployeesDAO;
+import Model.Account;
+import Model.Employee;
 import java.io.IOException;
 import java.util.Map;
 import jakarta.servlet.RequestDispatcher;
@@ -14,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 
 /**
@@ -57,48 +61,31 @@ public class EmployeesProfileController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        // Lấy phone từ session
-        String phone = (String) session.getAttribute("phone");
-
-        if (phone == null || phone.isEmpty()) {
-            // Handle case where phone is not found in session
-            request.setAttribute("error", "Phone number not found in session.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
-
-        // Gọi phương thức để lấy thông tin nhân viên từ DAO
-        EmployeesDAO dao = new EmployeesDAO();
-        try {
-            Map<String, Object> employeeInfo = dao.employeeProfile(phone);
-
-            if (employeeInfo.isEmpty()) {
-                // Handle case where employee info is not found
-                request.setAttribute("error", "Employee not found.");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
-                dispatcher.forward(request, response);
-                return;
-            }
-
-            // Forward đến trang JSP để hiển thị thông tin nhân viên
-            request.setAttribute("employeeInfo", employeeInfo);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employeesProfile.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (Exception e) {
-            // Xử lý ngoại lệ
-            e.printStackTrace(); // Log exception for debugging
-            request.setAttribute("error", "Error retrieving employee information.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
-            dispatcher.forward(request, response);
-        }
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    
+    HttpSession session = request.getSession();
+    String phone = (String) session.getAttribute("phone");
+    
+    try {
+        EmployeesDAO employeesDAO = new EmployeesDAO();
+        Employee employee = employeesDAO.getAllEmployees(phone);
+        
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = accountDAO.getAllAccounts(phone);
+        
+        request.setAttribute("employee", employee);
+        request.setAttribute("account", account);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/employeesProfile.jsp");
+        dispatcher.forward(request, response);
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        response.sendRedirect("errorPage.jsp");
     }
+}
 
 
     /**

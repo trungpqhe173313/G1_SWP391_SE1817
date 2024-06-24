@@ -5,6 +5,7 @@
 package Dal;
 
 import static Dal.DBContext.connection;
+import Model.Account;
 import Model.Employee;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -119,46 +120,23 @@ public class EmployeesDAO extends DBContext {
                 return rowsUpdated > 0;
             }
         }
-
-
-
-    public Map<String, Object> employeeProfile(String phone) throws SQLException {
-        Map<String, Object> employeeInfo = new HashMap<>();
-
-        String sql = "SELECT "
-                + "   a.avatar, "
-                + "   a.phone, "
-                + "   e.employeeId, "
-                + "   e.fullName, "
-                + "   a.email, "
-                + "   a.gender, "
-                + "   r.role "
-                + "FROM "
-                + "   [account] a "
-                + "JOIN "
-                + "   [employee] e ON a.phone = e.phone "
-                + "JOIN "
-                + "   [role] r ON a.roleId = r.id "
-                + "WHERE "
-                + "   a.phone = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, phone);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    employeeInfo.put("avatar", rs.getString("avatar"));
-                    employeeInfo.put("phone", rs.getString("phone"));
-                    employeeInfo.put("employeeId", rs.getInt("employeeId"));
-                    employeeInfo.put("fullName", rs.getString("fullName"));
-                    employeeInfo.put("email", rs.getString("email"));
-                    employeeInfo.put("gender", rs.getBoolean("gender"));
-                    employeeInfo.put("role", rs.getString("role"));
-                } else {
-                    System.out.println("User not found.");
-                }
+ 
+    public Employee getAllEmployees(String phone) throws SQLException {
+        Employee employee = null;
+        try {
+            String sql = "SELECT * FROM employee WHERE phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                employee = new Employee();
+                employee.setFullName(rs.getString("fullName"));
+                employee.setPhone(rs.getString("phone"));
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return employeeInfo;
+        return employee;
     }
 
     public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
