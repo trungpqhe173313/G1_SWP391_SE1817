@@ -71,7 +71,7 @@
                                         <input class="form-control" id="gender" value="${c.account.gender ? 'Male' : 'Female'}">
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="updateCustomer(${c.customerId})">Cập nhập thông tin</button>
+                                <button class="btn btn-primary" type="button" onclick="updateCustomer()">Cập nhập thông tin</button>
                                 <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
                                 <br>
                                 <br>
@@ -85,8 +85,8 @@
     </div>
 
     <script>
-        function updateCustomer(customerId) {
-            window.location.href = 'customerupdate?customerId=' + customerId;
+        function updateCustomer() {
+            window.location.href = 'customerupdate';
         }
         function changePassword(customerId) {
             window.location.href = 'changepassw?customerId=' + customerId;
