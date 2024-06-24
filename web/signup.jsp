@@ -66,7 +66,14 @@
                             <div class="card-body p-4 p-md-5">
                                 <form action="signup" method="post">
 
+                                    <div data-mdb-input-init class="form-outline">
+                                        <h6 class="mb-0">Họ và tên</h6>
+                                        <input type="text" required value="${param.fullName}" name="fullname" class="form-control form-control-lg">
+                                    </div>
 
+                                    <br>
+
+                                    
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <h6 class="mb-0" for="phone">Số điện thoại</h6>
@@ -77,11 +84,10 @@
 
                                         <div class="col-md-6">
                                             <h6 class="mb-0" for="email">Email</h6>
-                                            <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]$" 
+                                            <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
                                                    title="Địa chỉ email không hợp lệ" class="form-control form-control-lg" />
                                         </div>
                                     </div>
-
 
 
                                     <div class="row mb-4">
@@ -111,13 +117,13 @@
                                             <input class="form-check-input" type="radio" name="gender" value="${param.gender}" />
                                             <label class="form-check-label" for="male">Nam</label>
                                         </div>
+
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div data-mdb-input-init class="form-outline">
-                                            <h6 class="mb-0">Avatar</h6>
-                                            <input type="file" required value="${param.avatar}" name="avatar" accept="image/*"class="form-control form-control-lg">
-                                        </div>
+                                    <div data-mdb-input-init class="form-outline">
+                                        <h6 class="mb-0">Ảnh đại diện</h6>
+                                        <input type="file" value="${param.avatar}" name="avatar" accept="image/*"class="form-control form-control-lg">
                                     </div>
+
 
                                     <div class="mt-4 pt-2">
                                         <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Đăng ký" />
