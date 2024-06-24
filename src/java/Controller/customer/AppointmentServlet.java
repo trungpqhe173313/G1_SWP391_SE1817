@@ -43,28 +43,33 @@ public class AppointmentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ShiftsDAO d = new ShiftsDAO();
         HttpSession session = request.getSession();
-        List<String> listDate = new ArrayList<>();
+        if (session.getAttribute("account") == null) {
+            request.getRequestDispatcher("login").forward(request, response);
+        } else {
+            ShiftsDAO d = new ShiftsDAO();
+            List<String> listDate = new ArrayList<>();
 
 // Lấy ngày hôm nay
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String todayStr = today.format(formatter);
-        listDate.add(todayStr);
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String todayStr = today.format(formatter);
+            listDate.add(todayStr);
 
 // Lấy hai ngày tiếp theo
-        for (int i = 0; i < 2; i++) {
-            today = today.plusDays(1);
-            String nextDayStr = today.format(formatter);
-            listDate.add(nextDayStr);
-        }
-        if (session.getAttribute("time") == null) {
-            session.setAttribute("time", new Time(todayStr, d.getAllShiftFromNow()));
+            for (int i = 0; i < 2; i++) {
+                today = today.plusDays(1);
+                String nextDayStr = today.format(formatter);
+                listDate.add(nextDayStr);
+            }
+            if (session.getAttribute("time") == null) {
+                session.setAttribute("time", new Time(todayStr, d.getAllShiftFromNow()));
+            }
+
+            request.setAttribute("listDate", listDate);
+            request.getRequestDispatcher("booking.jsp").forward(request, response);
         }
 
-        request.setAttribute("listDate", listDate);
-        request.getRequestDispatcher("booking.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -126,7 +131,7 @@ public class AppointmentServlet extends HttpServlet {
             request.setAttribute("mss", "Đặt Thành Công");
         } catch (Exception e) {
         }
-        
+
         request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
 
     }

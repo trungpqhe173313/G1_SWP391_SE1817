@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #bf925b;" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #2E59D9;" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="viewOrder">
@@ -36,19 +36,24 @@
     </div>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.jsp">
+        <a class="nav-link" href="viewrevenue">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Doanh Thu</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="viewsale">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Doanh Thu Nhân Viên</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="employeesdetail">
             <i class="fas fa-fw fa-table"></i>
-            <span>Employees</span></a>
+            <span>Nhân VIên</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="servicedetail">
             <i class="fas fa-fw fa-table"></i>
-            <span>Services</span></a>
+            <span>Dịch Vụ</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="getOrderManager">

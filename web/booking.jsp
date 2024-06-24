@@ -175,17 +175,18 @@
                                         <div id="appointment-fields">
                                             <c:if test="${sessionScope.services == null}">
 
-                                                <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
+                                                <input type="text" id="please-select-service" 
+                                                       value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
                                             </c:if>
                                             <c:if test="${sessionScope.services != null}">
                                                 <div id="appointment-details" >
                                                     <div class="col-sm-10">
                                                         <div class="form-group">
                                                             <div class="select-wrap">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
                                                                 <select name="date" id="date" class="form-control">
                                                                     <c:forEach items="${listDate}" var="date">
-                                                                        <option value="${date}" ${date == sessionScope.time.getDate() ? 'selected' : ''}>${date}</option>
+                                                                        <option value="${date}"  ${date == sessionScope.time.getDate() ? 'selected' : ''}>${date}</option>
                                                                     </c:forEach>
                                                                 </select>
                                                             </div>
@@ -194,7 +195,7 @@
                                                     <div class="col-sm-10">
                                                         <div class="form-group">
                                                             <div class="select-wrap">
-                                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
                                                                 <select name="shifts" id="shifts" class="form-control" >
                                                                     <c:forEach items="${sessionScope.time.getShift()}" var="shifts">
                                                                         <option value="${shifts.getId()}">
