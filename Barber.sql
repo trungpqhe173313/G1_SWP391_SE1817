@@ -212,6 +212,15 @@ GO
 
 -- Inserting data into account table
 INSERT INTO account (phone, pass, roleId, email, gender, isActive, avatar) VALUES
+(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, NULL),
+(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, NULL),
+(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, NULL),
+(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, NULL),
+(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, NULL),
+(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, NULL),
+(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, NULL),
+(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, NULL),
+(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL),
 (N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL),
 (N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL),
 (N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL),
@@ -228,7 +237,17 @@ INSERT INTO account (phone, pass, roleId, email, gender, isActive, avatar) VALUE
 GO
 
 -- Inserting data into customer table
+USE Barber
+GO
 INSERT INTO customer (phone, fullName) VALUES
+(N'0912345269', N'Phạm Văn Fanh'),
+(N'0912345369', N'Phạm Văn Ganh'),
+(N'0912345469', N'Phạm Văn Hanh'),
+(N'0912345569', N'Phạm Văn Ianh'),
+(N'0912345769', N'Phạm Văn Kanh'),
+(N'0912345869', N'Phạm Văn Lanh'),
+(N'0912345969', N'Phạm Văn Manh'),
+(N'0912345169', N'Phạm Văn Eanh'),
 (N'0912345669', N'Phạm Văn Anh'),
 (N'0912345668', N'Nguyễn Văn Bảo'),
 (N'0912345667', N'Trương Văn Cam'),
@@ -247,6 +266,7 @@ GO
 
 -- Inserting data into employee table
 INSERT INTO employee (fullName, phone, statusEmployee, updateTime) VALUES
+(N'Đỗ Tiến Thuật', N'0912345611', 2, GETDATE()),
 (N'Phạm Quốc Trung', N'0912345679', 1, GETDATE()),
 (N'Phạm Đạt Quý', N'0912345678', 1, GETDATE()),
 (N'Phạm Đức Thiện', N'0912345677', 1, GETDATE()),
@@ -291,7 +311,17 @@ INSERT INTO shift (startTime) VALUES
 GO
 
 -- Inserting data into order table
+USE Barber;
+GO
 INSERT INTO [order] (customerId, employeeId, statusID, orderDate, totalAmount, shiftId, updateTime) VALUES
+(5, 4, 1, '2024-06-26', 70000, 5, GETDATE()),
+(6, 5, 1, '2024-06-26', 70000, 3, GETDATE()),
+(7, 6, 1, '2024-06-26', 70000, 8, GETDATE()),
+(8, 7, 1, '2024-06-26', 70000, 9, GETDATE()),
+(9, 8, 1, '2024-06-26', 70000, 15, GETDATE()),
+(10, 9, 1, '2024-06-26', 70000, 12, GETDATE()),
+(11, 2, 1, '2024-06-26', 70000, 15, GETDATE()),
+(12, 5, 1, '2024-06-26', 70000, 15, GETDATE());
 (1, 1, 3, '2024-06-07', 70000, 1, GETDATE()),
 (2, 2, 2, '2024-06-07', 370000, 1, GETDATE()),
 (3, 3, 1, '2024-06-08', 100000, 2, GETDATE()),
@@ -300,6 +330,21 @@ GO
 
 -- Inserting data into Order_services table
 INSERT INTO Order_services (OrderId, servicesId) VALUES
+(6, 1),
+(6, 5),
+(7, 3),
+(8, 6),
+(8, 2),
+(9, 1),
+(9, 4),
+(9, 2),
+(10, 5),
+(10, 1),
+(11, 6),
+(12, 4),
+(12, 2),
+(13, 2),
+(13, 1),
 (1, 1),
 (2, 1),
 (2, 2),
@@ -307,7 +352,13 @@ INSERT INTO Order_services (OrderId, servicesId) VALUES
 (3, 1),
 (4, 5),
 (4, 6),
-(4, 3);
+(4, 3),
+(5, 2),
+(5, 5),
+(5, 4),
+(5, 6),
+(5, 3),
+(5, 1);
 GO
 
 -- Inserting data into feedback table

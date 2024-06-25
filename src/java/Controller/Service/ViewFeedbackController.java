@@ -2,19 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.customer;
+package Controller.Service;
 
-import Dal.CustomerDAO;
-import Dal.OrderDAO;
-import Dal.ServicesDAO;
-import Dal.ShiftsDAO;
-import Dal.StatusDAO;
+import Dal.FeedbackDAO;
 import Model.Account;
-import Model.Customer;
-import Model.Order;
-import Model.Services;
-import Model.Shift;
-import Model.Status;
+import Model.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,9 +18,9 @@ import java.util.List;
 
 /**
  *
- * @author phamt
+ * @author LINHNTHE170290
  */
-public class ViewAppountController extends HttpServlet {
+public class ViewFeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,34 +33,21 @@ public class ViewAppountController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            response.sendRedirect("login");
-        } else {
-            Account account = (Account) session.getAttribute("account");
-            //get info customer
-            Customer customer = new CustomerDAO().getCustomerByP(account.getPhone());
-            //get info order of customer
-            Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
-            //get info shift
-            List<Shift> Shift = new ShiftsDAO().getAll();
-            //get info status
-            List<Status> status = new StatusDAO().getAll();
-            //get all services for update
-            List<Services> listServices = new ServicesDAO().GetAllServices();
-            request.setAttribute("order", order);
-            request.setAttribute("ls", listServices);
-            request.setAttribute("status", status);
-            request.setAttribute("shift", Shift);
-            if(order != null){
-                //get info sevices of order
-                List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
-                request.setAttribute("services", services);
-            }
-            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
-        }
+        //HttpSession session = request.getSession();
+        //Account account = (Account) session.getAttribute("account");
 
+        //if (account != null) {
+        // Assuming FeedbackDAO has method to retrieve all feedbacks
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks(); // Adjust based on your DAO method
+
+        // Set feedback list as attribute to be accessed in JSP
+        request.setAttribute("feedbackList", feedbackList);
+
+        // Forward to JSP for rendering
+        request.getRequestDispatcher("ViewFeedback.jsp").forward(request, response);
+        //} else {
+        //response.sendRedirect("login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

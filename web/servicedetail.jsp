@@ -187,7 +187,7 @@
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="addservice" style="background-color: #bf925b;">
+                                    <a class="btn btn-primary btn-sm mr-2" href="addservice" >
                                         Thêm Dịch Vụ
                                     </a>
                                     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Tìm kiếm dịch vụ..." class="form-control" style="width: 300px; display: inline-block;">

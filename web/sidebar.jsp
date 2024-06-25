@@ -51,6 +51,11 @@
             <span>Nhân VIên</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="workscheduleemployees">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Nhân Viên Đang Làm</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="servicedetail">
             <i class="fas fa-fw fa-table"></i>
             <span>Dịch Vụ</span></a>
