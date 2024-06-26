@@ -53,7 +53,7 @@
     <li class="nav-item">
         <a class="nav-link" href="workscheduleemployees">
             <i class="fas fa-fw fa-table"></i>
-            <span>Employee Schedule</span></a>
+            <span>Nhân Viên Đang Làm</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="servicedetail">
