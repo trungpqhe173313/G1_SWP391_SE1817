@@ -16,13 +16,6 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String fullName, String phone, Account account) {
-        this.customerId = customerId;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.account = account;
-    }
-
     public Customer(int customerId, String fullName, String phone) {
         this.customerId = customerId;
         this.fullName = fullName;
@@ -30,8 +23,7 @@ public class Customer {
     }
     
 
-   
-
+  
     public int getCustomerId() {
         return customerId;
     }

@@ -123,18 +123,7 @@
                                 <i class="fa fa-bars"></i>
                             </button>
                             <!-- Topbar Search -->
-                            <form
-                                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                           aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -248,18 +237,16 @@
                                         <label for="employee">Thợ</label>
                                         <c:choose>
                                             <c:when test="${0 == detailOrder.employeeId}">
-                                                <c:choose>
-                                                    <c:when test="${not empty ListBarberFree}">
-                                                        <select id="employee" name="employee" class="form-control">
-                                                            <c:forEach items="${ListBarberFree}" var="b">
-                                                                <option value="${b.employeeId}">${b.fullName}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <p>Không còn thợ</p>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <select id="employee" name="employee" class="form-control">
+                                                    <c:if test="${not empty ListBarberFree}">
+                                                        <c:forEach items="${ListBarberFree}" var="b">
+                                                            <option value="${b.employeeId}">${b.fullName}</option>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                    <c:if test="${empty ListBarberFree}">
+                                                        <option value="">Không có thợ</option>
+                                                    </c:if>
+                                                </select>
                                             </c:when>
 
                                             <c:otherwise>

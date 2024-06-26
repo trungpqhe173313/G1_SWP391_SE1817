@@ -59,12 +59,8 @@ public class OrderDAO extends DBContext {
         }
         return id;
     }
-    
 
-    public static void main(String[] args) {
-        OrderDAO o = new OrderDAO();
-        System.out.println(o.getNewOrderId());
-    }
+
 
     public void cancelBooking(String orderId) {
         try {
@@ -177,6 +173,9 @@ public class OrderDAO extends DBContext {
     }
 
     public void upDateOrderAdmin(String Eid, String status, String oId, int total) {
+        if (Eid.trim().isEmpty()) {
+            Eid = null;
+        }
         try {
             String sql = "UPDATE [dbo].[order]\n"
                     + "   SET [employeeId] = ?\n"
@@ -184,7 +183,11 @@ public class OrderDAO extends DBContext {
                     + "      ,[totalAmount] = ?\n"
                     + " WHERE [orderId] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, Eid);
+            if (Eid != null) {
+                stm.setString(1, Eid);
+            } else {
+                stm.setNull(1, java.sql.Types.VARCHAR);
+            }
             stm.setString(2, status);
             stm.setInt(3, total);
             stm.setString(4, oId);
@@ -193,5 +196,8 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+        public static void main(String[] args) {
+        OrderDAO o = new OrderDAO();
+        o.upDateOrderAdmin("", "2", "8", 400000);
+    }
 }

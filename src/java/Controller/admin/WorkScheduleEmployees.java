@@ -3,25 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.common;
+package Controller.admin;
 
-import Dal.AccountDAO;
+import Dal.EmployeesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
- * @author LENOVO
+ * @author ducth
  */
-public class changepassreset extends HttpServlet {
+public class WorkScheduleEmployees extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +36,10 @@ public class changepassreset extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet changepassreset</title>");  
+            out.println("<title>Servlet WorkScheduleEmployees</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet changepassreset at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet WorkScheduleEmployees at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,9 +56,16 @@ public class changepassreset extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("changePassReset.jsp").forward(request, response);
+        EmployeesDAO dao = new EmployeesDAO();
+    
+        try {
+            List<Map<String, Object>> employeeSchedule = dao.getWorkingEmployees();
+            request.setAttribute("employeeSchedule", employeeSchedule);
+            request.getRequestDispatcher("/workSchedule.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     } 
-
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -71,27 +76,7 @@ public class changepassreset extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-                AccountDAO dao = new AccountDAO();
-                HttpSession session = request.getSession();
-                String emailReset = (String) session.getAttribute("emailReset");
-                String password = request.getParameter("password");
-                String rePass = request.getParameter("confirmPassword");
-                if (!password.equals(rePass)) {
-                    request.setAttribute("mess", "Mật khẩu phải giống nhau !! ");
-                    request.getRequestDispatcher("ChangeResetPass.jsp").forward(request, response);
-
-                } else {
-                    try {
-                        dao.changePass(emailReset, password);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(changepassreset.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(changepassreset.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    request.setAttribute("mess", "Đặt lại  mật khẩu thành công  !! ");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-
-                }
+        processRequest(request, response);
     }
 
     /** 
