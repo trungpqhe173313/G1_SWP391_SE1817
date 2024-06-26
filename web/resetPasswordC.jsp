@@ -40,12 +40,12 @@
                         <img src="https://img.freepik.com/premium-vector/3d-password-field-with-padlock-isolated_169241-6460.jpg" alt="IMG">
                     </div>
                     <form action="sendlink" method="post"> <span class="login100-form-title">
-                            <b>Reset Password  </b>
+                            <b>Quên Mật Khâủ  </b>
                         </span>
 
                         <div class="wrap-input100 validate-input">
 
-                            <input class="input100" type="text" placeholder="Input your email" name="emailInputReset"
+                            <input class="input100" type="text" placeholder="Nhập email của bạn" name="emailInputReset"
                                    value="" required>
 
                             <span class="symbol-input100">
