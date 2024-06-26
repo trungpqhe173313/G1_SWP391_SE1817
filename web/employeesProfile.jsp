@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -50,11 +49,6 @@
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= request.getAttribute("employee").getFullName() %></span>
-                                <img class="img-profile rounded-circle" src="img/<%= request.getAttribute("employee").getAvatar() %>">
-                            </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -82,46 +76,62 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h2 class="mb-4">Employee Information</h2>
-                            <form>
-                                <div class="form-group row">
-                                    <label for="fullName" class="col-sm-4 col-form-label">Full Name</label>
+                            <form id="editForm" action="updateemployeesprofile" method="post">
+<!--                                <div class="form-group row">
+                                    <label for="avatar" class="col-sm-4 col-form-label"></label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="fullName" readonly value= "${employee.fullName}" />
+                                        <img src="" class="img-fluid rounded-circle" alt="Avatar">
+                                    </div>
+                                </div>-->
+                                <div class="form-group row">
+                                    <label for="fullName" class="col-sm-4 col-form-label">Họ Tên</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="fullName" name="fullName" readonly value="${employee.fullName}" maxlength="50" required
+                                        pattern="[A-Za-zÀ-ỹ ]{2,}" oninput="validateFullName(this)" />
+                                        <small class="text-danger" id="fullNameError"></small>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="phone" class="col-sm-4 col-form-label">Phone</label>
+                                    <label for="phone" class="col-sm-4 col-form-label">Số Điện Thoại</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="phone" readonly value= "${employee.phone}" />
+                                        <input type="text" class="form-control" id="phone" name="phone" readonly value="${account.phone}" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-4 col-form-label">Email</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="email" readonly value= "${account.email}" />
+                                        <input type="email" class="form-control" id="email" name="email" readonly value="${account.email}" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="roleId" class="col-sm-4 col-form-label">Role ID</label>
+                                    <label for="roleId" class="col-sm-4 col-form-label">Chức Vụ</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="roleId" readonly value= "${account.roleId}" />
+                                        <c:choose>
+                                            <c:when test="${account.roleId == 1}">
+                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Admin" />
+                                            </c:when>
+                                            <c:when test="${account.roleId == 2}">
+                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Nhân Viên" />
+                                            </c:when>
+                                            <c:when test="${account.roleId == 3}">
+                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Khách Hàng" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Unknown" />
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="gender" class="col-sm-4 col-form-label">Gender</label>
+                                    <label for="gender" class="col-sm-4 col-form-label">Giới Tính</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="gender" readonly value= "${account.gender}" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="avatar" class="col-sm-4 col-form-label">Avatar</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control-plaintext" id="avatar" readonly value= "${account.avatar}" />
+                                        <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${account.gender ? 'Nam' : 'Nữ'}"/>" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12 text-right">
                                         <button type="button" class="btn btn-primary" id="editButton">Edit</button>
+                                        <button type="submit" class="btn btn-success d-none" id="saveButton">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -174,8 +184,57 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Edit button click event
+        $('#editButton').click(function() {
+            // Enable all form inputs for editing
+            $('#fullName').prop('readonly', false).addClass('form-control');
+            $('#phone').prop('readonly', true).addClass('form-control');
+            $('#email').prop('readonly', false).addClass('form-control');
+            $('#roleId').prop('readonly', true).addClass('form-control');
+            $('#gender').prop('readonly', true).addClass('form-control');
+
+            // Show save button and hide edit button
+            $('#editButton').addClass('d-none');
+            $('#saveButton').removeClass('d-none');
+        });
+
+        // Form submit event
+        $('#editForm').submit(function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Submit form using AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'updateemployeesprofile', // Your Servlet URL
+                data: $('#editForm').serialize(), // Serialize form data
+                success: function(response) {
+                    // Redirect to employeesProfile.jsp after successful update
+                    window.location.href = 'employeesprofile';
+                },
+                error: function() {
+                    // Handle error if any
+                    alert('Error updating profile. Please try again.');
+                }
+            });
+        });
+    });
+        function validateFullName(input) {
+        // Regular expression to match alphabetic characters and spaces
+        var regex = /^[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ ]*$/;
+        
+        // Check if input matches the pattern
+        if (!regex.test(input.value)) {
+            document.getElementById('fullNameError').textContent = 'Họ Tên chỉ được nhập chữ cái và khoảng trắng, ít nhất 2 ký tự.';
+            input.setCustomValidity('Họ Tên không hợp lệ.');
+        } else {
+            document.getElementById('fullNameError').textContent = '';
+            input.setCustomValidity('');
+        }
+    }
+</script>
 </body>
 </html>
+
