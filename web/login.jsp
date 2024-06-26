@@ -48,11 +48,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <div class="foot-lnk">
                             <a href="sendlink">Quên mật khẩu?</a>
                         </div>
-                        <br>
+                        
                         <div class="foot-lnk">
                             <p>Chưa có tài khoản?<a href="signup"> Đăng ký</a></p>
                         </div>
-                        <br><br>
+                        
                         <div class="foot-lnk">
                             <a href="home" style="color: black"><- Quay lại trang chủ </a>
                         </div>
