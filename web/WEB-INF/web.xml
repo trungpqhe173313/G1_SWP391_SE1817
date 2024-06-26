@@ -185,6 +185,7 @@
         <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
     </servlet>
     <servlet> 
+    <servlet>
         <servlet-name>ViewFeedbackController</servlet-name>
         <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
     </servlet>
@@ -199,6 +200,12 @@
     <servlet>
         <servlet-name>UpdateEmployeesProfile</servlet-name>
         <servlet-class>Controller.Employee.UpdateEmployeesProfile</servlet-class>
+        <servlet-name>verifyOTP</servlet-name>
+        <servlet-class>Controller.common.verifyOTP</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resendotp</servlet-name>
+        <servlet-class>Controller.common.resendotp</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -395,5 +402,11 @@
     <servlet-mapping>
         <servlet-name>EmployeesProfileController</servlet-name>
         <url-pattern>/employeesprofile</url-pattern>
+        <servlet-name>verifyOTP</servlet-name>
+        <url-pattern>/verifyotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resendotp</servlet-name>
+        <url-pattern>/resendotp</url-pattern>
     </servlet-mapping>
 </web-app>

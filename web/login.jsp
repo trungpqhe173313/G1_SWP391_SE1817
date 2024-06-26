@@ -31,11 +31,11 @@
                                     <p class="text-danger">${error}</p>
                                     <div class="form-group mb-3">
                                         <label class="label" for="phone">Số điện thoại</label>
-                                        <input type="text" class="form-control" placeholder="Số điện thoại" required name = "phone" value="${param.phone}">
+                                        <input type="text" class="form-control" placeholder="Số điện thoại" required name = "phone" value="${cookie.cUser.value}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="label" for="pass">Mật khẩu</label>
-                                        <input type="password" class="form-control" placeholder="Mật khẩu" required name = "pass" value="${param.pass}">
+                                        <input type="password" class="form-control" placeholder="Mật khẩu" required name = "pass" value="${cookie.cPass.value}">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng nhập</button>
@@ -43,7 +43,7 @@
                                     <div class="form-group d-md-flex">
                                         <div class="w-50 text-left">
                                             <label class="checkbox-wrap checkbox-primary mb-0">Lưu tài khoản
-                                                <input type="checkbox" checked>
+                                                <input type="checkbox" name="remember" ${cookie.cRem != null ? 'checked' : ''}>
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>

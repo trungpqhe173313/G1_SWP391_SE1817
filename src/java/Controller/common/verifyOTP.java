@@ -1,11 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller.common;
 
-import Dal.AccountDAO;
-import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,9 +15,9 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LINHNTHE170290
+ * @author LENOVO
  */
-public class LoginController extends HttpServlet {
+public class verifyOTP extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +36,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet verifyOTP</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet verifyOTP at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +57,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -73,47 +71,40 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("pass");
+        String otpEntered = request.getParameter("otp1")
+                + request.getParameter("otp2")
+                + request.getParameter("otp3")
+                + request.getParameter("otp4")
+                + request.getParameter("otp5")
+                + request.getParameter("otp6");
 
-        AccountDAO da = new AccountDAO();
-        Account a = da.checkAuthentic(phone, password);
-        // Mã hóa mật khẩu người dùng nhập vào
-        //String hashedPassword = AccountDAO.hashPassword(password);
-        //Account a = da.login(phone, hashedPassword);
-        
-        String r = request.getParameter("remember");
-            // tao 3 cookie  cookieU  , cookieP  , cookieR
-            Cookie cookieU = new Cookie("cUser", phone);
-            Cookie cookieP = new Cookie("cPass", password);
-            Cookie cookieR = new Cookie("cRem", r);
-            if (r != null) {
-                cookieU.setMaxAge(60 * 60 * 24);  // 1 day  
-                cookieP.setMaxAge(60 * 60 * 24);
-                cookieR.setMaxAge(60 * 60 * 24);
-
-            } else {
-                cookieU.setMaxAge(0);
-                cookieP.setMaxAge(0);
-                cookieR.setMaxAge(0);
-
+        // Get OTP from cookie
+        Cookie[] cookies = request.getCookies();
+        String otpCookieValue = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("otp")) {
+                    otpCookieValue = cookie.getValue();
+                    break;
+                }
             }
-            response.addCookie(cookieU);
-            response.addCookie(cookieP);
-            response.addCookie(cookieR);
-            // save browser
-            
-        if (a == null) {
-            request.setAttribute("error", "Phone or password incorrect!!!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-//            int sessionTimeoutSeconds = 240000;
-            // Tạo session
-            HttpSession session = request.getSession();
-//            session.setMaxInactiveInterval(sessionTimeoutSeconds);
-            session.setAttribute("account", a);
-            response.sendRedirect("home");
         }
+
+        // Check if OTP cookie is present
+        if (otpCookieValue == null) {
+            // OTP has expired, redirect to reset password page
+            request.setAttribute("mess", "OTP đã hết hạn, vui lòng thử lại.");
+            request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+        } else {
+            // Compare entered OTP with OTP from cookie
+            if (otpEntered != null && otpEntered.equals(otpCookieValue)) {
+                response.sendRedirect("changePassReset.jsp");
+            } else {
+                request.setAttribute("mess", "OTP không chính xác!!");
+                request.getRequestDispatcher("OTP.jsp").forward(request, response);
+            }
+        }
+
     }
 
     /**
