@@ -78,7 +78,7 @@ public class changepassreset extends HttpServlet {
                 String rePass = request.getParameter("confirmPassword");
                 if (!password.equals(rePass)) {
                     request.setAttribute("mess", "Mật khẩu phải giống nhau !! ");
-                    request.getRequestDispatcher("views/ChangeResetPass.jsp").forward(request, response);
+                    request.getRequestDispatcher("ChangeResetPass.jsp").forward(request, response);
 
                 } else {
                     try {

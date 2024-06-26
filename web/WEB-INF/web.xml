@@ -185,13 +185,20 @@
         <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
     </servlet>
     <servlet>
-        
         <servlet-name>ViewFeedbackController</servlet-name>
         <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CustomerFeedbackController</servlet-name>
         <servlet-class>Controller.customer.CustomerFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>verifyOTP</servlet-name>
+        <servlet-class>Controller.common.verifyOTP</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>resendotp</servlet-name>
+        <servlet-class>Controller.common.resendotp</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -378,12 +385,19 @@
         <url-pattern>/employeerecovery</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        
         <servlet-name>ViewFeedbackController</servlet-name>
         <url-pattern>/viewfeedback</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CustomerFeedbackController</servlet-name>
         <url-pattern>/cusfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>verifyOTP</servlet-name>
+        <url-pattern>/verifyotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resendotp</servlet-name>
+        <url-pattern>/resendotp</url-pattern>
     </servlet-mapping>
 </web-app>

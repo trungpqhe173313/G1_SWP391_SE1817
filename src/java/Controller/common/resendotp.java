@@ -4,52 +4,52 @@
  */
 package Controller.common;
 
-import Dal.AccountDAO;
 import Dal.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author admin
+ * @author LENOVO
  */
-public class SendLinkResetPass extends HttpServlet {
+public class resendotp extends HttpServlet {
 
-   /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sendLinkResetPass</title>");  
+            out.println("<title>Servlet resendotp</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sendLinkResetPass at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet resendotp at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,12 +57,13 @@ public class SendLinkResetPass extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
-    } 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -70,32 +71,34 @@ public class SendLinkResetPass extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         try ( PrintWriter out = response.getWriter()) {
-            /* sendLinkResetPass */
-            String emailReset = request.getParameter("emailInputReset");
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String emailReset = (String) session.getAttribute("emailReset");
+
+        if (emailReset != null) {
             SendMail sm = new SendMail();
-             AccountDAO dao = new AccountDAO();
-            boolean test = sm.sendEmailResetPass(emailReset);
-            HttpSession session = request.getSession();
-            session.setAttribute("emailReset", emailReset);
-            if (!dao.checkEmailExist(emailReset)) {
-                request.setAttribute("mess", "You have not registered for this email!! ");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
-            } else if (test) {
-                request.setAttribute("mess", "Check your mail");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+            String otp = sm.sendOTP(emailReset);
+            if (otp != null) {
+                // Create a new cookie for OTP
+                Cookie otpCookie = new Cookie("otp", otp);
+                otpCookie.setMaxAge(60); // Cookie expires in 60 seconds
+                response.addCookie(otpCookie);
+
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("OTP đã được gửi lại");
             } else {
-                request.setAttribute("mess", "Server error");
-                request.getRequestDispatcher("resetPasswordC.jsp").forward(request, response);
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write("Lỗi hệ thống");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(SendLinkResetPass.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Không tìm thấy email");
         }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
