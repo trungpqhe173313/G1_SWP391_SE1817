@@ -181,7 +181,7 @@ public class AccountDAO extends DBContext {
             con = DBContext.connection;
 
             if (con != null) {
-                String sql = " SELECT * FROM accounts WHERE email = ?";
+                String sql = " SELECT * FROM account WHERE email = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 //4. Excute Query
@@ -206,7 +206,7 @@ public class AccountDAO extends DBContext {
         try {
             conn = DBContext.connection; // Get connection
             if (conn != null) {
-                String sql = "SELECT * FROM accounts WHERE email = ? AND password = ?";
+                String sql = "SELECT * FROM account WHERE email = ? AND pass = ?";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, email);
                 pstmt.setString(2, oldPassword);
@@ -231,7 +231,7 @@ public class AccountDAO extends DBContext {
         con = DBContext.connection;
         if (con != null) {
             //2. Create SQL String
-            String sql = "    Update [accounts] SET   password =?\n"
+            String sql = "    Update [account] SET   pass =?\n"
                     + "   WHERE [email] =?";
             //3. Create Statement
             stm = con.prepareStatement(sql);

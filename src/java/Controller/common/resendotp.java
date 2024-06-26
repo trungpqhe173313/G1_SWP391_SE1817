@@ -2,54 +2,54 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.common;
 
-import Dal.AccountDAO;
+import Dal.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author LENOVO
  */
-public class changepassreset extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class resendotp extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet changepassreset</title>");  
+            out.println("<title>Servlet resendotp</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet changepassreset at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet resendotp at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,12 +57,13 @@ public class changepassreset extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        request.getRequestDispatcher("changePassReset.jsp").forward(request, response);
-    } 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -70,32 +71,34 @@ public class changepassreset extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-                AccountDAO dao = new AccountDAO();
-                HttpSession session = request.getSession();
-                String emailReset = (String) session.getAttribute("emailReset");
-                String password = request.getParameter("password");
-                String rePass = request.getParameter("confirmPassword");
-                if (!password.equals(rePass)) {
-                    request.setAttribute("mess", "Mật khẩu phải giống nhau !! ");
-                    request.getRequestDispatcher("ChangeResetPass.jsp").forward(request, response);
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String emailReset = (String) session.getAttribute("emailReset");
 
-                } else {
-                    try {
-                        dao.changePass(emailReset, password);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(changepassreset.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(changepassreset.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    request.setAttribute("mess", "Đặt lại  mật khẩu thành công  !! ");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+        if (emailReset != null) {
+            SendMail sm = new SendMail();
+            String otp = sm.sendOTP(emailReset);
+            if (otp != null) {
+                // Create a new cookie for OTP
+                Cookie otpCookie = new Cookie("otp", otp);
+                otpCookie.setMaxAge(60); // Cookie expires in 60 seconds
+                response.addCookie(otpCookie);
 
-                }
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write("OTP đã được gửi lại");
+            } else {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write("Lỗi hệ thống");
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Không tìm thấy email");
+        }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
