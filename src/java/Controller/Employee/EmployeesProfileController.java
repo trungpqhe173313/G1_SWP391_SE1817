@@ -66,33 +66,28 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     
     HttpSession session = request.getSession();
-    Account account = (Account) session.getAttribute("account");
+    String phone = (String) session.getAttribute("phone");
     
-    if (account != null) {
-        String phone = account.getPhone();
+    try {
+        EmployeesDAO employeesDAO = new EmployeesDAO();
+        Employee employee = employeesDAO.getAllEmployees(phone);
         
-        try {
-            EmployeesDAO employeesDAO = new EmployeesDAO();
-            Employee employee = employeesDAO.getAllEmployees(phone);
-            
-            AccountDAO accountDAO = new AccountDAO();
-            Account accountDetails = accountDAO.getAllAccounts(phone);
-            
-            request.setAttribute("employee", employee);
-            request.setAttribute("account", accountDetails);
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/employeesProfile.jsp");
-            dispatcher.forward(request, response);
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            response.sendRedirect("errorPage.jsp");
-        }
-    } else {
-        // Xử lý trường hợp không có tài khoản trong session
-        response.sendRedirect("login.jsp");
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = accountDAO.getAllAccounts(phone);
+        
+        request.setAttribute("employee", employee);
+        request.setAttribute("account", account);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/employeesProfile.jsp");
+        dispatcher.forward(request, response);
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        response.sendRedirect("errorPage.jsp");
     }
 }
+
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *

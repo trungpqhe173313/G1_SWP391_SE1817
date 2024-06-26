@@ -244,36 +244,27 @@ public class AccountDAO extends DBContext {
         }
 
     }
-    public Account getAllAccounts(String phone) throws SQLException {
-        Account account = null;
-        try {
-            String sql = "SELECT * FROM account WHERE phone = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, phone);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                account = new Account();
-                account.setPhone(rs.getString("phone"));
-                account.setRoleId(rs.getInt("roleId"));
-                account.setEmail(rs.getString("email"));
-                account.setGender(rs.getBoolean("gender"));
-                account.setAvatar(rs.getString("avatar"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+public Account getAllAccounts(String phone) throws SQLException {
+    Account account = null;
+    try {
+        String sql = "SELECT * FROM account WHERE phone = ?";
+        PreparedStatement stm = connection.prepareStatement(sql);
+        stm.setString(1, phone);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            account = new Account();
+            account.setPhone(rs.getString("phone"));
+            account.setRoleId(rs.getInt("roleId"));
+            account.setEmail(rs.getString("email"));
+            account.setGender(rs.getBoolean("gender"));
+            account.setAvatar(rs.getString("avatar"));
         }
-        return account;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+    return account;
+}
 
-    public void updateAccount(String phone, String email, String avatar) throws SQLException {
-        String sql = "UPDATE account SET email = ?, avatar = ? WHERE phone = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, email);
-            pstmt.setString(2, avatar);
-            pstmt.setString(3, phone);
-            pstmt.executeUpdate();
-        }
-    }
 
     public static void main(String[] args) {
         AccountDAO a = new AccountDAO();
