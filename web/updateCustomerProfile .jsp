@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/style_2.css">
     </head>
     <body>
-        <form action="customerupdate"method="POST" enctype="multipart/form-data">
+        <form action="updatecusprofile"method="POST" enctype="multipart/form-data">
 
             <div class="container-xl px-4 mt-4">
                 <!-- Account page navigation-->
