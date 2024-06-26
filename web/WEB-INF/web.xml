@@ -200,6 +200,8 @@
     <servlet>
         <servlet-name>UpdateEmployeesProfile</servlet-name>
         <servlet-class>Controller.Employee.UpdateEmployeesProfile</servlet-class>
+        </servlet>
+        <servlet>
         <servlet-name>verifyOTP</servlet-name>
         <servlet-class>Controller.common.verifyOTP</servlet-class>
     </servlet>
@@ -402,6 +404,8 @@
     <servlet-mapping>
         <servlet-name>EmployeesProfileController</servlet-name>
         <url-pattern>/employeesprofile</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
         <servlet-name>verifyOTP</servlet-name>
         <url-pattern>/verifyotp</url-pattern>
     </servlet-mapping>
