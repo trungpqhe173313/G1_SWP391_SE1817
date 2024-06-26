@@ -139,15 +139,6 @@ public class EmployeesDAO extends DBContext {
         return employee;
     }
 
-    public void updateEmployee(String phone, String fullName) throws SQLException {
-    String sql = "UPDATE employee SET fullName = ? WHERE phone = ?";
-    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-        pstmt.setString(1, fullName);
-        pstmt.setString(2, phone);
-        pstmt.executeUpdate();
-    }
-}
-    
     public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
         String sql = "SELECT "
@@ -226,7 +217,6 @@ public class EmployeesDAO extends DBContext {
         System.out.println(e.size());
     }
 
-    
     public void updateStatusBarber(int i, String Eid) {
         try {
             String sql = "UPDATE [dbo].[employee]\n"

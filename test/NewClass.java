@@ -1,17 +1,19 @@
-import Dal.AccountDAO;
 import Dal.EmployeesDAO;
-import Model.Employee;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.sql.SQLException;
 import java.util.Map;
 
 public class NewClass {
     public static void main(String[] args) {
-        EmployeesDAO dao = new EmployeesDAO();
+        EmployeesDAO employeesDAO = new EmployeesDAO();
+
+        // Chuyển đổi phone từ int sang String
+        String phone = "0912345677";
+
         try {
-            dao.updateEmployee("0912345677", "Phạm Đức Thiện");
-        } catch (SQLException ex) {
+            // Gọi phương thức printEmployeeProfile với phone là tham số
+            employeesDAO.printEmployeeProfile(phone);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
