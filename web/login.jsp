@@ -20,7 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <div class="login-wrap">
         <div class="login-html">
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-            <label for="tab-1" class="tab">Đăng ký</label>
+            <label for="tab-1" class="tab">Đăng nhập</label>
             <div class="login-form">
                 <div class="sign-in-htm">
                     <form action="login" method="post" class="signin-form">
@@ -34,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <input type="password" class="input"  required name = "pass" value="${cookie.cPass.value}">
                         </div>
                         <div class="group">
-                            <input id="check" type="checkbox" class="check" checked>
+                            
                             <label for="check"><span class="icon"></span> Lưu tài khoản
                                 <input type="checkbox" name="remember" ${cookie.cRem != null ? 'checked' : ''}>
                                 <span class="checkmark"></span>

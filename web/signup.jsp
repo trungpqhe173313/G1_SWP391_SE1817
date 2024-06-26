@@ -77,7 +77,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             </div>
                             <br>
                             <div class="foot-lnk">
-                                <a href="signin">Already have an account? Sign In</a>
+                                <p>Đã có tài khoản?<a href="login">Đăng nhập</a></p>
                             </div>
                             <br>
                             <div class="foot-lnk">

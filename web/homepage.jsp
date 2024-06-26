@@ -568,8 +568,24 @@
                             <h2 class="mb-0">Happy Customer</h2>
                         </div>
                         <div class="carousel-testimony owl-carousel ftco-animate">
-                            
+                            <c:forEach var="feedback" items="${feedbackList}">
                             <div class="item">
+                                <div class="testimony-wrap pb-4">
+                                    <div class="text">
+                                        <p class="mb-4">${feedback.noidung}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="user-img" style="background-image: url(${feedback.customer.avatarUrl})">
+                                        </div>
+                                        <div class="pos ml-3">
+                                            <p class="name">${feedback.customer.fullName}</p>
+                                            <span class="position">${feedback.customer.position}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+<!--                            <div class="item">
                                 <div class="testimony-wrap pb-4">
                                     <div class="text">
                                         <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
@@ -643,7 +659,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
