@@ -575,7 +575,7 @@
                                         <p class="mb-4">${feedback.noidung}</p>
                                     </div>
                                     <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(${feedback.customer.avatarUrl})">
+                                        <div class="user-img" style="background-image: url(${feedback.customer.account.avatar})">
                                         </div>
                                         <div class="pos ml-3">
                                             <p class="name">${feedback.customer.fullName}</p>
