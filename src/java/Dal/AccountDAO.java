@@ -264,7 +264,6 @@ public class AccountDAO extends DBContext {
         }
         return account;
     }
-
     public void updateAccount(String phone, String email, String avatar) throws SQLException {
         String sql = "UPDATE account SET email = ?, avatar = ? WHERE phone = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {

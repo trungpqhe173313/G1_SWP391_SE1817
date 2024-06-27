@@ -87,7 +87,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a class="btn btn-primary btn-sm mr-2" href="employeesdetail" style="background-color: #bf925b;">
+                            <a class="btn btn-primary btn-sm mr-2" href="employeesdetail" style="background-color: #2E59D9;">
                                 Quay Lại
                             </a>
                         </div>
@@ -101,7 +101,8 @@
                                             <th>Số Điện Thoại</th>
                                             <th>Giới Tính</th>
                                             <th>Email</th>
-                                            <th>Khôi Phục</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Phục Hồi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -116,13 +117,12 @@
                                             <td><%= employee.get("phone") %></td>
                                             <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
                                             <td><%= employee.get("email") %></td>
+                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("isActive"))) ? "Đang Hoạt Động" : "Không Hoạt Động") %></td>
                                             <td>
-                                                <a href="employeerecovery?employeeId=<%= employee.get("employeeId") %>&isActive=true"
-                                                   class="btn btn-success btn-circle btn-sm">
+                                                <a href="#" onclick="confirmDelete('<%= employee.get("employeeId") %>')" class="btn btn-success btn-circle btn-sm">
                                                     <i class="fas fa-undo-alt"></i>
                                                 </a>
                                             </td>
-
                                         </tr>
                                         <%
                                                 }
@@ -190,38 +190,24 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
                 "columnDefs": [
-                    { "orderable": false, "targets": [0, 5] } // 0 là cột Hình Ảnh, 5 là cột Khôi Phục
+                    { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
                 ],
-                "order": [[2, "asc"]], // Sắp xếp mặc định theo cột Họ
-            });
-
-            // Tìm kiếm trong bảng
-            function searchTable() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("searchInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("dataTable");
-                tr = table.getElementsByTagName("tr");
-
-                // Duyệt qua tất cả các hàng và ẩn những hàng không khớp với tìm kiếm
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[2]; // Lấy dữ liệu trong cột Họ và Tên (index 2)
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
                 }
-            }
+            });
         });
+
+        function confirmDelete(employeeId) {
+            if (confirm("Bạn có chắc chắn muốn phục hồi nhân viên này không?")) {
+                window.location.href = 'employeerecovery?employeeId=' + employeeId + '&isActive=true';
+            }
+        }
     </script>
+
 </body>
-</html>
+</html

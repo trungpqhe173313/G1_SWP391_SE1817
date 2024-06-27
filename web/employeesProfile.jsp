@@ -36,7 +36,7 @@
 <body id="page-top">
     <div id="wrapper">
         <!-- Include sidebar -->
-        <jsp:include page="sidebar.jsp"></jsp:include>
+        <jsp:include page="sidebarEmployees.jsp"></jsp:include>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -74,64 +74,65 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <h2 class="mb-4">Employee Information</h2>
                             <form id="editForm" action="updateemployeesprofile" method="post">
-<!--                                <div class="form-group row">
-                                    <label for="avatar" class="col-sm-4 col-form-label"></label>
-                                    <div class="col-sm-8">
-                                        <img src="" class="img-fluid rounded-circle" alt="Avatar">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle mb-4" alt="Avatar">
                                     </div>
-                                </div>-->
-                                <div class="form-group row">
-                                    <label for="fullName" class="col-sm-4 col-form-label">Họ Tên</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="fullName" name="fullName" readonly value="${employee.fullName}" maxlength="50" required
-                                        pattern="[A-Za-zÀ-ỹ ]{2,}" oninput="validateFullName(this)" />
-                                        <small class="text-danger" id="fullNameError"></small>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="phone" class="col-sm-4 col-form-label">Số Điện Thoại</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="phone" name="phone" readonly value="${account.phone}" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-4 col-form-label">Email</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="email" name="email" readonly value="${account.email}" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="roleId" class="col-sm-4 col-form-label">Chức Vụ</label>
-                                    <div class="col-sm-8">
-                                        <c:choose>
-                                            <c:when test="${account.roleId == 1}">
-                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Admin" />
-                                            </c:when>
-                                            <c:when test="${account.roleId == 2}">
-                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Nhân Viên" />
-                                            </c:when>
-                                            <c:when test="${account.roleId == 3}">
-                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Khách Hàng" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Unknown" />
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="gender" class="col-sm-4 col-form-label">Giới Tính</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${account.gender ? 'Nam' : 'Nữ'}"/>" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-12 text-right">
-                                        <button type="button" class="btn btn-primary" id="editButton">Edit</button>
-                                        <button type="submit" class="btn btn-success d-none" id="saveButton">Save</button>
+                                    <div class="col-md-9">
+                                        <div class="form-group row">
+                                            <label for="fullName" class="col-sm-4 col-form-label">Họ Tên</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="fullName" name="fullName" readonly value="${employeeDetails.fullName}" maxlength="50" required
+                                                pattern="[A-Za-zÀ-ỹ ]{2,}" oninput="validateFullName(this)" />
+                                                <small class="text-danger" id="fullNameError"></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="phone" class="col-sm-4 col-form-label">Số Điện Thoại</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="phone" name="phone" readonly value="${account.phone}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control" id="email" name="email" readonly value="${account.email}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="roleId" class="col-sm-4 col-form-label">Chức Vụ</label>
+                                            <div class="col-sm-8">
+                                                <c:choose>
+                                                    <c:when test="${account.roleId == 1}">
+                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Admin" />
+                                                    </c:when>
+                                                    <c:when test="${account.roleId == 2}">
+                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Nhân Viên" />
+                                                    </c:when>
+                                                    <c:when test="${account.roleId == 3}">
+                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Khách Hàng" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Unknown" />
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="gender" class="col-sm-4 col-form-label">Giới Tính</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${account.gender ? 'Nam' : 'Nữ'}"/>" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 text-right">
+                                                <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
+                                                <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -221,7 +222,8 @@
             });
         });
     });
-        function validateFullName(input) {
+
+    function validateFullName(input) {
         // Regular expression to match alphabetic characters and spaces
         var regex = /^[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ ]*$/;
         
@@ -237,4 +239,3 @@
 </script>
 </body>
 </html>
-

@@ -56,6 +56,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
+                row.put("isActive", rs.getString("isActive"));
 
                 resultList.add(row);
             }
@@ -97,6 +98,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
+                row.put("isActive", rs.getString("isActive"));
 
                 resultList.add(row);
             }
