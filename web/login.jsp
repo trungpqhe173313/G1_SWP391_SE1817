@@ -54,6 +54,7 @@
                                 </form>
                                 <p class="text-center">Chưa có tài khoản?<a href="signup">Đăng ký</a></p>
                                 <div class="text-center">
+                                    ${mess}
                                     <a href="home"> <- Quay lại trang chủ </a>
                                 </div>
                             </div>
