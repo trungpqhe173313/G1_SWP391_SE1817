@@ -24,6 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="login-form">
                 <div class="sign-in-htm">
                     <form action="login" method="post" class="signin-form">
+                        <p class="text-danger">${error}</p>
                         <div class="group">
                             <label class="label" for="phone">Số điện thoại</label>
                             <input type="text" class="input"  required name = "phone" value="${cookie.cUser.value}">

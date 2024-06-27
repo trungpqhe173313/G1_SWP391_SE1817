@@ -15,16 +15,17 @@
 
         <link rel="stylesheet" href="css/style_2.css">
     </head>
+
     <body>
-        <form action="updatecusprofile"method="POST" enctype="multipart/form-data">
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
 
-            <div class="container-xl px-4 mt-4">
-                <!-- Account page navigation-->
-                <nav class="nav nav-borders">
+        </nav>
+        <hr class="mt-0 mb-4">
+        <div class="container-xl px-4 mt-4">
 
-                </nav>
-                <hr class="mt-0 mb-4">
-                <div class="row">
+            <div class="row">
+                <form action="updatecusprofile"method="POST" >
                     <div class="col-xl-4">
                         <!-- Profile picture card-->
                         <div class="card mb-4 mb-xl-0">
@@ -39,59 +40,58 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-8">
                         <!-- Account details card-->
                         <div class="card mb-4">
                             <div class="card-header">Thông tin tài khoản</div>
                             <div class="card-body">
-                                <form method="post" action="updatecusprofile">
+
+                                
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (full name)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="customerId">ID</label>
-                                        <input class="form-control" type="text" id="customerId" value="${customer.customerId}">
+                                        <label class="small mb-1" for="fullname">Họ và tên</label>
+                                        <input class="form-control" type="text" id="fullname" value="${customer.fullName}">
 
                                     </div>
-                                    <!-- Form Row-->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (full name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="fullname">Họ và tên</label>
-                                            <input class="form-control" type="text" id="fullname" value="${customer.fullName}">
-
-                                        </div>
-                                        <!-- Form Group (phone number)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="phone">Số điện thoại</label>
-                                            <input class="form-control" readonly="" id="phone" value="${customer.phone}">
-                                        </div>
+                                    <!-- Form Group (phone number)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="phone">Số điện thoại</label>
+                                        <input type="text" name="phone" required value="${param.phone}" pattern="0[0-9]{9}" 
+                                       title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
                                     </div>
-                                    <!-- Form Row        -->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (email address)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="email">Email</label>
-                                            <input class="form-control" type="text" id="email" value="${customer.email}">
-                                        </div>
-                                        <!-- Form Group (location)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="gender">Giới tính</label>
-                                            <td>
-                                                <label class="radio-label"><input type="radio" name="gender" value="Male" ${customer.gender?"checked=\"checked\"":""}> Male </label>
-                                                <label class="radio-label"><input type="radio" name="gender" value="Female" ${!customer.gender?"checked=\"checked\"":""}> Female </label>
-                                            </td>
-                                        </div>
+                                </div>
+                                <!-- Form Row        -->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (email address)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="email">Email</label>
+                                        <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+                                       title="Địa chỉ email không hợp lệ" class="input">
                                     </div>
+                                    <!-- Form Group (location)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="gender">Giới tính</label>
+                                        <td>
+                                            <label class="radio-label"><input type="radio" name="gender" value="Male" ${customer.gender?"checked=\"checked\"":""}> Male </label>
+                                            <label class="radio-label"><input type="radio" name="gender" value="Female" ${!customer.gender?"checked=\"checked\"":""}> Female </label>
+                                        </td>
+                                    </div>
+                                </div>
 
-
-                                    <!-- Save changes button-->
-                                    <button class="btn btn-primary" type="button">Lưu thay đổi</button>
-                                </form>
                             </div>
+
                         </div>
                     </div>
-                </div>
-            </div>  
+                    <!-- Save changes button-->
+                    <button class="btn btn-primary" type="button">Lưu thay đổi</button>
+            </div>
 
+        </form>
 
+    </div>
 
-    </body>
+</body>
 </html>

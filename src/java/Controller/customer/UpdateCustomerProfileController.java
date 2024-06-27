@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LINHNTHE170290
+ * @author admin
  */
 public class UpdateCustomerProfileController extends HttpServlet {
 
@@ -38,7 +38,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCustomerProfileController</title>");
+            out.println("<title>Servlet UpdateCustomerProfileController</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateCustomerProfileController at " + request.getContextPath() + "</h1>");

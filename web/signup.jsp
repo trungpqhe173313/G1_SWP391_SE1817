@@ -35,7 +35,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                             <div class="group">
                                 <label for="phone" class="label">Số điện thoại*</label>
-                                <input type="text" name="phone" required value="${param.phone}" pattern="0[1-9]{9}" 
+                                <input type="text" name="phone" required value="${param.phone}" pattern="0[0-9]{9}" 
                                        title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
                             </div>
 
@@ -56,16 +56,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             </div>
 
                             <div class="group-gen">
-                                <label for="gender" class="label">Giới tính</label>
+                                <label for="gender" class="label">Giới tính</label>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" value="${param.gender}" />
-                                    <label class="form-check-label" for="female">Nữ</label>
+                                    <input class="form-check-input" type="radio" id="female" name="gender" value="false" />
+                                    <label class="form-check-label" for="female">Nữ</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" value="${param.gender}" />
+                                    <input class="form-check-input" type="radio" id="male" name="gender" value="true" />
                                     <label class="form-check-label" for="male">Nam</label>
                                 </div>
-                            </div>  
+                            </div>
 
                             <div class="group">
                                 <label for="avatar" class="label">Ảnh đại diện</label>
@@ -75,11 +75,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <div class="group">
                                 <input type="submit" class="button" value="Đăng ký">
                             </div>
-                            
+
                             <div class="foot-lnk">
                                 <p>Đã có tài khoản?<a href="login"> Đăng nhập</a></p>
                             </div>
-                            
+
                             <div class="foot-lnk">
                                 <a href="home" style="color: black"><- Quay lại trang chủ </a>
                             </div>
