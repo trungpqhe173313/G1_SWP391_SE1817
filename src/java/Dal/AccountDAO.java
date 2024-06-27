@@ -258,6 +258,7 @@ public class AccountDAO extends DBContext {
                 account.setEmail(rs.getString("email"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
+                account.setAvatar(rs.getString("pass"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -270,6 +271,15 @@ public class AccountDAO extends DBContext {
             pstmt.setString(1, email);
             pstmt.setString(2, avatar);
             pstmt.setString(3, phone);
+            pstmt.executeUpdate();
+        }
+    }
+    
+    public void updatePassAccountEmployees(String phone, String pass) throws SQLException {
+        String sql = "UPDATE account SET pass = ? WHERE phone = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, phone);
+            pstmt.setString(2, pass);
             pstmt.executeUpdate();
         }
     }

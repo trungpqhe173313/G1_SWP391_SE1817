@@ -93,26 +93,26 @@
                                         <div class="form-group row">
                                             <label for="phone" class="col-sm-4 col-form-label">Số Điện Thoại</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="phone" name="phone" readonly value="${account.phone}" />
+                                                <input type="text" class="form-control" id="phone" name="phone" readonly value="${accountDetails.phone}" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="email" class="col-sm-4 col-form-label">Email</label>
                                             <div class="col-sm-8">
-                                                <input type="email" class="form-control" id="email" name="email" readonly value="${account.email}" />
+                                                <input type="email" class="form-control" id="email" name="email" readonly value="${accountDetails.email}" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="roleId" class="col-sm-4 col-form-label">Chức Vụ</label>
                                             <div class="col-sm-8">
                                                 <c:choose>
-                                                    <c:when test="${account.roleId == 1}">
+                                                    <c:when test="${accountDetails.roleId == 1}">
                                                         <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Admin" />
                                                     </c:when>
-                                                    <c:when test="${account.roleId == 2}">
+                                                    <c:when test="${accountDetails.roleId == 2}">
                                                         <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Nhân Viên" />
                                                     </c:when>
-                                                    <c:when test="${account.roleId == 3}">
+                                                    <c:when test="${accountDetails.roleId == 3}">
                                                         <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Khách Hàng" />
                                                     </c:when>
                                                     <c:otherwise>
@@ -124,15 +124,16 @@
                                         <div class="form-group row">
                                             <label for="gender" class="col-sm-4 col-form-label">Giới Tính</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${account.gender ? 'Nam' : 'Nữ'}"/>" />
+                                                <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${accountDetails.gender ? 'Nam' : 'Nữ'}"/>" />
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-12 text-right">
-                                                <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
-                                                <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
-                                            </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
+                                            <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
+                                            <a href="changepassemployees" class="btn btn-info ml-2">Đổi mật khẩu</a>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </form>
