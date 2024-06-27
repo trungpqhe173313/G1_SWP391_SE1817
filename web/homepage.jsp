@@ -555,7 +555,7 @@
         </div>
     </section>
 
-    <section class="testimony-section bg-light">
+  <!--  <section class="testimony-section bg-light">
         <div class="container">
             <div class="row ftco-animate justify-content-center">
                 <div class="col-md-6 col-lg-5 d-flex">
@@ -569,22 +569,20 @@
                         </div>
                         <div class="carousel-testimony owl-carousel ftco-animate">
                             <c:forEach var="feedback" items="${feedbackList}">
-                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">${feedback.noidung}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(${feedback.customer.account.avatar})">
+                                <div class="item">
+                                    <div class="testimony-wrap pb-4">
+                                        <div class="text">
+                                            <p class="mb-4">${feedback.noidung}</p>
                                         </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">${feedback.customer.fullName}</p>
-                                            <span class="position">${feedback.customer.position}</span>
+                                        <div class="d-flex">
+                                            <div class="user-img" style="background-image: url(${feedback.customer.avatar})"></div>
+                                            <div class="pos ml-3">
+                                                <p class="name">${feedback.customer.fullName}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach> -->
 <!--                            <div class="item">
                                 <div class="testimony-wrap pb-4">
                                     <div class="text">
@@ -660,12 +658,12 @@
                                     </div>
                                 </div>
                             </div>-->
-                        </div>
+ <!--                       </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <footer class="ftco-footer ftco-section">
         <div class="container">
