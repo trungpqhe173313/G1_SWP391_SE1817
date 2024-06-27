@@ -4,7 +4,9 @@
  */
 package Controller.common;
 
+import Dal.FeedbackDAO;
 import Dal.ServicesDAO;
+import Model.Feedback;
 import Model.Services;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +36,9 @@ public class HomeController extends HttpServlet {
         ServicesDAO dao = new ServicesDAO();
         List<Services> se = dao.GetAllServices();
         request.setAttribute("listS", se);
+         FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
+        request.setAttribute("feedbackList", feedbackList);
         request.getRequestDispatcher("homepage.jsp").forward(request, response);
     }
 

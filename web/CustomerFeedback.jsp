@@ -77,14 +77,16 @@
             </div>
             <form method="post" action="cusfeedback">
                 <h3>Đánh giá dịch vụ</h3>
+                
                 <div class="form-group">
-                    <textarea name="noidung" class="form-control" placeholder="Đánh giá của bạn *"  style="width: 100%; height: 150px;"></textarea>
+                    <h6>Bạn có những kiến nghị gì để chúng tôi cải thiện dịch vụ tốt hơn?</h6>
+                    <textarea name="noidung" class="form-control" placeholder="Đánh giá của bạn*"  style="width: 100%; height: 150px;"></textarea>
 
                 </div>
                 <div class="col-md-6">
                     <input type="submit" name="btnSubmit" class="btnContact" value="Gửi" />
                     <br>
-                    <a href="home"><- Quay lại trang chủ </a>
+                    <a href="viewfeedback"><- Quay lại </a>
                 </div>
 
 
