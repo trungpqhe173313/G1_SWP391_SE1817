@@ -555,7 +555,7 @@
         </div>
     </section>
 
-  <!--  <section class="testimony-section bg-light">
+    <section class="testimony-section bg-light">
         <div class="container">
             <div class="row ftco-animate justify-content-center">
                 <div class="col-md-6 col-lg-5 d-flex">
@@ -582,7 +582,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach> -->
+                            </c:forEach> 
 <!--                            <div class="item">
                                 <div class="testimony-wrap pb-4">
                                     <div class="text">
@@ -658,12 +658,12 @@
                                     </div>
                                 </div>
                             </div>-->
- <!--                       </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
 
     <footer class="ftco-footer ftco-section">
         <div class="container">

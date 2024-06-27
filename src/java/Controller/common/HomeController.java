@@ -36,9 +36,11 @@ public class HomeController extends HttpServlet {
         ServicesDAO dao = new ServicesDAO();
         List<Services> se = dao.GetAllServices();
         request.setAttribute("listS", se);
-         FeedbackDAO feedbackDAO = new FeedbackDAO();
+        
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
         List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
         request.setAttribute("feedbackList", feedbackList);
+        
         request.getRequestDispatcher("homepage.jsp").forward(request, response);
     }
 
