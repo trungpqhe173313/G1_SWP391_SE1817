@@ -28,6 +28,10 @@
                 background-color: #BF925B;
                 border: none;
                 cursor: pointer;
+                height: 50px; /* Adjust the height as needed */
+                line-height: 50px; /* Ensure the text is vertically centered */
+                display: inline-block; /* Ensure the button behaves like an inline-block element */
+                padding: 0 20px; /* Adjust padding as needed */
             }
 
             .btn-primary:hover {
@@ -45,7 +49,7 @@
             <div class="container my-5 py-5 text-body">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-11 col-lg-9 col-xl-7">
-                        <h2 class="text-center mb-4">Danh sách phản hồi</h2>
+                        <h2 class="text-center mb-4">Danh sách các phản hồi của khách hàng</h2>
                         <c:forEach var="feedback" items="${feedbackList}">
                             <div class="d-flex flex-start mb-4">
                                 <img class="rounded-circle shadow-1-strong me-3"
@@ -66,6 +70,7 @@
                             </div>
                         </c:forEach>
                         <a href="cusfeedback" class="btn btn-primary nav-link">Đánh giá của bạn</a>
+                        <br>
                         <a href="home"><- Quay lại trang chủ </a>
                     </div>
                 </div>

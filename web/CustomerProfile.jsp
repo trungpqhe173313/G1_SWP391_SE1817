@@ -38,6 +38,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-xl-8">
                     <!-- Account details card-->
                     <div class="card mb-4">
@@ -71,14 +72,17 @@
                                         <input class="form-control" id="gender" value="${c.account.gender ? 'Male' : 'Female'}">
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="button" onclick="updateCustomer()">Cập nhập thông tin</button>
-                                <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
-                                <br>
-                                <br>
-                                <a href="home"><- Quay lại trang chủ </a>
+
                             </form>
+
                         </div>
+
                     </div>
+                    <button class="btn btn-primary" type="button" onclick="updateCustomer()">Cập nhập thông tin</button>
+                    <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
+                    <br>
+                    <br>
+                    <a href="home"><- Quay lại trang chủ </a>
                 </div>
             </div>
         </div>
@@ -86,7 +90,7 @@
 
     <script>
         function updateCustomer() {
-            window.location.href = 'customerupdate';
+            window.location.href = 'updatecusprofile';
         }
         function changePassword(customerId) {
             window.location.href = 'changepassw?customerId=' + customerId;

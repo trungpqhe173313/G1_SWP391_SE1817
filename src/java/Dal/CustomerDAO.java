@@ -94,7 +94,6 @@ public class CustomerDAO extends DBContext {
 //
 //        return customer;
 //    }
-    
     public List<Customer> getAllCustomer() {
         List<Customer> customer = new ArrayList<>();
         try {
@@ -113,7 +112,7 @@ public class CustomerDAO extends DBContext {
         }
         return customer;
     }
-    
+
     public Customer getCustomerProfile(String phone) {
         String sql = "SELECT "
                 + "   c.customerId, "
@@ -166,7 +165,6 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-
     public Customer getCustomerProfileById(int customerId) {
         String sql = "SELECT "
                 + "   c.customerId, "
@@ -218,9 +216,6 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-
-
-
     public boolean updateCustomer(Customer customer) {
         String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
 
@@ -237,6 +232,19 @@ public class CustomerDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+
+    public void insertCustomer(Customer customer) {
+        String query = "INSERT INTO customer (customerId, fullName, phone) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement stm = connection.prepareStatement(query);
+            stm.setInt(1, customer.getCustomerId());
+            stm.setString(2, customer.getFullName());
+            stm.setString(3, customer.getPhone());
+            stm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

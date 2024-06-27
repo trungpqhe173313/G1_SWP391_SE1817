@@ -158,7 +158,7 @@ public class AccountDAO extends DBContext {
 
     public void insertAccount(Account account) {
         String sql = "INSERT INTO account (phone, pass, roleId, email, "
-                + "gender, isActive) VALUES (?, ?, ?, ?, ?, ?)";
+                + "gender, isActive, avatar) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getPhone());
@@ -167,6 +167,7 @@ public class AccountDAO extends DBContext {
             stm.setString(4, account.getEmail());
             stm.setBoolean(5, account.getGender());
             stm.setBoolean(6, account.getIsActive());
+            stm.setString(7, account.getAvatar());
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
