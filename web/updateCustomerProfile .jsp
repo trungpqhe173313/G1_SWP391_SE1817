@@ -47,7 +47,7 @@
                             <div class="card-header">Thông tin tài khoản</div>
                             <div class="card-body">
 
-                                
+
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (full name)-->
@@ -60,7 +60,7 @@
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="phone">Số điện thoại</label>
                                         <input type="text" name="phone" required value="${param.phone}" pattern="0[0-9]{9}" 
-                                       title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
+                                               title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
                                     </div>
                                 </div>
                                 <!-- Form Row        -->
@@ -69,7 +69,7 @@
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="email">Email</label>
                                         <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-                                       title="Địa chỉ email không hợp lệ" class="input">
+                                               title="Địa chỉ email không hợp lệ" class="input">
                                     </div>
                                     <!-- Form Group (location)-->
                                     <div class="col-md-6">
@@ -87,11 +87,13 @@
                     </div>
                     <!-- Save changes button-->
                     <button class="btn btn-primary" type="button">Lưu thay đổi</button>
+                </form>
+
             </div>
 
-        </form>
 
-    </div>
 
-</body>
+        </div>
+
+    </body>
 </html>
