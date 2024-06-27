@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #bf925b;" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: #2E59D9;" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
@@ -50,5 +50,3 @@
 
 </ul>
 <!-- End of Sidebar -->
-
-
