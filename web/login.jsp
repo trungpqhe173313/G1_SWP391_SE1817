@@ -43,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                         </div>
                         <div class="group">
-                            <input type="submit" class="button" value="Đăng ký">
+                            <input type="submit" class="button" value="Đăng nhập">
                         </div>
 
                         <div class="foot-lnk">
