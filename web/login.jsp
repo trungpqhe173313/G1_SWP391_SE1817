@@ -20,10 +20,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <div class="login-wrap">
         <div class="login-html">
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-            <label for="tab-1" class="tab">Đăng ký</label>
+            <label for="tab-1" class="tab">Đăng nhập</label>
             <div class="login-form">
                 <div class="sign-in-htm">
                     <form action="login" method="post" class="signin-form">
+                        <p class="text-danger">${error}</p>
                         <div class="group">
                             <label class="label" for="phone">Số điện thoại</label>
                             <input type="text" class="input"  required name = "phone" value="${cookie.cUser.value}">
@@ -34,7 +35,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <input type="password" class="input"  required name = "pass" value="${cookie.cPass.value}">
                         </div>
                         <div class="group">
-                            <input id="check" type="checkbox" class="check" checked>
+                            
                             <label for="check"><span class="icon"></span> Lưu tài khoản
                                 <input type="checkbox" name="remember" ${cookie.cRem != null ? 'checked' : ''}>
                                 <span class="checkmark"></span>
@@ -48,11 +49,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <div class="foot-lnk">
                             <a href="sendlink">Quên mật khẩu?</a>
                         </div>
-                        <br>
+                        
                         <div class="foot-lnk">
                             <p>Chưa có tài khoản?<a href="signup"> Đăng ký</a></p>
                         </div>
-                        <br><br>
+                        
                         <div class="foot-lnk">
                             <a href="home" style="color: black"><- Quay lại trang chủ </a>
                         </div>
