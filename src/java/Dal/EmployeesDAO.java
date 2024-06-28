@@ -56,6 +56,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
+                row.put("isActive", rs.getString("isActive"));
 
                 resultList.add(row);
             }
@@ -97,6 +98,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
+                row.put("isActive", rs.getString("isActive"));
 
                 resultList.add(row);
             }
@@ -139,6 +141,15 @@ public class EmployeesDAO extends DBContext {
         return employee;
     }
 
+    public void updateEmployee(String phone, String fullName) throws SQLException {
+    String sql = "UPDATE employee SET fullName = ? WHERE phone = ?";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, fullName);
+        pstmt.setString(2, phone);
+        pstmt.executeUpdate();
+    }
+}
+    
     public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
         String sql = "SELECT "
@@ -217,6 +228,7 @@ public class EmployeesDAO extends DBContext {
         System.out.println(e.size());
     }
 
+    
     public void updateStatusBarber(int i, String Eid) {
         try {
             String sql = "UPDATE [dbo].[employee]\n"

@@ -31,13 +31,13 @@ public class Account {
         this.avatar = avatar;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvata(String avatar) {
-        this.avatar = avatar;
-    }
+//    public String getAvatar(String vatar) {
+//        return avatar;
+//    }
+//
+//    public void setAvata(String avatar) {
+//        this.avatar = avatar;
+//    }
     
     public String getPhone() {
         return phone;
@@ -55,7 +55,7 @@ public class Account {
         this.pass = pass;
     }
 
-    public String getAvatar(String avatar) {
+    public String getAvatar() {
         return avatar;
     }
 

@@ -78,7 +78,7 @@ public class FeedbackDAO extends DBContext {
                 String fullName = rs.getString("fullName");
                 String phone = rs.getString("phone");
 
-                Customer customer = new Customer(cId, fullName, phone, null); // Assuming Account is not retrieved here
+                Customer customer = new Customer(cId, fullName, phone); // Assuming Account is not retrieved here
                 Feedback feedback = new Feedback(id, noidung, customerId, isActive, customer);
                 feedbacks.add(feedback);
             }

@@ -21,10 +21,6 @@
         <servlet-class>Controller.common.CustomerProfile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CustomerUpdatePage</servlet-name>
-        <servlet-class>Controller.common.CustomerUpdatePage</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
@@ -200,6 +196,10 @@
         <servlet-name>resendotp</servlet-name>
         <servlet-class>Controller.common.resendotp</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateCustomerProfileController</servlet-name>
+        <servlet-class>Controller.customer.UpdateCustomerProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -219,10 +219,6 @@
     <servlet-mapping>
         <servlet-name>CustomerProfile</servlet-name>
         <url-pattern>/cusprofile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerUpdatePage</servlet-name>
-        <url-pattern>/customerupdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
@@ -399,5 +395,9 @@
     <servlet-mapping>
         <servlet-name>resendotp</servlet-name>
         <url-pattern>/resendotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCustomerProfileController</servlet-name>
+        <url-pattern>/updatecusprofile</url-pattern>
     </servlet-mapping>
 </web-app>

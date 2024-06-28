@@ -158,7 +158,7 @@ public class AccountDAO extends DBContext {
 
     public void insertAccount(Account account) {
         String sql = "INSERT INTO account (phone, pass, roleId, email, "
-                + "gender, isActive) VALUES (?, ?, ?, ?, ?, ?)";
+                + "gender, isActive, avatar) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getPhone());
@@ -167,6 +167,7 @@ public class AccountDAO extends DBContext {
             stm.setString(4, account.getEmail());
             stm.setBoolean(5, account.getGender());
             stm.setBoolean(6, account.getIsActive());
+            stm.setString(7, account.getAvatar());
             stm.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -244,27 +245,45 @@ public class AccountDAO extends DBContext {
         }
 
     }
-public Account getAllAccounts(String phone) throws SQLException {
-    Account account = null;
-    try {
-        String sql = "SELECT * FROM account WHERE phone = ?";
-        PreparedStatement stm = connection.prepareStatement(sql);
-        stm.setString(1, phone);
-        ResultSet rs = stm.executeQuery();
-        if (rs.next()) {
-            account = new Account();
-            account.setPhone(rs.getString("phone"));
-            account.setRoleId(rs.getInt("roleId"));
-            account.setEmail(rs.getString("email"));
-            account.setGender(rs.getBoolean("gender"));
-            account.setAvatar(rs.getString("avatar"));
+    public Account getAllAccounts(String phone) throws SQLException {
+        Account account = null;
+        try {
+            String sql = "SELECT * FROM account WHERE phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                account = new Account();
+                account.setPhone(rs.getString("phone"));
+                account.setRoleId(rs.getInt("roleId"));
+                account.setEmail(rs.getString("email"));
+                account.setGender(rs.getBoolean("gender"));
+                account.setAvatar(rs.getString("avatar"));
+                account.setAvatar(rs.getString("pass"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return account;
     }
-    return account;
-}
-
+    public void updateAccount(String phone, String email, String avatar) throws SQLException {
+        String sql = "UPDATE account SET email = ?, avatar = ? WHERE phone = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, avatar);
+            pstmt.setString(3, phone);
+            pstmt.executeUpdate();
+        }
+    }
+    
+    public void updatePassAccountEmployees(String phone, String pass) throws SQLException {
+        String sql = "UPDATE account SET pass = ? WHERE phone = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, phone);
+            pstmt.setString(2, pass);
+            pstmt.executeUpdate();
+        }
+    }
 
     public static void main(String[] args) {
         AccountDAO a = new AccountDAO();
