@@ -38,15 +38,15 @@ public class HomeController extends HttpServlet {
         ServicesDAO dao = new ServicesDAO();
         List<Services> se = dao.GetAllServices();
         request.setAttribute("listS", se);
-        
+
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
         request.setAttribute("feedbackList", feedbackList);
-        
-        CustomerDAO customerDAO =  new CustomerDAO();
+
+        CustomerDAO customerDAO = new CustomerDAO();
         List<Customer> cusList = customerDAO.getAllCustomer();
-         request.setAttribute("cusList", cusList);
-        
+        request.setAttribute("cusList", cusList);
+
 //         for (Feedback feedback : feedbackList) {
 //            System.out.println(feedback.toString());
 //        }
@@ -65,10 +65,11 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+//        ServicesDAO dao = new ServicesDAO();
+//        List<Services> se = dao.GetAllServices();
+//        request.setAttribute("listS", se);
+//        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

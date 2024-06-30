@@ -176,7 +176,7 @@
                                             <p class="mb-4">${feedback.noidung}</p>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="user-img" style="background-image: url(images/stylist-1.jpg)">
+                                            <div class="user-img" style="background-image: url(images/.jpg)">
                                             </div>
                                             <div class="pos ml-3">
                                                 <p class="name">
@@ -295,7 +295,7 @@
                             <li><a href="#" class="py-2 d-block">FAQs</a></li>
                             <li><a href="#" class="py-2 d-block">Privacy</a></li>
                             <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
-                            <li><a href="ViewFeedback"class="py-2 d-block">Feedback</a></li>
+                            
                         </ul>
                     </div>
                 </div>

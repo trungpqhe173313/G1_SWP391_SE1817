@@ -94,9 +94,11 @@ public class CustomerFeedbackController extends HttpServlet {
 
                 FeedbackDAO feedbackDAO = new FeedbackDAO();
                 feedbackDAO.addFeedback(feedback);
+                
 
                 // No redirect needed, just close the modal
                 response.getWriter().write("Phản hồi của bạn đã được gửi đi thành công! :>"); // Sending response back to indicate success
+                
             } else {
                 // Handle case where customer not found (optional)
                 response.getWriter().write("Không tìm thấy khách hàng này! :("); // Sending response back to handle in frontend
