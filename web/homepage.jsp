@@ -568,7 +568,7 @@
                             <span class="subheading">Testimony</span>
                             <h2 class="mb-0">Happy Customer</h2>
                         </div>
-                        <div class="carousel-testimony owl-carousel ftco-animate">
+                        <div class="carousel-testimony owl-carousel ftco-animate" id="feedback-list">
                             <!-- Start of dynamic feedback loop -->
                             <c:forEach var="feedback" items="${feedbackList}">
                                 <div class="item">
@@ -577,8 +577,7 @@
                                             <p class="mb-4">${feedback.noidung}</p>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="user-img" style="background-image: url(images/.jpg)">
-                                            </div>
+                                            <div class="user-img" style="background-image: url(images/.jpg)"></div>
                                             <div class="pos ml-3">
                                                 <p class="name">
                                                     <c:forEach var="customer" items="${cusList}">
@@ -593,8 +592,6 @@
                                     </div>
                                 </div>
                             </c:forEach>
-                           
-
                         </div>
                         <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Feedback here</a>
                     </div>
@@ -641,7 +638,7 @@
                             <li><a href="#" class="py-2 d-block">FAQs</a></li>
                             <li><a href="#" class="py-2 d-block">Privacy</a></li>
                             <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -686,36 +683,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-                            function openFeedbackModal() {
-                                $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
-                                $('#feedbackModal').modal('show');
-                            }
+                                function openFeedbackModal() {
+                                    $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
+                                    $('#feedbackModal').modal('show');
+                                }
 
-                            $(document).ready(function () {
-                                $('.btnContact').click(function (e) {
-                                    e.preventDefault();
-                                    var formData = $('.contact-form form').serialize();
+                                $(document).ready(function () {
+                                    $('.btnContact').click(function (e) {
+                                        e.preventDefault();
+                                        var formData = $('.contact-form form').serialize();
 
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'cusfeedback',
-                                        data: formData,
-                                        success: function (response) {
-                                            if (response.trim() === 'success') {
-                                                // Close modal if feedback sent successfully
-                                                $('#feedbackModal').modal('hide');
-//                        alert('Phản hồi của bạn đã được gửi đi thành công! :>');
-                                            } else {
-                                                // Handle errors or alerts for not finding customer/account
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'cusfeedback',
+                                            data: formData,
+                                            success: function (response) {
+                                                if (response.trim() === 'Phản hồi của bạn đã được gửi đi thành công! :>') {
+                                                    $('#feedbackModal').modal('hide');
+                                                    // Reload the homepage to reflect new feedback
+                                                    location.reload();
+                                                } else {
+                                                    alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
+                                                }
+                                            },
+                                            error: function () {
                                                 alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
                                             }
-                                        },
-                                        error: function () {
-                                            alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
-                                        }
+                                        });
                                     });
                                 });
-                            });
     </script>
 
     <!-- loader -->

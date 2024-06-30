@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import static java.lang.System.out;
 
 /**
  *
@@ -61,7 +62,7 @@ public class CustomerFeedbackController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
 
     }
 
@@ -96,17 +97,18 @@ public class CustomerFeedbackController extends HttpServlet {
                 feedbackDAO.addFeedback(feedback);
                 
 
-                // No redirect needed, just close the modal
-                response.getWriter().write("Phản hồi của bạn đã được gửi đi thành công! :>"); // Sending response back to indicate success
+                
+                response.getWriter().write("Phản hồi của bạn đã được gửi đi thành công! :>");
                 
             } else {
-                // Handle case where customer not found (optional)
-                response.getWriter().write("Không tìm thấy khách hàng này! :("); // Sending response back to handle in frontend
+                
+                response.getWriter().write("Không tìm thấy khách hàng này! :(");
             }
         } else {
-            // Handle case where account not found (optional)
-            response.getWriter().write("Tài khoản này không được tìm thấy! :("); // Sending response back to handle in frontend
+            
+            response.getWriter().write("Tài khoản này không được tìm thấy! :(");
         }
+          out.flush();
     }
 
     /**
