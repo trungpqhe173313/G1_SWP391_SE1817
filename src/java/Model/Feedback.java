@@ -13,16 +13,16 @@ public class Feedback {
     private String noidung;
     private int customerId;
     private boolean isActive;
-    private Customer customer;
+
     public Feedback() {
     }
 
-    public Feedback(int id, String noidung, int customerId, boolean isActive, Customer customer) {
+    public Feedback(int id, String noidung, int customerId, boolean isActive) {
         this.id = id;
         this.noidung = noidung;
         this.customerId = customerId;
         this.isActive = isActive;
-        this.customer = customer;
+
     }
 
     
@@ -59,17 +59,10 @@ public class Feedback {
         this.isActive = isActive;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
     @Override
     public String toString() {
-        return "Feedback{" + "id=" + id + ", noidung=" + noidung + ", customerId=" + customerId + ", isActive=" + isActive + ", customer=" + customer + '}';
+        return "Feedback{" + "id=" + id + ", noidung=" + noidung + ", customerId=" + customerId + ", isActive=" + isActive + '}';
     }
    
 }

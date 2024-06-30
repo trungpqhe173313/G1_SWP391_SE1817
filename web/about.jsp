@@ -169,22 +169,29 @@
                         </div>
                         
                         <div class="carousel-testimony owl-carousel ftco-animate">
-                            <c:forEach var="feedback" items="${feedbackList}">
+                           <c:forEach var="feedback" items="${feedbackList}">
                                 <div class="item">
                                     <div class="testimony-wrap pb-4">
                                         <div class="text">
                                             <p class="mb-4">${feedback.noidung}</p>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="user-img" style="background-image: url(${feedback.customer.avatar})"></div>
+                                            <div class="user-img" style="background-image: url(images/stylist-1.jpg)">
+                                            </div>
                                             <div class="pos ml-3">
-                                                <p class="name">${feedback.customer.fullName}</p>
+                                                <p class="name">
+                                                    <c:forEach var="customer" items="${cusList}">
+                                                        <c:if test="${customer.customerId == feedback.customerId}">
+                                                            ${customer.fullName}
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </p>
                                                 <span class="position">Customer</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach> 
+                            </c:forEach>
 <!--                            <div class="item">
                                 <div class="testimony-wrap pb-4">
                                     <div class="text">

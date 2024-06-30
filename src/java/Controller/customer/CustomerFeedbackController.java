@@ -40,7 +40,7 @@ public class CustomerFeedbackController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerFeedbackController</title>");            
+            out.println("<title>Servlet CustomerFeedbackController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CustomerFeedbackController at " + request.getContextPath() + "</h1>");
@@ -61,7 +61,7 @@ public class CustomerFeedbackController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
 
     }
 
@@ -90,20 +90,23 @@ public class CustomerFeedbackController extends HttpServlet {
                 Feedback feedback = new Feedback();
                 feedback.setNoidung(noidung);
                 feedback.setCustomerId(customerId);
-                feedback.setIsActive(true); // Giả sử mặc định isActive là true
+                feedback.setIsActive(true);
 
                 FeedbackDAO feedbackDAO = new FeedbackDAO();
                 feedbackDAO.addFeedback(feedback);
 
-                response.sendRedirect("viewfeedback");
+                // No redirect needed, just close the modal
+                response.getWriter().write("Phản hồi của bạn đã được gửi đi thành công! :>"); // Sending response back to indicate success
             } else {
                 // Handle case where customer not found (optional)
-                response.sendRedirect("login.jsp");
+                response.getWriter().write("Không tìm thấy khách hàng này! :("); // Sending response back to handle in frontend
             }
         } else {
-            response.sendRedirect("login.jsp");
+            // Handle case where account not found (optional)
+            response.getWriter().write("Tài khoản này không được tìm thấy! :("); // Sending response back to handle in frontend
         }
     }
+
     /**
      * Returns a short description of the servlet.
      *

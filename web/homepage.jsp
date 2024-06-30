@@ -1,9 +1,10 @@
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -568,6 +569,7 @@
                             <h2 class="mb-0">Happy Customer</h2>
                         </div>
                         <div class="carousel-testimony owl-carousel ftco-animate">
+                            <!-- Start of dynamic feedback loop -->
                             <c:forEach var="feedback" items="${feedbackList}">
                                 <div class="item">
                                     <div class="testimony-wrap pb-4">
@@ -575,95 +577,123 @@
                                             <p class="mb-4">${feedback.noidung}</p>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="user-img" style="background-image: url(${feedback.customer.avatar})"></div>
+                                            <div class="user-img" style="background-image: url(images/stylist-1.jpg)">
+                                            </div>
                                             <div class="pos ml-3">
-                                                <p class="name">${feedback.customer.fullName}</p>
+                                                <p class="name">
+                                                    <c:forEach var="customer" items="${cusList}">
+                                                        <c:if test="${customer.customerId == feedback.customerId}">
+                                                            ${customer.fullName}
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </p>
+                                                <span class="position">Customer</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach> 
-<!--                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(images/stylist-1.jpg)">
-                                        </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">Jeff Nucci</p>
-                                            <span class="position">Businessman</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(images/stylist-2.jpg)">
-                                        </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">Jeff Nucci</p>
-                                            <span class="position">Businessman</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(images/stylist-3.jpg)">
-                                        </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">Jeff Nucci</p>
-                                            <span class="position">Businessman</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(images/stylist-4.jpg)">
-                                        </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">Jeff Nucci</p>
-                                            <span class="position">Businessman</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimony-wrap pb-4">
-                                    <div class="text">
-                                        <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="user-img" style="background-image: url(images/stylist-5.jpg)">
-                                        </div>
-                                        <div class="pos ml-3">
-                                            <p class="name">Jeff Nucci</p>
-                                            <span class="position">Businessman</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
+                            </c:forEach>
+                            <!-- End of dynamic feedback loop -->
+                            <!--                            <div class="item">
+                                                            <div class="testimony-wrap pb-4">
+                                                                <div class="text">
+                                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="user-img" style="background-image: url(images/stylist-1.jpg)">
+                                                                    </div>
+                                                                    <div class="pos ml-3">
+                                                                        <p class="name">Jeff Nucci</p>
+                                                                        <span class="position">Businessman</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item">
+                                                            <div class="testimony-wrap pb-4">
+                                                                <div class="text">
+                                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="user-img" style="background-image: url(images/stylist-2.jpg)">
+                                                                    </div>
+                                                                    <div class="pos ml-3">
+                                                                        <p class="name">Jeff Nucci</p>
+                                                                        <span class="position">Businessman</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item">
+                                                            <div class="testimony-wrap pb-4">
+                                                                <div class="text">
+                                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="user-img" style="background-image: url(images/stylist-3.jpg)">
+                                                                    </div>
+                                                                    <div class="pos ml-3">
+                                                                        <p class="name">Jeff Nucci</p>
+                                                                        <span class="position">Businessman</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item">
+                                                            <div class="testimony-wrap pb-4">
+                                                                <div class="text">
+                                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="user-img" style="background-image: url(images/stylist-4.jpg)">
+                                                                    </div>
+                                                                    <div class="pos ml-3">
+                                                                        <p class="name">Jeff Nucci</p>
+                                                                        <span class="position">Businessman</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item">
+                                                            <div class="testimony-wrap pb-4">
+                                                                <div class="text">
+                                                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                                                </div>
+                                                                <div class="d-flex">
+                                                                    <div class="user-img" style="background-image: url(images/stylist-5.jpg)">
+                                                                    </div>
+                                                                    <div class="pos ml-3">
+                                                                        <p class="name">Jeff Nucci</p>
+                                                                        <span class="position">Businessman</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+
                         </div>
+                        <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Feedback</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Đánh giá dịch vụ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="feedbackIframe" src="" frameborder="0" style="width: 100%; height: 500px;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="ftco-footer ftco-section">
         <div class="container">
@@ -727,7 +757,41 @@
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+                            function openFeedbackModal() {
+                                $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
+                                $('#feedbackModal').modal('show');
+                            }
 
+                            $(document).ready(function () {
+                                $('.btnContact').click(function (e) {
+                                    e.preventDefault();
+                                    var formData = $('.contact-form form').serialize();
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'cusfeedback',
+                                        data: formData,
+                                        success: function (response) {
+                                            if (response.trim() === 'success') {
+                                                // Close modal if feedback sent successfully
+                                                $('#feedbackModal').modal('hide');
+//                        alert('Phản hồi của bạn đã được gửi đi thành công! :>');
+                                            } else {
+                                                // Handle errors or alerts for not finding customer/account
+                                                alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
+                                            }
+                                        },
+                                        error: function () {
+                                            alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
+                                        }
+                                    });
+                                });
+                            });
+    </script>
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
