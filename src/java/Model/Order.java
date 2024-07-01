@@ -5,7 +5,6 @@
 package Model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 /**
  *
@@ -14,33 +13,46 @@ import java.time.LocalDateTime;
 public class Order {
 
     private int id;
+    private String codeOrder;
     private int customerId;
     private int employeeId;
     private int statusId;
     private Date orderDate;
     private int totalAmount;
-    private int shiftsID;
     private String updateTime;
-
+    private Shift shift;
+    
     public Order() {
     }
 
-    public Order(int id, int customerId, int employeeId, int statusId, Date orderDate, int totalAmount, int shiftsID, String updateTime) {
+    public Order(int id, String codeOrder, int customerId, int employeeId, int statusId, Date orderDate, int totalAmount, String updateTime, Shift shift) {
         this.id = id;
+        this.codeOrder = codeOrder;
         this.customerId = customerId;
         this.employeeId = employeeId;
         this.statusId = statusId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
-        this.shiftsID = shiftsID;
         this.updateTime = updateTime;
+        this.shift = shift;
     }
-    public Order(int customerId, int statusId, Date orderDate, int totalAmount, int shiftsID) {
-        this.customerId = customerId;
-        this.statusId = statusId;
-        this.orderDate = orderDate;
-        this.totalAmount = totalAmount;
-        this.shiftsID = shiftsID;
+
+    
+
+    public String getCodeOrder() {
+        return codeOrder;
+    }
+
+    public void setCodeOrder(String codeOrder) {
+        this.codeOrder = codeOrder;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 
     public String getUpdateTime() {
@@ -75,13 +87,6 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public int getShiftsID() {
-        return shiftsID;
-    }
-
-    public void setShiftsID(int shiftsID) {
-        this.shiftsID = shiftsID;
-    }
 
     public int getStatusId() {
         return statusId;
@@ -109,7 +114,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", shiftsID=" + shiftsID + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
+        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
     }
 
     

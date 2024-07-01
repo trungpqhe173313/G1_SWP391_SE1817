@@ -75,14 +75,11 @@ public class GetOrderManager extends HttpServlet {
         List<Customer> ListCustomer = new CustomerDAO().getAllCustomer();
         //get info barber
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
-        //get info shift
-        List<Shift> Shift = new ShiftsDAO().getAll();
         //get info status
         List<Status> status = new StatusDAO().getAll();
         //get info services
         List<Services> serviceses = new ServicesDAO().GetAllServices();
         request.setAttribute("status", status);
-        request.setAttribute("shift", Shift);
         request.setAttribute("orders", ListOrder);
         request.setAttribute("ListCustomer", ListCustomer);
         request.setAttribute("ListEmployee", ListEmployee);
