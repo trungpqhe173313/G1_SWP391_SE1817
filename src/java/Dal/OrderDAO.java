@@ -6,6 +6,7 @@ package Dal;
 
 import static Dal.DBContext.connection;
 import Model.Order;
+import Model.Shift;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,16 +25,21 @@ public class OrderDAO extends DBContext {
     public Order getOrderByAId(int customerId) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [Barber].[dbo].[order]\n"
-                    + "  where [order].customerId = ? and [order].statusID = 1";
+                    + "  FROM [Barber].[dbo].[Orders]\n"
+                    + "  where [Orders].customerId = ? and [Orders].statusID = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, customerId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Order order = new Order(rs.getInt(1), rs.getInt(2),
-                        rs.getInt(3), rs.getInt(4),
-                        rs.getDate(5), rs.getInt(6),
-                        rs.getInt(7), rs.getString(8));
+                Order order = new Order();
+                order.setId(rs.getInt(1));
+                order.setCodeOrder(rs.getString(2));
+                order.setCustomerId(rs.getInt(3));
+                order.setEmployeeId(rs.getInt(4));
+                order.setStatusId(rs.getInt(5));
+                order.setOrderDate(rs.getDate(6));
+                order.setTotalAmount(rs.getInt(7));
+                order.setUpdateTime(rs.getString(8));
                 return order;
             }
         } catch (SQLException ex) {
@@ -47,7 +53,7 @@ public class OrderDAO extends DBContext {
         try {
 
             String sql = "SELECT TOP 1 orderId\n"
-                    + "FROM [order]\n"
+                    + "FROM [Orders]\n"
                     + "ORDER BY orderId DESC;";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -60,14 +66,12 @@ public class OrderDAO extends DBContext {
         return id;
     }
 
-
-
     public void cancelBooking(String orderId) {
         try {
-            String sql = "UPDATE [dbo].[order]\n"
+            String sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [statusID] = 5\n"
                     + "    \n"
-                    + " WHERE [order].orderId = ?";
+                    + " WHERE [Orders].orderId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, orderId);
             stm.executeUpdate();
@@ -77,7 +81,7 @@ public class OrderDAO extends DBContext {
     }
 
     public void AddOrder(Order o) {
-        String sql = "INSERT INTO [dbo].[order]\n"
+        String sql = "INSERT INTO [dbo].[Orders]\n"
                 + "           ([customerId]\n"
                 + "           ,[statusID]\n"
                 + "           ,[orderDate]\n"
@@ -121,12 +125,12 @@ public class OrderDAO extends DBContext {
 
     public void upDateOrder(String date, String shift, String oId, int total) {
         try {
-            String sql = "UPDATE [dbo].[order]\n"
+            String sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [orderDate] = ?\n"
                     + "      ,[totalAmount] = ?\n"
                     + "      ,[shiftId] = ?\n"
                     + "      \n"
-                    + " WHERE [order].orderId = ?";
+                    + " WHERE [Orders].orderId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, date);
             stm.setInt(2, total);
@@ -141,15 +145,59 @@ public class OrderDAO extends DBContext {
     public List<Order> getAllOrder() {
         List<Order> ListOrder = new ArrayList<>();
         try {
-            String sql = "SELECT *\n"
-                    + "  FROM [Barber].[dbo].[order]";
+            String sql = "WITH OrderedShifts AS (\n"
+                    + "    SELECT \n"
+                    + "        o.orderId,\n"
+                    + "        o.orderCode,\n"
+                    + "        o.customerId,\n"
+                    + "        o.employeeId,\n"
+                    + "        o.statusID,\n"
+                    + "        o.orderDate,\n"
+                    + "        o.totalAmount,\n"
+                    + "        o.updateTime,\n"
+                    + "        s.id AS shiftId,\n"
+                    + "        s.startTime,\n"
+                    + "        ROW_NUMBER() OVER (PARTITION BY o.orderId ORDER BY s.startTime) AS rn\n"
+                    + "    FROM \n"
+                    + "        Orders o\n"
+                    + "    JOIN \n"
+                    + "        Order_shift os ON o.orderId = os.OrderID\n"
+                    + "    JOIN \n"
+                    + "        shift s ON os.ShiftID = s.id\n"
+                    + ")\n"
+                    + "SELECT \n"
+                    + "    orderId,\n"
+                    + "    orderCode,\n"
+                    + "    customerId,\n"
+                    + "    employeeId,\n"
+                    + "    statusID,\n"
+                    + "    orderDate,\n"
+                    + "    totalAmount,\n"
+                    + "    updateTime,\n"
+                    + "    shiftId,\n"
+                    + "    startTime\n"
+                    + "FROM \n"
+                    + "    OrderedShifts\n"
+                    + "WHERE \n"
+                    + "    rn = 1\n"
+                    + "ORDER BY \n"
+                    + "    orderId;";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Order order = new Order(rs.getInt(1), rs.getInt(2),
-                        rs.getInt(3), rs.getInt(4),
-                        rs.getDate(5), rs.getInt(6),
-                        rs.getInt(7), rs.getString(8));
+                Order order = new Order();
+                order.setId(rs.getInt(1));
+                order.setCodeOrder(rs.getString(2));
+                order.setCustomerId(rs.getInt(3));
+                order.setEmployeeId(rs.getInt(4));
+                order.setStatusId(rs.getInt(5));
+                order.setOrderDate(rs.getDate(6));
+                order.setTotalAmount(rs.getInt(7));
+                order.setUpdateTime(rs.getString(8));
+                Shift shift = new Shift();
+                shift.setId(rs.getInt(9));
+                shift.setStartTime(rs.getString(10));
+                order.setShift(shift);
                 ListOrder.add(order);
             }
         } catch (SQLException ex) {
@@ -160,7 +208,7 @@ public class OrderDAO extends DBContext {
 
     public void upDateStatusOrder(int i, String Oid) {
         try {
-            String sql = "UPDATE [dbo].[order]\n"
+            String sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [statusID] = ?\n"
                     + " WHERE [orderId] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -177,7 +225,7 @@ public class OrderDAO extends DBContext {
             Eid = null;
         }
         try {
-            String sql = "UPDATE [dbo].[order]\n"
+            String sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [employeeId] = ?\n"
                     + "      ,[statusID] = ?\n"
                     + "      ,[totalAmount] = ?\n"
@@ -196,8 +244,9 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        public static void main(String[] args) {
-        OrderDAO o = new OrderDAO();
-        o.upDateOrderAdmin("", "2", "8", 400000);
-    }
+
+//    public static void main(String[] args) {
+//        OrderDAO o = new OrderDAO();
+//        o.upDateOrderAdmin("", "2", "7", 140000);
+//    }
 }

@@ -237,28 +237,29 @@
                                         <label for="employee">Thợ</label>
                                         <c:choose>
                                             <c:when test="${0 == detailOrder.employeeId}">
-                                                <select id="employee" name="employee" class="form-control">
-                                                    <c:if test="${not empty ListBarberFree}">
-                                                        <c:forEach items="${ListBarberFree}" var="b">
-                                                            <option value="${b.employeeId}">${b.fullName}</option>
-                                                        </c:forEach>
-                                                    </c:if>
-                                                    <c:if test="${empty ListBarberFree}">
-                                                        <option value="">Không có thợ</option>
-                                                    </c:if>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${BarberFree != null}">
+                                                        <input type="hidden" name="employee" value="${BarberFree.employeeId}" />
+                                                        <input type="text"  value="${BarberFree.fullName}" readonly />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="hidden" name="employee" value="" />
+                                                        <input type="text"  value="Không có thợ" readonly />                                                       
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:when>
-
                                             <c:otherwise>
                                                 <c:forEach items="${ListEmployee}" var="e">
                                                     <c:if test="${e.employeeId == detailOrder.employeeId}">
-                                                        <input type="text" class="form-control" value="${e.fullName}" readonly />
+                                                        <input type="hidden" name="employee" value="${e.employeeId}" />
+                                                        <input type="text"  name="employeeId" value="${e.fullName}" readonly />
                                                     </c:if>                                                
                                                 </c:forEach>
                                             </c:otherwise>
                                         </c:choose>
+
                                     </div>
-                                    <button class="btn" type="submit">Ghi lại</button>
+                                    <button class="btn" type="submit">Xác nhận</button>
                                 </form>
                             </div>
                         </div>
