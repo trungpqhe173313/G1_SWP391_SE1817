@@ -51,22 +51,25 @@ public class ViewAppountController extends HttpServlet {
             Customer customer = new CustomerDAO().getCustomerByP(account.getPhone());
             //get info order of customer
             Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
-            //get info shift
-            List<Shift> Shift = new ShiftsDAO().getAll();
             //get info status
             List<Status> status = new StatusDAO().getAll();
             //get all services for update
             List<Services> listServices = new ServicesDAO().GetAllServices();
-            request.setAttribute("order", order);
-            request.setAttribute("ls", listServices);
-            request.setAttribute("status", status);
-            request.setAttribute("shift", Shift);
-            if(order != null){
+            //get all shift
+            List<Shift> shift = new ShiftsDAO().getAll();
+            if (order != null) {
                 //get info sevices of order
                 List<Services> services = new ServicesDAO().getServicesInOrder(order.getId());
+                request.setAttribute("order", order);
+                request.setAttribute("ls", listServices);
+                request.setAttribute("status", status);
+                request.setAttribute("shift", shift);
                 request.setAttribute("services", services);
+                request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("viewappointment.jsp");
             }
-            request.getRequestDispatcher("viewappointment.jsp").forward(request, response);
+
         }
 
     }

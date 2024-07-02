@@ -6,6 +6,7 @@ package Controller.customer;
 
 import Dal.OrderDAO;
 import Dal.Order_servicesDAO;
+import Dal.Order_shiftDAO;
 import Dal.ServicesDAO;
 import Model.Services;
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class UpdateAppointmentController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String date = request.getParameter("date");
         String[] idServices = request.getParameterValues("services");
-        String shift = request.getParameter("shift");
+        int shift = Integer.parseInt(request.getParameter("shift"));
         String oId = request.getParameter("orderID");
         List<Services> services = new ServicesDAO().GetAllServices();
         PrintWriter out = response.getWriter();
-        
+
 
         //total new order
         int total = 0;
@@ -53,13 +54,21 @@ public class UpdateAppointmentController extends HttpServlet {
                 }
             }
         }
+
         //update order with new info
-        new OrderDAO().upDateOrder(date,shift,oId,total);
+        new OrderDAO().upDateOrder(date,oId,total);
         //delete old services before update
         new Order_servicesDAO().deleteAllServices(oId);
         //insert new services to order
         for (String id : idServices) {
             new Order_servicesDAO().InsertServices(oId, id);
+        }
+        //delete old shift before update
+        new Order_shiftDAO().deleteAllShift(oId);
+        //update new shift flow services ex 3 services = 3 shift
+        for (int i = 0; i < idServices.length; i++) {
+            int newShift = shift + i;
+            new Order_shiftDAO().InsertShift(oId,newShift);
         }
         response.sendRedirect("viewAppountController");
     }

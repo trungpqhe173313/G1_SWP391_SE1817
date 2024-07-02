@@ -199,25 +199,8 @@ public class CustomerDAO extends DBContext {
 
     public static void main(String[] args) {
         CustomerDAO customerdao = new CustomerDAO();
-        String phone = "0912345669";
-        Customer customer = customerdao.getCustomerProfile(phone);
-        if (customer != null) {
-            System.out.println("Successful!");
-            System.out.println("Customer Information:");
-            System.out.println("customerId: " + customer.getCustomerId());
-            System.out.println("fullName: " + customer.getFullName());
-            System.out.println("phone: " + customer.getPhone());
-            System.out.println("Account Information:");
-            System.out.println("phone: " + customer.getAccount().getPhone());
-            System.out.println("pass: " + customer.getAccount().getPass());
-            System.out.println("role Id: " + customer.getAccount().getRoleId());
-            System.out.println("email: " + customer.getAccount().getEmail());
-            System.out.println("gender: " + customer.getAccount().getGender());
-            System.out.println("is Active: " + customer.getAccount().getIsActive());
-            System.out.println("avatar: " + customer.getAccount().getAvatar());
-        } else {
-            System.out.println("Failed: Invalid customer id!");
-        }
+        Customer c = customerdao.getCustomerByP("0912345667");
+        System.out.println(c.getCustomerId());
 
     }
 
