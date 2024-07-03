@@ -23,27 +23,12 @@ public class SendMail {
     private Session getSession() {
         return Session.getInstance(getMailProperties(),
                 new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
     }
 
-//    public boolean sendEmailResetPass(String emailReset) {
-//        boolean isSent = false;
-//        try {
-//            Message message = new MimeMessage(getSession());
-//            message.setFrom(new InternetAddress(username));
-//            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailReset));
-//            message.setSubject("Reset Password");
-//            message.setText("Click the following link to reset your password: ");
-//            Transport.send(message);
-//            isSent = true;
-//        } catch (MessagingException e) {
-//            e.printStackTrace();
-//        }
-//        return isSent;
-//    }
     public String sendOTP(String email) {
         String otp = generateOTP();
         try {
@@ -64,5 +49,26 @@ public class SendMail {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000);
         return String.valueOf(otp);
+    }
+
+    public void sendMail(String to, String sub, String message) {
+        try {
+            Message msg = new MimeMessage(getSession());
+            msg.setFrom(new InternetAddress(username));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            msg.setSubject(sub);
+            msg.setContent(message, "text/html; charset=UTF-8");
+            Transport.send(msg);
+            System.out.println("Email sent successfully!");
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email.");
+            e.printStackTrace();
+        }
+    }
+
+    // Main method for testing purposes
+    public static void main(String[] args) {
+        SendMail mailer = new SendMail();
+        mailer.sendMail("hannhe171759@fpt.edu.vn", "Test Subject", "This is a test email with UTF-8 encoding.");
     }
 }

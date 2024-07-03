@@ -114,9 +114,10 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
+        return "Order{" + "id=" + id + ", codeOrder=" + codeOrder + ", customerId=" + customerId + ", employeeId=" + employeeId + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + ", shift=" + shift + '}';
     }
 
+   
     
 
 }
