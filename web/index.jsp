@@ -266,11 +266,7 @@
                                                                 </c:if>
                                                             </c:forEach>
                                                             <td>${uOder.orderDate}</td>
-                                                            <c:forEach items="${shift}" var="s">
-                                                                <c:if test="${uOder.shiftsID == s.id}">
-                                                                    <td>${s.startTime}</td>
-                                                                </c:if>
-                                                            </c:forEach>
+                                                            <td>${uOder.shift.startTime}</td>
                                                             <c:forEach items="${status}" var="s">
                                                                 <c:if test="${uOder.statusId == s.id}">
                                                                     <td>${s.name}</td>
@@ -326,11 +322,7 @@
                                                                 </c:if>
                                                             </c:forEach>
                                                             <td>${o.orderDate}</td>
-                                                            <c:forEach items="${shift}" var="s">
-                                                                <c:if test="${o.shiftsID == s.id}">
-                                                                    <td>${s.startTime}</td>
-                                                                </c:if>
-                                                            </c:forEach>
+                                                            <td>${o.shift.startTime}</td>
                                                             <c:forEach items="${status}" var="s">
                                                                 <c:if test="${o.statusId == s.id}">
                                                                     <td>${s.name}</td>
@@ -386,11 +378,7 @@
                                                                 </c:if>
                                                             </c:forEach>
                                                             <td>${co.orderDate}</td>
-                                                            <c:forEach items="${shift}" var="s">
-                                                                <c:if test="${co.shiftsID == s.id}">
-                                                                    <td>${s.startTime}</td>
-                                                                </c:if>
-                                                            </c:forEach>
+                                                            <td>${co.shift.startTime}</td>
                                                             <c:forEach items="${status}" var="s">
                                                                 <c:if test="${co.statusId == s.id}">
                                                                     <td>${s.name}</td>

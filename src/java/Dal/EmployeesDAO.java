@@ -65,7 +65,6 @@ public class EmployeesDAO extends DBContext {
         return resultList;
     }
 
-
     public List<Map<String, Object>> getEmployeeResign() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
@@ -105,24 +104,24 @@ public class EmployeesDAO extends DBContext {
         }
         return resultList;
     }
-    
-        public boolean updateEmployeeActiveStatus(int employeeId, boolean isActive) throws SQLException {
-            String sql = "UPDATE [account] " +
-                         "SET [account].isActive = ? " +
-                         "FROM [account] " +
-                         "JOIN [employee] ON [account].phone = [employee].phone " +
-                         "WHERE [employee].employeeId = ?";
 
-            int bitValue = isActive ? 1 : 0;
+    public boolean updateEmployeeActiveStatus(int employeeId, boolean isActive) throws SQLException {
+        String sql = "UPDATE [account] "
+                + "SET [account].isActive = ? "
+                + "FROM [account] "
+                + "JOIN [employee] ON [account].phone = [employee].phone "
+                + "WHERE [employee].employeeId = ?";
 
-            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, bitValue);
-                pstmt.setInt(2, employeeId);
-                int rowsUpdated = pstmt.executeUpdate();
-                return rowsUpdated > 0;
-            }
+        int bitValue = isActive ? 1 : 0;
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, bitValue);
+            pstmt.setInt(2, employeeId);
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0;
         }
- 
+    }
+
     public Employee getAllEmployees(String phone) throws SQLException {
         Employee employee = null;
         try {
@@ -142,14 +141,14 @@ public class EmployeesDAO extends DBContext {
     }
 
     public void updateEmployee(String phone, String fullName) throws SQLException {
-    String sql = "UPDATE employee SET fullName = ? WHERE phone = ?";
-    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-        pstmt.setString(1, fullName);
-        pstmt.setString(2, phone);
-        pstmt.executeUpdate();
+        String sql = "UPDATE employee SET fullName = ? WHERE phone = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, fullName);
+            pstmt.setString(2, phone);
+            pstmt.executeUpdate();
+        }
     }
-}
-    
+
     public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
         String sql = "SELECT "
@@ -223,12 +222,6 @@ public class EmployeesDAO extends DBContext {
         return employee;
     }
 
-    public static void main(String[] args) {
-        List<Employee> e = new EmployeesDAO().getBarberFree();
-        System.out.println(e.size());
-    }
-
-    
     public void updateStatusBarber(int i, String Eid) {
         try {
             String sql = "UPDATE [dbo].[employee]\n"
@@ -243,23 +236,46 @@ public class EmployeesDAO extends DBContext {
         }
     }
 
-    public List<Employee> getBarberFree() {
-        List<Employee> employee = new ArrayList<>();
+    public Employee getBarberFree() {
         try {
-            String sql = "SELECT *\n"
+            String sql = "SELECT top (1) *\n"
                     + "FROM [Barber].[dbo].[employee]\n"
                     + "WHERE [statusEmployee] = 1\n"
-                    + "ORDER BY [updateTime] DESC;";
+                    + "ORDER BY [updateTime] ASC;";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
-                employee.add(e);
+            if (rs.next()) {
+                return new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return employee;
+        return null;
     }
 
+    public Employee getBarberByID(String Eid) {
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[employee] \n"
+                    + "  where employeeId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, Eid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                        rs.getInt(4), rs.getString(5));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+//        List<Employee> e = new EmployeesDAO().getAllEmployee();
+//        System.out.println(e.size());
+        Employee e = new EmployeesDAO().getBarberByID("6");
+        System.out.println(e.getStatusId());
+    }
 }

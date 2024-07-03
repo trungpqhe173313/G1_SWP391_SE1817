@@ -89,10 +89,11 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
                 break;
             }
         }
+
         //get info barber
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
         //Get info barber free
-        List<Employee> ListBarberFree = new EmployeesDAO().getBarberFree();
+        Employee BarberFree = new EmployeesDAO().getBarberFree();
         //get info status
         List<Status> status = new StatusDAO().getAll();
         //get info services
@@ -102,7 +103,7 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
         request.setAttribute("detailOrder", detailOrder);
         request.setAttribute("ListServices", ListServices);
         request.setAttribute("status", status);
-        request.setAttribute("ListBarberFree", ListBarberFree);
+        request.setAttribute("BarberFree", BarberFree);
         request.setAttribute("ListEmployee", ListEmployee);
         request.getRequestDispatcher("viewDetailOrder.jsp").forward(request, response);
     }
@@ -125,7 +126,8 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
         String Eid = request.getParameter("employee") + "";
         List<Services> services = new ServicesDAO().GetAllServices();
         PrintWriter out = response.getWriter();
-        if (Eid.equals("")&& IdStatus == 1) {
+        
+        if (Eid.equals("") && IdStatus == 1 || Eid.equals("") && IdStatus == 2) {
             //total new order
             int total = 0;
             for (String idService : idServices) {
@@ -137,10 +139,9 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
                     }
                 }
             }
-            //update new status of barber
-            new EmployeesDAO().updateStatusBarber(2, Eid);
+
             //update order with new info
-            new OrderDAO().upDateOrderAdmin(Eid,"2", oId, total);
+            new OrderDAO().upDateOrderAdmin(Eid, "2", oId, total);
             //delete old services before update
             new Order_servicesDAO().deleteAllServices(oId);
             //insert new services to order
@@ -148,7 +149,7 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
                 new Order_servicesDAO().InsertServices(oId, id);
             }
             response.sendRedirect("getOrderManager");
-        } else {
+        } else if (!Eid.equals("") && IdStatus == 1 || !Eid.equals("") && IdStatus == 2) {
             //total new order
             int total = 0;
             for (String idService : idServices) {
@@ -160,16 +161,29 @@ public class ViewOrderDetatailUpdateController extends HttpServlet {
                     }
                 }
             }
-            //update new status of barber
-            new EmployeesDAO().updateStatusBarber(2, Eid);
-            //update order with new info
-            new OrderDAO().upDateOrderAdmin(Eid,"3", oId, total);
             //delete old services before update
             new Order_servicesDAO().deleteAllServices(oId);
             //insert new services to order
             for (String id : idServices) {
                 new Order_servicesDAO().InsertServices(oId, id);
             }
+            Employee barber = new EmployeesDAO().getBarberByID(Eid);
+            if (barber.getStatusId() == 1) {
+                //update new status of barber
+                response.getWriter().print(barber.getStatusId());
+                new EmployeesDAO().updateStatusBarber(2, Eid);
+                //update order with new info
+                new OrderDAO().upDateOrderAdmin(Eid, "3", oId, total);
+                response.sendRedirect("getOrderManager");
+            } else {
+                response.getWriter().print(barber.getStatusId());
+                //update order with new info
+                new OrderDAO().upDateOrderAdmin(Eid, "2", oId, total);
+                //delete old services before update
+                response.sendRedirect("getOrderManager");
+            }
+            
+        } else {
             response.sendRedirect("getOrderManager");
         }
     }
