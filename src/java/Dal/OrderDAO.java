@@ -6,10 +6,12 @@ package Dal;
 
 import static Dal.DBContext.connection;
 import Model.Order;
+import Dal.ShiftsDAO;
 import Model.Shift;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,30 +124,30 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public void AddOrder(Order o) {
-        String sql = "INSERT INTO [dbo].[Orders]\n"
-                + "           ([customerId]\n"
-                + "           ,[statusID]\n"
-                + "           ,[orderDate]\n"
-                + "           ,[totalAmount]\n"
-                + "           ,[shiftId]\n"
-                + "           ,[updateTime])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,GETDATE())";
-        try (PreparedStatement st = connection.prepareStatement(sql);) {
-
-            st.setInt(1, o.getCustomerId());
-            st.setInt(2, o.getStatusId());
-            st.setDate(3, o.getOrderDate());
-            st.setInt(4, o.getTotalAmount());
-            st.setInt(5, o.getShiftsID());
-
-            st.executeUpdate();
-
-        } catch (SQLException e) {
-
-        }
-    }
+//    public void AddOrder(Order o) {
+//        String sql = "INSERT INTO [dbo].[Orders]\n"
+//                + "           ([customerId]\n"
+//                + "           ,[statusID]\n"
+//                + "           ,[orderDate]\n"
+//                + "           ,[totalAmount]\n"
+//                + "           ,[shiftId]\n"
+//                + "           ,[updateTime])\n"
+//                + "     VALUES\n"
+//                + "           (?,?,?,?,?,GETDATE())";
+//        try (PreparedStatement st = connection.prepareStatement(sql);) {
+//
+//            st.setInt(1, o.getCustomerId());
+//            st.setInt(2, o.getStatusId());
+//            st.setDate(3, o.getOrderDate());
+//            st.setInt(4, o.getTotalAmount());
+//            st.setInt(5, o.getShiftsID());
+//
+//            st.executeUpdate();
+//
+//        } catch (SQLException e) {
+//
+//        }
+//    }
 
     public void AddOrder_services(int servicesId, int orderId) {
         String sql = "INSERT INTO [dbo].[Order_services]\n"
@@ -283,10 +285,45 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+ public List<Order> findOrdersByDate() {
+    List<Order> orders = new ArrayList<>();
+    String query = "SELECT o.*, s.* " +
+                   "FROM Orders o " +
+                   "JOIN Order_shift os ON o.orderId = os.OrderID " +
+                   "JOIN Shift s ON os.ShiftID = s.id " +
+                   "WHERE o.orderDate = CONVERT(date, DATEADD(DAY, 1, GETDATE()))";
 
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            Order order = new Order();
+            order.setId(resultSet.getInt("orderId"));
+            order.setCodeOrder(resultSet.getString("orderCode"));
+            order.setCustomerId(resultSet.getInt("customerId"));
+            order.setEmployeeId(resultSet.getInt("employeeId"));
+            order.setStatusId(resultSet.getInt("statusID"));
+            order.setOrderDate(resultSet.getDate("orderDate"));
+            order.setTotalAmount(resultSet.getInt("totalAmount"));
+            order.setUpdateTime(resultSet.getString("updateTime"));
+
+            Shift shift = new Shift();
+            shift.setId(resultSet.getInt("id"));
+            shift.setStartTime(resultSet.getString("startTime"));
+
+            order.setShift(shift);
+            orders.add(order);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return orders;
+}
+
+ 
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
-        Order k = o.getOrderByAId(8);
-        System.out.println(k.getShift().getStartTime());
+        List<Order> k = o.findOrdersByDate();
+        System.out.println(k);
     }
 }
