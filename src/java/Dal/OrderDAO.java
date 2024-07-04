@@ -148,7 +148,6 @@ public class OrderDAO extends DBContext {
 //
 //        }
 //    }
-
     public void AddOrder_services(int servicesId, int orderId) {
         String sql = "INSERT INTO [dbo].[Order_services]\n"
                 + "           ([servicesId]\n"
@@ -285,42 +284,46 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
- public List<Order> findOrdersByDate() {
-    List<Order> orders = new ArrayList<>();
-    String query = "SELECT o.*, s.* " +
-                   "FROM Orders o " +
-                   "JOIN Order_shift os ON o.orderId = os.OrderID " +
-                   "JOIN Shift s ON os.ShiftID = s.id " +
-                   "WHERE o.orderDate = CONVERT(date, DATEADD(DAY, 1, GETDATE()))";
 
-    try (PreparedStatement statement = connection.prepareStatement(query)) {
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            Order order = new Order();
-            order.setId(resultSet.getInt("orderId"));
-            order.setCodeOrder(resultSet.getString("orderCode"));
-            order.setCustomerId(resultSet.getInt("customerId"));
-            order.setEmployeeId(resultSet.getInt("employeeId"));
-            order.setStatusId(resultSet.getInt("statusID"));
-            order.setOrderDate(resultSet.getDate("orderDate"));
-            order.setTotalAmount(resultSet.getInt("totalAmount"));
-            order.setUpdateTime(resultSet.getString("updateTime"));
+    public List<Order> findOrdersByDate() {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT o.*, s.* \n"
+                + "FROM Orders o \n"
+                + "JOIN Order_shift os ON o.orderId = os.OrderID \n"
+                + "JOIN Shift s ON os.ShiftID = s.id \n"
+                + "WHERE \n"
+                + "    CAST(CONCAT(CONVERT(date, GETDATE()), ' ', s.startTime) AS DATETIME) \n"
+                + "    BETWEEN DATEADD(MINUTE, 30, GETDATE()) AND DATEADD(MINUTE, 60, GETDATE());";
 
-            Shift shift = new Shift();
-            shift.setId(resultSet.getInt("id"));
-            shift.setStartTime(resultSet.getString("startTime"));
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setId(resultSet.getInt("orderId"));
+                order.setCodeOrder(resultSet.getString("orderCode"));
+                order.setCustomerId(resultSet.getInt("customerId"));
+                order.setEmployeeId(resultSet.getInt("employeeId"));
+                order.setStatusId(resultSet.getInt("statusID"));
+                order.setOrderDate(resultSet.getDate("orderDate"));
+                order.setTotalAmount(resultSet.getInt("totalAmount"));
+                order.setUpdateTime(resultSet.getString("updateTime"));
 
-            order.setShift(shift);
-            orders.add(order);
+                Shift shift = new Shift();
+                shift.setId(resultSet.getInt("id"));
+                shift.setStartTime(resultSet.getString("startTime"));
+
+                order.setShift(shift);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return orders;
     }
-    return orders;
-}
+    
+   
 
- 
+
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
         List<Order> k = o.findOrdersByDate();
