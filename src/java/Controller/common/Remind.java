@@ -51,19 +51,22 @@ public class Remind {
             }
         };
 
-        Calendar remindAppointmentTime = Calendar.getInstance();
-        remindAppointmentTime.set(Calendar.YEAR, 2024);
-        remindAppointmentTime.set(Calendar.MONTH, Calendar.JULY);
-        remindAppointmentTime.set(Calendar.DAY_OF_MONTH, 03);
-        remindAppointmentTime.set(Calendar.HOUR_OF_DAY, 19);
-        remindAppointmentTime.set(Calendar.MINUTE, 25);
-        remindAppointmentTime.set(Calendar.SECOND, 0);
-        remindAppointmentTime.set(Calendar.MILLISECOND, 0);
-
-        t.scheduleAtFixedRate(remindAppointment, remindAppointmentTime.getTime(), 24 * 60 * 60 * 1000);
+        // Chạy TimerTask để kiểm tra các đơn hàng
+        t.scheduleAtFixedRate(remindAppointment, 30 * 60 * 1000, 30 * 60 * 1000);
+//        t.scheduleAtFixedRate(remindAppointment, 0, 60 * 1000);
     }
 
     public void cancelReminder() {
         t.cancel();
     }
 }
+// Calendar remindAppointmentTime = Calendar.getInstance();
+//        remindAppointmentTime.set(Calendar.YEAR, 2024);
+//        remindAppointmentTime.set(Calendar.MONTH, Calendar.JULY);
+//        remindAppointmentTime.set(Calendar.DAY_OF_MONTH, 03);
+//        remindAppointmentTime.set(Calendar.HOUR_OF_DAY, 19);
+//        remindAppointmentTime.set(Calendar.MINUTE, 25);
+//        remindAppointmentTime.set(Calendar.SECOND, 0);
+//        remindAppointmentTime.set(Calendar.MILLISECOND, 0);
+//
+//        t.scheduleAtFixedRate(remindAppointment, remindAppointmentTime.getTime(), 24 * 60 * 60 * 1000);
