@@ -3,198 +3,184 @@ GO
 
 USE Barber;
 GO
-
-CREATE TABLE [Services] (
-	[servicesId] INT IDENTITY UNIQUE,
-	[name] NVARCHAR(255),
-	[image] NVARCHAR(255),
-	[price] INT,
-	[description] NVARCHAR(255),
-	[isActive] BIT,
-	PRIMARY KEY([servicesId])
+CREATE TABLE Services (
+    servicesId int IDENTITY(1,1) PRIMARY KEY,
+    name nvarchar(255),
+    image nvarchar(255),
+    price int,
+    description nvarchar(255),
+    isActive bit
 );
-GO
 
--- Remove the empty index creation
-
-CREATE TABLE [employee] (
-	[employeeId] INT NOT NULL IDENTITY UNIQUE,
-	[fullName] NVARCHAR(255),
-	[phone] NVARCHAR(255),
-	[statusEmployee] INT,
-	[updateTime] DATETIME,
-	PRIMARY KEY([employeeId])
+CREATE TABLE customer (
+    customerId int IDENTITY(1,1) PRIMARY KEY,
+    fullName nvarchar(255),
+    phone nvarchar(255) UNIQUE
 );
-GO
 
-CREATE TABLE [account] (
-	[phone] NVARCHAR(255),
-	[pass] NVARCHAR(255),
-	[roleId] INT,
-	[email] NVARCHAR(255),
-	[gender] BIT,
-	[isActive] BIT,
-	[avatar] NVARCHAR(255),
-	PRIMARY KEY([phone])
+CREATE TABLE status (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    status nvarchar(255)
 );
-GO
 
-CREATE TABLE [role] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[role] NVARCHAR(255) UNIQUE,
-	PRIMARY KEY([id])
+CREATE TABLE account (
+    phone nvarchar(255) PRIMARY KEY,
+    pass nvarchar(255),
+    roleId int,
+    email nvarchar(255),
+    gender bit,
+    isActive bit,
+    points int,
+    avatar nvarchar(255),
+    CONSTRAINT FK_account_customer FOREIGN KEY (phone) REFERENCES customer(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
 
-CREATE TABLE [Order_services] (
-	[servicesId] INT,
-	[OrderId] INT,
-	PRIMARY KEY([servicesId], [OrderId])
+CREATE TABLE employee (
+    employeeId int IDENTITY(1,1) PRIMARY KEY,
+    fullName nvarchar(255),
+    phone nvarchar(255) UNIQUE,
+    statusEmployee int,
+    updateTime datetime,
+	CONSTRAINT FK_employee_account FOREIGN KEY (phone) REFERENCES account(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
-
-CREATE TABLE [order] (
-	[orderId] INT NOT NULL IDENTITY UNIQUE,
-	[customerId] INT,
-	[employeeId] INT,
-	[statusID] INT,
-	[orderDate] DATE,
-	[totalAmount] INT,
-	[shiftId] INT,
-	[updateTime] DATETIME,
-	PRIMARY KEY([orderId])
+CREATE TABLE admin (
+    adminId int IDENTITY(1,1) PRIMARY KEY,
+    fullName nvarchar(255),
+    phone nvarchar(255) UNIQUE,
+	CONSTRAINT FK_admin_account FOREIGN KEY (phone) REFERENCES account(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
 
-CREATE TABLE [shift] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[startTime] NVARCHAR(255),
-	PRIMARY KEY([id])
+CREATE TABLE role (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    role nvarchar(255)
 );
-GO
 
-CREATE TABLE [status] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[status] NVARCHAR(255),
-	PRIMARY KEY([id])
+
+
+CREATE TABLE Orders (
+    orderId int IDENTITY(1,1) PRIMARY KEY,
+    orderCode nvarchar(50) UNIQUE,
+    customerId int,
+    employeeId int,
+    statusID int,
+    orderDate date,
+    totalAmount int,
+    updateTime datetime,
+    CONSTRAINT FK_Orders_customer FOREIGN KEY (customerId) REFERENCES customer(customerId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_Orders_employee FOREIGN KEY (employeeId) REFERENCES employee(employeeId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_Orders_status FOREIGN KEY (statusID) REFERENCES status(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
 
-CREATE TABLE [customer] (
-	[customerId] INT IDENTITY UNIQUE,
-	[fullName] NVARCHAR(255),
-	[phone] NVARCHAR(255),
-	PRIMARY KEY([customerId])
+CREATE TABLE Order_services (
+    servicesId int,
+    orderId int,
+    PRIMARY KEY(servicesId, orderId),
+    CONSTRAINT FK_Order_services_services FOREIGN KEY (servicesId) REFERENCES Services(servicesId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_Order_services_orders FOREIGN KEY (orderId) REFERENCES Orders(orderId) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
 
-CREATE TABLE [feedback] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[noidung] NVARCHAR(255),
-	[customerId] INT,
-	[isActive] BIT,
-	PRIMARY KEY([id])
+CREATE TABLE shift (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    startTime nvarchar(255)
 );
-GO
 
-CREATE TABLE [store] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[isActive] BIT,
-	PRIMARY KEY([id])
+
+CREATE TABLE feedback (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    noidung nvarchar(255),
+    customerId int,
+    isActive bit,
+    CONSTRAINT FK_feedback_customer FOREIGN KEY (customerId) REFERENCES customer(customerId) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-GO
 
-CREATE TABLE [statusEmployee] (
-	[id] INT NOT NULL IDENTITY UNIQUE,
-	[status] NVARCHAR(255) UNIQUE,
-	PRIMARY KEY([id])
+CREATE TABLE store (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    isActive bit
 );
+
+CREATE TABLE statusEmployee (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    status nvarchar(255)
+);
+
+CREATE TABLE Order_shift (
+    ShiftID int,
+    OrderID int,
+    PRIMARY KEY(ShiftID, OrderID),
+    CONSTRAINT FK_Order_shift_shift FOREIGN KEY (ShiftID) REFERENCES shift(id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_Order_shift_orders FOREIGN KEY (OrderID) REFERENCES Orders(orderId) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+CREATE TABLE discount (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    point int,
+    discount float
+);
+
+CREATE TABLE Chat (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    SenderID int,
+    adminId int,
+    MessageContent nvarchar(255),
+    SendTime datetime,
+    MessageStatus nvarchar(255),
+	senderType nvarchar(50),
+    CONSTRAINT FK_Chat_admin FOREIGN KEY (adminId) REFERENCES admin(adminId) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_Chat_customer FOREIGN KEY (SenderID) REFERENCES customer(customerId) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+CREATE TABLE Voucher (
+    id int IDENTITY(1,1) PRIMARY KEY,
+    Name nvarchar(255),
+    discount float,
+    status int,
+    startTime date,
+    endTime date
+);
+CREATE TABLE LoyaltyPolicies (
+    PolicyID INT IDENTITY(1,1) PRIMARY KEY,
+    MinAmount INT NOT NULL, -- Số tiền tối thiểu để bắt đầu tính điểm
+    PointsPerUnit INT NOT NULL -- Số điểm cho mỗi đơn vị tiền chi tiêu
+);
+
+ALTER TABLE account
+ADD CONSTRAINT FK_account_role FOREIGN KEY (roleId) REFERENCES role(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE employee
+ADD CONSTRAINT FK_employee_statusEmployee FOREIGN KEY (statusEmployee) REFERENCES statusEmployee(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
-ALTER TABLE [account]
-ADD FOREIGN KEY([roleId]) REFERENCES [role]([id])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [order]
-ADD FOREIGN KEY([statusID]) REFERENCES [status]([id])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [Order_services]
-ADD FOREIGN KEY([OrderId]) REFERENCES [order]([orderId])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [Order_services]
-ADD FOREIGN KEY([servicesId]) REFERENCES [Services]([servicesId])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [order]
-ADD FOREIGN KEY([shiftId]) REFERENCES [shift]([id])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [employee]
-ADD FOREIGN KEY([phone]) REFERENCES [account]([phone])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [customer]
-ADD FOREIGN KEY([phone]) REFERENCES [account]([phone])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [order]
-ADD FOREIGN KEY([customerId]) REFERENCES [customer]([customerId])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [feedback]
-ADD FOREIGN KEY([customerId]) REFERENCES [customer]([customerId])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [order]
-ADD FOREIGN KEY([employeeId]) REFERENCES [employee]([employeeId])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-
-ALTER TABLE [employee]
-ADD FOREIGN KEY([statusEmployee]) REFERENCES [statusEmployee]([id])
-ON UPDATE NO ACTION ON DELETE NO ACTION;
-GO
-CREATE TRIGGER trg_UpdateEmployeeTime
-ON [employee]
+CREATE TRIGGER trg_UpdateTimeOnStatusChange
+ON Orders
 AFTER UPDATE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    IF UPDATE([statusEmployee])
+    -- Kiểm tra nếu statusID thay đổi
+    IF UPDATE(statusID)
     BEGIN
-        UPDATE [employee]
-        SET [updateTime] = GETDATE()
-        WHERE [employeeId] IN (SELECT [employeeId] FROM inserted);
+        UPDATE Orders
+        SET updateTime = GETDATE()
+        FROM Orders o
+        INNER JOIN inserted i ON o.orderId = i.orderId
+        WHERE o.orderId = i.orderId;
     END
 END;
-GO
-CREATE TRIGGER trg_UpdateOrderTime
-ON [order]
+go
+CREATE TRIGGER trg_UpdateTimeOnStatusEmployeeChange
+ON employee
 AFTER UPDATE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    IF UPDATE([statusID])
+    -- Kiểm tra nếu statusEmployee thay đổi
+    IF UPDATE(statusEmployee)
     BEGIN
-        UPDATE [order]
-        SET [updateTime] = GETDATE()
-        WHERE [orderId] IN (SELECT [orderId] FROM inserted);
+        UPDATE employee
+        SET updateTime = GETDATE()
+        FROM employee e
+        INNER JOIN inserted i ON e.employeeId = i.employeeId
+        WHERE e.employeeId = i.employeeId;
     END
 END;
-GO
 
 -- Inserting data into roles table
 INSERT INTO role ([role]) VALUES
@@ -210,36 +196,9 @@ INSERT INTO statusEmployee ([status]) VALUES
 (N'Nghỉ Làm');
 GO
 
--- Inserting data into account table
-INSERT INTO account (phone, pass, roleId, email, gender, isActive, avatar) VALUES
-(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, NULL),
-(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, NULL),
-(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, NULL),
-(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, NULL),
-(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, NULL),
-(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, NULL),
-(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, NULL),
-(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, NULL),
-(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL),
-(N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL),
-(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL),
-(N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL),
-(N'0912345677', 'password4', 2, 'thien@example.com', 1, 1, NULL),
-(N'0912345676', 'password5', 2, 'anh@example.com', 1, 1, NULL),
-(N'0912345675', 'password6', 2, 'kiet@example.com', 1, 1, NULL),
-(N'0912345674', 'password7', 2, 'duong@example.com', 1, 1, NULL),
-(N'0912345673', 'password8', 2, 'vinh@example.com', 1, 1, NULL),
-(N'0912345672', 'password9', 2, 'uoc@example.com', 1, 1, NULL),
-(N'0912345669', 'password10', 3, 'phamvana@example.com', 1, 1, NULL),
-(N'0912345668', 'password11', 3, 'nguyenvanb@example.com', 1, 1, NULL),
-(N'0912345667', 'password12', 3, 'truongvanc@example.com', 1, 1, NULL),
-(N'0912345666', 'password13', 3, 'hoangvand@example.com', 1, 1, NULL);
-GO
-
 -- Inserting data into customer table
-USE Barber
-GO
 INSERT INTO customer (phone, fullName) VALUES
+(N'0912345169', N'Phạm Văn Eanh'),
 (N'0912345269', N'Phạm Văn Fanh'),
 (N'0912345369', N'Phạm Văn Ganh'),
 (N'0912345469', N'Phạm Văn Hanh'),
@@ -247,21 +206,46 @@ INSERT INTO customer (phone, fullName) VALUES
 (N'0912345769', N'Phạm Văn Kanh'),
 (N'0912345869', N'Phạm Văn Lanh'),
 (N'0912345969', N'Phạm Văn Manh'),
-(N'0912345169', N'Phạm Văn Eanh'),
 (N'0912345669', N'Phạm Văn Anh'),
-(N'0912345668', N'Nguyễn Văn Bảo'),
-(N'0912345667', N'Trương Văn Cam'),
-(N'0912345666', N'Hoàng Văn Dương');
+(N'0912345668', N'Nguyễn Văn B'),
+(N'0912345667', N'Trương Văn C'),
+(N'0912345666', N'Hoàng Văn D'),
+(N'0912345611', N'Đỗ Tiến Thuật'),
+(N'0912345679', N'Phạm Quốc Trung'),
+(N'0912345678', N'Phạm Đạt Quý'),
+(N'0912345677', N'Phạm Đức Thiện'),
+(N'0912345676', N'Phạm Quang Đức Anh'),
+(N'0912345675', N'Quách Thế Kiệt'),
+(N'0912345674', N'Nguyễn Cảnh Dương'),
+(N'0912345673', N'Đỗ Đức Vinh'),
+(N'0912345672', N'Nguyễn Quang Bá Ước'),
+(N'0912345671', N'Admin');
 GO
 
--- Inserting data into Services table
-INSERT INTO Services (name, image, price, description, isActive) VALUES
-(N'Cắt Tóc', NULL, 70000, N'Cắt tóc tạo kiểu', 1),
-(N'Nhuộm Tóc', NULL, 300000, N'Nhuộm tóc', 1),
-(N'Uốn Tóc', NULL, 200000, N'Uốn tóc', 1),
-(N'Gội Đầu', NULL, 30000, N'Gội đầu', 1),
-(N'Massage', NULL, 50000, N'Massage', 1),
-(N'Trị Mụn', NULL, 70000, N'Trị mụn', 1);
+-- Inserting data into account table
+INSERT INTO account (phone, pass, roleId, email, gender, isActive, points, avatar) VALUES
+(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, 100, NULL),
+(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, 100, NULL),
+(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, 100, NULL),
+(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, 100, NULL),
+(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, 100, NULL),
+(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, 100, NULL),
+(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, 100, NULL),
+(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, 100, NULL),
+(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL, NULL),
+(N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL, NULL),
+(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL, NULL),
+(N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL, NULL),
+(N'0912345677', 'password4', 2, 'thien@example.com', 1, 1, NULL, NULL),
+(N'0912345676', 'password5', 2, 'anh@example.com', 1, 1, NULL, NULL),
+(N'0912345675', 'password6', 2, 'kiet@example.com', 1, 1, NULL, NULL),
+(N'0912345674', 'password7', 2, 'duong@example.com', 1, 1, NULL, NULL),
+(N'0912345673', 'password8', 2, 'vinh@example.com', 1, 1, NULL, NULL),
+(N'0912345672', 'password9', 2, 'uoc@example.com', 1, 1, NULL, NULL),
+(N'0912345669', 'password10', 3, 'phamvana@example.com', 1, 1, 100, NULL),
+(N'0912345668', 'password11', 3, 'nguyenvanb@example.com', 1, 1, 100, NULL),
+(N'0912345667', 'password12', 3, 'truongvanc@example.com', 1, 1, 100, NULL),
+(N'0912345666', 'password13', 3, 'hoangvand@example.com', 1, 1, 100, NULL);
 GO
 
 -- Inserting data into employee table
@@ -277,6 +261,11 @@ INSERT INTO employee (fullName, phone, statusEmployee, updateTime) VALUES
 (N'Nguyễn Quang Bá Ước', N'0912345672', 1, GETDATE());
 GO
 
+-- Inserting data into admin table
+INSERT INTO admin (fullName, phone) VALUES
+(N'Admin', N'0912345671');
+GO
+
 -- Inserting data into status table
 INSERT INTO status ([status]) VALUES
 (N'Đã Đặt'),
@@ -286,8 +275,22 @@ INSERT INTO status ([status]) VALUES
 (N'Hủy Đơn');
 GO
 
+-- Inserting data into discount table
+INSERT INTO discount (point, discount) VALUES
+(100, 10000),
+(200, 20000),
+(300, 30000),
+(400, 40000),
+(500, 50000),
+(600, 60000),
+(700, 70000),
+(800, 80000),
+(900, 90000),
+(1000, 100000);
+GO
+
 -- Inserting data into shift table
-INSERT INTO shift (startTime) VALUES
+INSERT INTO shift ([startTime]) VALUES
 (N'08:00'),
 (N'08:30'),
 (N'9:00'),
@@ -310,65 +313,108 @@ INSERT INTO shift (startTime) VALUES
 (N'19:00');
 GO
 
--- Inserting data into order table
-USE Barber;
+-- Inserting data into Services table
+INSERT INTO Services (name, image, price, description, isActive) VALUES
+(N'Cắt Tóc', NULL, 70000, N'Cắt tóc tạo kiểu', 1),
+(N'Nhuộm Tóc', NULL, 300000, N'Nhuộm tóc', 1),
+(N'Uốn Tóc', NULL, 200000, N'Uốn tóc', 1),
+(N'Gội Đầu', NULL, 30000, N'Gội đầu', 1),
+(N'Massage', NULL, 50000, N'Massage', 1),
+(N'Trị Mụn', NULL, 70000, N'Trị mụn', 1);
 GO
-INSERT INTO [order] (customerId, employeeId, statusID, orderDate, totalAmount, shiftId, updateTime) VALUES
-(5, 4, 1, '2024-06-26', 70000, 5, GETDATE()),
-(6, 5, 1, '2024-06-26', 70000, 3, GETDATE()),
-(7, 6, 1, '2024-06-26', 70000, 8, GETDATE()),
-(8, 7, 1, '2024-06-26', 70000, 9, GETDATE()),
-(9, 8, 1, '2024-06-26', 70000, 15, GETDATE()),
-(10, 9, 1, '2024-06-26', 70000, 12, GETDATE()),
-(11, 2, 1, '2024-06-26', 70000, 15, GETDATE()),
-(12, 5, 1, '2024-06-26', 70000, 15, GETDATE());
-(1, 1, 3, '2024-06-07', 70000, 1, GETDATE()),
-(2, 2, 2, '2024-06-07', 370000, 1, GETDATE()),
-(3, 3, 1, '2024-06-08', 100000, 2, GETDATE()),
-(4, 4, 1, '2024-06-08', 220000, 2, GETDATE());
+
+-- Inserting data into Orders table
+INSERT INTO Orders (orderCode, customerId, employeeId, statusID, orderDate, totalAmount) VALUES
+(N'A123', 1, NULL, 1, '2023-06-30', 150000),
+(N'B123', 2, NULL, 1, '2023-06-30', 180000),
+(N'C123', 3, NULL, 1, '2023-06-30', 250000),
+(N'D123', 4, NULL, 1, '2023-06-30', 120000),
+(N'E123', 5, NULL, 1, '2023-06-30', 170000),
+(N'F123', 6, NULL, 1, '2023-06-30', 130000),
+(N'G123', 7, NULL, 1, '2023-06-30', 140000),
+(N'H123', 8, NULL, 1, '2023-06-30', 160000),
+(N'I123', 9, NULL, 1, '2023-06-30', 190000),
+(N'K123', 10, NULL, 1, '2023-06-30', 210000);
 GO
 
 -- Inserting data into Order_services table
-INSERT INTO Order_services (OrderId, servicesId) VALUES
-(6, 1),
-(6, 5),
-(7, 3),
-(8, 6),
-(8, 2),
-(9, 1),
-(9, 4),
-(9, 2),
-(10, 5),
-(10, 1),
-(11, 6),
-(12, 4),
-(12, 2),
-(13, 2),
-(13, 1),
+INSERT INTO Order_services (servicesId, orderId) VALUES
 (1, 1),
 (2, 1),
-(2, 2),
-(3, 4),
 (3, 1),
-(4, 5),
-(4, 6),
-(4, 3),
-(5, 2),
-(5, 5),
-(5, 4),
-(5, 6),
+(4, 2),
 (5, 3),
-(5, 1);
+(6, 3),
+(1, 4),
+(3, 4),
+(3, 6),
+(1, 6),
+(1, 7),
+(2, 8),
+(3, 8),
+(1, 8),
+(6, 9),
+(1, 9),
+(4, 10),
+(1, 10),
+(5, 5),
+(3, 5);
 GO
 
--- Inserting data into feedback table
+-- Inserting data into Chat table
+INSERT INTO Chat (SenderID, adminId, MessageContent, SendTime, MessageStatus, senderType) VALUES
+(1, 1, N'Hello admin', '2023-06-30', N'sent', N'Customer'),
+(1, 1, N'Hello', '2023-06-30', N'sent', N'Admin'),
+(2, 1, N'admin ơi', '2023-06-30', N'sent', N'Customer'),
+(2, 1, N'chào bạn', '2023-06-30', N'sent', N'Admin'),
+(3, 1, N'chào admin', '2023-06-30', N'sent', N'Customer'),
+(3, 1, N'admin xin chào', '2023-06-30', N'sent', N'Admin');
+GO
+
+-- Inserting data into Voucher table
+INSERT INTO Voucher (Name, discount, status, startTime, endTime) VALUES
+(N'voucher 1', 10000, 1, '2023-06-30', '2023-06-30'),
+(N'voucher 2', 20000, 1, '2023-06-30', '2023-06-30'),
+(N'voucher 3', 30000, 1, '2023-06-30', '2023-06-30'),
+(N'voucher 4', 40000, 1, '2023-06-30', '2023-06-30'),
+(N'voucher 5', 50000, 1, '2023-06-30', '2023-06-30');
+GO
+
+-- Inserting data into the feedback table
 INSERT INTO feedback (noidung, customerId, isActive) VALUES
-(N'Nhân viên thái độ lồi lõm', 1, 1),
-(N'Em gội đầu xinh gái', 3, 1);
+(N'Nhân viên thái độ tốt.', 1, 1),
+(N'Nhân viên rất nhiệt tình.', 2, 1),
+(N'Nhân viên làm việc hiệu quả.', 3, 1),
+(N'Nhân viên làm việc nhanh nhẹn.', 4, 1),
+(N'Nhân viên thân thiện.', 5, 1),
+(N'Nhân viên chuyên nghiệp.', 6, 1),
+(N'Nhân viên thái độ tốt.', 7, 1),
+(N'Nhân viên thái độ tốt.', 8, 1);
+GO
+
+INSERT INTO Order_shift (ShiftID, OrderID)
+VALUES 
+    (1, 1),
+    (2, 2),
+    (2, 3),
+	(3, 4),
+	(4, 5),
+	(5, 6),
+	(5, 7),
+	(6, 8),
+	(6, 9),
+	(7, 10);
+GO
+
+INSERT INTO LoyaltyPolicies (MinAmount, PointsPerUnit)
+VALUES 
+    (100000, 5),
+    (200000, 10),
+    (500000, 25);
 GO
 
 -- Inserting data into store table
-INSERT INTO store (isActive) VALUES
+INSERT INTO store ([isActive]) VALUES
 (1),
 (0);
 GO

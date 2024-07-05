@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.common.HomeController</servlet-class>
@@ -19,10 +20,6 @@
     <servlet>
         <servlet-name>CustomerProfile</servlet-name>
         <servlet-class>Controller.common.CustomerProfile</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CustomerUpdatePage</servlet-name>
-        <servlet-class>Controller.common.CustomerUpdatePage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeesController</servlet-name>
@@ -200,6 +197,10 @@
         <servlet-name>resendotp</servlet-name>
         <servlet-class>Controller.common.resendotp</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateCustomerProfileController</servlet-name>
+        <servlet-class>Controller.customer.UpdateCustomerProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -219,10 +220,6 @@
     <servlet-mapping>
         <servlet-name>CustomerProfile</servlet-name>
         <url-pattern>/cusprofile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerUpdatePage</servlet-name>
-        <url-pattern>/customerupdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
@@ -399,5 +396,9 @@
     <servlet-mapping>
         <servlet-name>resendotp</servlet-name>
         <url-pattern>/resendotp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCustomerProfileController</servlet-name>
+        <url-pattern>/updatecusprofile</url-pattern>
     </servlet-mapping>
 </web-app>

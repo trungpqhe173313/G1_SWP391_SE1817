@@ -5,6 +5,7 @@
 package Controller.customer;
 
 import Dal.CustomerDAO;
+import Model.Account;
 import Model.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,10 +13,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LINHNTHE170290
+ * @author admin
  */
 public class UpdateCustomerProfileController extends HttpServlet {
 
@@ -36,7 +38,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCustomerProfileController</title>");
+            out.println("<title>Servlet UpdateCustomerProfileController</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateCustomerProfileController at " + request.getContextPath() + "</h1>");
@@ -57,7 +59,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
     }
 
     /**
@@ -72,40 +74,53 @@ public class UpdateCustomerProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ form
-        String idStr = request.getParameter("customerid");
-        String phone = request.getParameter("phone");
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
+        //String idStr = request.getParameter("customerid");
         String avatar = request.getParameter("avatar");
+        String fullName = request.getParameter("fullName");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
         Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
-        int customerId = Integer.parseInt(idStr);
+        //int customerId = Integer.parseInt(idStr);
 
         // Kiểm tra xem các tham số đã được cung cấp chưa
         if (phone == null || fullName == null || email == null || avatar == null) {
             response.getWriter().println("Missing required parameters.");
             return;
         }
+        // Lấy thông tin tài khoản từ phiên làm việc
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            CustomerDAO customerDAO = new CustomerDAO();
+            Customer customer = customerDAO.getCustomerByP(account.getPhone());
+            if (customer != null) {
+                // Cập nhật thông tin khách hàng
+                customer.setFullName(fullName);
+                customer.setPhone(phone);
 
-        // Tạo đối tượng Customer mới
-        Customer updatedCustomer = new Customer();
-        updatedCustomer.setCustomerId(customerId);
-        updatedCustomer.setFullName(fullName);
-        updatedCustomer.setPhone(phone);
-        updatedCustomer.getAccount().setEmail(email);
-        updatedCustomer.getAccount().setGender(gender);
-        updatedCustomer.getAccount().setAvatar(avatar);
-
-        // Cập nhật thông tin khách hàng
-        CustomerDAO customerDAO = new CustomerDAO();
-        boolean updateSuccessful = customerDAO.updateCustomer(updatedCustomer);
-
-        if (updateSuccessful) {
-            // Chuyển hướng đến trang CustomerProfile.jsp sau khi cập nhật thành công
-            response.sendRedirect("CustomerProfile.jsp");
+                // Cập nhật thông tin tài khoản liên kết
+                account.setEmail(email);
+                account.setGender(gender);
+                account.setAvatar(avatar);
+                customer.setAccount(account);
+                // Cập nhật thông tin khách hàng trong cơ sở dữ liệu
+                boolean updateSuccessful = customerDAO.updateCustomer(customer);
+                if (updateSuccessful) {
+                    // Chuyển hướng đến trang CustomerProfile.jsp sau khi cập nhật thành công
+                    response.sendRedirect("CustomerProfile.jsp");
+                } else {
+                    // Xử lý trường hợp cập nhật thất bại
+                    response.getWriter().println("Failed to update customer information.");
+                }
+            } else {
+                // Xử lý trường hợp không tìm thấy khách hàng
+                response.getWriter().println("Customer not found.");
+            }
         } else {
-            // Xử lý trường hợp cập nhật thất bại
-            response.getWriter().println("Failed to update customer information.");
+            // Xử lý trường hợp không có tài khoản trong phiên làm việc
+            response.getWriter().println("No account found in session.");
         }
+
     }
 
     /**
