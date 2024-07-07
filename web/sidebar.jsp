@@ -70,6 +70,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Thanh toán</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="voucherdetail">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Mã Giảm Giá</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

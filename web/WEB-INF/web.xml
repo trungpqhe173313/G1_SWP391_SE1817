@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.common.HomeController</servlet-class>
@@ -201,6 +200,14 @@
         <servlet-name>UpdateCustomerProfileController</servlet-name>
         <servlet-class>Controller.customer.UpdateCustomerProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VoucherDetail</servlet-name>
+        <servlet-class>Controller.Voucher.VoucherDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddVoucher</servlet-name>
+        <servlet-class>Controller.Voucher.AddVoucher</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -400,5 +407,13 @@
     <servlet-mapping>
         <servlet-name>UpdateCustomerProfileController</servlet-name>
         <url-pattern>/updatecusprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VoucherDetail</servlet-name>
+        <url-pattern>/voucherdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddVoucher</servlet-name>
+        <url-pattern>/addvoucher</url-pattern>
     </servlet-mapping>
 </web-app>
