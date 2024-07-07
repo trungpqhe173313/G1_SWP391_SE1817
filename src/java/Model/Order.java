@@ -37,6 +37,15 @@ public class Order {
         this.shift = shift;
     }
 
+    public Order(String codeOrder, int customerId, int statusId, Date orderDate, int totalAmount) {
+      
+        this.codeOrder = codeOrder;
+        this.customerId = customerId;
+        this.statusId = statusId;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+    }
+
     
 
     public String getCodeOrder() {

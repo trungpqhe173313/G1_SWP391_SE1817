@@ -17,10 +17,6 @@
         <servlet-class>Controller.common.SignupController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CustomerProfile</servlet-name>
-        <servlet-class>Controller.common.CustomerProfile</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
@@ -181,14 +177,6 @@
         <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewFeedbackController</servlet-name>
-        <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CustomerFeedbackController</servlet-name>
-        <servlet-class>Controller.customer.CustomerFeedbackController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>verifyOTP</servlet-name>
         <servlet-class>Controller.common.verifyOTP</servlet-class>
     </servlet>
@@ -201,12 +189,24 @@
         <servlet-class>Controller.customer.UpdateCustomerProfileController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>VoucherDetail</servlet-name>
-        <servlet-class>Controller.Voucher.VoucherDetail</servlet-class>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>VNpay.ajaxServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddVoucher</servlet-name>
-        <servlet-class>Controller.Voucher.AddVoucher</servlet-class>
+        <servlet-name>CheckOutServeletController</servlet-name>
+        <servlet-class>VNpay.CheckOutServeletController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <servlet-class>Controller.feedback.ViewFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <servlet-class>Controller.feedback.CustomerFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <servlet-class>Controller.customer.CustomerProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -223,10 +223,6 @@
     <servlet-mapping>
         <servlet-name>SignupController</servlet-name>
         <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerProfile</servlet-name>
-        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
@@ -389,14 +385,6 @@
         <url-pattern>/employeerecovery</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewFeedbackController</servlet-name>
-        <url-pattern>/viewfeedback</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerFeedbackController</servlet-name>
-        <url-pattern>/cusfeedback</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>verifyOTP</servlet-name>
         <url-pattern>/verifyotp</url-pattern>
     </servlet-mapping>
@@ -409,11 +397,23 @@
         <url-pattern>/updatecusprofile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>VoucherDetail</servlet-name>
-        <url-pattern>/voucherdetail</url-pattern>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddVoucher</servlet-name>
-        <url-pattern>/addvoucher</url-pattern>
+        <servlet-name>CheckOutServeletController</servlet-name>
+        <url-pattern>/checkOutServeletController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <url-pattern>/viewfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <url-pattern>/cusfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
 </web-app>

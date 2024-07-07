@@ -2,27 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.common;
+package Controller.feedback;
 
-import Dal.CustomerDAO;
 import Dal.FeedbackDAO;
-import Dal.ServicesDAO;
-import Model.Customer;
+import Model.Account;
 import Model.Feedback;
-import Model.Services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+
 
 /**
  *
- * @author phamt
+ * @author LINHNTHE170290
  */
-public class HomeController extends HttpServlet {
+public class ViewFeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,23 +34,23 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
+        //HttpSession session = request.getSession();
+        //Account account = (Account) session.getAttribute("account");
 
+        //if (account != null) {
+        // Assuming FeedbackDAO has method to retrieve all feedbacks
         FeedbackDAO feedbackDAO = new FeedbackDAO();
-        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
+        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks(); // Adjust based on your DAO method
+
+        // Set feedback list as attribute to be accessed in JSP
         request.setAttribute("feedbackList", feedbackList);
 
-        CustomerDAO customerDAO = new CustomerDAO();
-        List<Customer> cusList = customerDAO.getAllCustomer();
-        request.setAttribute("cusList", cusList);
-
-//         for (Feedback feedback : feedbackList) {
-//            System.out.println(feedback.toString());
-//        }
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
-    }
+        // Forward to JSP for rendering
+        request.getRequestDispatcher("ViewFeedback.jsp").forward(request, response);
+        //} else {
+        //response.sendRedirect("login.jsp");
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -65,10 +64,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ServicesDAO dao = new ServicesDAO();
-//        List<Services> se = dao.GetAllServices();
-//        request.setAttribute("listS", se);
-//        request.getRequestDispatcher("homepage.jsp").forward(request, response);
         processRequest(request, response);
     }
 

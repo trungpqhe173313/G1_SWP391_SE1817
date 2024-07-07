@@ -124,30 +124,29 @@ public class OrderDAO extends DBContext {
         }
     }
 
-//    public void AddOrder(Order o) {
-//        String sql = "INSERT INTO [dbo].[Orders]\n"
-//                + "           ([customerId]\n"
-//                + "           ,[statusID]\n"
-//                + "           ,[orderDate]\n"
-//                + "           ,[totalAmount]\n"
-//                + "           ,[shiftId]\n"
-//                + "           ,[updateTime])\n"
-//                + "     VALUES\n"
-//                + "           (?,?,?,?,?,GETDATE())";
-//        try (PreparedStatement st = connection.prepareStatement(sql);) {
-//
-//            st.setInt(1, o.getCustomerId());
-//            st.setInt(2, o.getStatusId());
-//            st.setDate(3, o.getOrderDate());
-//            st.setInt(4, o.getTotalAmount());
-//            st.setInt(5, o.getShiftsID());
-//
-//            st.executeUpdate();
-//
-//        } catch (SQLException e) {
-//
-//        }
-//    }
+    public void AddOrder(Order o) {
+        String sql = "INSERT INTO [dbo].[Orders]\n"
+                + "           ([orderCode]\n"
+                + "           ,[customerId]\n"
+                + "           ,[statusID]\n"
+                + "           ,[orderDate]\n"
+                + "           ,[totalAmount]\n"
+                + "           ,[updateTime])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,GETDATE())";
+        try (PreparedStatement st = connection.prepareStatement(sql);) {
+            st.setString(1, o.getCodeOrder());
+            st.setInt(2, o.getCustomerId());
+            st.setInt(3, o.getStatusId());
+            st.setDate(4, o.getOrderDate());
+            st.setInt(5, o.getTotalAmount());
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+
+        }
+    }
+
     public void AddOrder_services(int servicesId, int orderId) {
         String sql = "INSERT INTO [dbo].[Order_services]\n"
                 + "           ([servicesId]\n"
@@ -320,9 +319,6 @@ public class OrderDAO extends DBContext {
         }
         return orders;
     }
-    
-   
-
 
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
