@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.common.HomeController</servlet-class>
@@ -16,10 +15,6 @@
     <servlet>
         <servlet-name>SignupController</servlet-name>
         <servlet-class>Controller.common.SignupController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CustomerProfile</servlet-name>
-        <servlet-class>Controller.common.CustomerProfile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeesController</servlet-name>
@@ -182,14 +177,6 @@
         <servlet-class>Controller.admin.EmployeesRecoveryController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewFeedbackController</servlet-name>
-        <servlet-class>Controller.Service.ViewFeedbackController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CustomerFeedbackController</servlet-name>
-        <servlet-class>Controller.customer.CustomerFeedbackController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>verifyOTP</servlet-name>
         <servlet-class>Controller.common.verifyOTP</servlet-class>
     </servlet>
@@ -209,6 +196,18 @@
         <servlet-name>CheckOutServeletController</servlet-name>
         <servlet-class>VNpay.CheckOutServeletController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <servlet-class>Controller.feedback.ViewFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <servlet-class>Controller.feedback.CustomerFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <servlet-class>Controller.customer.CustomerProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -224,10 +223,6 @@
     <servlet-mapping>
         <servlet-name>SignupController</servlet-name>
         <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerProfile</servlet-name>
-        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
@@ -390,14 +385,6 @@
         <url-pattern>/employeerecovery</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewFeedbackController</servlet-name>
-        <url-pattern>/viewfeedback</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerFeedbackController</servlet-name>
-        <url-pattern>/cusfeedback</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>verifyOTP</servlet-name>
         <url-pattern>/verifyotp</url-pattern>
     </servlet-mapping>
@@ -416,5 +403,17 @@
     <servlet-mapping>
         <servlet-name>CheckOutServeletController</servlet-name>
         <url-pattern>/checkOutServeletController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackController</servlet-name>
+        <url-pattern>/viewfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerFeedbackController</servlet-name>
+        <url-pattern>/cusfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
 </web-app>

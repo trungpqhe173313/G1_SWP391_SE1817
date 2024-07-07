@@ -58,7 +58,11 @@
                                 <div class="card w-100">
                                     <div class="card-body p-4">
                                         <div class="">
-                                            <h5>${feedback.customer.fullName}</h5>
+                                            <h5> <c:forEach var="customer" items="${cusList}">
+                                                    <c:if test="${customer.customerId == feedback.customerId}">
+                                                        ${customer.fullName}
+                                                    </c:if>
+                                                </c:forEach></h5>
                                             <p>${feedback.noidung}</p>
 
                                             <div class="d-flex justify-content-between align-items-center">

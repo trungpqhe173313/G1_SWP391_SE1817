@@ -149,12 +149,18 @@ public class AccountDAO extends DBContext {
 
     public static String hashPassword(String password) {
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hashedBytes = md.digest(password.getBytes());
+            // Create a MessageDigest instance for SHA-256
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // Add password bytes to digest
+            md.update(password.getBytes());
+            // Get the hashed bytes
+            byte[] bytes = md.digest();
+            // Convert bytes to a hexadecimal format
             StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
+            // Get complete hashed password in hex format
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
