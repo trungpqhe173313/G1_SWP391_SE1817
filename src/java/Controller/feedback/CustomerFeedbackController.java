@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.customer;
+package Controller.feedback;
 
 import Dal.CustomerDAO;
 import Dal.FeedbackDAO;
@@ -59,7 +59,7 @@ public class CustomerFeedbackController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+   @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("CustomerFeedback.jsp").forward(request, response);
@@ -75,7 +75,7 @@ public class CustomerFeedbackController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String noidung = request.getParameter("noidung");
         HttpSession session = request.getSession();
@@ -108,7 +108,11 @@ public class CustomerFeedbackController extends HttpServlet {
             
             response.getWriter().write("Tài khoản này không được tìm thấy! :(");
         }
+<<<<<<< Updated upstream:src/java/Controller/customer/CustomerFeedbackController.java
           out.flush();
+=======
+          
+>>>>>>> Stashed changes:src/java/Controller/feedback/CustomerFeedbackController.java
     }
 
     /**

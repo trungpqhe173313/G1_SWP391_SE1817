@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.Service;
+package Controller.feedback;
 
 import Dal.FeedbackDAO;
 import Model.Account;
@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+
 
 /**
  *
@@ -48,6 +49,7 @@ public class ViewFeedbackController extends HttpServlet {
         request.getRequestDispatcher("ViewFeedback.jsp").forward(request, response);
         //} else {
         //response.sendRedirect("login.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
