@@ -74,14 +74,31 @@ public class ShiftsDAO extends DBContext {
         return list;
     }
 
+    public List<Shift> getAllNextShift(int id, int number) {
+        List<Shift> list = new ArrayList<>();
+         String sql = "SELECT TOP " + number + " * FROM shift WHERE id > ? ORDER BY id;";
+        try (PreparedStatement stm = connection.prepareStatement(sql);) {
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Shift s = new Shift(rs.getInt(1), rs.getString(2));
+                list.add(s);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         ShiftsDAO d = new ShiftsDAO();
-        
-        System.out.println(d.getShiftById(1));
-//        List<Shift> l = d.getAllShiftFromNow();
-//        for (Shift s : l) {
-//            System.out.println(s.toString());
-//        }
+
+//        System.out.println(d.getShiftById(1));
+        List<Shift> l = d.getAllNextShift(6, 5);
+        for (Shift s : l) {
+            System.out.println(s.toString());
+        }
     }
 
 }

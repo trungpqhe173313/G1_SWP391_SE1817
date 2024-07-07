@@ -37,6 +37,15 @@ public class Order {
         this.shift = shift;
     }
 
+    public Order(String codeOrder, int customerId, int statusId, Date orderDate, int totalAmount) {
+      
+        this.codeOrder = codeOrder;
+        this.customerId = customerId;
+        this.statusId = statusId;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+    }
+
     
 
     public String getCodeOrder() {
@@ -114,9 +123,10 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", customerId=" + customerId + ", employeeId=" + employeeId + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + '}';
+        return "Order{" + "id=" + id + ", codeOrder=" + codeOrder + ", customerId=" + customerId + ", employeeId=" + employeeId + ", statusId=" + statusId + ", orderDate=" + orderDate + ", totalAmount=" + totalAmount + ", updateTime=" + updateTime + ", shift=" + shift + '}';
     }
 
+   
     
 
 }

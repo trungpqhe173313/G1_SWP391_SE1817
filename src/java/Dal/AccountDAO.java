@@ -42,6 +42,34 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    public Account getAccountByPhone(String phone) {
+
+        try {
+
+            String sql = "SELECT *\n"
+                    + "  FROM account\n"
+                    + "  where phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Account account = new Account();
+                account.setPhone(rs.getString("phone"));
+                account.setPass(rs.getString("pass"));
+                account.setRoleId(rs.getInt("roleId"));
+                account.setEmail(rs.getString("email"));
+                account.setGender(rs.getBoolean("gender"));
+                account.setIsActive(rs.getBoolean("isActive"));
+                account.setAvatar(rs.getString("avatar"));
+                return account;
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<>();
@@ -285,38 +313,34 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        AccountDAO a = new AccountDAO();
-        String phone = "0912345666"; // Thay thế bằng tên người dùng thử nghiệm
-        String pass = "password13"; // Thay thế bằng mật khẩu thử nghiệm
-        Account account = a.checkAuthentic(phone, pass);
-
-        // In thông tin tài khoản nếu đăng nhập thành công
-        if (account != null) {
-            System.out.println("Login successful!");
-            System.out.println("Phone: " + account.getPhone());
-            System.out.println("Pass: " + account.getPass());
-            System.out.println("Role ID: " + account.getRoleId());
-            System.out.println("Email: " + account.getEmail());
-            System.out.println("Gender: " + account.getGender());
-            System.out.println("Is Active: " + account.getIsActive());
-            System.out.println("Avatar: " + account.getAvatar());
-        } else {
-            System.out.println("Login failed: Invalid phone or pass");
-
-        }
-    }
 //    public static void main(String[] args) {
-//    String email = "quypdhe173508@fpt.edu.vn";
-//    AccountDAO dao = new AccountDAO();
-//    
-//    try {
-//        boolean emailExists = dao.checkEmailExist(email);
-//        System.out.println("Email exists: " + emailExists);
-//    } catch (SQLException e) {
-//        System.out.println("Error while checking email existence: " + e.getMessage());
-//        e.printStackTrace();
+//        AccountDAO a = new AccountDAO();
+//        String phone = "0912345666"; // Thay thế bằng tên người dùng thử nghiệm
+//        String pass = "password13"; // Thay thế bằng mật khẩu thử nghiệm
+//        Account account = a.checkAuthentic(phone, pass);
+//
+//        // In thông tin tài khoản nếu đăng nhập thành công
+//        if (account != null) {
+//            System.out.println("Login successful!");
+//            System.out.println("Phone: " + account.getPhone());
+//            System.out.println("Pass: " + account.getPass());
+//            System.out.println("Role ID: " + account.getRoleId());
+//            System.out.println("Email: " + account.getEmail());
+//            System.out.println("Gender: " + account.getGender());
+//            System.out.println("Is Active: " + account.getIsActive());
+//            System.out.println("Avatar: " + account.getAvatar());
+//        } else {
+//            System.out.println("Login failed: Invalid phone or pass");
+//
+//        }
 //    }
-//}
 
+    
+public static void main(String[] args) {
+    
+        String phone = "0912345269";
+        AccountDAO d = new AccountDAO();
+        System.out.println(d.getAccountByPhone(phone).getEmail());   
+        
+    }
 }
