@@ -42,7 +42,6 @@ public class CustomerDAO extends DBContext {
         return null;
     }
 
-
     public List<Customer> getAllCustomer() {
         List<Customer> customer = new ArrayList<>();
         try {
@@ -115,22 +114,23 @@ public class CustomerDAO extends DBContext {
     }
 
     public Customer getCustomerProfileById(int customerId) {
-        String sql = "SELECT "
-                + "   c.customerId, "
-                + "   c.fullName, "
-                + "   a.phone, "
-                + "   a.pass, "
-                + "   a.roleId, "
-                + "   a.email, "
-                + "   a.gender, "
-                + "   a.isActive, "
-                + "   a.avatar "
-                + "FROM "
-                + "   account a "
-                + "JOIN "
-                + "   customer c ON a.phone = c.phone "
-                + "WHERE "
-                + "   c.customerId = ?";
+        String sql = "SELECT \n"
+                + "    c.customerId, \n"
+                + "    c.fullName, \n"
+                + "    a.phone, \n"
+                + "    a.pass, \n"
+                + "    a.roleId, \n"
+                + "    a.email, \n"
+                + "    a.gender, \n"
+                + "    a.isActive, \n"
+                + "    a.avatar, \n"
+                + "	a.points\n"
+                + "FROM \n"
+                + "    account a \n"
+                + "JOIN \n"
+                + "    customer c ON a.phone = c.phone \n"
+                + "WHERE \n"
+                + "    c.customerId = ?";
 
         Customer customer = null;
 
@@ -147,7 +147,7 @@ public class CustomerDAO extends DBContext {
                     account.setGender(rs.getBoolean("gender"));
                     account.setIsActive(rs.getBoolean("isActive"));
                     account.setAvatar(rs.getString("avatar"));
-
+                    account.setPoint(rs.getInt("points"));
                     // Retrieve customer information
                     customer = new Customer();
                     customer.setCustomerId(rs.getInt("customerId"));

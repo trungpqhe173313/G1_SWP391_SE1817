@@ -117,7 +117,6 @@ public class ServicesDAO extends DBContext {
         PreparedStatement stm = null;
         ResultSet rs = null;
         Services service = null;
-
         try {
             con = DBContext.connection;
             if (con != null) {
@@ -145,7 +144,6 @@ public class ServicesDAO extends DBContext {
     public void toggleVisibility(int serviceId) {
         Connection con = null;
         PreparedStatement ps = null;
-
         try {
             con = DBContext.connection;
             if (con != null) {
