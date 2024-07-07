@@ -4,6 +4,8 @@
  */
 package Controller.customer;
 
+import Dal.EmployeesDAO;
+import Dal.Order_shiftDAO;
 import Dal.ShiftsDAO;
 import Model.Shift;
 import Model.Time;
@@ -44,20 +46,24 @@ public class FetchShiftsServlet extends HttpServlet {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String todayStr = today.format(formatter);
-        
+
         List<Shift> shifts;
         if (selectedDate.equals(todayStr)) {
             shifts = d.getAllShiftFromNow();
-        }else
+        } else {
+
             shifts = d.getAll();
-        session.setAttribute("time", new Time(selectedDate, shifts));
+        }
+        //danh sach luu nhung ca trong
+        List<Shift> listShift = listShiftEmpty(shifts, selectedDate);
+        session.setAttribute("time", new Time(selectedDate, listShift));
         // Set content type và encoding của response
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         // Convert danh sách shifts sang JSON và gửi về client
         PrintWriter out = response.getWriter();
-        out.print(buildJSONResponse(shifts));
+        out.print(buildJSONResponse(listShift));
         out.flush();
     }
 
@@ -76,6 +82,25 @@ public class FetchShiftsServlet extends HttpServlet {
         }
         json.append("]");
         return json.toString();
+    }
+
+    /**
+     *
+     * @param shift to check is that shift empty
+     * @param date
+     * @return boolean
+     */
+    public List<Shift> listShiftEmpty(List<Shift> listShift, String date) {
+        List<Shift> listShiftEmpty = new ArrayList<>();
+        Order_shiftDAO osd = new Order_shiftDAO();
+        EmployeesDAO ed = new EmployeesDAO();
+        int numberEmployeeActive = ed.countNumberActiveEmployee();
+        for (Shift s : listShift) {
+            if (numberEmployeeActive > osd.countNumberOrderInShift(s.getId(), date)) {
+                listShiftEmpty.add(s);
+            }
+        }
+        return listShiftEmpty;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

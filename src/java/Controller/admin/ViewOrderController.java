@@ -54,12 +54,9 @@ public class ViewOrderController extends HttpServlet {
         List<Customer> ListCustomer = new CustomerDAO().getAllCustomer();
         //get info barber
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
-        //get info shift
-        List<Shift> Shift = new ShiftsDAO().getAll();
         //get info status
         List<Status> status = new StatusDAO().getAll();
         request.setAttribute("status", status);
-        request.setAttribute("shift", Shift);
         request.setAttribute("orders", ListOrder);
         request.setAttribute("ListCustomer", ListCustomer);
         request.setAttribute("cancelOrder", cancelOrder);

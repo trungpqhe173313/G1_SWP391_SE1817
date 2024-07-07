@@ -16,11 +16,32 @@ public class Account {
     private String email;
     private Boolean gender;
     private Boolean isActive;
+    private int point;
     private String avatar;
 
     public Account() {
     }
 
+    public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, int point, String avatar) {
+        this.phone = phone;
+        this.pass = pass;
+        this.roleId = roleId;
+        this.email = email;
+        this.gender = gender;
+        this.isActive = isActive;
+        this.point = point;
+        this.avatar = avatar;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+    
+    
     public Account(String phone, String pass, int roleId, String email, Boolean gender, Boolean isActive, String avatar) {
         this.phone = phone;
         this.pass = pass;
@@ -31,13 +52,13 @@ public class Account {
         this.avatar = avatar;
     }
 
-//    public String getAvatar(String vatar) {
-//        return avatar;
-//    }
-//
-//    public void setAvata(String avatar) {
-//        this.avatar = avatar;
-//    }
+    public String getAvatar(String vatar) {
+        return avatar;
+    }
+
+    public void setAvata(String avatar) {
+        this.avatar = avatar;
+    }
     
     public String getPhone() {
         return phone;

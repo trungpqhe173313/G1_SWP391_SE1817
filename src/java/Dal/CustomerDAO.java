@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 public class CustomerDAO extends DBContext {
 
     public Customer getCustomerByP(String phone) {
-        Customer customer = new Customer();
         try {
 
             String sql = "SELECT *\n"
@@ -33,67 +32,16 @@ public class CustomerDAO extends DBContext {
             stm.setString(1, phone);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                customer = new Customer(rs.getInt(1),
+                return new Customer(rs.getInt(1),
                         rs.getString(2), rs.getString(3));
-                return customer;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return customer;
+        return null;
     }
 
-//    public Customer getCustomerProfileByID(int customerId) {
-//        String sql = "SELECT "
-//                + "   c.customerId, "
-//                + "   c.fullName, "
-//                + "   a.phone, "
-//                + "   a.pass, "
-//                + "   a.roleId, "
-//                + "   a.email, "
-//                + "   a.gender, "
-//                + "   a.isActive, "
-//                + "   a.avatar "
-//                + "FROM "
-//                + "   account a "
-//                + "JOIN "
-//                + "   customer c ON a.phone = c.phone "
-//                + "WHERE "
-//                + "   c.customerId = ?";
-//
-//        Customer customer = null;
-//
-//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-//            stmt.setInt(1, customerId);
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    // Retrieve account information
-//                    Account account = new Account();
-//                    account.setPhone(rs.getString("phone"));
-//                    account.setPass(rs.getString("pass"));
-//                    account.setRoleId(rs.getInt("roleId"));
-//                    account.setEmail(rs.getString("email"));
-//                    account.setGender(rs.getBoolean("gender"));
-//                    account.setIsActive(rs.getBoolean("isActive"));
-//                    account.setAvatar(rs.getString("avatar"));
-//
-//                    // Retrieve customer information
-//                    customer = new Customer();
-//                    customer.setCustomerId(rs.getInt("customerId"));
-//                    customer.setFullName(rs.getString("fullName"));
-//                    customer.setPhone(rs.getString("phone")); // Phone from accounts table
-//
-//                    // Set the account object into customer
-//                    customer.setAccount(account);
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        return customer;
-//    }
     public List<Customer> getAllCustomer() {
         List<Customer> customer = new ArrayList<>();
         try {
@@ -166,22 +114,23 @@ public class CustomerDAO extends DBContext {
     }
 
     public Customer getCustomerProfileById(int customerId) {
-        String sql = "SELECT "
-                + "   c.customerId, "
-                + "   c.fullName, "
-                + "   a.phone, "
-                + "   a.pass, "
-                + "   a.roleId, "
-                + "   a.email, "
-                + "   a.gender, "
-                + "   a.isActive, "
-                + "   a.avatar "
-                + "FROM "
-                + "   account a "
-                + "JOIN "
-                + "   customer c ON a.phone = c.phone "
-                + "WHERE "
-                + "   c.customerId = ?";
+        String sql = "SELECT \n"
+                + "    c.customerId, \n"
+                + "    c.fullName, \n"
+                + "    a.phone, \n"
+                + "    a.pass, \n"
+                + "    a.roleId, \n"
+                + "    a.email, \n"
+                + "    a.gender, \n"
+                + "    a.isActive, \n"
+                + "    a.avatar, \n"
+                + "	a.points\n"
+                + "FROM \n"
+                + "    account a \n"
+                + "JOIN \n"
+                + "    customer c ON a.phone = c.phone \n"
+                + "WHERE \n"
+                + "    c.customerId = ?";
 
         Customer customer = null;
 
@@ -198,7 +147,7 @@ public class CustomerDAO extends DBContext {
                     account.setGender(rs.getBoolean("gender"));
                     account.setIsActive(rs.getBoolean("isActive"));
                     account.setAvatar(rs.getString("avatar"));
-
+                    account.setPoint(rs.getInt("points"));
                     // Retrieve customer information
                     customer = new Customer();
                     customer.setCustomerId(rs.getInt("customerId"));
@@ -250,25 +199,8 @@ public class CustomerDAO extends DBContext {
 
     public static void main(String[] args) {
         CustomerDAO customerdao = new CustomerDAO();
-        String phone = "0912345669";
-        Customer customer = customerdao.getCustomerProfile(phone);
-        if (customer != null) {
-            System.out.println("Successful!");
-            System.out.println("Customer Information:");
-            System.out.println("customerId: " + customer.getCustomerId());
-            System.out.println("fullName: " + customer.getFullName());
-            System.out.println("phone: " + customer.getPhone());
-            System.out.println("Account Information:");
-            System.out.println("phone: " + customer.getAccount().getPhone());
-            System.out.println("pass: " + customer.getAccount().getPass());
-            System.out.println("role Id: " + customer.getAccount().getRoleId());
-            System.out.println("email: " + customer.getAccount().getEmail());
-            System.out.println("gender: " + customer.getAccount().getGender());
-            System.out.println("is Active: " + customer.getAccount().getIsActive());
-            System.out.println("avatar: " + customer.getAccount().getAvatar());
-        } else {
-            System.out.println("Failed: Invalid customer id!");
-        }
+        Customer c = customerdao.getCustomerByP("0912345667");
+        System.out.println(c.getCustomerId());
 
     }
 
