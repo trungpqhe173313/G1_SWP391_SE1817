@@ -5,7 +5,9 @@
 package Controller.common;
 
 import Dal.AccountDAO;
+import Dal.CustomerDAO;
 import Model.Account;
+import Model.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -38,7 +40,7 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet LoginController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
@@ -81,37 +83,41 @@ public class LoginController extends HttpServlet {
         // Mã hóa mật khẩu người dùng nhập vào
         //String hashedPassword = AccountDAO.hashPassword(password);
         //Account a = da.login(phone, hashedPassword);
-        
+
         String r = request.getParameter("remember");
-            // tao 3 cookie  cookieU  , cookieP  , cookieR
-            Cookie cookieU = new Cookie("cUser", phone);
-            Cookie cookieP = new Cookie("cPass", password);
-            Cookie cookieR = new Cookie("cRem", r);
-            if (r != null) {
-                cookieU.setMaxAge(60 * 60 * 24);  // 1 day  
-                cookieP.setMaxAge(60 * 60 * 24);
-                cookieR.setMaxAge(60 * 60 * 24);
+        // tao 3 cookie  cookieU  , cookieP  , cookieR
+        Cookie cookieU = new Cookie("cUser", phone);
+        Cookie cookieP = new Cookie("cPass", password);
+        Cookie cookieR = new Cookie("cRem", r);
+        if (r != null) {
+            cookieU.setMaxAge(60 * 60 * 24);  // 1 day  
+            cookieP.setMaxAge(60 * 60 * 24);
+            cookieR.setMaxAge(60 * 60 * 24);
 
-            } else {
-                cookieU.setMaxAge(0);
-                cookieP.setMaxAge(0);
-                cookieR.setMaxAge(0);
+        } else {
+            cookieU.setMaxAge(0);
+            cookieP.setMaxAge(0);
+            cookieR.setMaxAge(0);
 
-            }
-            response.addCookie(cookieU);
-            response.addCookie(cookieP);
-            response.addCookie(cookieR);
-            // save browser
-            
+        }
+        response.addCookie(cookieU);
+        response.addCookie(cookieP);
+        response.addCookie(cookieR);
+        // save browser
+
         if (a == null) {
             request.setAttribute("error", "Phone or password incorrect!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
+//            CustomerDAO customerDAO = new CustomerDAO();
+//            Customer customer = customerDAO.getCustomerByP(phone);
+            
 //            int sessionTimeoutSeconds = 240000;
             // Tạo session
             HttpSession session = request.getSession();
 //            session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
+            //request.setAttribute("customer", customer);
             response.sendRedirect("home");
         }
     }

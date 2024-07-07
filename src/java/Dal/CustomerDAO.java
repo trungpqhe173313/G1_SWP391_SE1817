@@ -56,7 +56,7 @@ public class CustomerDAO extends DBContext {
             }
             rs.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ServicesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return customer;
     }
