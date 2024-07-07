@@ -108,11 +108,7 @@ public class CustomerFeedbackController extends HttpServlet {
             
             response.getWriter().write("Tài khoản này không được tìm thấy! :(");
         }
-<<<<<<< Updated upstream:src/java/Controller/customer/CustomerFeedbackController.java
-          out.flush();
-=======
-          
->>>>>>> Stashed changes:src/java/Controller/feedback/CustomerFeedbackController.java
+
     }
 
     /**
