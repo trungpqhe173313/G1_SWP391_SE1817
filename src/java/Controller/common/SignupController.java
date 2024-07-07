@@ -56,7 +56,7 @@ public class SignupController extends HttpServlet {
 //        }
 
         AccountDAO d = new AccountDAO();
-        //CustomerDAO cd = new CustomerDAO();
+        CustomerDAO cd = new CustomerDAO();
         Account a = d.checkAccountExist(phone);
         if (a == null) {
             // Tạo mới đối tượng Account và đặt các giá trị
@@ -74,7 +74,7 @@ public class SignupController extends HttpServlet {
             customer.setFullName(fullName);
             customer.setAccount(newAccount); // Liên kết Customer với Account
             
-            //cd.insertCustomer(customer);
+            cd.insertCustomer(customer);
             d.insertAccount(newAccount);
             response.sendRedirect("login");
             //request.getRequestDispatcher("homepage.jsp").forward(request, response);

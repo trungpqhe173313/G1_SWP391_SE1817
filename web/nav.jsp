@@ -27,10 +27,11 @@
                     <c:if test="${sessionScope.account!=null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hello ${sessionScope.account.getPhone()}
+                           Hello ${sessionScope.account.getPhone()}
+                                    
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-<!--                            <a class="dropdown-item" href="employeesprofile">Personal Information</a>-->
+                            <!--                            <a class="dropdown-item" href="employeesprofile">Personal Information</a>-->
                             <a class="dropdown-item" href="cusprofile">Personal Information</a>
                             <a class="dropdown-item" href="viewAppountController">Appointment Schedule</a>
                             <a class="dropdown-item" href="viewhistorybooking">View history Booking</a>

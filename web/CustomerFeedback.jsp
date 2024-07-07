@@ -53,7 +53,7 @@
                 border-radius: 5px;
                 padding: 1.5%;
                 background: #dc3545;
-                font-weight: 600;
+                font-weight: 1200;
                 color: #fff;
                 cursor: pointer;
             }
@@ -76,22 +76,23 @@
                 <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
             </div>
             <form method="post" action="cusfeedback">
-                <h3>Đánh giá dịch vụ</h3>
                 
                 <div class="form-group">
                     <h6>Bạn có những kiến nghị gì để chúng tôi cải thiện dịch vụ tốt hơn?</h6>
-                    <textarea name="noidung" class="form-control" placeholder="Đánh giá của bạn*"  style="width: 100%; height: 150px;"></textarea>
+                    <textarea name="noidung" class="form-control" placeholder="Đánh giá của bạn*"  style="width: 100%; height: 200px;"></textarea>
 
                 </div>
                 <div class="col-md-6">
                     <input type="submit" name="btnSubmit" class="btnContact" value="Gửi" />
                     <br>
-                    <a href="viewfeedback"><- Quay lại </a>
+                    
                 </div>
 
 
 
             </form>
         </div>
+        
+
     </body>
 </html>

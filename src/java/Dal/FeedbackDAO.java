@@ -59,11 +59,11 @@ public class FeedbackDAO extends DBContext {
     public List<Feedback> getAllFeedbacks() {
         List<Feedback> feedbacks = new ArrayList<>();
 
-        String query = "SELECT f.id, f.noidung, f.customerId, f.isActive, "
-                + "c.customerId, c.fullName, c.phone "
-                + "FROM feedback f "
-                + "JOIN customer c ON f.customerId = c.customerId;";
-
+//        String query = "SELECT f.id, f.noidung, f.customerId, f.isActive, "
+//                + "c.fullName"
+//                + "FROM feedback f "
+//                + "JOIN customer c ON f.customerId = c.customerId;";
+        String query = "SELECT*FROM feedback";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -73,13 +73,11 @@ public class FeedbackDAO extends DBContext {
                 String noidung = rs.getString("noidung");
                 int customerId = rs.getInt("customerId");
                 boolean isActive = rs.getBoolean("isActive");
+                //String fullName = rs.getString("fullName");
+                //String phone = rs.getString("phone");
 
-                int cId = rs.getInt("customerId");
-                String fullName = rs.getString("fullName");
-                String phone = rs.getString("phone");
-
-                Customer customer = new Customer(cId, fullName, phone); // Assuming Account is not retrieved here
-                Feedback feedback = new Feedback(id, noidung, customerId, isActive, customer);
+                //Customer customer = new Customer(customerId, fullName, phone); // Assuming Account is not retrieved here
+                Feedback feedback = new Feedback(id, noidung, customerId, isActive);
                 feedbacks.add(feedback);
             }
 
@@ -117,17 +115,10 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         FeedbackDAO fb = new FeedbackDAO();
         Feedback feedback = new Feedback();
-        feedback.setNoidung("Cắt đẹp.");
-        feedback.setCustomerId(2); // Thay thế bằng customerId thực tế
-        feedback.setIsActive(true);
 
-        // In thông tin tài khoản nếu đăng nhập thành công
-         // Gọi phương thức addFeedback của FeedbackDAO để thêm feedback vào cơ sở dữ liệu
-        try {
-            fb.addFeedback(feedback);
-            System.out.println("Thêm phản hồi thành công!");
-        } catch (Exception e) {
-            System.err.println("Lỗi khi thêm phản hồi: " + e.getMessage());
+        List<Feedback> feedlist = fb.getAllFeedbacks();
+        for (Feedback feedback1 : feedlist) {
+            System.out.println(feedback1.toString());
         }
     }
 }
