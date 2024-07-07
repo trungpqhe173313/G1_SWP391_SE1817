@@ -17,10 +17,6 @@
         <servlet-class>Controller.common.SignupController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CustomerProfile</servlet-name>
-        <servlet-class>Controller.common.CustomerProfile</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EmployeesController</servlet-name>
         <servlet-class>Controller.common.EmployeesController</servlet-class>
     </servlet>
@@ -208,6 +204,10 @@
         <servlet-name>CustomerFeedbackController</servlet-name>
         <servlet-class>Controller.feedback.CustomerFeedbackController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <servlet-class>Controller.customer.CustomerProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -223,10 +223,6 @@
     <servlet-mapping>
         <servlet-name>SignupController</servlet-name>
         <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerProfile</servlet-name>
-        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeesController</servlet-name>
@@ -415,5 +411,9 @@
     <servlet-mapping>
         <servlet-name>CustomerFeedbackController</servlet-name>
         <url-pattern>/cusfeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerProfileController</servlet-name>
+        <url-pattern>/cusprofile</url-pattern>
     </servlet-mapping>
 </web-app>
