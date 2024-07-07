@@ -232,12 +232,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <form action="login" method="post" class="signin-form">
                         <p class="text-danger">${error}</p>
                         <div class="group">
-                            <label class="label" for="phone">Số điện thoại</label>
+                            <label class="label" for="phone">Số điện thoại*</label>
                             <input type="text" class="input"  required name = "phone" value="${cookie.cUser.value}">
                         </div>
 
                         <div class="group">
-                            <label class="label" for="pass">Mật khẩu</label>
+                            <label class="label" for="pass">Mật khẩu*</label>
                             <input type="password" class="input"  required name = "pass" value="${cookie.cPass.value}">
                         </div>
                         <div class="group">
