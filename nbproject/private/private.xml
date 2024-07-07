@@ -2,6 +2,45 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/changePassEmployees.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Employee.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/changePassReset.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/AccountDAO.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/CustomerProfile.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/changepassw.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeerecovery.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/contact.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/FeedbackDAO.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesResign.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/test/NewClass.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/EmployeesDetailController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/EmployeesDAO.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/ChangePassEmployees.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesProfile.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/nbproject/build-impl.xml</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/homepage.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/LogoutController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/services.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/updateemployeesstatus.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/customer/AppointmentServlet.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/LoginController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/changepassreset.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Customer.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesManagement.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/DBContext.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesdetail.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/nav.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/Employee/EmployeesProfileController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Account.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/CustomerDAO.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/Employee/UpdateEmployeesProfile.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/AddEmployeesController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/sidebarEmployees.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/UpdateStatusEmployeeController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/sidebar.jsp</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/UpdateEmployeesStatusController.java</file>
+        </group>
     </open-files>
 </project-private>

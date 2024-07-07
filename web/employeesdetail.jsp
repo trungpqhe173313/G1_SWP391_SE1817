@@ -178,7 +178,7 @@
 
         function confirmDelete(employeeId) {
             if (confirm("Bạn có chắc chắn muốn xóa nhân viên này không?")) {
-                window.location.href = 'employeerecovery?employeeId=' + employeeId + '&isActive=true';
+                window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=false';
             }
         }
     </script>
