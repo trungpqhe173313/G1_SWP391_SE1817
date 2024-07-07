@@ -200,6 +200,14 @@
         <servlet-name>UpdateCustomerProfileController</servlet-name>
         <servlet-class>Controller.customer.UpdateCustomerProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>VNpay.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckOutServeletController</servlet-name>
+        <servlet-class>VNpay.CheckOutServeletController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -399,5 +407,13 @@
     <servlet-mapping>
         <servlet-name>UpdateCustomerProfileController</servlet-name>
         <url-pattern>/updatecusprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckOutServeletController</servlet-name>
+        <url-pattern>/checkOutServeletController</url-pattern>
     </servlet-mapping>
 </web-app>
