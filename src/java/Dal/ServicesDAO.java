@@ -117,7 +117,6 @@ public class ServicesDAO extends DBContext {
         PreparedStatement stm = null;
         ResultSet rs = null;
         Services service = null;
-
         try {
             con = DBContext.connection;
             if (con != null) {
@@ -145,7 +144,6 @@ public class ServicesDAO extends DBContext {
     public void toggleVisibility(int serviceId) {
         Connection con = null;
         PreparedStatement ps = null;
-
         try {
             con = DBContext.connection;
             if (con != null) {
@@ -164,41 +162,30 @@ public class ServicesDAO extends DBContext {
         }
     }
 
-//    public static void main(String[] args) {
-//        // Tạo đối tượng ServicesDAO
-//        ServicesDAO dao = new ServicesDAO();
-//
-//        // ID của dịch vụ muốn lấy thông tin
-//        int id = 32;
-//
-//        // Lấy thông tin dịch vụ
-//        Services service = dao.getServiceById(id);
-//
-//        // In thông tin dịch vụ ra console
-//        if (service != null) {
-//            System.out.println("Service Details: ");
-//            System.out.println(service);
-//        } else {
-//            System.out.println("Service not found with ID: " + id);
-//        }
-//    }
+    public static void main(String[] args) {
+        // Tạo đối tượng ServicesDAO
+        ServicesDAO dao = new ServicesDAO();
+        List<Services> s = dao.GetAllServices();
+        System.out.println(s.size());
+    }
+
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
         try {
-            String sql = "SELECT \n"
+            String sql = "SELECT\n"
                     + "    s.servicesId,\n"
                     + "    s.name,\n"
                     + "    s.image,\n"
                     + "    s.price,\n"
                     + "    s.description,\n"
                     + "    s.isActive\n"
-                    + "FROM \n"
-                    + "    [Barber].[dbo].[order] o\n"
-                    + "INNER JOIN \n"
-                    + "    dbo.Order_services os ON os.OrderId = o.orderId\n"
-                    + "INNER JOIN \n"
-                    + "    dbo.Services s ON s.servicesId = os.servicesId\n"
-                    + "WHERE \n"
+                    + "FROM\n"
+                    + "    Orders o\n"
+                    + "INNER JOIN\n"
+                    + "    Order_services os ON os.orderId = o.orderId\n"
+                    + "INNER JOIN\n"
+                    + "    Services s ON s.servicesId = os.servicesId\n"
+                    + "WHERE\n"
                     + "    o.orderId = ?;";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);

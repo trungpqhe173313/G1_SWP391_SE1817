@@ -5,13 +5,16 @@
 package Controller.customer;
 
 import Dal.CustomerDAO;
+import Dal.EmployeesDAO;
 import Dal.OrderDAO;
+import Dal.Order_shiftDAO;
 import Dal.ShiftsDAO;
 import Dal.ShopDAO;
 import Model.Account;
 import Model.Order;
 import Model.Services;
 import Model.ServicesBooking;
+import Model.Shift;
 import Model.Time;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -63,7 +66,20 @@ public class AppointmentServlet extends HttpServlet {
                 listDate.add(nextDayStr);
             }
             if (session.getAttribute("time") == null) {
-                session.setAttribute("time", new Time(todayStr, d.getAllShiftFromNow()));
+                //Lay ra tat ca cac ca 
+                List<Shift> listAllShift = d.getAllShiftFromNow();
+                //tao danh sach de luu nhung ca trong
+                List<Shift> listShift = listShiftEmpty(listAllShift, todayStr);
+
+                session.setAttribute("time", new Time(todayStr, listShift));
+            } else if (session.getAttribute("time") != null) {
+                Time time = (Time) session.getAttribute("time");
+                    //Lay ra tat ca cac ca 
+                    List<Shift> listAllShift = d.getAllShiftFromNow();
+                    //tao danh sach de luu nhung ca trong
+                    List<Shift> listShift = listShiftEmpty(listAllShift, time.getDate());
+                    session.setAttribute("time", new Time(time.getDate(), listShift));
+                
             }
 
             request.setAttribute("listDate", listDate);
@@ -134,6 +150,25 @@ public class AppointmentServlet extends HttpServlet {
 
         request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
 
+    }
+
+    /**
+     *
+     * @param shift to check is that shift empty
+     * @param date
+     * @return boolean
+     */
+    public List<Shift> listShiftEmpty(List<Shift> listShift, String date) {
+        List<Shift> listShiftEmpty = new ArrayList<>();
+        Order_shiftDAO osd = new Order_shiftDAO();
+        EmployeesDAO ed = new EmployeesDAO();
+        int numberEmployeeActive = ed.countNumberActiveEmployee();
+        for (Shift s : listShift) {
+            if (numberEmployeeActive > osd.countNumberOrderInShift(s.getId(), date)) {
+                listShiftEmpty.add(s);
+            }
+        }
+        return listShiftEmpty;
     }
 
     /**

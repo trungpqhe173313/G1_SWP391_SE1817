@@ -179,13 +179,7 @@
                                                         </c:forEach>
                                                     </td>
                                                     <td>${o.orderDate}</td>
-                                                    <td>
-                                                        <c:forEach items="${shift}" var="s">
-                                                            <c:if test="${o.shiftsID == s.id}">
-                                                                ${s.startTime}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </td>
+                                                    <td>${o.shift.startTime}</td>
                                                     <td data-status-id="${o.statusId}">
                                                         <c:forEach items="${status}" var="s">
                                                             <c:if test="${o.statusId == s.id}">
@@ -194,7 +188,9 @@
                                                         </c:forEach>
                                                     </td>
                                                     <td>
-                                                        <a href="updateStatusEmployee?Eid=${o.employeeId}&Oid=${o.id}" class='btn btn-info'>Thanh toán</a>
+                                                        <a href="updateStatusEmployee?Eid=${o.employeeId}&Oid=${o.id}" class='btn btn-info'>Kết thúc ca</a>
+                                                        <a href="checkOutServeletController?Oid=${o.id}&cId=${o.customerId}" class='btn btn-info'>Thanh toán</a>
+<!--                                                        <a href="ajaxservlet?amount=${o.totalAmount}&codeOrder=${o.codeOrder}" class='btn btn-info'>Thanh toán</a>-->
                                                     </td>
                                                 </tr>
                                             </c:forEach>

@@ -177,21 +177,13 @@
                                     <th>Ngày</th>
                                     <th>Ca</th>
                                     <th colspan="2">Dịch vụ</th>
-
                                     <th>Trạng thái</th>
                                     <th>Tổng tiền</th>
-
                                     <th></th>
                                 </tr>
-
-
                                 <tr>
                                     <td>${order.getOrderDate()}</td>
-                                    <c:forEach items="${shift}" var="shift"> 
-                                        <c:if test="${shift.getId() == order.getShiftsID()}">
-                                            <td>${shift.getStartTime()}</td>
-                                        </c:if>
-                                    </c:forEach>
+                                    <td>${order.shift.startTime}</td>
                                     <td colspan="2">
                                         <ul>
                                             <c:forEach items="${services}" var="s">
@@ -247,7 +239,7 @@
                         <label for="time">Thời Gian</label>
                         <select id="shift" name="shift" required>
                             <c:forEach items="${shift}" var="shift">
-                                <option ${(shift.getId() == order.getShiftsID())?"selected = \"selected\"":""}
+                                <option ${(shift.getId() == order.shift.id)?"selected = \"selected\"":""}
                                     value="${shift.getId()}" >${shift.getStartTime()}</option>
                             </c:forEach>        
                         </select>        
@@ -259,12 +251,6 @@
                 </form>
             </div>
         </div>
-
-
-
-
-
-
 
 
         <!-- loader -->

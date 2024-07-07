@@ -249,7 +249,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                         </div>
                         <div class="group">
-                            <input type="submit" class="button" value="Đăng nhập">
+                            <input type="submit" class="button" value="Đăng Nhập">
                         </div>
 
                         <div class="foot-lnk">
@@ -257,10 +257,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         </div>
 
                         <div class="foot-lnk">
-                            <p>Chưa có tài khoản?<a href="signup"> Đăng ký</a></p>
+                            <p>Chưa có tài khoản?<a href="signup"> Đăng Ký</a></p>
                         </div>
 
                         <div class="foot-lnk">
+                            ${mess}
                             <a href="home" style="color: black"><- Quay lại trang chủ </a>
                         </div>
                     </form>  
