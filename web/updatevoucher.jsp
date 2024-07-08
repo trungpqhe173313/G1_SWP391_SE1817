@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -183,26 +185,26 @@
 
                                         <form action="updatevoucher" method="post" onsubmit="return validateForm();">
                                             <input type="hidden" name="VoucherId" value="${vid}">
-                                            <div class="form-group">
-                                                <label for="name">Mã Giảm Giá:</label>
-                                                <input type="text" id="name" name="name" class="form-control" value="${voucher.name}" required>
-                                            </div >
-                                            <div class="form-group">
-                                                <label for="voucher">Giảm Giá (%):</label>
-                                                <input type="number" id="voucher" name="voucher" class="form-control" value="${voucher.discount}" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="starttime">Ngày Bắt Đầu:</label>
-                                                <input type="date" id="starttime" name="starttime" class="form-control" value="${voucher.startTime}" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="endtime">Ngày Kết Thúc:</label>
-                                                <input type="date" id="endtime" name="endtime" class="form-control" value="${voucher.endTime}" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" value="Cập Nhật">
-                                            </div>
-                                            <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="name">Mã Giảm Giá:</label>
+                                            <input type="text" id="name" name="name" class="form-control" value="${voucher.name}" required>
+                                        </div >
+                                        <div class="form-group">
+                                            <label for="voucher">Giảm Giá (%):</label>
+                                            <input type="number" step="0.01" id="voucher" name="voucher" class="form-control" value="<fmt:formatNumber value='${voucher.discount * 100}' type='number' minFractionDigits='0' maxFractionDigits='2'/>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="starttime">Ngày Bắt Đầu:</label>
+                                            <input type="date" id="starttime" name="starttime" class="form-control" value="${voucher.startTime}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="endtime">Ngày Kết Thúc:</label>
+                                            <input type="date" id="endtime" name="endtime" class="form-control" value="${voucher.endTime}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Cập Nhật">
+                                        </div>
+                                        <div class="form-group">
                                             ${mess}
                                         </div>
                                     </form>
