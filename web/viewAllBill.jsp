@@ -189,7 +189,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="updateStatusEmployee?Eid=${o.employeeId}&Oid=${o.id}" class='btn btn-info'>Kết thúc ca</a>
-                                                        <a href="checkOutServeletController?Oid=${o.id}&cId=${o.customerId}" class='btn btn-info'>Thanh toán</a>
+                                                        <a href="checkOutServeletController?Oid=${o.id}&cId=${o.customerId}&codeOrder=${o.codeOrder}&Eid=${o.employeeId}" class='btn btn-info'>Thanh toán</a>
 <!--                                                        <a href="ajaxservlet?amount=${o.totalAmount}&codeOrder=${o.codeOrder}" class='btn btn-info'>Thanh toán</a>-->
                                                     </td>
                                                 </tr>

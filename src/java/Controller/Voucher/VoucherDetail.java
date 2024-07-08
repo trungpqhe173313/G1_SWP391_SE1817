@@ -3,14 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package VNpay;
+package Controller.Voucher;
 
-import Dal.CustomerDAO;
-import Dal.EmployeesDAO;
-import Dal.OrderDAO;
-import Dal.ServicesDAO;
-import Model.Customer;
-import Model.Services;
+import Dal.VoucherDAO;
+import Model.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,9 +17,9 @@ import java.util.List;
 
 /**
  *
- * @author phamt
+ * @author LENOVO
  */
-public class CheckOutServeletController extends HttpServlet {
+public class VoucherDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,28 +31,18 @@ public class CheckOutServeletController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //get order id
-        String oId = request.getParameter("Oid");
-        //get customer ID
-        int cId = Integer.parseInt(request.getParameter("cId"));
-        //get code order
-        String orderCode = request.getParameter("codeOrder");
-        List<Services> ls= new ServicesDAO().getServicesInOrder(Integer.parseInt(oId));
-        int amount = 0;
-        for (Services l : ls) {
-            amount += l.getPrice();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet VoucherDetail</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet VoucherDetail at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        String Eid = request.getParameter("Eid");
-//        //update status employee to free(id = 1)
-//        new EmployeesDAO().updateStatusBarber(1,Eid);
-//        //update status order to done(id = 4)
-//        new OrderDAO().upDateStatusOrder(4, oId);
-        Customer c = new CustomerDAO().getCustomerProfileById(cId);
-        request.setAttribute("cus", c);
-        request.setAttribute("ls", ls);
-        request.setAttribute("codeOrder", orderCode);
-        request.setAttribute("amount", amount);
-        request.getRequestDispatcher("payment.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,7 +56,10 @@ public class CheckOutServeletController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       VoucherDAO dao = new VoucherDAO();
+       List<Voucher> v = dao.getAllVouchers();
+       request.setAttribute("listV", v);
+        request.getRequestDispatcher("voucherdetail.jsp").forward(request, response);
     } 
 
     /** 
