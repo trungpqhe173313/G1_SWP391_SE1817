@@ -220,6 +220,10 @@
         <servlet-name>Updatevoucher</servlet-name>
         <servlet-class>Controller.Voucher.Updatevoucher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OldVoucher</servlet-name>
+        <servlet-class>Controller.Voucher.OldVoucher</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -439,5 +443,9 @@
     <servlet-mapping>
         <servlet-name>Updatevoucher</servlet-name>
         <url-pattern>/updatevoucher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OldVoucher</servlet-name>
+        <url-pattern>/oldvoucher</url-pattern>
     </servlet-mapping>
 </web-app>
