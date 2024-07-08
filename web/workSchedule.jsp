@@ -78,6 +78,7 @@
                                         <tr>
                                             <th>Họ Và Tên</th>
                                             <th>Số Điện Thoại</th>
+                                            <th>Giới Tính</th>
                                             <th>Trạng Thái</th>
                                             <th>Khách Hàng</th>
                                             <th>Dịch Vụ</th>
@@ -91,9 +92,10 @@
                                                 for (Map<String, Object> employee : employeeSchedule) {
                                         %>
                                         <tr>
-                                            <td><%= employee.get("fullName") %></td>
-                                            <td><%= employee.get("phone") %></td>
-                                            <td><%= employee.get("status") %></td>
+                                            <td><%= employee.get("employeeFullName") %></td>
+                                            <td><%= employee.get("employeePhone") %></td>
+                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("employeeGender"))) ? "Nữ" : "Nam") %></td>
+                                            <td><%= employee.get("workStatus") %></td>
                                             <td><%= employee.get("customerFullName") %></td>
                                             <td><%= employee.get("serviceNames") %></td>
                                         </tr>
