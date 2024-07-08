@@ -45,24 +45,23 @@
                     <div class="block-heading text-center">
                         <h2>Payment</h2>
                     </div>
-                    <form>
+                    <form action="ajaxservlet" method="post">
                         <div class="products">
                             <h3 class="title">Checkout</h3>
-                            
+                            <input type="hidden" name="codeOrder" value="${codeOrder}">
                             <c:forEach items="${ls}" var="ls">
                                 <div class="item d-flex justify-content-between">
-
-                                <div>
-                                    <p class="item-name">${ls.name}</p>
-                                    
+                                    <div>
+                                        <p class="item-name">${ls.name}</p>
+                                    </div>
+                                    <span class="price">${ls.price} VND</span>
                                 </div>
-                                <span class="price">${ls.price} VND</span>
-                            </div>
                             </c:forEach>
-                            
+
                             <div class="total d-flex justify-content-between">
                                 <span>Total</span>
-                                <span class="price" name="amount" id="total-amount">${amount} VND</span>
+                                <span class="price" id="total-amount">${amount} VND</span>
+                                <input type="hidden" name="amount" id="total-amount-hidden" value="${amount}">
                             </div>
                         </div>
                         <div class="points">
@@ -74,7 +73,7 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-12 mt-4">
-                            <button type="button" class="btn btn-primary btn-block">Proceed</button>
+                            <button type="submit" class="btn btn-primary btn-block">Proceed</button>
                         </div>
                     </form>
                 </div>
@@ -84,32 +83,31 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function () {
-                var userPoints = 50; // User's available points
-
-                function calculateDiscount(points) {
-                    var discount = 0;
-                    if (points >= 20) {
-                        discount += Math.floor(points / 20) * 1.5; // Discount for every 20 points is $1.5
-                        points %= 20;
-                    }
-                    if (points >= 10) {
-                        discount += Math.floor(points / 10); // Discount for every 10 points is $1
-                    }
-                    return discount;
-                }
-
                 $('#apply-points').click(function () {
-                    var totalAmount = 320; // Initial total amount
-                    var pointsToUse = Math.min(userPoints, 20 + Math.floor((totalAmount / 1.5) * 20));
-                    var discount = calculateDiscount(pointsToUse);
-                    var newTotal = totalAmount - discount;
-                    if (newTotal < 0)
-                        newTotal = 0;
-                    $('#total-amount').text('$' + newTotal.toFixed(2));
+                    var userPoints = parseInt(document.getElementById('available-points').innerText); // Số điểm hiện có của người dùng
+                    var totalAmount = parseInt(document.getElementById('total-amount').innerText); // Tổng số tiền ban đầu
 
-                    userPoints -= pointsToUse;
-                    $('#available-points').text(userPoints);
-                    console.log('Remaining points:', userPoints);
+                    $.ajax({
+                        url: 'calculateDiscount',
+                        type: 'POST',
+                        data: {
+                            points: userPoints,
+                            totalAmount: totalAmount
+                        },
+                        success: function (response) {
+                            // Kiểm tra xem response có phải là một đối tượng không
+                            if (typeof response === 'string') {
+                                response = JSON.parse(response);
+                            }
+                            $('#total-amount').text(response.newTotal + ' VND');
+                            $('#total-amount-hidden').val(response.newTotal);
+                            $('#available-points').text(response.newPoints);
+                            console.log('Số điểm còn lại:', response.newPoints);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Lỗi:', error);
+                        }
+                    });
                 });
             });
         </script>
