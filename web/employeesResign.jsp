@@ -102,6 +102,7 @@
                                             <th>Giới Tính</th>
                                             <th>Email</th>
                                             <th>Trạng Thái</th>
+                                            <th>Ngày Nghỉ Việc</th> 
                                             <th>Phục Hồi</th>
                                         </tr>
                                     </thead>
@@ -118,6 +119,7 @@
                                             <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
                                             <td><%= employee.get("email") %></td>
                                             <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("isActive"))) ? "Đang Hoạt Động" : "Không Hoạt Động") %></td>
+                                            <td><%= employee.get("updateTime") %></td>
                                             <td>
                                                 <a href="#" onclick="confirmDelete('<%= employee.get("employeeId") %>')" class="btn btn-success btn-circle btn-sm">
                                                     <i class="fas fa-undo-alt"></i>
