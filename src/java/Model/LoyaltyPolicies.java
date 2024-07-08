@@ -6,47 +6,40 @@ package Model;
 
 /**
  *
- * @author phamt
+ * @author ducth
  */
 public class LoyaltyPolicies {
-    //tính điểm cho từng đơn hàng 
-    private int id;
-    private int MinAmount;
-    private int points;    
+    private int policyId;
+    private int minAmount;
+    private int pointsPerUnit;
 
-    public LoyaltyPolicies(int id, int MinAmount, int points) {
-        this.id = id;
-        this.MinAmount = MinAmount;
-        this.points = points;
+    public LoyaltyPolicies(int policyId, int minAmount, int pointsPerUnit) {
+        this.policyId = policyId;
+        this.minAmount = minAmount;
+        this.pointsPerUnit = pointsPerUnit;
     }
 
-    public LoyaltyPolicies() {
+    public int getPolicyId() {
+        return policyId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setPolicyId(int policyId) {
+        this.policyId = policyId;
     }
 
     public int getMinAmount() {
-        return MinAmount;
+        return minAmount;
     }
 
-    public void setMinAmount(int MinAmount) {
-        this.MinAmount = MinAmount;
+    public void setMinAmount(int minAmount) {
+        this.minAmount = minAmount;
     }
 
-    public int getPoints() {
-        return points;
+    public int getPointsPerUnit() {
+        return pointsPerUnit;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setPointsPerUnit(int pointsPerUnit) {
+        this.pointsPerUnit = pointsPerUnit;
     }
-    
-    
-    
 }

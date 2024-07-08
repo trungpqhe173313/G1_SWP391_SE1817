@@ -1,11 +1,6 @@
-<%-- 
-    Document   : employeesDetail
-    Created on : Jun 9, 2024, 7:37:15 AM
-    Author     : ducth
---%>
-
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List, java.util.Map" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin 2 - Tables</title>
+    <title>Loyalty Policies</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,51 +68,31 @@
 
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <a class="btn btn-primary btn-sm mr-2" href="addemployees">
-                                Thêm Nhân Viên
-                            </a>
-                            <a class="btn btn-primary btn-sm" href="employeesresign">
-                                Đã Nghỉ Việc
-                            </a>
-                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-<!--                                            <th>Hình Ảnh</th>-->
-                                            <th>Họ Và Tên</th>
-                                            <th>Số Điện Thoại</th>
-                                            <th>Giới Tính</th>
-                                            <th>Email</th>
-                                            <th>Trạng Thái</th>
-                                            <th>Xóa</th>
+                                            <th>Số Tiền Tối Thiểu</th>
+                                            <th>Điểm Mỗi Đơn Vị</th>
+                                            <th>Chỉnh Sửa</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                            List<Map<String, Object>> employeeServicesInfo = (List<Map<String, Object>>) request.getAttribute("employeeServicesInfo");
-                                            if (employeeServicesInfo != null) {
-                                                for (Map<String, Object> employee : employeeServicesInfo) {
-                                        %>
-                                        <tr>
-<!--                                            <td><%= employee.get("avatar") %></td>-->
-                                            <td><%= employee.get("fullName") %></td>
-                                            <td><%= employee.get("phone") %></td>
-                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
-                                            <td><%= employee.get("email") %></td>
-                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("isActive"))) ? "Không Hoạt Động" : "Đang Hoạt Động") %></td>
-                                            <td>
-                                                <a href="#" onclick="confirmDelete('<%= employee.get("employeeId") %>')" class="btn btn-danger btn-circle btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <%
-                                                }
-                                            }
-                                        %>
+                                        <c:forEach var="policy" items="${policies}">
+                                            <tr>
+                                                <td>${policy.minAmount}</td>
+                                                <td>${policy.pointsPerUnit}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-info btn-sm edit-btn" 
+                                                        data-policyid="${policy.policyId}" 
+                                                        data-minamount="${policy.minAmount}" 
+                                                        data-pointsperunit="${policy.pointsPerUnit}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -139,6 +114,33 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <div class="modal fade" id="editPolicyModal" tabindex="-1" role="dialog" aria-labelledby="editPolicyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPolicyModalLabel">Chỉnh sửa Chính sách Loyalty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPolicyForm">
+                        <div class="form-group">
+                            <label for="minAmount">Số Tiền Tối Thiểu</label>
+                            <input type="number" class="form-control" id="minAmount" name="minAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pointsPerUnit">Điểm Mỗi Đơn Vị</label>
+                            <input type="number" class="form-control" id="pointsPerUnit" name="pointsPerUnit" required>
+                        </div>
+                        <input type="hidden" id="policyId" name="policyId">
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -164,25 +166,47 @@
     <script src="js/sb-admin-2.min.js"></script>
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
     <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                "columnDefs": [
-                    { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
-                ],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
-                }
+        $(document).ready(function() {
+            // Khi nhấn vào nút "Chỉnh Sửa"
+            $('.edit-btn').on('click', function() {
+                // Lấy thông tin từ dòng hiện tại
+                var policyId = $(this).data('policyid');
+                var minAmount = $(this).data('minamount');
+                var pointsPerUnit = $(this).data('pointsperunit');
+
+                // Điền thông tin vào form
+                $('#policyId').val(policyId);
+                $('#minAmount').val(minAmount);
+                $('#pointsPerUnit').val(pointsPerUnit);
+
+                // Hiển thị modal
+                $('#editPolicyModal').modal('show');
+            });
+
+            // Xử lý khi form được submit
+            $('#editPolicyForm').on('submit', function(event) {
+                event.preventDefault();
+
+                // Lấy dữ liệu từ form
+                var formData = $(this).serialize();
+
+                // Gửi yêu cầu AJAX để cập nhật chính sách
+                $.ajax({
+                    type: 'POST',
+                    url: 'updateloyaltypolicies',
+                    data: formData,
+                    success: function(response) {
+                        alert('Cập nhật thành công');
+                        location.reload(); // Reload trang sau khi cập nhật thành công
+                    },
+                    error: function() {
+                        alert('Cập nhật thất bại');
+                    }
+                });
             });
         });
-
-        function confirmDelete(employeeId) {
-            if (confirm("Bạn có chắc chắn muốn xóa nhân viên này không?")) {
-                window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=false';
-            }
-        }
     </script>
-
 </body>
-
 </html>
