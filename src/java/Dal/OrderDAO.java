@@ -11,10 +11,12 @@ import Model.Shift;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,17 @@ import java.util.logging.Logger;
  * @author phamt
  */
 public class OrderDAO extends DBContext {
+    private static Random random = new Random();
+
+    public static String generateOrderCode() {
+        String prefix = "order";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datePart = dateFormat.format(new Date());
+        int randomNumber = random.nextInt(9000 - 1 + 1) + 1; // Random từ 1 đến 9000
+
+        String orderCode = prefix + datePart + randomNumber;
+        return orderCode;
+    }
 
     public Order getOrderByAId(int customerId) {
         try {
