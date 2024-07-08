@@ -5,11 +5,97 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Haircare - Free Bootstrap 4 Template by Colorlib</title>
         <style>
+            .popup {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px; /* Adjust width */
+                height: 400px; /* Adjust height to make it square */
+                background-color: #D2B48C; /* Light brown color */
+                border-radius: 15px; /* Rounded corners */
+                z-index: 1000;
+                display: none; /* Hidden by default */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+                overflow: hidden;
+            }
+
+            .popup-content {
+                padding: 20px;
+                text-align: center;
+                position: relative;
+                background: linear-gradient(135deg, #8B4513, #CD853F); /* Gradient background light brown */
+                color: white; /* Text color */
+                height: 100%; /* Ensure content fills the popup */
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start; /* Align content to the top */
+                align-items: center;
+            }
+
+            .popup-content a.navbar-brand {
+                margin-top: 10px; /* Adjust margin as needed */
+                position: absolute;
+                top: 10px; /* Adjust top position as needed */
+                left: 20px; /* Adjust left position as needed */
+                text-decoration: none;
+                color: white; /* Text color */
+                font-size: 18px; /* Adjust font size as needed */
+            }
+
+            .popup-content strong {
+                font-weight: bold; /* Make strong elements bold */
+                font-size: 28px; /* Adjust font size as needed */
+                font-family: Arial, sans-serif; /* Specify font family */
+            }
+
+            .popup-content h2 {
+                margin: 0 0 10px;
+                font-family: 'Arial', sans-serif;
+                font-size: 24px;
+            }
+
+            .popup-content p {
+                margin: 10px 0;
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+            }
+
+            .popup-close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                font-size: 24px;
+                color: white;
+                font-weight: bold;
+            }
+
+            .popup-logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 15px;
+            }
+
+            /* Overlay */
+            .popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
+                z-index: 999;
+                display: none; /* Hidden by default */
+            }
+
             .pricing-entry {
                 height: 450px;
                 position: relative; /* Make this container the reference for absolute positioning */
@@ -142,6 +228,16 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <div id="popup-overlay" class="popup-overlay" onclick="closePopup()"></div>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="popup-close" onclick="closePopup()">&times;</span>
+
+                <a class="navbar-brand" href="home"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a> <br> <br><br>
+
+                <p id="popup-message"></p>
+            </div>
+        </div>
         <jsp:include page="nav.jsp"></jsp:include>
             <!-- END nav -->
             <section class="hero-wrap js-fullheight" style="background-image: url(images/bg-2.jpg);" data-stellar-background-ratio="0.5">
@@ -683,35 +779,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-                                function openFeedbackModal() {
-                                    $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
-                                    $('#feedbackModal').modal('show');
-                                }
+                            function openFeedbackModal() {
+                                $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
+                                $('#feedbackModal').modal('show');
+                            }
 
-                                $(document).ready(function () {
-                                    $('.btnContact').click(function (e) {
-                                        e.preventDefault();
-                                        var formData = $('.contact-form form').serialize();
+                            $(document).ready(function () {
+                                $('.btnContact').click(function (e) {
+                                    e.preventDefault();
+                                    var formData = $('.contact-form form').serialize();
 
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'cusfeedback',
-                                            data: formData,
-                                            success: function (response) {
-                                                if (response.trim() === 'Phản hồi của bạn đã được gửi đi thành công! :>') {
-                                                    $('#feedbackModal').modal('hide');
-                                                    // Reload the homepage to reflect new feedback
-                                                    location.reload();
-                                                } else {
-                                                    alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
-                                                }
-                                            },
-                                            error: function () {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'cusfeedback',
+                                        data: formData,
+                                        success: function (response) {
+                                            if (response.trim() === 'Phản hồi của bạn đã được gửi đi thành công! :>') {
+                                                $('#feedbackModal').modal('hide');
+                                                // Reload the homepage to reflect new feedback
+                                                location.reload();
+                                            } else {
                                                 alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
                                             }
-                                        });
+                                        },
+                                        error: function () {
+                                            alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
+                                        }
                                     });
                                 });
+                            });
     </script>
 
     <!-- loader -->
@@ -744,6 +840,67 @@
                                     interval: 3000
                                 });
                             });
+
+
+    </script>
+    <script>
+        // Function to format number as percentage with specified decimal places
+        function formatPercentage(number, decimals) {
+            return (number * 100).toFixed(decimals) + '%';
+        }
+
+        // Function to format date as dd-MM-yyyy
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            var day = date.getDate();
+            var month = date.getMonth() + 1; // Months are zero based
+            var year = date.getFullYear();
+
+            // Padding day and month with leading zeros if needed
+            if (day < 10) {
+                day = '0' + day;
+            }
+            if (month < 10) {
+                month = '0' + month;
+            }
+
+            return day + '-' + month + '-' + year;
+        }
+
+        // Function to display popup and format discount
+        function showPopup() {
+        var vouchers = [
+        <c:forEach items="${todaysVouchers}" var="voucher">
+        {
+        name: "${voucher.name}",
+                discount: ${voucher.discount},
+                startTime: "${voucher.startTime}",
+                endTime: "${voucher.endTime}"
+        }<c:if test="${!voucherStatus.last}">,</c:if>
+        </c:forEach>
+        ];
+                console.log("Vouchers: ", vouchers); // Debugging line
+
+                if (vouchers.length > 0) {
+        var discountFormatted = formatPercentage(vouchers[0].discount, 0); // Format discount here
+                var startDateFormatted = formatDate(vouchers[0].startTime); // Format start date
+                var endDateFormatted = formatDate(vouchers[0].endTime); // Format end date
+
+                var message = "<strong>Haircare xin thông báo</strong><br><br>Hiện nay cửa hàng đang giảm giá " + discountFormatted + " từ ngày " + startDateFormatted + " đến ngày " + endDateFormatted;
+                document.getElementById('popup-message').innerHTML = message;
+                document.getElementById('popup').style.display = 'block';
+                document.getElementById('popup-overlay').style.display = 'block';
+        } else {
+        console.log("No vouchers available"); // Debugging line
+        }
+        }
+
+        function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+                document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        window.onload = showPopup;
     </script>
 </body>
 </html>

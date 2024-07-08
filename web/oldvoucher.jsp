@@ -188,13 +188,11 @@
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="advoucher" >
-                                        Thêm Mã Giảm Giá
-                                    </a>
-                                    <a class="btn btn-primary btn-sm mr-2" href="oldvoucher" >
-                                        Mã đã hết hạn
+                                    <a class="btn btn-primary btn-sm mr-2" href="voucherdetail" >
+                                        Quay lại
                                     </a>
                                     
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -211,24 +209,24 @@
                                             </thead>
                                             <tbody>
                                             <c:forEach items="${listV}" var="o">
-                                                <c:if test="${o.status == 1}">
-                                                <tr>
-                                                    <td>${o.id}</td>
-                                                    <td>${o.name}</td>
-                                                    <td><fmt:formatNumber value="${o.discount * 100}" type="number" minFractionDigits="0" maxFractionDigits="2"/> %</td>
-                                                    <td>${o.startTime}</td>
-                                                    <td>${o.endTime}</td>
-                                                    <td>
-                                                        <a href="updatevoucher?vid=${o.id}">
-                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
-                                                                <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
-                                                            </button>
-                                                        </a>
+                                                <c:if test="${o.status == 0}">
+                                                    <tr>
+                                                        <td>${o.id}</td>
+                                                        <td>${o.name}</td>
+                                                        <td><fmt:formatNumber value="${o.discount * 100}" type="number" minFractionDigits="0" maxFractionDigits="2"/> %</td>
+                                                        <td>${o.startTime}</td>
+                                                        <td>${o.endTime}</td>
+                                                        <td>
+                                                            <a href="updatevoucher?vid=${o.id}">
+                                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
+                                                                    <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
+                                                                </button>
+                                                            </a>
 
-                                                       
-                                                    </td>
-                                                </tr>
-                                                  </c:if>  
+
+                                                        </td>
+                                                    </tr>
+                                                </c:if>  
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -292,33 +290,33 @@
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
             $(document).ready(function () {
-                                                $('#allTable').DataTable();
-                                            });
-                                                                function filterTable() {
-                                                                    var input, filter, table, tr, td, i, j, txtValue;
-                                                                    input = document.getElementById("searchInput");
-                                                                    filter = input.value.toLowerCase();
-                                                                    table = document.getElementById("dataTable");
-                                                                    tr = table.getElementsByTagName("tr");
+                $('#allTable').DataTable();
+            });
+            function filterTable() {
+                var input, filter, table, tr, td, i, j, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toLowerCase();
+                table = document.getElementById("dataTable");
+                tr = table.getElementsByTagName("tr");
 
-                                                                    for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                                                                        tr[i].style.display = "none"; // Ẩn tất cả các hàng
+                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                    tr[i].style.display = "none"; // Ẩn tất cả các hàng
 
-                                                                        td = tr[i].getElementsByTagName("td");
-                                                                        for (j = 0; j < td.length; j++) {
-                                                                            if (td[j]) {
-                                                                                txtValue = td[j].textContent || td[j].innerText;
-                                                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                                                                                    tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                function toggleVisibility(serviceId) {
-                                                                    window.location.href = 'deleteservice?sid=' + serviceId;
-                                                                }
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            txtValue = td[j].textContent || td[j].innerText;
+                            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            function toggleVisibility(serviceId) {
+                window.location.href = 'deleteservice?sid=' + serviceId;
+            }
         </script>
     </body>
 </html>
