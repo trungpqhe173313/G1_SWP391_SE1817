@@ -6,6 +6,8 @@
 package VNpay;
 
 import Dal.CustomerDAO;
+import Dal.EmployeesDAO;
+import Dal.OrderDAO;
 import Dal.ServicesDAO;
 import Model.Customer;
 import Model.Services;
@@ -33,16 +35,26 @@ public class CheckOutServeletController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int oId = Integer.parseInt(request.getParameter("Oid"));
+        //get order id
+        String oId = request.getParameter("Oid");
+        //get customer ID
         int cId = Integer.parseInt(request.getParameter("cId"));
-        List<Services> ls= new ServicesDAO().getServicesInOrder(oId);
+        //get code order
+        String orderCode = request.getParameter("codeOrder");
+        List<Services> ls= new ServicesDAO().getServicesInOrder(Integer.parseInt(oId));
         int amount = 0;
         for (Services l : ls) {
             amount += l.getPrice();
         }
+        String Eid = request.getParameter("Eid");
+//        //update status employee to free(id = 1)
+//        new EmployeesDAO().updateStatusBarber(1,Eid);
+//        //update status order to done(id = 4)
+//        new OrderDAO().upDateStatusOrder(4, oId);
         Customer c = new CustomerDAO().getCustomerProfileById(cId);
         request.setAttribute("cus", c);
         request.setAttribute("ls", ls);
+        request.setAttribute("codeOrder", orderCode);
         request.setAttribute("amount", amount);
         request.getRequestDispatcher("payment.jsp").forward(request, response);
     } 
