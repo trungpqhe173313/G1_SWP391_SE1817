@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Controller.common;
 
 import Dal.PointDAO;
@@ -69,10 +64,9 @@ public class UpdateLoyaltyPolicies extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        response.setContentType("application/json;charset=UTF-8");
         
-        try {
+        try (PrintWriter out = response.getWriter()) {
             // Retrieve parameters from the request
             int policyId = Integer.parseInt(request.getParameter("policyId"));
             int minAmount = Integer.parseInt(request.getParameter("minAmount"));
@@ -82,12 +76,19 @@ public class UpdateLoyaltyPolicies extends HttpServlet {
             PointDAO pointDAO = new PointDAO();
             pointDAO.updateLoyaltyPolicy(policyId, minAmount, pointsPerUnit);
             
-            // Redirect to a success page if needed
-            response.sendRedirect("loyaltypolicies.jsp");
-        } catch (NumberFormatException | IOException e) {
-            out.println("Error: " + e.getMessage());
-        } finally {
-            out.close();
+            // Send success response
+            response.setStatus(HttpServletResponse.SC_OK);
+            out.write("{\"status\":\"success\"}");
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            try (PrintWriter out = response.getWriter()) {
+                out.write("{\"status\":\"error\", \"message\":\"Invalid input\"}");
+            }
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            try (PrintWriter out = response.getWriter()) {
+                out.write("{\"status\":\"error\", \"message\":\"Update failed\"}");
+            }
         }
     }
 

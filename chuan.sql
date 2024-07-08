@@ -1,7 +1,7 @@
-﻿CREATE DATABASE Barber12;
+﻿CREATE DATABASE Barber;
 GO
 
-USE Barber12;
+USE Barber;
 GO
 CREATE TABLE Services (
     servicesId int IDENTITY(1,1) PRIMARY KEY,
@@ -376,9 +376,7 @@ GO
 
 INSERT INTO LoyaltyPolicies (MinAmount, PointsPerUnit)
 VALUES 
-    (100000, 5),
-    (200000, 10),
-    (500000, 25);
+    (100000, 5);
 GO
 
 -- Inserting data into store table
