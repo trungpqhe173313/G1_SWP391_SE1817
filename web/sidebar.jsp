@@ -71,6 +71,12 @@
             <span>Thanh toán</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="voucherdetail">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Mã Giảm Giá</span></a>
+    </li>
+    
+    <li class="nav-item">
         <a class="nav-link" href="loyaltypolicies">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Chính Sách Tích Điểm</span></a>
