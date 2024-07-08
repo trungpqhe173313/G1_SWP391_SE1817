@@ -208,6 +208,18 @@
         <servlet-name>CustomerProfileController</servlet-name>
         <servlet-class>Controller.customer.CustomerProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VoucherDetail</servlet-name>
+        <servlet-class>Controller.Voucher.VoucherDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Advoucher</servlet-name>
+        <servlet-class>Controller.Voucher.Advoucher</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Updatevoucher</servlet-name>
+        <servlet-class>Controller.Voucher.Updatevoucher</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -415,5 +427,17 @@
     <servlet-mapping>
         <servlet-name>CustomerProfileController</servlet-name>
         <url-pattern>/cusprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VoucherDetail</servlet-name>
+        <url-pattern>/voucherdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Advoucher</servlet-name>
+        <url-pattern>/advoucher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Updatevoucher</servlet-name>
+        <url-pattern>/updatevoucher</url-pattern>
     </servlet-mapping>
 </web-app>

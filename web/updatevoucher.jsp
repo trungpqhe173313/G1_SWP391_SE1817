@@ -1,16 +1,15 @@
 <%-- 
-    Document   : servicedetail
-    Created on : Jun 12, 2024, 3:49:09 PM
+    Document   : advoucher
+    Created on : Jul 8, 2024, 12:37:24 PM
     Author     : LENOVO
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,68 +27,62 @@
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
-            .table-responsive {
-                overflow: hidden;
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
             }
 
-            .table-responsive tbody {
-                display: table-row-group;
+            .container-fluid {
+                max-width: 600px;
+                padding: 20px;
+                margin: 0 auto;
+            }
+
+            .card {
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="file"],
+            .form-group textarea,
+            .form-group input[type="date"] {
                 width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
             }
 
-            .table-responsive thead, .table-responsive tbody tr {
-                display: table;
+            .form-group input[type="submit"] {
                 width: 100%;
-                table-layout: fixed;
-            }
-
-            .table-responsive thead {
-                width: 100%;
-            }
-
-            .switch {
-                position: relative;
-                display: inline-block;
-                width: 50px;
-                height: 25px;
-            }
-
-            .switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-            .slider {
-                position: absolute;
+                padding: 10px;
+                background-color: #4e73df;
+                border: none;
+                color: white;
+                font-size: 16px;
+                border-radius: 4px;
                 cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #ccc;
-                transition: .4s;
-                border-radius: 25px;
             }
 
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 17px;
-                width: 17px;
-                left: 4px;
-                bottom: 4px;
-                background-color: white;
-                transition: .4s;
-                border-radius: 50%;
-            }
-
-            input:checked + .slider {
-                background-color: #2196F3;
-            }
-
-            input:checked + .slider:before {
-                transform: translateX(24px);
+            .form-group input[type="submit"]:hover {
+                background-color: #3b5bcc;
             }
         </style>
     </head>
@@ -115,17 +108,16 @@
                             </form>
 
                             <!-- Topbar Search -->
-                            <!--                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-primary" type="button">
-                                                                        <i class="fas fa-search fa-sm"></i>
-                                                                    </button>
-                            
-                                                                </div>
-                                                            </div>
-                                                        </form>-->
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -185,59 +177,49 @@
                             <!-- Page Heading -->
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="advoucher" >
-                                        Thêm Mã Giảm Giá
-                                    </a>
-                                    
-                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="allTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Tên Voucher </th>
-                                                    <th>Giảm giá</th>
-                                                    <th>Ngày bắt đầu</th>
-                                                    <th>ngày kết thúc</th>
-                                                    <th>Chỉnh sửa</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <c:forEach items="${listV}" var="o">
-                                                <tr>
-                                                    <td>${o.id}</td>
-                                                    <td>${o.name}</td>
-                                                    <td>${o.discount}%</td>
-                                                    <td>${o.startTime}</td>
-                                                    <td>${o.endTime}</td>
-                                                    <td>
-                                                        <a href="updatevoucher?vid=${o.id}">
-                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
-                                                                <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
-                                                            </button>
-                                                        </a>
+                                        <h1 class="text-center">Sửa Mã Giảm Giá</h1>
 
-                                                       
-                                                    </td>
-                                                </tr>
-                                                    
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                        <form action="updatevoucher" method="post" onsubmit="return validateForm();">
+                                            <input type="hidden" name="VoucherId" value="${vid}">
+                                            <div class="form-group">
+                                                <label for="name">Mã Giảm Giá:</label>
+                                                <input type="text" id="name" name="name" class="form-control" value="${voucher.name}" required>
+                                            </div >
+                                            <div class="form-group">
+                                                <label for="voucher">Giảm Giá (%):</label>
+                                                <input type="number" id="voucher" name="voucher" class="form-control" value="${voucher.discount}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="starttime">Ngày Bắt Đầu:</label>
+                                                <input type="date" id="starttime" name="starttime" class="form-control" value="${voucher.startTime}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="endtime">Ngày Kết Thúc:</label>
+                                                <input type="date" id="endtime" name="endtime" class="form-control" value="${voucher.endTime}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Cập Nhật">
+                                            </div>
+                                            <div class="form-group">
+                                            ${mess}
+                                        </div>
+                                    </form>
+                                    <button onclick="window.location.href = 'voucherdetail'" class="btn btn-secondary btn-block mt-3">Quay lại</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- /.container-fluid -->
                 </div>
-                <!-- End of Main Content 
+                <!-- End of Main Content -->
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
+                            <span>Copyright &copy; Your Website 2024</span>
                         </div>
                     </div>
                 </footer>
@@ -265,7 +247,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="#">Logout</a>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
                     </div>
                 </div>
             </div>
@@ -284,36 +266,39 @@
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
         <script>
-            $(document).ready(function () {
-                                                $('#allTable').DataTable();
-                                            });
-                                                                function filterTable() {
-                                                                    var input, filter, table, tr, td, i, j, txtValue;
-                                                                    input = document.getElementById("searchInput");
-                                                                    filter = input.value.toLowerCase();
-                                                                    table = document.getElementById("dataTable");
-                                                                    tr = table.getElementsByTagName("tr");
+                                        function validateForm() {
+                                            // Lấy các giá trị từ form
+                                            var name = document.getElementById("name").value.trim();
+                                            var voucher = document.getElementById("voucher").value.trim();
+                                            var starttime = document.getElementById("starttime").value;
+                                            var endtime = document.getElementById("endtime").value;
 
-                                                                    for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                                                                        tr[i].style.display = "none"; // Ẩn tất cả các hàng
+                                            // Kiểm tra Mã Giảm Giá
+                                            var nameRegex = /^[^\s][a-zA-Z0-9]*$/;
+                                            if (!nameRegex.test(name) || name.split(' ').length > 1) {
+                                                alert("Mã giảm giá không được bắt đầu bằng dấu cách, không được nhập quá một từ và không được nhập tiếng Việt.");
+                                                return false;
+                                            }
 
-                                                                        td = tr[i].getElementsByTagName("td");
-                                                                        for (j = 0; j < td.length; j++) {
-                                                                            if (td[j]) {
-                                                                                txtValue = td[j].textContent || td[j].innerText;
-                                                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                                                                                    tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                function toggleVisibility(serviceId) {
-                                                                    window.location.href = 'deleteservice?sid=' + serviceId;
-                                                                }
+                                            // Kiểm tra Giảm Giá
+                                            if (isNaN(voucher) || voucher <= 0 || voucher > 100) {
+                                                alert("Giảm giá phải là một số từ 1 đến 100.");
+                                                return false;
+                                            }
+
+                                            // Kiểm tra Ngày Bắt Đầu và Ngày Kết Thúc
+                                            if (new Date(starttime) >= new Date(endtime)) {
+                                                alert("Ngày bắt đầu phải trước ngày kết thúc.");
+                                                return false;
+                                            }
+
+                                            return true;
+                                        }
         </script>
+
     </body>
 </html>
-

@@ -45,40 +45,99 @@ public class VoucherDAO extends DBContext {
         return vouchers;
     }
 
-        public void addVoucher(String name, float discount, Date startTime, Date endTime) {
-            Connection con = null;
-            PreparedStatement stm = null;
-            try {
-                con = DBContext.connection;
-                if (con != null) {
-                    String sql = "INSERT INTO Voucher (Name, discount, status, startTime, endTime) VALUES (?, ?, 1, ?, ?)";
-                    stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                    stm.setString(1, name);
-                    stm.setFloat(2, discount);
+    public void addVoucher(String name, float discount, Date startTime, Date endTime) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "INSERT INTO Voucher (Name, discount, status, startTime, endTime) VALUES (?, ?, 1, ?, ?)";
+                stm = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, name);
+                stm.setFloat(2, discount);
 
-                    stm.setDate(3, new java.sql.Date(startTime.getTime()));
-                    stm.setDate(4, new java.sql.Date(endTime.getTime()));
+                stm.setDate(3, new java.sql.Date(startTime.getTime()));
+                stm.setDate(4, new java.sql.Date(endTime.getTime()));
 
-                    int rowsAffected = stm.executeUpdate();
+                int rowsAffected = stm.executeUpdate();
 
-                    // Retrieve the generated voucher ID
-                    if (rowsAffected > 0) {
-                        try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
-                            if (generatedKeys.next()) {
-                                int voucherId = generatedKeys.getInt(1);
-                                System.out.println("Voucher ID: " + voucherId);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace(); // Print stack trace for debugging
-                            System.out.println("Error retrieving generated voucher ID: " + e.getMessage());
+                // Retrieve the generated voucher ID
+                if (rowsAffected > 0) {
+                    try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int voucherId = generatedKeys.getInt(1);
+                            System.out.println("Voucher ID: " + voucherId);
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace(); // Print stack trace for debugging
+                        System.out.println("Error retrieving generated voucher ID: " + e.getMessage());
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace(); // Print stack trace for debugging
-                System.out.println("Error: " + e.getMessage());
             }
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for debugging
+            System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    public Voucher getVoucherById(int id) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Voucher voucher = null;
+        try {
+            con = DBContext.connection;
+            if (con != null) {
+                String sql = "SELECT * FROM Voucher WHERE id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, id);
+                rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    voucher = new Voucher();
+                    voucher.setId(rs.getInt("id"));
+                    voucher.setName(rs.getString("Name"));
+                    voucher.setDiscount(rs.getFloat("discount"));
+                    voucher.setStatus(rs.getInt("status"));
+                    voucher.setStartTime(rs.getDate("startTime"));
+                    voucher.setEndTime(rs.getDate("endTime"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return voucher;
+    }
+    
+    public void updateVoucher(int voucherId, String name, float discount, Date startTime, Date endTime) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    try {
+        con = DBContext.connection;
+        if (con != null) {
+            String sql = "UPDATE Voucher SET Name = ?, discount = ?, startTime = ?, endTime = ? WHERE id = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setFloat(2, discount);
+            stm.setDate(3, new java.sql.Date(startTime.getTime()));
+            stm.setDate(4, new java.sql.Date(endTime.getTime()));
+            stm.setInt(5, voucherId);
+
+            int rowsAffected = stm.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+            // Optionally, you can add logic to check if the update was successful
+            // if (rowsAffected > 0) {
+            //     System.out.println("Voucher updated successfully.");
+            // } else {
+            //     System.out.println("Failed to update voucher.");
+            // }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Print stack trace for debugging
+        System.out.println("Error: " + e.getMessage());
+    } 
+}
 
 //    public static void main(String[] args) {
 //        // Tạo đối tượng VoucherDAO
