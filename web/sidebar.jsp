@@ -48,7 +48,7 @@
     <li class="nav-item">
         <a class="nav-link" href="employeesdetail">
             <i class="fas fa-fw fa-table"></i>
-            <span>Nhân VIên</span></a>
+            <span>Nhân Viên</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="workscheduleemployees">
@@ -69,6 +69,11 @@
         <a class="nav-link" href="viewAllBill">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Thanh toán</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="loyaltypolicies">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Chính Sách Tích Điểm</span></a>
     </li>
 
     <!-- Divider -->

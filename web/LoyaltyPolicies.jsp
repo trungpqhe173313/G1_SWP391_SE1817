@@ -84,9 +84,12 @@
                                                 <td>${policy.minAmount}</td>
                                                 <td>${policy.pointsPerUnit}</td>
                                                 <td>
-                                                    <a class="btn btn-info btn-sm" href="updateloyaltypolicies?policyId=${policy.policyId}">
+                                                    <button type="button" class="btn btn-info btn-sm edit-btn" 
+                                                        data-policyid="${policy.policyId}" 
+                                                        data-minamount="${policy.minAmount}" 
+                                                        data-pointsperunit="${policy.pointsPerUnit}">
                                                         <i class="fas fa-edit"></i>
-                                                    </a>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -111,6 +114,33 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <div class="modal fade" id="editPolicyModal" tabindex="-1" role="dialog" aria-labelledby="editPolicyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPolicyModalLabel">Chỉnh sửa Chính sách Loyalty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPolicyForm">
+                        <div class="form-group">
+                            <label for="minAmount">Số Tiền Tối Thiểu</label>
+                            <input type="number" class="form-control" id="minAmount" name="minAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pointsPerUnit">Điểm Mỗi Đơn Vị</label>
+                            <input type="number" class="form-control" id="pointsPerUnit" name="pointsPerUnit" required>
+                        </div>
+                        <input type="hidden" id="policyId" name="policyId">
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -137,6 +167,46 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-</body>
+    <script>
+        $(document).ready(function() {
+            // Khi nhấn vào nút "Chỉnh Sửa"
+            $('.edit-btn').on('click', function() {
+                // Lấy thông tin từ dòng hiện tại
+                var policyId = $(this).data('policyid');
+                var minAmount = $(this).data('minamount');
+                var pointsPerUnit = $(this).data('pointsperunit');
 
+                // Điền thông tin vào form
+                $('#policyId').val(policyId);
+                $('#minAmount').val(minAmount);
+                $('#pointsPerUnit').val(pointsPerUnit);
+
+                // Hiển thị modal
+                $('#editPolicyModal').modal('show');
+            });
+
+            // Xử lý khi form được submit
+            $('#editPolicyForm').on('submit', function(event) {
+                event.preventDefault();
+
+                // Lấy dữ liệu từ form
+                var formData = $(this).serialize();
+
+                // Gửi yêu cầu AJAX để cập nhật chính sách
+                $.ajax({
+                    type: 'POST',
+                    url: 'updateloyaltypolicies',
+                    data: formData,
+                    success: function(response) {
+                        alert('Cập nhật thành công');
+                        location.reload(); // Reload trang sau khi cập nhật thành công
+                    },
+                    error: function() {
+                        alert('Cập nhật thất bại');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 </html>
