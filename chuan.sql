@@ -161,6 +161,22 @@ ALTER TABLE employee
 ADD CONSTRAINT FK_employee_statusEmployee FOREIGN KEY (statusEmployee) REFERENCES statusEmployee(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
+CREATE TRIGGER trg_UpdateVoucherStatus
+ON Voucher
+AFTER UPDATE, INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @currentDate date;
+    SET @currentDate = CAST(GETDATE() AS date);
+
+    UPDATE Voucher
+    SET status = 0
+    WHERE endTime < @currentDate
+      AND status != 0;
+END;
+
 -- Inserting data into roles table
 INSERT INTO role ([role]) VALUES
 (N'admin'),
