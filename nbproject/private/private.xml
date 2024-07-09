@@ -3,56 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/changePassEmployees.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Employee.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/workSchedule.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/LoyaltyPolicies.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/AccountDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/contact.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/FeedbackDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/UpdateLoyaltyPolicies.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesResign.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/test/Main.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/EmployeesDetailController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/EmployeesDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesProfile.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/WEB-INF/web.xml</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/WorkScheduleEmployees.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/PointDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/LoginController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesdetail.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/VoucherDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/nav.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/CustomerDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/AddEmployeesController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/sidebar.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/UpdateEmployeesStatusController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/nbproject/build-impl.xml~</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/changePassReset.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/Order_shiftDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/changepassw.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeerecovery.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/ChangePassEmployees.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/LoyaltyPoliciesController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/LoyaltyPolicies.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/nbproject/build-impl.xml</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/homepage.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/LogoutController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/services.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/updateemployeesstatus.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Voucher.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/customer/AppointmentServlet.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/changepassreset.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Customer.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/employeesManagement.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/DBContext.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/Employee/EmployeesProfileController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/EmployeesResignController.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Account.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/Employee/UpdateEmployeesProfile.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/sidebarEmployees.jsp</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/UpdateStatusEmployeeController.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/topservice.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/homepage.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/oldservice.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/ServicesDAO.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/common/HomeController.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/servicedetail.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/Oldservice.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/Topservicedetail.java</file>
         </group>
     </open-files>
 </project-private>
