@@ -174,31 +174,4 @@ public class VoucherDAO extends DBContext {
         } 
         return vouchers;
     }
-
-//    public static void main(String[] args) {
-//        // Tạo đối tượng VoucherDAO
-//        VoucherDAO voucherDAO = new VoucherDAO();
-//
-//        // Dữ liệu kiểm thử
-//        String name = "Test Voucher";
-//        float discount = 10.0f;
-//        
-//        // Định dạng ngày kiểm thử
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        Date startTime = null;
-//        Date endTime = null;
-//        try {
-//            startTime = new Date(dateFormat.parse("2024-07-01").getTime());
-//            endTime = new Date(dateFormat.parse("2024-07-31").getTime());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Định dạng ngày không hợp lệ.");
-//            return;
-//        }
-//
-//        // Gọi phương thức addVoucher
-//        voucherDAO.addVoucher(name, discount, startTime, endTime);
-//
-//        // Bạn có thể thêm các kiểm tra bổ sung để xác minh xem dữ liệu đã được thêm thành công vào cơ sở dữ liệu hay chưa.
-//    }
-    }
+}

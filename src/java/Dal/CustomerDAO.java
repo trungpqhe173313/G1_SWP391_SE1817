@@ -199,9 +199,33 @@ public class CustomerDAO extends DBContext {
 
     public static void main(String[] args) {
         CustomerDAO customerdao = new CustomerDAO();
-        Customer c = customerdao.getCustomerByP("0912345667");
-        System.out.println(c.getCustomerId());
+        Customer c = customerdao.getCustomerById(3);
+        System.out.println(c.getPhone());
 
+    }
+
+    public Customer getCustomerById(int customerId) {
+        String sql = "SELECT *\n"
+                + "  FROM [Barber].[dbo].[customer]\n"
+                + "  where customerId = ?";
+        Customer customer = null;
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, customerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+
+                    // Retrieve customer information
+                    customer = new Customer();
+                    customer.setCustomerId(rs.getInt("customerId"));
+                    customer.setFullName(rs.getString("fullName"));
+                    customer.setPhone(rs.getString("phone")); // Phone from accounts table
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return customer;
     }
 
 }

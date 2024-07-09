@@ -42,6 +42,7 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     public Account getAccountByPhone(String phone) {
 
         try {
@@ -62,6 +63,7 @@ public class AccountDAO extends DBContext {
                 account.setGender(rs.getBoolean("gender"));
                 account.setIsActive(rs.getBoolean("isActive"));
                 account.setAvatar(rs.getString("avatar"));
+                account.setPoint(rs.getInt("points"));
                 return account;
 
             }
@@ -279,6 +281,7 @@ public class AccountDAO extends DBContext {
         }
 
     }
+
     public Account getAllAccounts(String phone) throws SQLException {
         Account account = null;
         try {
@@ -300,6 +303,7 @@ public class AccountDAO extends DBContext {
         }
         return account;
     }
+
     public void updateAccount(String phone, String email, String avatar) throws SQLException {
         String sql = "UPDATE account SET email = ?, avatar = ? WHERE phone = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -309,7 +313,7 @@ public class AccountDAO extends DBContext {
             pstmt.executeUpdate();
         }
     }
-    
+
     public void updatePassAccountEmployees(String phone, String pass) throws SQLException {
         String sql = "UPDATE account SET pass = ? WHERE phone = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -340,13 +344,25 @@ public class AccountDAO extends DBContext {
 //
 //        }
 //    }
+    public static void main(String[] args) {
 
-    
-public static void main(String[] args) {
-    
         String phone = "0912345269";
         AccountDAO d = new AccountDAO();
-        System.out.println(d.getAccountByPhone(phone).getEmail());   
-        
+        System.out.println(d.getAccountByPhone(phone).getEmail());
+
+    }
+
+    public void updatePoints(int points, String phone) {
+        try {
+            String sql = "UPDATE [dbo].[account]\n"
+                    + "   SET [points] = ?\n"
+                    + " WHERE [phone] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, points);
+            stm.setString(2, phone);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

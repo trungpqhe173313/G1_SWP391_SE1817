@@ -4,9 +4,14 @@
  */
 package VNpay;
 
-import Dal.DiscountDAO;
-import Model.Discount;
-import com.google.gson.Gson;
+import Dal.AccountDAO;
+import Dal.CustomerDAO;
+import Dal.LoyaltyPoliciesDAO;
+import Dal.OrderDAO;
+import Model.Account;
+import Model.Customer;
+import Model.LoyaltyPolicies;
+import Model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,16 +19,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author phamt
  */
-@WebServlet(name = "DiscountServlet", urlPatterns = {"/calculateDiscount"})
-public class DiscountServlet extends HttpServlet {
+@WebServlet(name = "UpdateBillServlet", urlPatterns = {"/updateBill"})
+public class UpdateBillServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,15 +41,29 @@ public class DiscountServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DiscountServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DiscountServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String codeOrder = request.getParameter("codeOrder");
+            String isTransactionSuccessful = request.getParameter("isTransactionSuccessful");
+            int amount = Integer.parseInt(request.getParameter("amount")) /100;
+            Order order = new OrderDAO().getOrderByCode(codeOrder);
+            //get info customer in order
+            Customer customer = new CustomerDAO().getCustomerById(order.getCustomerId());
+            //get account
+            Account account = new AccountDAO().getAccountByPhone(customer.getPhone());
+            int points = 0;
+            boolean transactionSuccessful = Boolean.parseBoolean(isTransactionSuccessful);
+            if (transactionSuccessful) {
+                if (account != null) {
+                    LoyaltyPolicies lp = new LoyaltyPoliciesDAO().getLoyalty();
+                    points = account.getPoint() + (amount / lp.getMinAmount()) * lp.getPointsPerUnit();
+                    new AccountDAO().updatePoints(points, account.getPhone());
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
+                } else {
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);;
+                }
+            } else {
+                new OrderDAO().upDateStatusOrderByCode(6, codeOrder);
+            }
+            response.sendRedirect("getOrderManager");
         }
     }
 
@@ -63,7 +79,7 @@ public class DiscountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -77,36 +93,7 @@ public class DiscountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int points = Integer.parseInt(request.getParameter("points"));
-        int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
-        int newTotal = 0;
-        int newPoints = 0;
-        List<Discount> dis = new DiscountDAO().getAllDis();
-
-        for (int i = dis.size() - 1; i >= 0; i++) {
-            Discount di = dis.get(i);
-            if (points >= di.getPoint()) {
-                newPoints = points - di.getPoint();
-                newTotal = totalAmount - di.getDiscount();
-                break;
-            }
-
-        }
-
-        if (newTotal < 0) {
-            newTotal = 0;
-        }
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        Map<String, Integer> discountResponse = new HashMap<>();
-        discountResponse.put("newPoints", newPoints);
-        discountResponse.put("newTotal", newTotal);
-
-//        response.getWriter().write(new Gson().toJson(discountResponse));
-        String jsonResponse = new Gson().toJson(discountResponse);
-        System.out.println("JSON Response: " + jsonResponse);
-
-        response.getWriter().write(jsonResponse);
+        processRequest(request, response);
     }
 
     /**
