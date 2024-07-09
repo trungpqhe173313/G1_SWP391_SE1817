@@ -579,328 +579,284 @@
             <div class="row justify-content-center pb-3">
                 <div class="col-md-10 heading-section text-center ftco-animate">
                     <span class="subheading">Pricing</span>
-                    <h2 class="mb-4">Our Prices</h2>
+                    <h2 class="mb-4">Top Dịch Vụ</h2>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Hair Style</h3>
-                            <p><span class="price">$50.00</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Hair Dryer</li>
-                            <li>Hair Coloring</li>
-                            <li>Hair Cut</li>
-                            <li>Hair Dresser</li>
-                            <li>Hair Spa</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Manicure Pedicure</h3>
-                            <p><span class="price">$34.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Manicure</li>
-                            <li>Pedicure</li>
-                            <li>Coloring</li>
-                            <li>Nails</li>
-                            <li>Nail Cut</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry active pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Makeup</h3>
-                            <p><span class="price">$54.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Makeup</li>
-                            <li>Professional Makeup</li>
-                            <li>Blush On</li>
-                            <li>Facial Massage</li>
-                            <li>Facial Spa</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Body Treatment</h3>
-                            <p><span class="price">$89.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Massage</li>
-                            <li>Spa</li>
-                            <li>Foot Spa</li>
-                            <li>Body Spa</li>
-                            <li>Relaxing</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
+                <c:forEach items="${listT}" var="t" varStatus="statu" begin="0" end="3">
+                    <c:if test="${t.isActive}">
+                        <div class="col-md-3 ftco-animate">
+                            <div class="pricing-entry pb-5 text-center">
+                                <div>
+                                    <h3 class="mb-4">${t.name}</h3>
+                                    <img src="img/service/${t.image}" width="300" height="300" alt="${t.name}"/>
+                                    <p class="service-description">${t.description}</p>
+                                    <p class="price-fixed">
+                                        <span class="price">
+                                            <fmt:formatNumber value="${t.price}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="testimony-section bg-light">
-        <div class="container">
-            <div class="row ftco-animate justify-content-center">
-                <div class="col-md-6 col-lg-5 d-flex">
-                    <div class="testimony-img" style="background-image: url(images/testimony-img.jpg);"></div>
-                </div>
-                <div class="col-md-6 col-lg-7 py-5 pl-md-5">
-                    <div class="py-md-5">
-                        <div class="heading-section ftco-animate">
-                            <span class="subheading">Testimony</span>
-                            <h2 class="mb-0">Happy Customer</h2>
-                        </div>
-                        <div class="carousel-testimony owl-carousel ftco-animate" id="feedback-list">
-                            <!-- Start of dynamic feedback loop -->
-                            <c:forEach var="feedback" items="${feedbackList}">
-                                <div class="item">
-                                    <div class="testimony-wrap pb-4">
-                                        <div class="text">
-                                            <p class="mb-4">${feedback.noidung}</p>
-                                        </div>
-                                        <div class="d-flex">
-                                            <div class="user-img" style="background-image: url(images/.jpg)"></div>
-                                            <div class="pos ml-3">
-                                                <p class="name">
-                                                    <c:forEach var="customer" items="${cusList}">
-                                                        <c:if test="${customer.customerId == feedback.customerId}">
-                                                            ${customer.fullName}
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </p>
-                                                <span class="position">Customer</span>
-                                            </div>
+<section class="testimony-section bg-light">
+    <div class="container">
+        <div class="row ftco-animate justify-content-center">
+            <div class="col-md-6 col-lg-5 d-flex">
+                <div class="testimony-img" style="background-image: url(images/testimony-img.jpg);"></div>
+            </div>
+            <div class="col-md-6 col-lg-7 py-5 pl-md-5">
+                <div class="py-md-5">
+                    <div class="heading-section ftco-animate">
+                        <span class="subheading">Testimony</span>
+                        <h2 class="mb-0">Happy Customer</h2>
+                    </div>
+                    <div class="carousel-testimony owl-carousel ftco-animate" id="feedback-list">
+                        <!-- Start of dynamic feedback loop -->
+                        <c:forEach var="feedback" items="${feedbackList}">
+                            <div class="item">
+                                <div class="testimony-wrap pb-4">
+                                    <div class="text">
+                                        <p class="mb-4">${feedback.noidung}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="user-img" style="background-image: url(images/.jpg)"></div>
+                                        <div class="pos ml-3">
+                                            <p class="name">
+                                                <c:forEach var="customer" items="${cusList}">
+                                                    <c:if test="${customer.customerId == feedback.customerId}">
+                                                        ${customer.fullName}
+                                                    </c:if>
+                                                </c:forEach>
+                                            </p>
+                                            <span class="position">Customer</span>
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
-                        <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Feedback here</a>
+                            </div>
+                        </c:forEach>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feedback Modal -->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="feedbackModalLabel">Đánh giá dịch vụ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <iframe id="feedbackIframe" src="" frameborder="0" style="width: 100%; height: 500px;"></iframe>
+                    <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Feedback here</a>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <footer class="ftco-footer ftco-section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo">Haircare</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Information</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                            <li><a href="#" class="py-2 d-block">Privacy</a></li>
-                            <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="feedbackModalLabel">Đánh giá dịch vụ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="feedbackIframe" src="" frameborder="0" style="width: 100%; height: 500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Links</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">Home</a></li>
-                            <li><a href="#" class="py-2 d-block">About</a></li>
-                            <li><a href="#" class="py-2 d-block">Services</a></li>
-                            <li><a href="#" class="py-2 d-block">Work</a></li>
-                            <li><a href="#" class="py-2 d-block">Blog</a></li>
-                            <li><a href="#" class="py-2 d-block">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
-                        <div class="block-23 mb-3">
-                            <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
+<footer class="ftco-footer ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2 logo">Haircare</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Information</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                        <li><a href="#" class="py-2 d-block">Privacy</a></li>
+                        <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
 
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Links</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Home</a></li>
+                        <li><a href="#" class="py-2 d-block">About</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Work</a></li>
+                        <li><a href="#" class="py-2 d-block">Blog</a></li>
+                        <li><a href="#" class="py-2 d-block">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+        <div class="row">
+            <div class="col-md-12 text-center">
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-                            function openFeedbackModal() {
-                                $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
-                                $('#feedbackModal').modal('show');
-                            }
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-                            $(document).ready(function () {
-                                $('.btnContact').click(function (e) {
-                                    e.preventDefault();
-                                    var formData = $('.contact-form form').serialize();
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+                        function openFeedbackModal() {
+                            $('#feedbackIframe').attr('src', 'CustomerFeedback.jsp');
+                            $('#feedbackModal').modal('show');
+                        }
 
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'cusfeedback',
-                                        data: formData,
-                                        success: function (response) {
-                                            if (response.trim() === 'Phản hồi của bạn đã được gửi đi thành công! :>') {
-                                                $('#feedbackModal').modal('hide');
-                                                // Reload the homepage to reflect new feedback
-                                                location.reload();
-                                            } else {
-                                                alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
-                                            }
-                                        },
-                                        error: function () {
+                        $(document).ready(function () {
+                            $('.btnContact').click(function (e) {
+                                e.preventDefault();
+                                var formData = $('.contact-form form').serialize();
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'cusfeedback',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response.trim() === 'Phản hồi của bạn đã được gửi đi thành công! :>') {
+                                            $('#feedbackModal').modal('hide');
+                                            // Reload the homepage to reflect new feedback
+                                            location.reload();
+                                        } else {
                                             alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
                                         }
-                                    });
+                                    },
+                                    error: function () {
+                                        alert('Error: Không thể gửi phản hồi. Vui lòng thử lại.');
+                                    }
                                 });
                             });
-    </script>
+                        });
+</script>
 
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script>
-                            $(document).ready(function () {
-                                $('#serviceCarousel').carousel({
-                                    interval: 3000
-                                });
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/jquery.animateNumber.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/jquery.timepicker.min.js"></script>
+<script src="js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="js/google-map.js"></script>
+<script src="js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+                        $(document).ready(function () {
+                            $('#serviceCarousel').carousel({
+                                interval: 3000
                             });
+                        });
 
 
-    </script>
-    <script>
-        // Function to format number as percentage with specified decimal places
-        function formatPercentage(number, decimals) {
-            return (number * 100).toFixed(decimals) + '%';
+</script>
+<script>
+    // Function to format number as percentage with specified decimal places
+    function formatPercentage(number, decimals) {
+        return (number * 100).toFixed(decimals) + '%';
+    }
+
+    // Function to format date as dd-MM-yyyy
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero based
+        var year = date.getFullYear();
+
+        // Padding day and month with leading zeros if needed
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (month < 10) {
+            month = '0' + month;
         }
 
-        // Function to format date as dd-MM-yyyy
-        function formatDate(dateString) {
-            var date = new Date(dateString);
-            var day = date.getDate();
-            var month = date.getMonth() + 1; // Months are zero based
-            var year = date.getFullYear();
+        return day + '-' + month + '-' + year;
+    }
 
-            // Padding day and month with leading zeros if needed
-            if (day < 10) {
-                day = '0' + day;
-            }
-            if (month < 10) {
-                month = '0' + month;
-            }
+    // Function to display popup and format discount
+    function showPopup() {
+    var vouchers = [
+    <c:forEach items="${todaysVouchers}" var="voucher">
+    {
+    name: "${voucher.name}",
+            discount: ${voucher.discount},
+            startTime: "${voucher.startTime}",
+            endTime: "${voucher.endTime}"
+    }<c:if test="${!voucherStatus.last}">,</c:if>
+    </c:forEach>
+    ];
+            console.log("Vouchers: ", vouchers); // Debugging line
 
-            return day + '-' + month + '-' + year;
-        }
+            if (vouchers.length > 0) {
+    var discountFormatted = formatPercentage(vouchers[0].discount, 0); // Format discount here
+            var startDateFormatted = formatDate(vouchers[0].startTime); // Format start date
+            var endDateFormatted = formatDate(vouchers[0].endTime); // Format end date
 
-        // Function to display popup and format discount
-        function showPopup() {
-        var vouchers = [
-        <c:forEach items="${todaysVouchers}" var="voucher">
-        {
-        name: "${voucher.name}",
-                discount: ${voucher.discount},
-                startTime: "${voucher.startTime}",
-                endTime: "${voucher.endTime}"
-        }<c:if test="${!voucherStatus.last}">,</c:if>
-        </c:forEach>
-        ];
-                console.log("Vouchers: ", vouchers); // Debugging line
+            var message = "<strong>Haircare xin thông báo</strong><br><br>Hiện nay cửa hàng đang giảm giá " + discountFormatted + " từ ngày " + startDateFormatted + " đến ngày " + endDateFormatted;
+            document.getElementById('popup-message').innerHTML = message;
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('popup-overlay').style.display = 'block';
+    } else {
+    console.log("No vouchers available"); // Debugging line
+    }
+    }
 
-                if (vouchers.length > 0) {
-        var discountFormatted = formatPercentage(vouchers[0].discount, 0); // Format discount here
-                var startDateFormatted = formatDate(vouchers[0].startTime); // Format start date
-                var endDateFormatted = formatDate(vouchers[0].endTime); // Format end date
+    function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+    }
 
-                var message = "<strong>Haircare xin thông báo</strong><br><br>Hiện nay cửa hàng đang giảm giá " + discountFormatted + " từ ngày " + startDateFormatted + " đến ngày " + endDateFormatted;
-                document.getElementById('popup-message').innerHTML = message;
-                document.getElementById('popup').style.display = 'block';
-                document.getElementById('popup-overlay').style.display = 'block';
-        } else {
-        console.log("No vouchers available"); // Debugging line
-        }
-        }
-
-        function closePopup() {
-        document.getElementById('popup').style.display = 'none';
-                document.getElementById('popup-overlay').style.display = 'none';
-        }
-
-        window.onload = showPopup;
-    </script>
+    window.onload = showPopup;
+</script>
 </body>
 </html>
