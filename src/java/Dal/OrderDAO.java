@@ -306,7 +306,8 @@ public class OrderDAO extends DBContext {
                 + "JOIN Shift s ON os.ShiftID = s.id \n"
                 + "WHERE \n"
                 + "    CAST(CONCAT(CONVERT(date, GETDATE()), ' ', s.startTime) AS DATETIME) \n"
-                + "    BETWEEN DATEADD(MINUTE, 30, GETDATE()) AND DATEADD(MINUTE, 60, GETDATE());";
+                + "    BETWEEN DATEADD(MINUTE, 30, GETDATE()) AND DATEADD(MINUTE, 60, GETDATE())\n"
+                + "    AND CAST(o.OrderDate AS DATE) = CAST(GETDATE() AS DATE);";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();

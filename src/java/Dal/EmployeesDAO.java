@@ -32,6 +32,7 @@ public class EmployeesDAO extends DBContext {
                 + "   a.phone, "
                 + "   e.employeeId, "
                 + "   e.fullName, "
+                + "   CAST(e.updateTime AS DATE) AS updateTime, "
                 + "   a.email, "
                 + "   a.isActive,"
                 + "   a.gender, "
@@ -53,6 +54,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("phone", rs.getString("phone"));
                 row.put("employeeId", rs.getInt("employeeId"));
                 row.put("fullName", rs.getString("fullName"));
+                row.put("updateTime", rs.getString("updateTime"));
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
@@ -73,6 +75,7 @@ public class EmployeesDAO extends DBContext {
                 + "   a.phone, "
                 + "   e.employeeId, "
                 + "   e.fullName, "
+                + "   CAST(a.updateTime AS DATE) AS updateTime, "
                 + "   a.email, "
                 + "   a.isActive,"
                 + "   a.gender, "
@@ -94,6 +97,7 @@ public class EmployeesDAO extends DBContext {
                 row.put("phone", rs.getString("phone"));
                 row.put("employeeId", rs.getInt("employeeId"));
                 row.put("fullName", rs.getString("fullName"));
+                row.put("updateTime", rs.getString("updateTime"));
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));
                 row.put("status", rs.getString("status"));
@@ -106,11 +110,12 @@ public class EmployeesDAO extends DBContext {
     }
 
     public boolean updateEmployeeActiveStatus(int employeeId, boolean isActive) throws SQLException {
-        String sql = "UPDATE [account] "
-                + "SET [account].isActive = ? "
-                + "FROM [account] "
-                + "JOIN [employee] ON [account].phone = [employee].phone "
-                + "WHERE [employee].employeeId = ?";
+        String sql = "UPDATE a "
+                + "SET a.isActive = ?, "
+                + "    a.updateTime = GETDATE() "
+                + "FROM [account] a "
+                + "JOIN [employee] e ON a.phone = e.phone "
+                + "WHERE e.employeeId = ?";
 
         int bitValue = isActive ? 1 : 0;
 
@@ -152,51 +157,44 @@ public class EmployeesDAO extends DBContext {
     public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         List<Map<String, Object>> resultList = new ArrayList<>();
         String sql = "SELECT "
-                + " e.fullName, "
-                + " a.phone, "
-                + " CASE WHEN a.gender = 1 THEN 'Nam' ELSE 'Nu' END AS gender, "
-                + " a.email, "
-                + " se.status, "
-                + " c.fullName AS customerFullName, "
-                + " o.orderId, "
-                + " STUFF(( "
-                + "     SELECT ', ' + s.name "
-                + "     FROM [Order_services] os "
-                + "     JOIN [Services] s ON os.servicesId = s.servicesId "
-                + "     WHERE os.OrderId = o.orderId "
-                + "     FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 2, '') AS serviceNames "
-                + " FROM "
-                + "     [employee] e "
-                + " JOIN "
-                + "     [account] a ON e.phone = a.phone "
-                + " LEFT JOIN "
-                + "     [statusEmployee] se ON e.statusEmployee = se.id "
-                + " JOIN "
-                + "     [order] o ON e.employeeId = o.employeeId "
-                + " JOIN "
-                + "     [customer] c ON o.customerId = c.customerId "
-                + " WHERE "
-                + "     se.id = 2 AND a.isActive = 1 "
-                + " GROUP BY "
-                + "     e.fullName, "
-                + "     a.phone, "
-                + "     a.gender, "
-                + "     a.email, "
-                + "     se.status, "
-                + "     c.fullName, "
-                + "     o.orderId";
+                + "e.fullName AS employeeFullName, "
+                + "e.phone AS employeePhone, "
+                + "a.gender AS employeeGender, "
+                + "a.email AS employeeEmail, "
+                + "se.status AS workStatus, "
+                + "c.fullName AS customerFullName, "
+                + "o.orderId AS orderId, "
+                + "STRING_AGG(s.name, ', ') AS serviceNames "
+                + "FROM "
+                + "employee e "
+                + "JOIN account a ON e.phone = a.phone "
+                + "JOIN statusEmployee se ON e.statusEmployee = se.id "
+                + "LEFT JOIN Orders o ON e.employeeId = o.employeeId "
+                + "LEFT JOIN Order_services os ON o.orderId = os.orderId "
+                + "LEFT JOIN Services s ON os.servicesId = s.servicesId "
+                + "LEFT JOIN customer c ON o.customerId = c.customerId "
+                + "WHERE "
+                + "se.status = N'Đang Bận' "
+                + "GROUP BY "
+                + "e.fullName, "
+                + "e.phone, "
+                + "a.gender, "
+                + "a.email, "
+                + "se.status, "
+                + "c.fullName, "
+                + "o.orderId";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
-                row.put("fullName", rs.getString("fullName"));
-                row.put("phone", rs.getString("phone"));
-                row.put("gender", rs.getString("gender")); // Đảm bảo rằng tên cột phù hợp ở đây
-                row.put("email", rs.getString("email"));
-                row.put("status", rs.getString("status"));
-                row.put("customerFullName", rs.getString("customerFullName")); // Đảm bảo rằng tên cột phù hợp ở đây
+                row.put("employeeFullName", rs.getString("employeeFullName"));
+                row.put("employeePhone", rs.getString("employeePhone"));
+                row.put("employeeGender", rs.getString("employeeGender"));
+                row.put("employeeEmail", rs.getString("employeeEmail"));
+                row.put("workStatus", rs.getString("workStatus"));
+                row.put("customerFullName", rs.getString("customerFullName"));
                 row.put("orderId", rs.getString("orderId"));
-                row.put("serviceNames", rs.getString("serviceNames")); // Thêm serviceNames vào Map
+                row.put("serviceNames", rs.getString("serviceNames"));
 
                 resultList.add(row);
             }

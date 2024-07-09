@@ -5,7 +5,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -189,6 +191,9 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="advoucher" >
                                         Thêm Mã Giảm Giá
                                     </a>
+                                    <a class="btn btn-primary btn-sm mr-2" href="oldvoucher" >
+                                        Mã đã hết hạn
+                                    </a>
                                     
                                 </div>
                                 <div class="card-body">
@@ -206,10 +211,11 @@
                                             </thead>
                                             <tbody>
                                             <c:forEach items="${listV}" var="o">
+                                                <c:if test="${o.status == 1}">
                                                 <tr>
                                                     <td>${o.id}</td>
                                                     <td>${o.name}</td>
-                                                    <td>${o.discount}%</td>
+                                                    <td><fmt:formatNumber value="${o.discount * 100}" type="number" minFractionDigits="0" maxFractionDigits="2"/> %</td>
                                                     <td>${o.startTime}</td>
                                                     <td>${o.endTime}</td>
                                                     <td>
@@ -222,7 +228,7 @@
                                                        
                                                     </td>
                                                 </tr>
-                                                    
+                                                  </c:if>  
                                             </c:forEach>
                                         </tbody>
                                     </table>

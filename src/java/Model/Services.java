@@ -9,13 +9,14 @@ package Model;
  * @author xdrag
  */
 public class Services {
-    private int  servicesId;
+
+    private int servicesId;
     private String name;
     private String image;
     private int price;
     private String description;
     private boolean isActive;
-    
+    private int orderCount; // Add this field
 
     public Services() {
     }
@@ -29,6 +30,18 @@ public class Services {
         this.isActive = isActive;
     }
 
+    // Add a constructor that includes orderCount
+    public Services(int servicesId, String name, String image, int price, String description, boolean isActive, int orderCount) {
+        this.servicesId = servicesId;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.description = description;
+        this.isActive = isActive;
+        this.orderCount = orderCount;
+    }
+
+    // Existing getters and setters
     public int getServicesId() {
         return servicesId;
     }
@@ -77,23 +90,25 @@ public class Services {
         this.isActive = isActive;
     }
 
-//    public int getClassificationId() {
-//        return classificationId;
-//    }
-//
-//    public void setClassificationId(int classificationId) {
-//        this.classificationId = classificationId;
-//    }
+    // Getter and setter for orderCount
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
+    }
 
     @Override
     public String toString() {
-        return "Services{" + "servicesId=" + servicesId + ", name=" + name + ", image=" + image + ", price=" + price + ", description=" + description + ", isActive=" + isActive + '}';
+        return "Services{"
+                + "servicesId=" + servicesId
+                + ", name='" + name + '\''
+                + ", image='" + image + '\''
+                + ", price=" + price
+                + ", description='" + description + '\''
+                + ", isActive=" + isActive
+                + ", orderCount=" + orderCount
+                + '}';
     }
-
-    
-
-    
-    
-    
-    
 }

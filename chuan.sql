@@ -32,6 +32,7 @@ CREATE TABLE account (
     isActive bit,
     points int,
     avatar nvarchar(255),
+	updateTime DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_account_customer FOREIGN KEY (phone) REFERENCES customer(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
@@ -40,7 +41,8 @@ CREATE TABLE employee (
     fullName nvarchar(255),
     phone nvarchar(255) UNIQUE,
     statusEmployee int,
-    updateTime datetime,
+	createdAt DATETIME DEFAULT GETDATE(),
+    updateTime DATETIME DEFAULT GETDATE(),
 	CONSTRAINT FK_employee_account FOREIGN KEY (phone) REFERENCES account(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 CREATE TABLE admin (
@@ -122,7 +124,7 @@ CREATE TABLE Chat (
     SenderID int,
     adminId int,
     MessageContent nvarchar(255),
-    SendTime datetime,
+    SendTime datetime DEFAULT GETDATE(),
     MessageStatus nvarchar(255),
 	senderType nvarchar(50),
     CONSTRAINT FK_Chat_admin FOREIGN KEY (adminId) REFERENCES admin(adminId) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -142,6 +144,15 @@ CREATE TABLE LoyaltyPolicies (
     MinAmount INT NOT NULL, -- Số tiền tối thiểu để bắt đầu tính điểm
     PointsPerUnit INT NOT NULL -- Số điểm cho mỗi đơn vị tiền chi tiêu
 );
+CREATE TABLE BlogPosts (
+    postId INT IDENTITY(1,1) PRIMARY KEY,
+    title NVARCHAR(255) NOT NULL,
+    content NVARCHAR(MAX) NOT NULL,
+	image NVARCHAR(255),
+    createdAt DATETIME DEFAULT GETDATE(),
+    updatedAt DATETIME DEFAULT GETDATE(),
+    isActive BIT DEFAULT 1,
+);
 
 ALTER TABLE account
 ADD CONSTRAINT FK_account_role FOREIGN KEY (roleId) REFERENCES role(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -149,6 +160,22 @@ ADD CONSTRAINT FK_account_role FOREIGN KEY (roleId) REFERENCES role(id) ON DELET
 ALTER TABLE employee
 ADD CONSTRAINT FK_employee_statusEmployee FOREIGN KEY (statusEmployee) REFERENCES statusEmployee(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
+
+CREATE TRIGGER trg_UpdateVoucherStatus
+ON Voucher
+AFTER UPDATE, INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @currentDate date;
+    SET @currentDate = CAST(GETDATE() AS date);
+
+    UPDATE Voucher
+    SET status = 0
+    WHERE endTime < @currentDate
+      AND status != 0;
+END;
 
 -- Inserting data into roles table
 INSERT INTO role ([role]) VALUES
@@ -191,29 +218,29 @@ INSERT INTO customer (phone, fullName) VALUES
 GO
 
 -- Inserting data into account table
-INSERT INTO account (phone, pass, roleId, email, gender, isActive, points, avatar) VALUES
-(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, 100, NULL),
-(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, 100, NULL),
-(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, 100, NULL),
-(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, 100, NULL),
-(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, 100, NULL),
-(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, 100, NULL),
-(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, 100, NULL),
-(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, 100, NULL),
-(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL, NULL),
-(N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL, NULL),
-(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL, NULL),
-(N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL, NULL),
-(N'0912345677', 'password4', 2, 'thien@example.com', 1, 1, NULL, NULL),
-(N'0912345676', 'password5', 2, 'anh@example.com', 1, 1, NULL, NULL),
-(N'0912345675', 'password6', 2, 'kiet@example.com', 1, 1, NULL, NULL),
-(N'0912345674', 'password7', 2, 'duong@example.com', 1, 1, NULL, NULL),
-(N'0912345673', 'password8', 2, 'vinh@example.com', 1, 1, NULL, NULL),
-(N'0912345672', 'password9', 2, 'uoc@example.com', 1, 1, NULL, NULL),
-(N'0912345669', 'password10', 3, 'phamvana@example.com', 1, 1, 100, NULL),
-(N'0912345668', 'password11', 3, 'nguyenvanb@example.com', 1, 1, 100, NULL),
-(N'0912345667', 'password12', 3, 'truongvanc@example.com', 1, 1, 100, NULL),
-(N'0912345666', 'password13', 3, 'hoangvand@example.com', 1, 1, 100, NULL);
+INSERT INTO account (phone, pass, roleId, email, gender, isActive, points, avatar, updateTime) VALUES
+(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345677', 'password4', 2, 'thien@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345676', 'password5', 2, 'anh@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345675', 'password6', 2, 'kiet@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345674', 'password7', 2, 'duong@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345673', 'password8', 2, 'vinh@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345672', 'password9', 2, 'uoc@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345669', 'password10', 3, 'phamvana@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345668', 'password11', 3, 'nguyenvanb@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345667', 'password12', 3, 'truongvanc@example.com', 1, 1, 100, NULL, GETDATE()),
+(N'0912345666', 'password13', 3, 'hoangvand@example.com', 1, 1, 100, NULL, GETDATE());
 GO
 
 -- Inserting data into employee table
@@ -331,12 +358,12 @@ GO
 
 -- Inserting data into Chat table
 INSERT INTO Chat (SenderID, adminId, MessageContent, SendTime, MessageStatus, senderType) VALUES
-(1, 1, N'Hello admin', '2023-06-30', N'sent', N'Customer'),
-(1, 1, N'Hello', '2023-06-30', N'sent', N'Admin'),
-(2, 1, N'admin ơi', '2023-06-30', N'sent', N'Customer'),
-(2, 1, N'chào bạn', '2023-06-30', N'sent', N'Admin'),
-(3, 1, N'chào admin', '2023-06-30', N'sent', N'Customer'),
-(3, 1, N'admin xin chào', '2023-06-30', N'sent', N'Admin');
+(1, 1, N'Hello admin', GETDATE(), N'sent', N'Customer'),
+(1, 1, N'Hello', GETDATE(), N'sent', N'Admin'),
+(2, 1, N'admin ơi', GETDATE(), N'sent', N'Customer'),
+(2, 1, N'chào bạn', GETDATE(), N'sent', N'Admin'),
+(3, 1, N'chào admin', GETDATE(), N'sent', N'Customer'),
+(3, 1, N'admin xin chào', GETDATE(), N'sent', N'Admin');
 GO
 
 -- Inserting data into Voucher table
@@ -383,4 +410,28 @@ GO
 INSERT INTO store ([isActive]) VALUES
 (1),
 (0);
+GO
+
+-- Chèn dữ liệu mẫu vào bảng BlogPosts
+INSERT INTO BlogPosts (title, content, image, createdAt, updatedAt, isActive)
+VALUES 
+(N'5 Kiểu tóc nam hot nhất mùa hè 2024', 
+N'Năm 2024 mang đến nhiều kiểu tóc nam đầy phong cách và mới mẻ. Hãy cùng khám phá 5 kiểu tóc nam hot nhất mùa hè này, từ undercut cổ điển đến các kiểu tóc hiện đại như quiff và pompadour.', 
+N'/images/blog/toc-nam-2024.jpg', GETDATE(), GETDATE(), 1),
+
+(N'Làm sao để chăm sóc tóc sau khi uốn', 
+N'Uốn tóc có thể làm tóc trở nên khô và dễ gãy. Để giữ cho tóc luôn mềm mượt và khỏe mạnh sau khi uốn, bạn cần biết cách chăm sóc đúng cách. Bài viết này sẽ chia sẻ một số bí quyết chăm sóc tóc hiệu quả sau khi uốn.', 
+N'/images/blog/cham-soc-toc-uon.jpg', GETDATE(), GETDATE(), 1),
+
+(N'Các sản phẩm dưỡng tóc tốt nhất cho tóc nhuộm', 
+N'Tóc nhuộm cần được chăm sóc đặc biệt để giữ màu lâu và tóc luôn khỏe mạnh. Dưới đây là danh sách các sản phẩm dưỡng tóc tốt nhất mà bạn nên thử cho tóc nhuộm của mình.', 
+N'/images/blog/san-pham-duong-toc-nhuom.jpg', GETDATE(), GETDATE(), 1),
+
+(N'Mẹo vặt để cắt tóc tại nhà', 
+N'Không phải lúc nào bạn cũng có thể đến tiệm cắt tóc. Trong những trường hợp đó, biết cách tự cắt tóc tại nhà sẽ rất hữu ích. Bài viết này sẽ hướng dẫn bạn một số mẹo để cắt tóc tại nhà dễ dàng và đẹp.', 
+N'/images/blog/meo-cat-toc-tai-nha.jpg', GETDATE(), GETDATE(), 1),
+
+(N'Xu hướng màu tóc nổi bật cho năm 2024', 
+N'Bạn đang tìm kiếm một sự thay đổi cho màu tóc của mình? Hãy cùng khám phá những xu hướng màu tóc nổi bật cho năm 2024. Từ những màu sắc truyền thống đến những tông màu nổi bật, chắc chắn sẽ có lựa chọn phù hợp cho bạn.', 
+N'/images/blog/xu-huong-mau-toc-2024.jpg', GETDATE(), GETDATE(), 1);
 GO
