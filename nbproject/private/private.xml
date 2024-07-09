@@ -3,18 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/homepage.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/advoucher.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/updateserrvice.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/common/HomeController.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/ServicesDAO.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/AddService.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/VoucherDAO.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/updatevoucher.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Voucher/Advoucher.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Voucher/Updatevoucher.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/voucherdetail.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/UpdateService.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Model/Voucher.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/VNpay/ajaxServlet.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/viewAllBill.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/VNpay/DiscountServlet.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/payment.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/VNpay/CheckOutServeletController.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/VNpay/UpdateBillServlet.java</file>
         </group>
     </open-files>
 </project-private>

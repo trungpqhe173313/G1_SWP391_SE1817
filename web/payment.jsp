@@ -1,11 +1,11 @@
-<%-- 
-    Document   : payment
-    Created on : Jul 7, 2024, 1:09:53 AM
-    Author     : phamt
---%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%
+    HashMap<String, Integer> voucherMap = (HashMap<String, Integer>) request.getAttribute("voucherMap");
+    request.setAttribute("voucherMap", voucherMap); // Đặt lại thuộc tính để JSTL có thể sử dụng
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,6 +36,9 @@
             .payment-method, .card-details, .cash-details, .bank-transfer-details {
                 margin-top: 20px;
             }
+            .discount .price {
+                color: red; /* Đổi màu chữ của phần tử discount thành màu đỏ */
+            }
         </style>
     </head>
     <body>
@@ -49,6 +52,7 @@
                         <div class="products">
                             <h3 class="title">Checkout</h3>
                             <input type="hidden" name="codeOrder" value="${codeOrder}">
+                            <input type="hidden" name="" id="points-hidden" value="${minDiscount.point}">
                             <c:forEach items="${ls}" var="ls">
                                 <div class="item d-flex justify-content-between">
                                     <div>
@@ -57,21 +61,40 @@
                                     <span class="price">${ls.price} VND</span>
                                 </div>
                             </c:forEach>
-
+                            <c:if test="${not empty voucherMap}">
+                                <c:forEach var="entry" items="${voucherMap.entrySet()}">
+                                    <div class="discount d-flex justify-content-between">
+                                        <div>
+                                            <p class="item-name">${entry.key}</p>
+                                        </div>
+                                        <span class="price">${entry.value} VND</span>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                            <div class="discount d-flex justify-content-between" id="discount-container" style="display: none;">
+                                <div>
+                                    <p class="item-name">Discount</p>
+                                </div>
+                                <span class="price" id="discount-amount">0 VND</span>
+                            </div>
                             <div class="total d-flex justify-content-between">
                                 <span>Total</span>
                                 <span class="price" id="total-amount">${amount} VND</span>
                                 <input type="hidden" name="amount" id="total-amount-hidden" value="${amount}">
                             </div>
                         </div>
-                        <div class="points">
-                            <h3 class="title">Use Points</h3>
-                            <div class="form-group">
-                                <p>You have <span id="available-points">${cus.account.point}</span> points available. Maximum discount will be applied automatically.</p>
-                                <button type="button" class="btn btn-secondary mt-2" id="apply-points">Apply Points</button>
-                                <div class="error-message" id="error-message">Please enter a valid number of points.</div>
+                        <c:if test="${cus != null}">
+                            <div class="points">
+                                <h3 class="title">Use Points</h3>
+                                <div class="form-group">
+                                    <input type="hidden" name="points" id="available-points-hidden" value="${cus.account.point}">
+                                    <p>You have <span id="available-points">${cus.account.point}</span> points available. Maximum discount will be applied automatically.</p>
+                                    <button type="button" class="btn btn-secondary mt-2" id="apply-points">Apply Points</button>
+                                    <div class="error-message" id="error-message">Please enter a valid number of points.</div>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
+
                         <div class="form-group col-sm-12 mt-4">
                             <button type="submit" class="btn btn-primary btn-block">Proceed</button>
                         </div>
@@ -83,10 +106,19 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function () {
+                var pointsApplied = false;
+                var minPointsRequired = parseInt(document.getElementById('points-hidden').value);
                 $('#apply-points').click(function () {
-                    var userPoints = parseInt(document.getElementById('available-points').innerText); // Số điểm hiện có của người dùng
-                    var totalAmount = parseInt(document.getElementById('total-amount').innerText); // Tổng số tiền ban đầu
+                    if (pointsApplied) {
+                        return;
+                    }
 
+                    var userPoints = parseInt(document.getElementById('available-points').innerText); // Số điểm hiện có của người dùng
+                    var totalAmount = parseInt(document.getElementById('total-amount').innerText.replace(' VND', '')); // Tổng số tiền ban đầu
+                    if (userPoints < minPointsRequired) {
+                        alert('Bạn không đủ điểm để áp dụng giảm giá.');
+                        return;
+                    }
                     $.ajax({
                         url: 'calculateDiscount',
                         type: 'POST',
@@ -95,14 +127,21 @@
                             totalAmount: totalAmount
                         },
                         success: function (response) {
-                            // Kiểm tra xem response có phải là một đối tượng không
                             if (typeof response === 'string') {
                                 response = JSON.parse(response);
                             }
-                            $('#total-amount').text(response.newTotal + ' VND');
+                            var discount = totalAmount - response.newTotal;
+                            $('#discount-amount').text(discount + ' VND'); // Hiển thị số tiền trừ
+                            $('#total-amount').text(response.newTotal + ' VND'); // Hiển thị tổng tiền sau khi trừ
                             $('#total-amount-hidden').val(response.newTotal);
                             $('#available-points').text(response.newPoints);
-                            console.log('Số điểm còn lại:', response.newPoints);
+                            $('#available-points-hidden').val(response.newPoints);
+                            // Hiển thị phần tử discount-container sau khi đã tính toán số tiền trừ
+                            $('#discount-container').show();
+
+                            // Vô hiệu hóa nút apply-points và đặt biến cờ
+                            $('#apply-points').prop('disabled', true);
+                            pointsApplied = true;
                         },
                         error: function (xhr, status, error) {
                             console.error('Lỗi:', error);
@@ -113,4 +152,3 @@
         </script>
     </body>
 </html>
-
