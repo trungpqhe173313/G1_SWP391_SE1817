@@ -7,26 +7,23 @@
  *
  * @author ducth
  */
-import Dal.PointDAO;
-import Model.LoyaltyPolicies;
-
+import Dal.BlogDAO;
+import Dal.EmployeesDAO;
+import Model.Blog;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
+
     public static void main(String[] args) {
-        PointDAO pointDAO = new PointDAO();
-
-        // Call the DAO method to fetch all loyalty policies
-        List<LoyaltyPolicies> policies = pointDAO.getAllLoyaltyPolicies();
-
-        // Print the fetched loyalty policies
-        for (LoyaltyPolicies policy : policies) {
-            System.out.println("Policy ID: " + policy.getPolicyId());
-            System.out.println("Minimum Amount: " + policy.getMinAmount());
-            System.out.println("Points per Unit: " + policy.getPointsPerUnit());
-            System.out.println("----------------------");
+        BlogDAO blogDAO = new BlogDAO();
+        List<Blog> blogs = blogDAO.viewListBlogCustomer();
+        for (Blog blog : blogs) {
+            System.out.println(blog);
         }
     }
+
 }
 
 

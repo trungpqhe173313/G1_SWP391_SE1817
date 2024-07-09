@@ -47,6 +47,49 @@ public class ServicesDAO extends DBContext {
 
     }
 
+    public List<Services> getTopServices() {
+        List<Services> topServices = new ArrayList<>();
+        String sql = "SELECT TOP 10 "
+                + "s.servicesId, "
+                + "s.name, "
+                + "s.image, "
+                + "s.price, "
+                + "s.description, "
+                + "s.isActive, "
+                + "COUNT(os.orderId) AS orderCount "
+                + "FROM Services s "
+                + "JOIN Order_services os ON s.servicesId = os.servicesId "
+                + "GROUP BY "
+                + "s.servicesId, "
+                + "s.name, "
+                + "s.image, "
+                + "s.price, "
+                + "s.description, "
+                + "s.isActive "
+                + "ORDER BY orderCount DESC";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int servicesId = rs.getInt("servicesId");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+                int price = rs.getInt("price");
+                String description = rs.getString("description");
+                boolean isActive = rs.getBoolean("isActive");
+                int orderCount = rs.getInt("orderCount");
+
+                Services service = new Services(servicesId, name, image, price, description, isActive);
+                service.setOrderCount(orderCount); // Set the order count
+                topServices.add(service);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return topServices;
+    }
+
     public void AddService(String name, String image, int price, String description) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -162,12 +205,6 @@ public class ServicesDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        // Tạo đối tượng ServicesDAO
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> s = dao.GetAllServices();
-        System.out.println(s.size());
-    }
 
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
