@@ -32,7 +32,6 @@ public class EmployeesDAO extends DBContext {
                 + "   a.phone, "
                 + "   e.employeeId, "
                 + "   e.fullName, "
-                + "   CAST(e.createdAt AS DATE) AS createdAt, "
                 + "   CAST(e.updateTime AS DATE) AS updateTime, "
                 + "   a.email, "
                 + "   a.isActive,"
@@ -55,7 +54,6 @@ public class EmployeesDAO extends DBContext {
                 row.put("phone", rs.getString("phone"));
                 row.put("employeeId", rs.getInt("employeeId"));
                 row.put("fullName", rs.getString("fullName"));
-                row.put("createdAt", rs.getString("createdAt"));
                 row.put("updateTime", rs.getString("updateTime"));
                 row.put("email", rs.getString("email"));
                 row.put("gender", rs.getBoolean("gender"));

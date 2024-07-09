@@ -1003,7 +1003,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.javax.mail-1.6.2.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.javax.mail.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.gson-2.8.9.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.json-20210307.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+<!--        <copyfiles files="${file.reference.json-20210307.jar}" todir="${build.web.dir}/WEB-INF/lib"/>-->
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
