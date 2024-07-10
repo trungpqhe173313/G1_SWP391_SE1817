@@ -120,6 +120,8 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+
+
         <jsp:include page="nav.jsp"></jsp:include>
             <!-- END nav -->
 
@@ -433,5 +435,8 @@
                                 });
                             });
     </script>
+
+
 </body>
+
 </html>

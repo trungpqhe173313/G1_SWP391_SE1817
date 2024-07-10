@@ -1,21 +1,16 @@
-<%-- 
-    Document   : employeesResign
-    Created on : Jun 17, 2024, 4:48:09 PM
-    Author     : ducth
---%>
-
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List, java.util.Map" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin 2 - Tables</title>
+    <title>Blog Management</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,36 +22,26 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
-
 <body id="page-top">
-    <!-- Page Wrapper -->
     <div id="wrapper">
-        <!-- Sidebar -->
-        <jsp:include page="sidebar.jsp"></jsp:include>
-        <!-- End of Sidebar -->
+        <%@ include file="sidebar.jsp" %>
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
             <div id="content">
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <!-- Sidebar Toggle (Topbar) -->
                     <form class="form-inline">
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
                     </form>
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -79,68 +64,60 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <a class="btn btn-primary btn-sm mr-2" href="employeesdetail" style="background-color: #2E59D9;">
-                                Quay Lại
-                            </a>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#editBlogModal">Tạo Blog Mới</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-<!--                                            <th>Hình Ảnh</th>-->
-                                            <th>Họ Và Tên</th>
-                                            <th>Số Điện Thoại</th>
-                                            <th>Giới Tính</th>
-                                            <th>Email</th>
-                                            <th>Trạng Thái</th>
-                                            <th>Ngày Nghỉ Việc</th> 
-                                            <th>Phục Hồi</th>
+                                            <th style="width: 500px;">Tiêu Đề</th>
+                                            <th style="width: 500px;">Nội Dung</th>
+                                            <th>Ngày Tạo</th>
+                                            <th>Ngày Sửa</th>
+                                            <th style="width: 150px;">Trạng Thái</th>
+                                            <th>Chỉnh Sửa</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                            List<Map<String, Object>> employeeResign = (List<Map<String, Object>>) request.getAttribute("employeeResign");
-                                            if (employeeResign != null) {
-                                                for (Map<String, Object> employee : employeeResign) {
-                                        %>
-                                        <tr>
-<!--                                            <td><%= employee.get("avatar") %></td>-->
-                                            <td><%= employee.get("fullName") %></td>
-                                            <td><%= employee.get("phone") %></td>
-                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
-                                            <td><%= employee.get("email") %></td>
-                                            <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("isActive"))) ? "Đang Hoạt Động" : "Không Hoạt Động") %></td>
-                                            <td><%= employee.get("updateTime") %></td>
-                                            <td>
-                                                <a href="#" onclick="confirmDelete('<%= employee.get("employeeId") %>')" class="btn btn-success btn-circle btn-sm">
-                                                    <i class="fas fa-undo-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <%
-                                                }
-                                            }
-                                        %>
+                                        <c:forEach var="blog" items="${blogs}">
+                                            <tr>
+                                                <td>${fn:substring(blog.title, 0, 60)}${fn:length(blog.content) > 60 ? '...' : ''}</td>
+                                                <td>${fn:substring(blog.content, 0, 60)}${fn:length(blog.content) > 60 ? '...' : ''}</td>
+                                                <td><fmt:formatDate value="${blog.createAt}" pattern="dd/MM/yyyy"/></td>
+                                                <td><fmt:formatDate value="${blog.updateAt}" pattern="dd/MM/yyyy"/></td>
+                                                <td id="status-${blog.postId}" class="status-column">${blog.isActive ? 'Đang hoạt động' : 'Không hoạt động'}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="btn btn-info btn-sm edit-btn mr-2"
+                                                                data-blogid="${blog.postId}"
+                                                                data-title="${blog.title}"
+                                                                data-content="${blog.content}">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <div class="custom-control custom-switch custom-switch-lg">
+                                                            <input type="checkbox" class="custom-control-input toggle-btn"
+                                                                   id="toggle-${blog.postId}"
+                                                                   data-blogid="${blog.postId}" data-active="${blog.isActive}"
+                                                                   ${blog.isActive ? 'checked' : ''}>
+                                                            <label class="custom-control-label ml-2" for="toggle-${blog.postId}">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -148,18 +125,13 @@
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
         </div>
-        <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -178,22 +150,15 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
+    <script src="vendor/ckeditor/ckeditor.js"></script>
+<script>
+            $(document).ready(function () {
             $('#dataTable').DataTable({
                 "columnDefs": [
                     { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
@@ -203,13 +168,29 @@
                 }
             });
         });
+$(document).ready(function() {
+    $('.toggle-btn').change(function() {
+        var postId = $(this).data('blogid');
+        var isActive = $(this).prop('checked');
 
-        function confirmDelete(employeeId) {
-            if (confirm("Bạn có chắc chắn muốn phục hồi nhân viên này không?")) {
-                window.location.href = 'employeerecovery?employeeId=' + employeeId + '&isActive=true';
+        $.ajax({
+            type: 'POST',
+            url: 'toggleblogstatus',
+            data: {
+                postId: postId,
+                isActive: isActive
+            },
+            success: function(response) {
+                var statusText = isActive ? 'Đang hoạt động' : 'Không hoạt động';
+                $('#toggle-' + postId).prop('checked', isActive);
+                $('#status-' + postId).text(statusText);
+            },
+            error: function(xhr, status, error) {
+                console.error('Lỗi khi cập nhật trạng thái: ' + error);
             }
-        }
-    </script>
-
+        });
+    });
+});
+</script>    
 </body>
-</html
+</html>

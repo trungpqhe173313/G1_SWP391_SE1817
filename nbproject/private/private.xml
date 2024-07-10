@@ -3,18 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/ServicesBookingAjaxServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Model/Shift.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/ViewHistoryBooking.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/FetchDateServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/Order_shiftDAO.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/ShiftsDAO.java</file>
-            <file>file:/D:/Project_SWP/web/booking.jsp</file>
-            <file>file:/D:/Project_SWP/web/BookingSucces.jsp</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/FeedbackDAO.java</file>
-            <file>file:/D:/Project_SWP/src/java/Model/Order.java</file>
+
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/topservice.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/homepage.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/oldservice.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/ServicesDAO.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/common/HomeController.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/web/servicedetail.jsp</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/Oldservice.java</file>
+            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/Service/Topservicedetail.java</file>
+
         </group>
     </open-files>
 </project-private>

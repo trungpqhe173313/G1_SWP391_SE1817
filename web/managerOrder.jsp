@@ -239,7 +239,7 @@
                                         <tbody>
                                             <c:forEach items="${orders}" var="o">
                                                 <tr>
-                                                    <td>${o.id}</td>
+                                                    <td>${o.codeOrder}</td>
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${o.employeeId == 0}">

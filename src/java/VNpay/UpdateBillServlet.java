@@ -2,29 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.common;
+package VNpay;
 
+import Dal.AccountDAO;
 import Dal.CustomerDAO;
-import Dal.FeedbackDAO;
-import Dal.ServicesDAO;
-import Dal.VoucherDAO;
+import Dal.LoyaltyPoliciesDAO;
+import Dal.OrderDAO;
+import Model.Account;
 import Model.Customer;
-import Model.Feedback;
-import Model.Services;
-import Model.Voucher;
+import Model.LoyaltyPolicies;
+import Model.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author phamt
  */
-public class HomeController extends HttpServlet {
+@WebServlet(name = "UpdateBillServlet", urlPatterns = {"/updateBill"})
+public class UpdateBillServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,26 +38,33 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        List<Services> t = dao.getTopServices();
-        request.setAttribute("listT", t);
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
-        List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
-        request.setAttribute("feedbackList", feedbackList);
-
-        CustomerDAO customerDAO = new CustomerDAO();
-        List<Customer> cusList = customerDAO.getAllCustomer();
-        request.setAttribute("cusList", cusList);
-
-//         for (Feedback feedback : feedbackList) {
-//            System.out.println(feedback.toString());
-//        }
-        VoucherDAO vdao = new VoucherDAO();
-        List<Voucher> todaysVouchers = vdao.getTodaysVouchers();
-        request.setAttribute("todaysVouchers", todaysVouchers);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String codeOrder = request.getParameter("codeOrder");
+            String isTransactionSuccessful = request.getParameter("isTransactionSuccessful");
+            int amount = Integer.parseInt(request.getParameter("amount")) /100;
+            Order order = new OrderDAO().getOrderByCode(codeOrder);
+            //get info customer in order
+            Customer customer = new CustomerDAO().getCustomerById(order.getCustomerId());
+            //get account
+            Account account = new AccountDAO().getAccountByPhone(customer.getPhone());
+            int points = 0;
+            boolean transactionSuccessful = Boolean.parseBoolean(isTransactionSuccessful);
+            if (transactionSuccessful) {
+                if (account != null) {
+                    LoyaltyPolicies lp = new LoyaltyPoliciesDAO().getLoyalty();
+                    points = account.getPoint() + (amount / lp.getMinAmount()) * lp.getPointsPerUnit();
+                    new AccountDAO().updatePoints(points, account.getPhone());
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
+                } else {
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);;
+                }
+            } else {
+                new OrderDAO().upDateStatusOrderByCode(6, codeOrder);
+            }
+            response.sendRedirect("getOrderManager");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,10 +79,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ServicesDAO dao = new ServicesDAO();
-//        List<Services> se = dao.GetAllServices();
-//        request.setAttribute("listS", se);
-//        request.getRequestDispatcher("homepage.jsp").forward(request, response);
         processRequest(request, response);
     }
 

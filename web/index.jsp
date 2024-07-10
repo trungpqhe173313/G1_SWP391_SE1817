@@ -245,7 +245,7 @@
                                                     <tbody>
                                                     <c:forEach items="${upcomingOrder}" var="uOder">
                                                         <tr>
-                                                            <td>${uOder.id}</td>
+                                                            <td>${uOder.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${uOder.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>
@@ -301,7 +301,7 @@
                                                 <tbody>
                                                     <c:forEach items="${orders}" var="o">
                                                         <tr>
-                                                            <td>${o.id}</td>
+                                                            <td>${o.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${o.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>
@@ -357,7 +357,7 @@
                                                 <tbody>
                                                     <c:forEach items="${cancelOrder}" var="co">
                                                         <tr>
-                                                            <td>${co.id}</td>
+                                                            <td>${co.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${co.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>

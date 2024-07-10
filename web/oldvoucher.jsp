@@ -5,7 +5,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +93,6 @@
             input:checked + .slider:before {
                 transform: translateX(24px);
             }
-
         </style>
     </head>
 
@@ -187,53 +188,45 @@
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-primary btn-sm mr-2" href="addservice" >
-                                        Thêm Dịch Vụ
+                                    <a class="btn btn-primary btn-sm mr-2" href="voucherdetail" >
+                                        Quay lại
                                     </a>
-                                    <a class="btn btn-primary btn-sm mr-2" href="topservice" >
-                                        Top Dịch Vụ
-                                    </a>
-                                    <a class="btn btn-primary btn-sm mr-2" href="oldservice" >
-                                        Dịch Vụ Đã Ẩn
-                                    </a>
-                                   
+                                    
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="allTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên Dịch Vụ</th>
-                                                    <th>Hình Ảnh</th>
-                                                    <th>Giá</th>
-                                                    <th>Mô tả</th>
-                                                    <th>Trạng Thái</th>
+                                                    <th>Tên Voucher </th>
+                                                    <th>Giảm giá</th>
+                                                    <th>Ngày bắt đầu</th>
+                                                    <th>ngày kết thúc</th>
+                                                    <th>Chỉnh sửa</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach items="${listS}" var="o">
-                                                <c:if test="${o.isActive}">
-                                                <tr>
-                                                    <td>${o.servicesId}</td>
-                                                    <td>${o.name}</td>
-                                                    <td><img src="img/service/${o.image}" alt="" style="max-width: 100px; max-height: 100px;"></td>
-                                                    <td><fmt:formatNumber value="${o.price}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup></td>
-                                                    <td>${o.description}</td>
-                                                    <td>
-                                                        <a href="updateservice?sid=${o.servicesId}">
-                                                            <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
-                                                                <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
-                                                            </button>
-                                                        </a>
+                                            <c:forEach items="${listV}" var="o">
+                                                <c:if test="${o.status == 0}">
+                                                    <tr>
+                                                        <td>${o.id}</td>
+                                                        <td>${o.name}</td>
+                                                        <td><fmt:formatNumber value="${o.discount * 100}" type="number" minFractionDigits="0" maxFractionDigits="2"/> %</td>
+                                                        <td>${o.startTime}</td>
+                                                        <td>${o.endTime}</td>
+                                                        <td>
+                                                            <a href="updatevoucher?vid=${o.id}">
+                                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal" data-target="#ModalUP" >
+                                                                    <i class="fas fa-eye"></i> <!-- Thay thế fa-edit bằng fa-eye -->
+                                                                </button>
+                                                            </a>
 
-                                                        <label class="switch">
-                                                            <input type="checkbox" onclick="toggleVisibility(${o.servicesId})" <c:if test="${o.isActive}">checked</c:if>>
-                                                                <span class="slider"></span>
-                                                            </label>
+
                                                         </td>
                                                     </tr>
-                                                 </c:if>
+                                                </c:if>  
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -242,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End of Main Content -->
+                <!-- End of Main Content 
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
@@ -296,42 +289,35 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
-                                                                $(document).ready(function () {
-            $('#dataTable').DataTable({
-                "columnDefs": [
-                    { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
-                ],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
-                }
+            $(document).ready(function () {
+                $('#allTable').DataTable();
             });
-        });
+            function filterTable() {
+                var input, filter, table, tr, td, i, j, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toLowerCase();
+                table = document.getElementById("dataTable");
+                tr = table.getElementsByTagName("tr");
 
-                                                                function filterTable() {
-                                                                    var input, filter, table, tr, td, i, j, txtValue;
-                                                                    input = document.getElementById("searchInput");
-                                                                    filter = input.value.toLowerCase();
-                                                                    table = document.getElementById("dataTable");
-                                                                    tr = table.getElementsByTagName("tr");
+                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                    tr[i].style.display = "none"; // Ẩn tất cả các hàng
 
-                                                                    for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                                                                        tr[i].style.display = "none"; // Ẩn tất cả các hàng
-
-                                                                        td = tr[i].getElementsByTagName("td");
-                                                                        for (j = 0; j < td.length; j++) {
-                                                                            if (td[j]) {
-                                                                                txtValue = td[j].textContent || td[j].innerText;
-                                                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                                                                                    tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                function toggleVisibility(serviceId) {
-                                                                    window.location.href = 'deleteservice?sid=' + serviceId;
-                                                                }
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            txtValue = td[j].textContent || td[j].innerText;
+                            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                tr[i].style.display = ""; // Hiển thị các hàng khớp với từ khóa tìm kiếm
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            function toggleVisibility(serviceId) {
+                window.location.href = 'deleteservice?sid=' + serviceId;
+            }
         </script>
     </body>
 </html>
+

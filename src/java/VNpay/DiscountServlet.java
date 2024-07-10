@@ -83,12 +83,14 @@ public class DiscountServlet extends HttpServlet {
         int newPoints = 0;
         List<Discount> dis = new DiscountDAO().getAllDis();
 
-        for (Discount di : dis) {
+        for (int i = dis.size() - 1; i >= 0; i++) {
+            Discount di = dis.get(i);
             if (points >= di.getPoint()) {
                 newPoints = points - di.getPoint();
                 newTotal = totalAmount - di.getDiscount();
                 break;
             }
+
         }
 
         if (newTotal < 0) {
