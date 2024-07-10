@@ -53,8 +53,8 @@
         <servlet-class>Controller.customer.CancelAppointmentController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FetchShiftsServlet</servlet-name>
-        <servlet-class>Controller.customer.FetchShiftsServlet</servlet-class>
+        <servlet-name>FetchDateServlet</servlet-name>
+        <servlet-class>Controller.customer.FetchDateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassw</servlet-name>
@@ -220,6 +220,10 @@
         <servlet-name>Updatevoucher</servlet-name>
         <servlet-class>Controller.Voucher.Updatevoucher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FetchNextShiftsServlet</servlet-name>
+        <servlet-class>Controller.customer.FetchNextShiftsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -273,8 +277,8 @@
         <url-pattern>/CancelAppointment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FetchShiftsServlet</servlet-name>
-        <url-pattern>/fetchshifts</url-pattern>
+        <servlet-name>FetchDateServlet</servlet-name>
+        <url-pattern>/fetchdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>changepassw</servlet-name>
@@ -439,5 +443,9 @@
     <servlet-mapping>
         <servlet-name>Updatevoucher</servlet-name>
         <url-pattern>/updatevoucher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FetchNextShiftsServlet</servlet-name>
+        <url-pattern>/fetchnextshifts</url-pattern>
     </servlet-mapping>
 </web-app>
