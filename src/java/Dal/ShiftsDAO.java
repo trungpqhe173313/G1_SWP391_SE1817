@@ -76,7 +76,7 @@ public class ShiftsDAO extends DBContext {
 
     public List<Shift> getAllNextShift(int id, int number) {
         List<Shift> list = new ArrayList<>();
-         String sql = "SELECT TOP " + number + " * FROM shift WHERE id > ? ORDER BY id;";
+         String sql = "SELECT TOP " + number + " * FROM shift WHERE id >= ? ORDER BY id;";
         try (PreparedStatement stm = connection.prepareStatement(sql);) {
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
