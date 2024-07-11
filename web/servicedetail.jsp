@@ -33,9 +33,7 @@
             }
 
             .table-responsive tbody {
-                display: block;
-                max-height: 400px; /* Adjust the height as needed */
-                overflow-y: auto;
+                display: table-row-group;
                 width: 100%;
             }
 
@@ -46,8 +44,9 @@
             }
 
             .table-responsive thead {
-                width: calc(100% - 1em);
+                width: 100%;
             }
+
             .switch {
                 position: relative;
                 display: inline-block;
@@ -92,6 +91,7 @@
             input:checked + .slider:before {
                 transform: translateX(24px);
             }
+
         </style>
     </head>
 
@@ -190,23 +190,30 @@
                                     <a class="btn btn-primary btn-sm mr-2" href="addservice" >
                                         Thêm Dịch Vụ
                                     </a>
-                                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Tìm kiếm dịch vụ..." class="form-control" style="width: 300px; display: inline-block;">
+                                    <a class="btn btn-primary btn-sm mr-2" href="topservice" >
+                                        Top Dịch Vụ
+                                    </a>
+                                    <a class="btn btn-primary btn-sm mr-2" href="oldservice" >
+                                        Dịch Vụ Đã Ẩn
+                                    </a>
+                                   
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Tên Dịch </th>
+                                                    <th>Tên Dịch Vụ</th>
                                                     <th>Hình Ảnh</th>
                                                     <th>Giá</th>
                                                     <th>Mô tả</th>
-                                                    <th>Chỉnh sửa</th>
+                                                    <th>Trạng Thái</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <c:forEach items="${listS}" var="o">
+                                                <c:if test="${o.isActive}">
                                                 <tr>
                                                     <td>${o.servicesId}</td>
                                                     <td>${o.name}</td>
@@ -226,7 +233,7 @@
                                                             </label>
                                                         </td>
                                                     </tr>
-                                                    
+                                                 </c:if>
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -289,6 +296,17 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
+                                                                $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "columnDefs": [
+                    { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+                }
+            });
+        });
+
                                                                 function filterTable() {
                                                                     var input, filter, table, tr, td, i, j, txtValue;
                                                                     input = document.getElementById("searchInput");

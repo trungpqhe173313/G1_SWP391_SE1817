@@ -7,9 +7,11 @@ package Controller.common;
 import Dal.CustomerDAO;
 import Dal.FeedbackDAO;
 import Dal.ServicesDAO;
+import Dal.VoucherDAO;
 import Model.Customer;
 import Model.Feedback;
 import Model.Services;
+import Model.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -38,7 +40,8 @@ public class HomeController extends HttpServlet {
         ServicesDAO dao = new ServicesDAO();
         List<Services> se = dao.GetAllServices();
         request.setAttribute("listS", se);
-
+        List<Services> t = dao.getTopServices();
+        request.setAttribute("listT", t);
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         List<Feedback> feedbackList = feedbackDAO.getAllFeedbacks();
         request.setAttribute("feedbackList", feedbackList);
@@ -50,6 +53,9 @@ public class HomeController extends HttpServlet {
 //         for (Feedback feedback : feedbackList) {
 //            System.out.println(feedback.toString());
 //        }
+        VoucherDAO vdao = new VoucherDAO();
+        List<Voucher> todaysVouchers = vdao.getTodaysVouchers();
+        request.setAttribute("todaysVouchers", todaysVouchers);
         request.getRequestDispatcher("homepage.jsp").forward(request, response);
     }
 

@@ -11,10 +11,12 @@ import Model.Shift;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,18 @@ import java.util.logging.Logger;
  * @author phamt
  */
 public class OrderDAO extends DBContext {
+
+    private static Random random = new Random();
+
+    public static String generateOrderCode() {
+        String prefix = "order";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        String datePart = dateFormat.format(new Date());
+        int randomNumber = random.nextInt(9000 - 1 + 1) + 1; // Random từ 1 đến 9000
+
+        String orderCode = prefix + datePart + randomNumber;
+        return orderCode;
+    }
 
     public Order getOrderByAId(int customerId) {
         try {
@@ -292,7 +306,8 @@ public class OrderDAO extends DBContext {
                 + "JOIN Shift s ON os.ShiftID = s.id \n"
                 + "WHERE \n"
                 + "    CAST(CONCAT(CONVERT(date, GETDATE()), ' ', s.startTime) AS DATETIME) \n"
-                + "    BETWEEN DATEADD(MINUTE, 30, GETDATE()) AND DATEADD(MINUTE, 60, GETDATE());";
+                + "    BETWEEN DATEADD(MINUTE, 30, GETDATE()) AND DATEADD(MINUTE, 60, GETDATE())\n"
+                + "    AND CAST(o.OrderDate AS DATE) = CAST(GETDATE() AS DATE);";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -320,9 +335,63 @@ public class OrderDAO extends DBContext {
         return orders;
     }
 
+    public void upDateStatusOrderByCode(int i, String codeOrder) {
+        try {
+            String sql = "UPDATE [dbo].[Orders]\n"
+                    + "   SET [statusID] = ?\n"
+                    + " WHERE [orderCode] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, i);
+            stm.setString(2, codeOrder);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateAmountOrder(int newAmount, String vnp_TxnRef) {
+        try {
+            String sql = "UPDATE [dbo].[Orders]\n"
+                    + "   SET [totalAmount] = ?\n"
+                    + " WHERE [orderCode] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, newAmount);
+            stm.setString(2, vnp_TxnRef);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Order getOrderByCode(String codeOrder) {
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[Orders]\n"
+                    + "  where orderCode = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, codeOrder);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt(1));
+                order.setCodeOrder(rs.getString(2));
+                order.setCustomerId(rs.getInt(3));
+                order.setEmployeeId(rs.getInt(4));
+                order.setStatusId(rs.getInt(5));
+                order.setOrderDate(rs.getDate(6));
+                order.setTotalAmount(rs.getInt(7));
+                order.setUpdateTime(rs.getString(8));
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
-        List<Order> k = o.findOrdersByDate();
-        System.out.println(k);
+        
+        System.out.println(o.getOrderByCode("Order7912").getCustomerId());
     }
 }

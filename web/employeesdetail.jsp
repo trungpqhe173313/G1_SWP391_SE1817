@@ -92,6 +92,7 @@
                                             <th>Giới Tính</th>
                                             <th>Email</th>
                                             <th>Trạng Thái</th>
+                                            <th>Ngày Bắt Đầu</th>
                                             <th>Xóa</th>
                                         </tr>
                                     </thead>
@@ -108,6 +109,7 @@
                                             <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("gender"))) ? "Nam" : "Nữ") %></td>
                                             <td><%= employee.get("email") %></td>
                                             <td><%= (Boolean.parseBoolean(String.valueOf(employee.get("isActive"))) ? "Không Hoạt Động" : "Đang Hoạt Động") %></td>
+                                            <td><%= employee.get("updateTime") %></td>
                                             <td>
                                                 <a href="#" onclick="confirmDelete('<%= employee.get("employeeId") %>')" class="btn btn-danger btn-circle btn-sm">
                                                     <i class="fas fa-trash"></i>
@@ -178,7 +180,7 @@
 
         function confirmDelete(employeeId) {
             if (confirm("Bạn có chắc chắn muốn xóa nhân viên này không?")) {
-                window.location.href = 'updateStatusEmployee?employeeId=' + employeeId + '&isActive=false';
+                window.location.href = 'updateemployeesstatus?employeeId=' + employeeId + '&isActive=false';
             }
         }
     </script>

@@ -43,7 +43,7 @@ public class ViewAllBillController extends HttpServlet {
         List<Order> ListOrder = new OrderDAO().getAllOrder();
         //get order have status "bat dau"
         List<Order> DoinglOrder = ListOrder.stream()
-                .filter(order -> order.getStatusId() == 3)
+                .filter(order -> order.getStatusId() == 3 || order.getStatusId() == 6)
                 .collect(Collectors.toList());
         //get info customer
         List<Customer> ListCustomer = new CustomerDAO().getAllCustomer();
