@@ -28,7 +28,7 @@ public class OrderDAO extends DBContext {
 
     private static Random random = new Random();
 
-    public static String generateOrderCode() {
+    public String generateOrderCode() {
         String prefix = "order";
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
         String datePart = dateFormat.format(new Date());
