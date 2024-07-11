@@ -26,15 +26,20 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
-    private static Random random = new Random();
+    private static final String PREFIX = "order";
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
+    private static int currentNumber = 1;
+    private static String lastDate = DATE_FORMAT.format(new Date());
 
-    public static String generateOrderCode() {
-        String prefix = "order";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-        String datePart = dateFormat.format(new Date());
-        int randomNumber = random.nextInt(9000 - 1 + 1) + 1; // Random từ 1 đến 9000
-
-        String orderCode = prefix + datePart + randomNumber;
+    public static synchronized String generateOrderCode() {
+        String currentDate = DATE_FORMAT.format(new Date());
+        if (!currentDate.equals(lastDate)) {
+            currentNumber = 1; // Reset số thứ tự khi ngày thay đổi
+            lastDate = currentDate;
+        }
+        
+        String orderCode = PREFIX + currentDate + String.format("%03d", currentNumber);
+        currentNumber++;
         return orderCode;
     }
 
