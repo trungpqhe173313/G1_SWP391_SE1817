@@ -65,21 +65,40 @@ public class AppointmentServlet extends HttpServlet {
                 String nextDayStr = today.format(formatter);
                 listDate.add(nextDayStr);
             }
+            List<Shift> listAllShift = null;
+            List<Shift> listShift;
             if (session.getAttribute("time") == null) {
                 //Lay ra tat ca cac ca 
-                List<Shift> listAllShift = d.getAllShiftFromNow();
+                listAllShift = d.getAllShiftFromNow();
                 //tao danh sach de luu nhung ca trong
-                List<Shift> listShift = listShiftEmpty(listAllShift, todayStr);
+                listShift = listShiftEmpty(listAllShift, todayStr);
 
                 session.setAttribute("time", new Time(todayStr, listShift));
             } else if (session.getAttribute("time") != null) {
                 Time time = (Time) session.getAttribute("time");
-                    //Lay ra tat ca cac ca 
-                    List<Shift> listAllShift = d.getAllShiftFromNow();
-                    //tao danh sach de luu nhung ca trong
-                    List<Shift> listShift = listShiftEmpty(listAllShift, time.getDate());
-                    session.setAttribute("time", new Time(time.getDate(), listShift));
-                
+                //Lay ra tat ca cac ca 
+                if (time.getDate().equals(todayStr)) {
+                    listAllShift = d.getAllShiftFromNow();
+                } else {
+                    listAllShift = d.getAll();
+                }
+                //tao danh sach de luu nhung ca trong
+                listShift = listShiftEmpty(listAllShift, time.getDate());
+                session.setAttribute("time", new Time(time.getDate(), listShift));
+
+            }
+            if (session.getAttribute("services") != null) {
+                ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
+                List<Shift> listShiftNeed = new ArrayList<>();
+                int servicesSize = servicesBooking.getListServices().size();
+                if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
+                    for (int i = 0; i < servicesSize; i++) {
+                        listShiftNeed.add(listAllShift.get(i));
+                    }
+                    request.setAttribute("listShiftNeed", listShiftNeed);
+                } else {
+                    request.setAttribute("mss", "Hôm nay đã hết ca vui lòng chọn ngày khác");
+                }
             }
 
             request.setAttribute("listDate", listDate);
@@ -118,38 +137,78 @@ public class AppointmentServlet extends HttpServlet {
         String shift_str = request.getParameter("shifts");
         try {
             HttpSession session = request.getSession();
-            CustomerDAO cd = new CustomerDAO();
-            Account a = (Account) session.getAttribute("account");
-            int customerId = cd.getCustomerByP(a.getPhone()).getCustomerId();
-
-            OrderDAO d = new OrderDAO();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            //ep kieu string sang date truoc roi tao ra mot cai sql date
-            Date date;
-
-            date = new java.sql.Date(sdf.parse(date_str).getTime());
             ServicesBooking sb = (ServicesBooking) session.getAttribute("services");
-            Order o = new Order(customerId, 1, date, sb.getTotalMoney(), Integer.parseInt(shift_str));
-            d.AddOrder(o);
-            int orderId = d.getNewOrderId();
-            List<Services> listServices = sb.getListServices();
-            for (Services s : listServices) {
-                d.AddOrder_services(s.getServicesId(), orderId);
-            }
             ShiftsDAO sd = new ShiftsDAO();
-            ShopDAO shopDao = new ShopDAO();
-            session.removeAttribute("time");
-            session.removeAttribute("services");
-            request.setAttribute("listServices", listServices);
-            request.setAttribute("shifts", sd.getShiftById(o.getShiftsID()));
-            request.setAttribute("order", o);
-            request.setAttribute("status", shopDao.getStatusById(o.getStatusId()));
-            request.setAttribute("mss", "Đặt Thành Công");
+            List<Shift> listShiftNeed = sd.getAllNextShift(Integer.parseInt(shift_str),
+                    sb.getListServices().size());
+            if (!checkAllShiftEmpty(listShiftNeed, date_str)
+                    || sb.getListServices().size() > listShiftNeed.size()) {
+
+                List<String> listDate = new ArrayList<>();
+                // Lấy ngày hôm nay
+                LocalDate today = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String todayStr = today.format(formatter);
+                listDate.add(todayStr);
+
+                // Lấy hai ngày tiếp theo
+                for (int i = 0; i < 2; i++) {
+                    today = today.plusDays(1);
+                    String nextDayStr = today.format(formatter);
+                    listDate.add(nextDayStr);
+                }
+                request.setAttribute("listShiftNeed", listShiftNeed);
+                request.setAttribute("shiftId", Integer.parseInt(shift_str));
+                request.setAttribute("listDate", listDate);
+                request.setAttribute("mss", "Đặt Không Thành Công Không đủ ca trống vui long chọn ca khác hoặc ngày khác");
+                request.getRequestDispatcher("booking.jsp").forward(request, response);
+            } else {
+                CustomerDAO cd = new CustomerDAO();
+                Account a = (Account) session.getAttribute("account");
+                int customerId = cd.getCustomerByP(a.getPhone()).getCustomerId();
+
+                OrderDAO d = new OrderDAO();
+                String orderCode = d.generateOrderCode();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                //ep kieu string sang date truoc roi tao ra mot cai sql date
+                Date date = new java.sql.Date(sdf.parse(date_str).getTime());
+                Order o = new Order(orderCode, customerId, 1, date, sb.getTotalMoney());
+                d.AddOrder(o);
+                int orderId = d.getNewOrderId();
+                List<Services> listServices = sb.getListServices();
+                for (Services s : listServices) {
+                    d.AddOrder_services(s.getServicesId(), orderId);
+                }
+                Order_shiftDAO osd = new Order_shiftDAO();
+                for (Shift s : listShiftNeed) {
+                    osd.InsertShift("" + orderId, s.getId());
+                }
+                ShopDAO shopDao = new ShopDAO();
+                session.removeAttribute("time");
+                session.removeAttribute("services");
+                request.setAttribute("listServices", listServices);
+                request.setAttribute("ListShifts", listShiftNeed);
+                request.setAttribute("order", o);
+                request.setAttribute("status", shopDao.getStatusById(o.getStatusId()));
+                request.setAttribute("mss", "Đặt Thành Công");
+                request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
+            }
         } catch (Exception e) {
         }
+    }
 
-        request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
-
+    public boolean checkAllShiftEmpty(List<Shift> listShift, String date) {
+        boolean check = true;
+        Order_shiftDAO osd = new Order_shiftDAO();
+        EmployeesDAO ed = new EmployeesDAO();
+        int numberEmployeeActive = ed.countNumberActiveEmployee();
+        for (Shift s : listShift) {
+            if (numberEmployeeActive <= osd.countNumberOrderInShift(s.getId(), date)) {
+                check = false;
+                break;
+            }
+        }
+        return check;
     }
 
     /**

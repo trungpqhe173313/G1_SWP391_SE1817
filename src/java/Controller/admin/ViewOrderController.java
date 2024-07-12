@@ -44,7 +44,7 @@ public class ViewOrderController extends HttpServlet {
         List<Order> ListOrder = new OrderDAO().getAllOrder();
         //get order have status "da dat" or "dang cho"
         List<Order> upcomingOrder = ListOrder.stream()
-                .filter(order -> order.getStatusId() == 1 || order.getStatusId()==2)
+                .filter(order -> order.getStatusId() == 1 || order.getStatusId() == 2)
                 .collect(Collectors.toList());
         //get order have status "Huy"
         List<Order> cancelOrder = ListOrder.stream()
@@ -54,10 +54,14 @@ public class ViewOrderController extends HttpServlet {
         List<Customer> ListCustomer = new CustomerDAO().getAllCustomer();
         //get info barber
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
+        //get info barber free
+        List<Employee> barberFree = new EmployeesDAO().getAllBarberFree();
+        int numberBarberFree = barberFree.size();
         //get info status
         List<Status> status = new StatusDAO().getAll();
         request.setAttribute("status", status);
         request.setAttribute("orders", ListOrder);
+        request.setAttribute("numberBarberFree", numberBarberFree);
         request.setAttribute("ListCustomer", ListCustomer);
         request.setAttribute("cancelOrder", cancelOrder);
         request.setAttribute("ListEmployee", ListEmployee);
