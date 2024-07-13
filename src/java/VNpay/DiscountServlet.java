@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,14 +84,13 @@ public class DiscountServlet extends HttpServlet {
         int newPoints = 0;
         List<Discount> dis = new DiscountDAO().getAllDis();
 
-        for (int i = dis.size() - 1; i >= 0; i++) {
-            Discount di = dis.get(i);
+        Collections.reverse(dis);
+        for (Discount di : dis) {
             if (points >= di.getPoint()) {
                 newPoints = points - di.getPoint();
                 newTotal = totalAmount - di.getDiscount();
                 break;
             }
-
         }
 
         if (newTotal < 0) {

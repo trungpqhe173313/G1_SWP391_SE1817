@@ -292,4 +292,22 @@ public class EmployeesDAO extends DBContext {
         EmployeesDAO d = new EmployeesDAO();
         System.out.println(d.countNumberActiveEmployee());
     }
+
+    public List<Employee> getAllBarberFree() {
+        List<Employee> employee = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[employee]\n"
+                    + "  where statusEmployee = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                employee.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
 }
