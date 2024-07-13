@@ -4,6 +4,7 @@
  */
 package Controller.common;
 
+import Controller.admin.RemindStoreStatus;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebListener;
 @WebListener
 public class RemindService implements ServletContextListener {
     Remind t=new Remind();
+    RemindStoreStatus rst = new RemindStoreStatus();
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -22,6 +24,7 @@ public class RemindService implements ServletContextListener {
         System.out.println("Ứng dụng đã khởi động!");
         // Khởi tạo và lên lịch cho TimerTask ở đây        
         t.remindAppointment();
+        rst.remindStoreStatus();
     }
 
     @Override
@@ -30,5 +33,6 @@ public class RemindService implements ServletContextListener {
         System.out.println("Ứng dụng đã bị đóng!");
         // Hủy TimerTask hoặc thực hiện các công việc dọn dẹp tại đây
         t.cancelReminder();
+        rst.cancelReminder();
     }
 }
