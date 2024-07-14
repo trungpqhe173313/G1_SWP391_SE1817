@@ -16,7 +16,6 @@ public class RemindStoreStatus {
     public void remindStoreStatus() {
         t = new Timer();
         StoreDAO sd = new StoreDAO();
-
         TimerTask remindStoreStatus = new TimerTask() {
             @Override
             public void run() {

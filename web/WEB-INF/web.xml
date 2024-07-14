@@ -236,6 +236,14 @@
         <servlet-name>Topservicedetail</servlet-name>
         <servlet-class>Controller.Service.Topservicedetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.StoreHolidayScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.CancelStoreHolidayScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -471,5 +479,13 @@
     <servlet-mapping>
         <servlet-name>Topservicedetail</servlet-name>
         <url-pattern>/topservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/storeholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/cancelstoreholidayschedule</url-pattern>
     </servlet-mapping>
 </web-app>

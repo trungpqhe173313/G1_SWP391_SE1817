@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/vnpay_return.jsp</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/admin/ViewOrderController.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Dal/EmployeesDAO.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/Controller/admin/ViewAllBillController.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/src/java/VNpay/DiscountServlet.java</file>
-            <file>file:/E:/SWP/G1_SWP391_SE1817/web/payment.jsp</file>
+            <file>file:/D:/Project_SWP/web/viewStoreStatus.jsp</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentServlet.java</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/admin/StoreHolidayScheduleServlet.java</file>
+            <file>file:/D:/Project_SWP/src/java/Model/Store.java</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/admin/RemindStoreStatus.java</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/admin/CancelStoreHolidayScheduleServlet.java</file>
+            <file>file:/D:/Project_SWP/src/java/Dal/StoreDAO.java</file>
+            <file>file:/D:/Project_SWP/web/booking.jsp</file>
+            <file>file:/D:/Project_SWP/web/BookingSucces.jsp</file>
+            <file>file:/D:/Project_SWP/src/java/Controller/common/Remind.java</file>
+            <file>file:/D:/Project_SWP/web/viewRevenueOrder.jsp</file>
         </group>
     </open-files>
 </project-private>
