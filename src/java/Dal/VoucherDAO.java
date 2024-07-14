@@ -145,7 +145,8 @@ public class VoucherDAO extends DBContext {
             System.out.println("Error: " + e.getMessage());
         }
     }
-     public List<Voucher> getTodaysVouchers() {
+
+    public List<Voucher> getTodaysVouchers() {
         List<Voucher> vouchers = new ArrayList<>();
         Connection con = null;
         PreparedStatement stm = null;
@@ -171,7 +172,28 @@ public class VoucherDAO extends DBContext {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
         return vouchers;
     }
+
+    public void updateExpiredVouchers() {
+        String query = "UPDATE Voucher SET status = 0 WHERE endTime < GETDATE() AND status = 1";
+
+        try (Connection connection = DBContext.connection; PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reactivateVouchers() {
+        String query = "UPDATE Voucher SET status = 1 WHERE endTime > GETDATE() AND status = 0";
+
+        try (Connection connection = DBContext.connection; PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
