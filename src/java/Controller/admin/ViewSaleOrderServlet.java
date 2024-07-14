@@ -45,7 +45,7 @@ public class ViewSaleOrderServlet extends HttpServlet {
             or.setCustomer(d.getCustomerById(o.getCustomerId()));
             or.setEmployee(d.getEmployeeById(o.getEmployeeId()));
             or.setServices(d.getServicesByOrderId(o.getId()));
-            or.setShift(d.getShiftById(o.getShiftsID()));
+            or.setShift(d.getListShiftByOrderId(o.getId()));
             or.setStatus(d.getStatusById(o.getStatusId()));
             request.setAttribute("o", or);
             request.setAttribute("month", month);

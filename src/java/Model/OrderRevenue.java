@@ -15,13 +15,13 @@ public class OrderRevenue {
     private Customer customer;
     private Employee employee;
     private List<Services> services;
-    private Shift shift;
+    private List<Shift> shift;
     private Status status;
 
     public OrderRevenue() {
     }
 
-    public OrderRevenue(Order order, Customer customer, Employee employee, List<Services> services, Shift shift, Status status) {
+    public OrderRevenue(Order order, Customer customer, Employee employee, List<Services> services, List<Shift> shift, Status status) {
         this.order = order;
         this.customer = customer;
         this.employee = employee;
@@ -62,11 +62,11 @@ public class OrderRevenue {
         this.services = services;
     }
 
-    public Shift getShift() {
+    public List<Shift> getShift() {
         return shift;
     }
 
-    public void setShift(Shift shift) {
+    public void setShift(List<Shift> shift) {
         this.shift = shift;
     }
 
