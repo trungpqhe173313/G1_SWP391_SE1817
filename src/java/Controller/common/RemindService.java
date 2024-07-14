@@ -17,6 +17,8 @@ import jakarta.servlet.annotation.WebListener;
 public class RemindService implements ServletContextListener {
     Remind t=new Remind();
     RemindStoreStatus rst = new RemindStoreStatus();
+    CheckVoucher v = new CheckVoucher();
+    
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -25,6 +27,7 @@ public class RemindService implements ServletContextListener {
         // Khởi tạo và lên lịch cho TimerTask ở đây        
         t.remindAppointment();
         rst.remindStoreStatus();
+        v.remindVoucherStatus();
     }
 
     @Override
@@ -34,5 +37,6 @@ public class RemindService implements ServletContextListener {
         // Hủy TimerTask hoặc thực hiện các công việc dọn dẹp tại đây
         t.cancelReminder();
         rst.cancelReminder();
+        v.cancelReminder();
     }
 }
