@@ -248,6 +248,10 @@
         <servlet-name>ExportRevenueToExcelServlet</servlet-name>
         <servlet-class>Controller.admin.ExportRevenueToExcelServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
+        <servlet-class>Controller.admin.ExportEmployeeRevenueToExcelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -495,5 +499,9 @@
     <servlet-mapping>
         <servlet-name>ExportRevenueToExcelServlet</servlet-name>
         <url-pattern>/exportrevenuetoexcel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
+        <url-pattern>/exportemployeerevenuetoexcel</url-pattern>
     </servlet-mapping>
 </web-app>

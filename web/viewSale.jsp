@@ -246,7 +246,8 @@
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                                  aria-labelledby="dropdownMenuLink">
                                                 <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="ExportRevenueToExcel">uất doanh thu sang file Excel</a>
+                                                <a class="dropdown-item" href="exportemployeerevenuetoexcel?month=${monthSelect}">
+                                                    Xuất doanh thu nhân viên sang file Excel</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
