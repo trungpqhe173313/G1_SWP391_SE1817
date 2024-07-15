@@ -6,6 +6,7 @@ import Dal.OrderDAO;
 import Dal.SendMail;
 
 import Model.Order;
+import SendSMS.SpeedSMSAPI;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -20,6 +21,7 @@ public class Remind {
         CustomerDAO tdao = new CustomerDAO();
         AccountDAO adao = new AccountDAO();
         SendMail mail = new SendMail();
+        SpeedSMSAPI smsApi = new SpeedSMSAPI("gJi5aDWZ40TkNTnoybcNxYBR0H7s4kus");
 
         TimerTask remindAppointment = new TimerTask() {
             @Override
@@ -47,6 +49,16 @@ public class Remind {
                             + "</html>";
                     String email = adao.getAccountByPhone(tdao.getCustomerProfileById(a.getCustomerId()).getPhone()).getEmail();
                     mail.sendMail(email, sub, message);
+                    
+                    // Gửi SMS nhắc nhở
+                    String phone = tdao.getCustomerProfileById(a.getCustomerId()).getPhone();
+                    String formattedPhone = formatPhoneNumber(phone);
+                    String smsMessage = "Haircare xin thông báo: Bạn có lịch hẹn cắt tóc vào lúc " + a.getShift().getStartTime() + " ngày " + a.getOrderDate() + ". Hẹn gặp bạn tại Haircare.";
+                    try {
+                        smsApi.sendSMS(formattedPhone, smsMessage, 5, "a465cd15693f6118");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -59,6 +71,16 @@ public class Remind {
     public void cancelReminder() {
         t.cancel();
     }
+    
+    // Phương thức chuẩn hóa số điện thoại
+    private String formatPhoneNumber(String phone) {
+        if (phone.startsWith("0")) {
+            phone = "84" + phone.substring(1);
+        }
+        return phone;
+    }
+    
+    
 }
 // Calendar remindAppointmentTime = Calendar.getInstance();
 //        remindAppointmentTime.set(Calendar.YEAR, 2024);
