@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class ViewRevenueServlet extends HttpServlet {
             or.setCustomer(d.getCustomerById(o.getCustomerId()));
             or.setEmployee(d.getEmployeeById(o.getEmployeeId()));
             or.setServices(d.getServicesByOrderId(o.getId()));
-            or.setShift(d.getShiftById(o.getShiftsID()));
+            or.setShift(d.getListShiftByOrderId(o.getId()));
             or.setStatus(d.getStatusById(o.getStatusId()));
             listOrder.add(or);
         }
