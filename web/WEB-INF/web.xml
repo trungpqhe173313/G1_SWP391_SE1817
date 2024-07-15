@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.common.HomeController</servlet-class>
@@ -238,6 +236,22 @@
         <servlet-name>Topservicedetail</servlet-name>
         <servlet-class>Controller.Service.Topservicedetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.StoreHolidayScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.CancelStoreHolidayScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <servlet-class>Controller.admin.ExportRevenueToExcelServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
+        <servlet-class>Controller.admin.ExportEmployeeRevenueToExcelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -473,5 +487,21 @@
     <servlet-mapping>
         <servlet-name>Topservicedetail</servlet-name>
         <url-pattern>/topservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/storeholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/cancelstoreholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <url-pattern>/exportrevenuetoexcel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
+        <url-pattern>/exportemployeerevenuetoexcel</url-pattern>
     </servlet-mapping>
 </web-app>
