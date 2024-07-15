@@ -129,10 +129,7 @@
                                         </c:forEach>
                                     </td>
                                     <td>
-                                        <c:forEach items="${lb.shift}" var="shift">
-                                            
-                                        <span style="font-size: 1rem;">${shift.getStartTime()}</span>
-                                        </c:forEach>
+                                        <span style="font-size: 1rem;">${lb.getShift().getStartTime()}</span>
                                         </br>
                                         <span style="font-size: 1.1rem; font-weight: 460">${lb.getOrder().getOrderDate()}</span>
                                     </td>
