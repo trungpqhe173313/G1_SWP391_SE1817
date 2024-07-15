@@ -53,8 +53,8 @@
         <servlet-class>Controller.customer.CancelAppointmentController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FetchShiftsServlet</servlet-name>
-        <servlet-class>Controller.customer.FetchShiftsServlet</servlet-class>
+        <servlet-name>FetchDateServlet</servlet-name>
+        <servlet-class>Controller.customer.FetchDateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>changepassw</servlet-name>
@@ -221,6 +221,10 @@
         <servlet-class>Controller.Voucher.Updatevoucher</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FetchNextShiftsServlet</servlet-name>
+        <servlet-class>Controller.customer.FetchNextShiftsServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>OldVoucher</servlet-name>
         <servlet-class>Controller.Voucher.OldVoucher</servlet-class>
     </servlet>
@@ -231,6 +235,18 @@
     <servlet>
         <servlet-name>Topservicedetail</servlet-name>
         <servlet-class>Controller.Service.Topservicedetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.StoreHolidayScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <servlet-class>Controller.admin.CancelStoreHolidayScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <servlet-class>Controller.admin.ExportRevenueToExcelServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -285,8 +301,8 @@
         <url-pattern>/CancelAppointment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FetchShiftsServlet</servlet-name>
-        <url-pattern>/fetchshifts</url-pattern>
+        <servlet-name>FetchDateServlet</servlet-name>
+        <url-pattern>/fetchdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>changepassw</servlet-name>
@@ -453,6 +469,10 @@
         <url-pattern>/updatevoucher</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>FetchNextShiftsServlet</servlet-name>
+        <url-pattern>/fetchnextshifts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>OldVoucher</servlet-name>
         <url-pattern>/oldvoucher</url-pattern>
     </servlet-mapping>
@@ -463,5 +483,17 @@
     <servlet-mapping>
         <servlet-name>Topservicedetail</servlet-name>
         <url-pattern>/topservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/storeholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
+        <url-pattern>/cancelstoreholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <url-pattern>/exportrevenuetoexcel</url-pattern>
     </servlet-mapping>
 </web-app>
