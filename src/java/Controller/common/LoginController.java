@@ -109,16 +109,16 @@ public class LoginController extends HttpServlet {
             request.setAttribute("error", "Phone or password incorrect!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-//            CustomerDAO customerDAO = new CustomerDAO();
-//            Customer customer = customerDAO.getCustomerByP(phone);
-            
-//            int sessionTimeoutSeconds = 240000;
             // Tạo session
             HttpSession session = request.getSession();
-//            session.setMaxInactiveInterval(sessionTimeoutSeconds);
             session.setAttribute("account", a);
-            //request.setAttribute("customer", customer);
-            response.sendRedirect("home");
+            if (a.getRoleId() == 1) {
+            response.sendRedirect("viewOrder");
+            } else if (a.getRoleId() == 2) {
+                response.sendRedirect("employeesprofile");
+            } else{
+                response.sendRedirect("home");
+            }
         }
     }
 

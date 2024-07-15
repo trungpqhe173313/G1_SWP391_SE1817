@@ -244,6 +244,10 @@
         <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
         <servlet-class>Controller.admin.CancelStoreHolidayScheduleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <servlet-class>Controller.admin.ExportRevenueToExcelServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -487,5 +491,9 @@
     <servlet-mapping>
         <servlet-name>CancelStoreHolidayScheduleServlet</servlet-name>
         <url-pattern>/cancelstoreholidayschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportRevenueToExcelServlet</servlet-name>
+        <url-pattern>/exportrevenuetoexcel</url-pattern>
     </servlet-mapping>
 </web-app>
