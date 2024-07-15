@@ -145,9 +145,8 @@
                             </div>-->
 
                             <!-- Content Row -->
-<!--                            <div class="row">
+                            <div class="row">
 
-                                 Earnings (Monthly) Card Example 
                                 <div class="col-xl-3 col-md-6 mb-4">
                                     <div class="card border-left-primary shadow h-100 py-2">
                                         <div class="card-body">
@@ -165,7 +164,6 @@
                                     </div>
                                 </div>
 
-                                 Earnings (Monthly) Card Example 
                                 <div class="col-xl-3 col-md-6 mb-4">
                                     <div class="card border-left-success shadow h-100 py-2">
                                         <div class="card-body">
@@ -183,18 +181,16 @@
                                     </div>
                                 </div>
 
-                                 Earnings (Monthly) Card Example 
 
 
-                                 Pending Requests Card Example 
                                 <div class="col-xl-3 col-md-6 mb-4">
                                     <div class="card border-left-warning shadow h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Pending Requests</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                        Thợ rảnh</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${numberBarberFree}</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -203,13 +199,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
 
                             <!-- Content Row -->
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
                                 </div>
                                 <div class="card-body">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -245,7 +241,7 @@
                                                     <tbody>
                                                     <c:forEach items="${upcomingOrder}" var="uOder">
                                                         <tr>
-                                                            <td>${uOder.id}</td>
+                                                            <td>${uOder.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${uOder.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>
@@ -301,7 +297,7 @@
                                                 <tbody>
                                                     <c:forEach items="${orders}" var="o">
                                                         <tr>
-                                                            <td>${o.id}</td>
+                                                            <td>${o.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${o.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>
@@ -357,7 +353,7 @@
                                                 <tbody>
                                                     <c:forEach items="${cancelOrder}" var="co">
                                                         <tr>
-                                                            <td>${co.id}</td>
+                                                            <td>${co.codeOrder}</td>
                                                             <c:forEach items="${ListEmployee}" var="e">
                                                                 <c:if test="${co.employeeId == e.employeeId}">
                                                                     <td>${e.fullName}</td>

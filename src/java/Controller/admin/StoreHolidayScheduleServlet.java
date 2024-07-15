@@ -2,29 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package VNpay;
+package Controller.admin;
 
-import Dal.DiscountDAO;
-import Model.Discount;
-import com.google.gson.Gson;
+import Dal.StoreDAO;
+import Model.Store;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
 
 /**
  *
- * @author phamt
+ * @author xdrag
  */
-@WebServlet(name = "DiscountServlet", urlPatterns = {"/calculateDiscount"})
-public class DiscountServlet extends HttpServlet {
+public class StoreHolidayScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +37,10 @@ public class DiscountServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DiscountServlet</title>");
+            out.println("<title>Servlet StoreHolidayScheduleServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DiscountServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet StoreHolidayScheduleServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +58,16 @@ public class DiscountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        StoreDAO sd = new StoreDAO();
+        LocalDate today = LocalDate.now();
+        Store store = sd.getStore();
+        if (today.isBefore(store.getStartDate())
+                || (today.isAfter(store.getStartDate().minusDays(1)) && today.isBefore(store.getEndDate().plusDays(1)))) {
+            request.setAttribute("check", true);
+        }
+        request.setAttribute("store", store);
+        request.getRequestDispatcher("viewStoreStatus.jsp").forward(request, response);
+
     }
 
     /**
@@ -78,35 +81,30 @@ public class DiscountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int points = Integer.parseInt(request.getParameter("points"));
-        int totalAmount = Integer.parseInt(request.getParameter("totalAmount"));
-        int newTotal = 0;
-        int newPoints = 0;
-        List<Discount> dis = new DiscountDAO().getAllDis();
-
-        Collections.reverse(dis);
-        for (Discount di : dis) {
-            if (points >= di.getPoint()) {
-                newPoints = points - di.getPoint();
-                newTotal = totalAmount - di.getDiscount();
-                break;
+        String startDate_str = request.getParameter("startdate");
+        String endDate_str = request.getParameter("enddate");
+        String mss;
+        StoreDAO sd = new StoreDAO();
+        if (startDate_str.isEmpty() || endDate_str.isEmpty()) {
+            mss = " Vui lòng chọn ngày hợp lệ";
+            request.setAttribute("mss", mss);
+        } else {
+            LocalDate startDate = LocalDate.parse(startDate_str);
+            LocalDate endDate = LocalDate.parse(endDate_str);
+            if (startDate.isBefore(endDate.plusDays(1))) {
+                Store s = sd.getStore();
+                s.setStartDate(startDate);
+                s.setEndDate(endDate);
+                sd.UpdateStore(s);
+                mss = "Đặt lịch nghỉ cho cửa hàng thành công";
+            } else {
+                mss = " Vui lòng chọn ngày hợp lệ";
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
             }
+            request.setAttribute("mss", mss);
         }
-
-        if (newTotal < 0) {
-            newTotal = 0;
-        }
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        Map<String, Integer> discountResponse = new HashMap<>();
-        discountResponse.put("newPoints", newPoints);
-        discountResponse.put("newTotal", newTotal);
-
-//        response.getWriter().write(new Gson().toJson(discountResponse));
-        String jsonResponse = new Gson().toJson(discountResponse);
-        System.out.println("JSON Response: " + jsonResponse);
-
-        response.getWriter().write(jsonResponse);
+        doGet(request, response);
     }
 
     /**

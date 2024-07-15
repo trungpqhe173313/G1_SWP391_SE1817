@@ -5,14 +5,10 @@
 package Dal;
 
 import static Dal.DBContext.connection;
-import Model.Discount;
-import Model.Order;
-import Model.Shift;
+import Model.LoyaltyPolicies;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,30 +16,26 @@ import java.util.logging.Logger;
  *
  * @author phamt
  */
-public class DiscountDAO extends DBContext {
+public class LoyaltyPoliciesDAO extends DBContext {
 
-    public List<Discount> getAllDis() {
-        List<Discount> List = new ArrayList<>();
+    public LoyaltyPolicies getLoyalty() {
         try {
             String sql = "SELECT *\n"
-                    + "FROM [Barber].[dbo].[discount]\n"
-                    + "ORDER BY point ASC;";
+                    + "  FROM [Barber].[dbo].[LoyaltyPolicies]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Discount dis = new Discount(rs.getInt(1), rs.getInt(2), rs.getInt(3));
-                List.add(dis);
+            if (rs.next()) {
+                return  new LoyaltyPolicies(rs.getInt(1),
+                        rs.getInt(2), 
+                        rs.getInt(3));
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return List;
+        return null;
     }
-
     public static void main(String[] args) {
-        List<Discount> dis = new DiscountDAO().getAllDis();
-        for (Discount di : dis) {
-            System.out.println(di.getPoint());
-        }
+        LoyaltyPolicies lp = new LoyaltyPoliciesDAO().getLoyalty();
+        System.out.println(lp.getMinAmount());
     }
 }

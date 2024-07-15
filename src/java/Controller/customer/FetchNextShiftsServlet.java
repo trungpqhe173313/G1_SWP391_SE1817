@@ -7,25 +7,23 @@ package Controller.customer;
 import Dal.EmployeesDAO;
 import Dal.Order_shiftDAO;
 import Dal.ShiftsDAO;
+import Model.ServicesBooking;
 import Model.Shift;
-import Model.Time;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author xdrag
  */
-public class FetchShiftsServlet extends HttpServlet {
+public class FetchNextShiftsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,58 +36,31 @@ public class FetchShiftsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ShiftsDAO d = new ShiftsDAO();
+        String shiftId = request.getParameter("shiftId");
         HttpSession session = request.getSession();
-        // Đọc thông tin ngày từ request
-        String selectedDate = request.getParameter("date");
-        // Lấy ngày hôm nay
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String todayStr = today.format(formatter);
-
-        List<Shift> shifts;
-        if (selectedDate.equals(todayStr)) {
-            shifts = d.getAllShiftFromNow();
-        } else {
-
-            shifts = d.getAll();
+        if (shiftId == null || shiftId.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing shiftId parameter");
+            return;
         }
-        //danh sach luu nhung ca trong
-        List<Shift> listShift = listShiftEmpty(shifts, selectedDate);
-        session.setAttribute("time", new Time(selectedDate, listShift));
-        // Set content type và encoding của response
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
 
-        // Convert danh sách shifts sang JSON và gửi về client
-        PrintWriter out = response.getWriter();
-        out.print(buildJSONResponse(listShift));
-        out.flush();
+        try {
+            int id = Integer.parseInt(shiftId);
+            ShiftsDAO shiftsDAO = new ShiftsDAO();
+            ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
+            int number = servicesBooking.getListServices().size();
+            List<Shift> listShiftNeed = shiftsDAO.getAllNextShift(id, /* số lượng ca cần thiết */ number);
+
+            String jsonResponse = new Gson().toJson(listShiftNeed);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid shiftId format");
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while fetching shifts");
+        }
     }
 
-    // Hàm để xây dựng JSON response từ danh sách Shift
-    private String buildJSONResponse(List<Shift> shifts) {
-        StringBuilder json = new StringBuilder("[");
-        for (int i = 0; i < shifts.size(); i++) {
-            Shift shift = shifts.get(i);
-            json.append("{");
-            json.append("\"id\":").append(shift.getId()).append(",");
-            json.append("\"startTime\":\"").append(shift.getStartTime()).append("\"");
-            json.append("}");
-            if (i < shifts.size() - 1) {
-                json.append(",");
-            }
-        }
-        json.append("]");
-        return json.toString();
-    }
-
-    /**
-     *
-     * @param shift to check is that shift empty
-     * @param date
-     * @return boolean
-     */
     public List<Shift> listShiftEmpty(List<Shift> listShift, String date) {
         List<Shift> listShiftEmpty = new ArrayList<>();
         Order_shiftDAO osd = new Order_shiftDAO();
@@ -102,6 +73,8 @@ public class FetchShiftsServlet extends HttpServlet {
         }
         return listShiftEmpty;
     }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

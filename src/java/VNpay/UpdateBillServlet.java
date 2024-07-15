@@ -2,32 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.admin;
+package VNpay;
 
+import Dal.AccountDAO;
 import Dal.CustomerDAO;
-import Dal.EmployeesDAO;
+import Dal.LoyaltyPoliciesDAO;
 import Dal.OrderDAO;
-import Dal.ShiftsDAO;
-import Dal.StatusDAO;
+import Model.Account;
 import Model.Customer;
-import Model.Employee;
+import Model.LoyaltyPolicies;
 import Model.Order;
-import Model.Shift;
-import Model.Status;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
  * @author phamt
  */
-public class ViewOrderController extends HttpServlet {
+@WebServlet(name = "UpdateBillServlet", urlPatterns = {"/updateBill"})
+public class UpdateBillServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,33 +39,32 @@ public class ViewOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List<Order> ListOrder = new OrderDAO().getAllOrder();
-        //get order have status "da dat" or "dang cho"
-        List<Order> upcomingOrder = ListOrder.stream()
-                .filter(order -> order.getStatusId() == 1 || order.getStatusId() == 2)
-                .collect(Collectors.toList());
-        //get order have status "Huy"
-        List<Order> cancelOrder = ListOrder.stream()
-                .filter(order -> order.getStatusId() == 5)
-                .collect(Collectors.toList());
-        //get info customer
-        List<Customer> ListCustomer = new CustomerDAO().getAllCustomer();
-        //get info barber
-        List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
-        //get info barber free
-        List<Employee> barberFree = new EmployeesDAO().getAllBarberFree();
-        int numberBarberFree = barberFree.size();
-        //get info status
-        List<Status> status = new StatusDAO().getAll();
-        request.setAttribute("status", status);
-        request.setAttribute("orders", ListOrder);
-        request.setAttribute("numberBarberFree", numberBarberFree);
-        request.setAttribute("ListCustomer", ListCustomer);
-        request.setAttribute("cancelOrder", cancelOrder);
-        request.setAttribute("ListEmployee", ListEmployee);
-        request.setAttribute("upcomingOrder", upcomingOrder);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String codeOrder = request.getParameter("codeOrder");
+            String isTransactionSuccessful = request.getParameter("isTransactionSuccessful");
+            int amount = Integer.parseInt(request.getParameter("amount")) /100;
+            Order order = new OrderDAO().getOrderByCode(codeOrder);
+            //get info customer in order
+            Customer customer = new CustomerDAO().getCustomerById(order.getCustomerId());
+            //get account
+            Account account = new AccountDAO().getAccountByPhone(customer.getPhone());
+            int points = 0;
+            boolean transactionSuccessful = Boolean.parseBoolean(isTransactionSuccessful);
+            if (transactionSuccessful) {
+                if (account != null) {
+                    LoyaltyPolicies lp = new LoyaltyPoliciesDAO().getLoyalty();
+                    points = account.getPoint() + (amount / lp.getMinAmount()) * lp.getPointsPerUnit();
+                    new AccountDAO().updatePoints(points, account.getPhone());
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
+                } else {
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);;
+                }
+            } else {
+                new OrderDAO().upDateStatusOrderByCode(6, codeOrder);
+            }
+            response.sendRedirect("getOrderManager");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -37,6 +37,11 @@
             }
             .service-name {
                 flex-grow: 1;
+                border: #bf925b solid 2px;
+                border-radius: 5px;
+                color: #563b4c !important;
+                font-size: 17px;
+                margin: 5px;
             }
             .service-price {
                 white-space: nowrap;
@@ -63,13 +68,6 @@
                 align-items: center;
                 justify-content: space-between;
                 position: relative;
-            }
-            .form-group span {
-                border: #bf925b solid 2px;
-                border-radius: 5px;
-                color: #563b4c !important;
-                font-size: 17px;
-                margin: 5px;
             }
             .form-group a span {
                 border: none;
@@ -142,82 +140,102 @@
                     <h3 class="vr">Call Us: 012-3456-7890</h3>
                     <div class="row justify-content-center">
                         <div class="col-md-10 ftco-animate">
+                            <!--kiem tra dang nhap chua-->
                         <c:if test="${sessionScope.account != null}">
-                            <c:set value="${sessionScope.account}" var="a"/>
-                            <form action="appointment" method="post" class="appointment-form" onsubmit="return validateForm()">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h5 class="mb-4">Chọn dịch vụ</h5>
-                                        <div class="form-group">
-                                            <c:if test="${sessionScope.services == null}">
-                                                <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
-                                                    <span class="bi bi-scissors mr-2"></span>
-                                                    <span>Chọn dịch vụ</span>
-                                                    <span class="bi bi-chevron-right icon-chevron"></span>
-                                                </a>
-                                            </c:if>
-                                            <c:if test="${sessionScope.services != null}">
-                                                <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
-                                                    <span class="bi bi-scissors mr-2"></span>
-                                                    <span>Bạn đã chọn ${sessionScope.services.getQuantityServices()} dịch vụ</span>
-                                                    <span class="bi bi-chevron-right icon-chevron"></span>
-                                                </a>
-                                                <c:forEach items="${sessionScope.services.getListServices()}" var="s">
-                                                    <span class="service-name">${s.getName()}</span>
-
-                                                </c:forEach>
-                                                <div style="font-size: 19px; color: #19692c">Tổng số tiền cần thanh toán: ${sessionScope.services.getTotalMoney()}K</div>
-                                            </c:if>
+                            <c:set value="${sessionScope.account}" var="a" />
+                            <!--kiem tra xem của hang co hoat dong khong--> 
+                            <c:if test="${checkNotActive == null}">
+                                <form action="appointment" method="post" class="appointment-form" onsubmit="return validateForm()">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h5 class="mb-4">Chọn dịch vụ</h5>
+                                            <div class="form-group">
+                                                <!--kiem tra neu chua chon dịch vụ-->
+                                                <c:if test="${sessionScope.services == null}">
+                                                    <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
+                                                        <span class="bi bi-scissors mr-2"></span>
+                                                        <span>Chọn dịch vụ</span>
+                                                        <span class="bi bi-chevron-right icon-chevron"></span>
+                                                    </a>
+                                                </c:if>
+                                                <!--kiem tra neu da chon dich vụ-->
+                                                <c:if test="${sessionScope.services != null}">
+                                                    <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
+                                                        <span class="bi bi-scissors mr-2"></span>
+                                                        <span>Bạn đã chọn ${sessionScope.services.getQuantityServices()} dịch vụ</span>
+                                                        <span class="bi bi-chevron-right icon-chevron"></span>
+                                                    </a>
+                                                    <c:forEach items="${sessionScope.services.getListServices()}" var="s">
+                                                        <span class="service-name">${s.getName()}</span>
+                                                    </c:forEach>
+                                                    <div style="font-size: 19px; color: #19692c">Tổng số tiền cần thanh toán: ${sessionScope.services.getTotalMoney()}K</div>
+                                                </c:if>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h5 class="mb-4">Chọn ngày, giờ & barber</h5>
-                                        <div id="appointment-fields">
-                                            <c:if test="${sessionScope.services == null}">
-
-                                                <input type="text" id="please-select-service" 
-                                                       value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
-                                            </c:if>
-                                            <c:if test="${sessionScope.services != null}">
-                                                <div id="appointment-details" >
-                                                    <div class="col-sm-10">
-                                                        <div class="form-group">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
-                                                                <select name="date" id="date" class="form-control">
-                                                                    <c:forEach items="${listDate}" var="date">
-                                                                        <option value="${date}"  ${date == sessionScope.time.getDate() ? 'selected' : ''}>${date}</option>
-                                                                    </c:forEach>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-10">
-                                                        <div class="form-group">
-                                                            <div class="select-wrap">
-                                                                <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
-                                                                <select name="shifts" id="shifts" class="form-control" >
-                                                                    <c:forEach items="${sessionScope.time.getShift()}" var="shifts">
-                                                                        <option value="${shifts.getId()}">
-                                                                            ${shifts.getStartTime()}</option>
+                                        <div class="col-sm-6">
+                                            <h5 class="mb-4">Chọn ngày, giờ & barber</h5>
+                                            <div id="appointment-fields">
+                                                <!--kiem tra neu chua chon dich vu-->
+                                                <c:if test="${sessionScope.services == null}">
+                                                    <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
+                                                </c:if>
+                                                    <!--kiem tra neu chua chon dich vu-->
+                                                <c:if test="${sessionScope.services != null}">
+                                                    <div id="appointment-details">
+                                                        <div class="col-sm-10">
+                                                            <div class="form-group">
+                                                                <div class="select-wrap">
+                                                                    <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
+                                                                    <select name="date" id="date" class="form-control">
+                                                                        <c:forEach items="${listDate}" var="date">
+                                                                            <option value="${date}" ${date == sessionScope.time.getDate() ? 'selected' : ''}>${date}</option>
                                                                         </c:forEach>
-                                                                </select>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <div class="form-group">
+                                                                <div class="select-wrap">
+                                                                    <div class="icon"><span style="border: none;" class="ion-ios-arrow-down"></span></div>
+                                                                    <select name="shifts" id="shifts" class="form-control" style="margin-bottom: 0;">
+                                                                        <c:forEach items="${sessionScope.time.getShift()}" var="shifts">
+                                                                            <option value="${shifts.getId()}" ${shifts.getId() == shiftId ? 'selected' : ''}>
+                                                                                ${shifts.getStartTime()}</option>
+                                                                            </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div style="font-size: 1.1rem; color: black;">Các ca dự kiến: </div>
+                                                            <div class="projected-shifts">
+                                                                <c:forEach items="${listShiftNeed}" var="shiftNeed">
+                                                                    <span class="service-name">${shiftNeed.getStartTime()}</span>
+                                                                </c:forEach>
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-                                                </div>
-                                            </c:if>
-
+                                                </c:if>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="error-message" id="error-message">${mss}</div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Make an Appointment" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </c:if>
+                            <!--kiem tra cua hang khong hoat dong-->
+                            <c:if test="${checkNotActive != null}">
+                                <div style="text-align: center;" >
+                                    <h3 style="font-weight: 700;">Cửa Hàng Đang Tạm Đóng Từ Ngày ${store.startDate} Đến Ngày ${store.endDate}</h3>
+                                    <h4 style="font-weight: 500;">Quý Khách vui lòng trở lại vào hôm khác</h4>
+                                    <form action="home" class="appointment-form">
+                                        <div class="form-group">
+                                            <input type="submit" value="Trở Lại" class="btn btn-primary">
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="error-message" id="error-message"></div>
-                                <div class="form-group">
-                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
-                                </div>
-                            </form>
+                            </c:if>
 
                         </c:if>
                         <c:if test="${sessionScope.account == null}">
@@ -293,7 +311,7 @@
         </footer>
 
         <!-- loader -->
-        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -338,6 +356,7 @@
 
                                     return true; // All validations passed
                                 }
+
                                 $(document).ready(function () {
                                     // Khi người dùng thay đổi ngày
                                     $('#date').change(function () {
@@ -345,26 +364,45 @@
 
                                         // Gửi yêu cầu AJAX để lấy danh sách ca làm việc mới
                                         $.ajax({
-                                            url: 'fetchshifts', // Đường dẫn tới Servlet của bạn để lấy danh sách ca làm việc
+                                            url: 'fetchdate', // Đường dẫn tới Servlet của bạn để lấy danh sách ca làm việc
                                             method: 'GET',
                                             data: {date: selectedDate},
-                                            success: function (response) {
-                                                // Xóa các option cũ trong dropdown shifts
-                                                $('#shifts').empty();
-
-                                                // Thêm các option mới từ response vào dropdown shifts
-                                                $.each(response, function (index, shift) {
-                                                    $('#shifts').append('<option value="' + shift.id + '">' + shift.startTime + '</option>');
-                                                });
+                                            success: function () {
+                                                // Sau khi xử lý thành công, tải lại trang
+                                                window.location.href = 'appointment';
                                             },
                                             error: function (error) {
                                                 console.log('Error fetching shifts:', error);
                                             }
                                         });
                                     });
+
+                                    $('#shifts').change(function () {
+                                        var selectedShiftId = $(this).val();
+
+                                        $.ajax({
+                                            url: 'fetchnextshifts', // Đảm bảo URL đúng với đường dẫn servlet
+                                            method: 'POST',
+                                            data: {shiftId: selectedShiftId},
+                                            success: function (response) {
+                                                // Kiểm tra phản hồi JSON
+                                                console.log(response);
+
+                                                // Xóa các ca dự kiến hiện tại
+                                                $('.projected-shifts').empty();
+
+                                                // Cập nhật các ca dự kiến mới
+                                                $.each(response, function (index, shift) {
+                                                    $('.projected-shifts').append('<span class="service-name">' + shift.startTime + '</span>');
+                                                });
+                                            },
+                                            error: function (error) {
+                                                console.log('Error processing shift ID:', error);
+                                            }
+                                        });
+                                    });
                                 });
         </script>
-
-
     </body>
+
 </html>

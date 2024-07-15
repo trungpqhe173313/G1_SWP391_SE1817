@@ -26,15 +26,20 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
-    private static Random random = new Random();
+    private static final String PREFIX = "order";
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
+    private static int currentNumber = 1;
+    private static String lastDate = DATE_FORMAT.format(new Date());
 
-    public static String generateOrderCode() {
-        String prefix = "order";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-        String datePart = dateFormat.format(new Date());
-        int randomNumber = random.nextInt(9000 - 1 + 1) + 1; // Random từ 1 đến 9000
-
-        String orderCode = prefix + datePart + randomNumber;
+    public static synchronized String generateOrderCode() {
+        String currentDate = DATE_FORMAT.format(new Date());
+        if (!currentDate.equals(lastDate)) {
+            currentNumber = 1; // Reset số thứ tự khi ngày thay đổi
+            lastDate = currentDate;
+        }
+        
+        String orderCode = PREFIX + currentDate + String.format("%03d", currentNumber);
+        currentNumber++;
         return orderCode;
     }
 
@@ -335,9 +340,63 @@ public class OrderDAO extends DBContext {
         return orders;
     }
 
+    public void upDateStatusOrderByCode(int i, String codeOrder) {
+        try {
+            String sql = "UPDATE [dbo].[Orders]\n"
+                    + "   SET [statusID] = ?\n"
+                    + " WHERE [orderCode] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, i);
+            stm.setString(2, codeOrder);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateAmountOrder(int newAmount, String vnp_TxnRef) {
+        try {
+            String sql = "UPDATE [dbo].[Orders]\n"
+                    + "   SET [totalAmount] = ?\n"
+                    + " WHERE [orderCode] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, newAmount);
+            stm.setString(2, vnp_TxnRef);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Order getOrderByCode(String codeOrder) {
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[Orders]\n"
+                    + "  where orderCode = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, codeOrder);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt(1));
+                order.setCodeOrder(rs.getString(2));
+                order.setCustomerId(rs.getInt(3));
+                order.setEmployeeId(rs.getInt(4));
+                order.setStatusId(rs.getInt(5));
+                order.setOrderDate(rs.getDate(6));
+                order.setTotalAmount(rs.getInt(7));
+                order.setUpdateTime(rs.getString(8));
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
-        List<Order> k = o.findOrdersByDate();
-        System.out.println(k);
+        
+        System.out.println(o.getOrderByCode("Order7912").getCustomerId());
     }
 }
