@@ -172,10 +172,7 @@
                                     </div>
                                     <div class="control-from">
                                         <label>Ca đặt: </label>
-                                        <c:forEach items="${o.getShift()}" var="shift">
-
-                                            <span>${shift.getStartTime()}</span>
-                                        </c:forEach>
+                                        <span>${o.getShift().getStartTime()}</span>
                                     </div>
                                     <div class="full-width">
                                         <label for="companyname">Dịch Vụ: </label>

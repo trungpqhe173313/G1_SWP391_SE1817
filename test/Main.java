@@ -18,12 +18,16 @@ public class Main {
 
     public static void main(String[] args) {
         BlogDAO blogDAO = new BlogDAO();
-        List<Blog> blogs = blogDAO.viewListBlogCustomer();
-        for (Blog blog : blogs) {
-            System.out.println(blog);
+            String title = "Sample Blog Title";
+            String content = "This is the content of the sample blog.";
+            String image = "sample_image.jpg";
+
+            // Call createBlog method
+            blogDAO.createBlog(title, content, image);
+
+            System.out.println("Blog created successfully!");
         }
     }
 
-}
 
 
