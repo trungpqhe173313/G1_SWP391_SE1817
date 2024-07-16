@@ -45,12 +45,6 @@ CREATE TABLE employee (
     updateTime DATETIME DEFAULT GETDATE(),
 	CONSTRAINT FK_employee_account FOREIGN KEY (phone) REFERENCES account(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-CREATE TABLE admin (
-    adminId int IDENTITY(1,1) PRIMARY KEY,
-    fullName nvarchar(255),
-    phone nvarchar(255) UNIQUE,
-	CONSTRAINT FK_admin_account FOREIGN KEY (phone) REFERENCES account(phone) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
 
 CREATE TABLE role (
     id int IDENTITY(1,1) PRIMARY KEY,
@@ -117,19 +111,7 @@ CREATE TABLE discount (
     id int IDENTITY(1,1) PRIMARY KEY,
     point int,
     discount float
-);
-
-CREATE TABLE Chat (
-    id int IDENTITY(1,1) PRIMARY KEY,
-    SenderID int,
-    adminId int,
-    MessageContent nvarchar(255),
-    SendTime datetime DEFAULT GETDATE(),
-    MessageStatus nvarchar(255),
-	senderType nvarchar(50),
-    CONSTRAINT FK_Chat_admin FOREIGN KEY (adminId) REFERENCES admin(adminId) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT FK_Chat_customer FOREIGN KEY (SenderID) REFERENCES customer(customerId) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+); 
 
 CREATE TABLE Voucher (
     id int IDENTITY(1,1) PRIMARY KEY,
@@ -161,21 +143,47 @@ ALTER TABLE employee
 ADD CONSTRAINT FK_employee_statusEmployee FOREIGN KEY (statusEmployee) REFERENCES statusEmployee(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
-CREATE TRIGGER trg_UpdateVoucherStatus
+-- Xóa trigger nếu đã tồn tại
+IF OBJECT_ID('trg_UpdateStatusOnEndTimeChange', 'TR') IS NOT NULL
+    DROP TRIGGER trg_UpdateStatusOnEndTimeChange;
+GO
+
+-- Tạo lại trigger
+CREATE TRIGGER trg_UpdateStatusOnEndTimeChange
 ON Voucher
-AFTER UPDATE, INSERT
+AFTER UPDATE
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @currentDate date;
-    SET @currentDate = CAST(GETDATE() AS date);
-
-    UPDATE Voucher
-    SET status = 0
-    WHERE endTime < @currentDate
-      AND status != 0;
+    IF UPDATE(endTime)
+    BEGIN
+        UPDATE v
+        SET v.status = CASE WHEN GETDATE() BETWEEN v.startTime AND i.endTime THEN 1 ELSE 0 END
+        FROM Voucher v
+        INNER JOIN inserted i ON v.id = i.id;
+    END
 END;
+
+-- Xóa trigger nếu đã tồn tại
+IF OBJECT_ID('trg_UpdateStatusToZeroOnPastEndTime', 'TR') IS NOT NULL
+    DROP TRIGGER trg_UpdateStatusToZeroOnPastEndTime;
+GO
+
+-- Tạo trigger mới
+CREATE TRIGGER trg_UpdateStatusToZeroOnPastEndTime
+ON Voucher
+AFTER UPDATE
+AS
+BEGIN
+    IF UPDATE(endTime)
+    BEGIN
+        UPDATE Voucher
+        SET status = 0
+        FROM Voucher v
+        INNER JOIN inserted i ON v.id = i.id
+        WHERE i.endTime < CAST(GETDATE() AS DATE);
+    END
+END;
+GO
 
 -- Inserting data into roles table
 INSERT INTO role ([role]) VALUES
@@ -254,11 +262,6 @@ INSERT INTO employee (fullName, phone, statusEmployee, updateTime) VALUES
 (N'Nguyễn Cảnh Dương', N'0912345674', 1, GETDATE()),
 (N'Đỗ Đức Vinh', N'0912345673', 1, GETDATE()),
 (N'Nguyễn Quang Bá Ước', N'0912345672', 1, GETDATE());
-GO
-
--- Inserting data into admin table
-INSERT INTO admin (fullName, phone) VALUES
-(N'Admin', N'0912345671');
 GO
 
 -- Inserting data into status table
@@ -356,16 +359,6 @@ INSERT INTO Order_services (servicesId, orderId) VALUES
 (3, 5);
 GO
 
--- Inserting data into Chat table
-INSERT INTO Chat (SenderID, adminId, MessageContent, SendTime, MessageStatus, senderType) VALUES
-(1, 1, N'Hello admin', GETDATE(), N'sent', N'Customer'),
-(1, 1, N'Hello', GETDATE(), N'sent', N'Admin'),
-(2, 1, N'admin ơi', GETDATE(), N'sent', N'Customer'),
-(2, 1, N'chào bạn', GETDATE(), N'sent', N'Admin'),
-(3, 1, N'chào admin', GETDATE(), N'sent', N'Customer'),
-(3, 1, N'admin xin chào', GETDATE(), N'sent', N'Admin');
-GO
-
 -- Inserting data into Voucher table
 INSERT INTO Voucher (Name, discount, status, startTime, endTime) VALUES
 (N'voucher 1', 10000, 1, '2023-06-30', '2023-06-30'),
@@ -435,3 +428,4 @@ N'/images/blog/meo-cat-toc-tai-nha.jpg', GETDATE(), GETDATE(), 1),
 N'Bạn đang tìm kiếm một sự thay đổi cho màu tóc của mình? Hãy cùng khám phá những xu hướng màu tóc nổi bật cho năm 2024. Từ những màu sắc truyền thống đến những tông màu nổi bật, chắc chắn sẽ có lựa chọn phù hợp cho bạn.', 
 N'/images/blog/xu-huong-mau-toc-2024.jpg', GETDATE(), GETDATE(), 1);
 GO
+

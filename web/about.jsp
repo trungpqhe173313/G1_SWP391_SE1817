@@ -37,8 +37,8 @@
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate pb-5 text-center">
-                    <h2 class="mb-0 bread">About us</h2>
-                    <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>About</span></p>
+                    <h2 class="mb-0 bread">Về Chúng Tôi</h2>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Trang Chủ <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Về Chúng Tôi</span></p>
                 </div>
             </div>
         </div>
@@ -56,104 +56,39 @@
                 </div>
                 <div class="col-md-6 py-md-5 pb-5 wrap-about pb-md-5 ftco-animate">
                     <div class="heading-section mb-4 mt-md-5">
-                        <span class="subheading">About Us</span>
-                        <h2 class="mb-4">Welcome To Haircare A Hair Salon</h2>
+                        <span class="subheading">Về Chúng Tôi</span>
+                        <h2 class="mb-4">Chào mừng đến với Haircare</h2>
                     </div>
                     <div class="pb-md-5">
-                        <p>But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <p>Chào mừng bạn đến với Haircare, nơi chúng tôi cam kết mang đến cho bạn trải nghiệm chăm sóc tóc hoàn hảo nhất. Với đội ngũ thợ làm tóc giàu kinh nghiệm và đam mê, chúng tôi luôn cập nhật những xu hướng tóc mới nhất và áp dụng kỹ thuật tiên tiến để mang đến cho bạn vẻ ngoài ấn tượng. Tại Haircare, mỗi khách hàng đều được chăm sóc tận tình và chu đáo, từ lần đầu tiên đến những lần tiếp theo. Chúng tôi luôn lắng nghe và hiểu rõ nhu cầu của bạn để tạo ra kiểu tóc phù hợp nhất với phong cách và cá tính riêng.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="ftco-section ftco-team">
-        <div class="container-fluid px-md-5">
-            <div class="row justify-content-center pb-3">
-                <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Artistic Director</span>
-                    <h2 class="mb-4">Makeup Artist</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+    <div class="container-fluid px-0">
+        <div class="row no-gutters">
+            <div class="col-md-6 text-center d-flex align-items-stretch order-md-2">
+                <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
+                    <div class="text">
+                        <h3>Cắt Tóc Nam</h3>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 ftco-animate">
-                    <div class="carousel-team owl-carousel">
-                        <div class="item">
-                            <a href="#" class="team text-center">
-                                <div class="img" style="background-image: url(images/stylist-1.jpg);"></div>
-                                <h2>Danica Lewis</h2>
-                                <span class="position">Hair Stylist</span>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#" class="team text-center">
-                                <div class="img" style="background-image: url(images/stylist-2.jpg);"></div>
-                                <h2>Nicole Simon</h2>
-                                <span class="position">Nail Master</span>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#" class="team text-center">
-                                <div class="img" style="background-image: url(images/stylist-3.jpg);"></div>
-                                <h2>Cloe Meyer</h2>
-                                <span class="position">Director</span>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#" class="team text-center">
-                                <div class="img" style="background-image: url(images/stylist-4.jpg);"></div>
-                                <h2>Rachel Clinton</h2>
-                                <span class="position">Hair Stylist</span>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#" class="team text-center">
-                                <div class="img" style="background-image: url(images/stylist-5.jpg);"></div>
-                                <h2>Dave Buff</h2>
-                                <span class="position">Barber</span>
-                            </a>
-                        </div>
-                    </div>
+            <div class="col-md-6 text-center d-flex align-items-stretch order-md-1">
+                <div class="text-about py-5 px-4">
+                    <h1 class="logo">
+                        <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+                    </h1>
+                    <h2>Chào Mừng Đến Với Salon Của Chúng Tôi</h2>
+                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
                 </div>
             </div>
         </div>
-    </section>
-
-
-    <section class="ftco-section ftco-no-pt ftco-no-pb">
-        <div class="container-fluid px-0">
-            <div class="row no-gutters">
-                <div class="col-md text-center d-flex align-items-stretch">
-                    <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
-                        <div class="text">
-                            <h3>For Men</h3>
-                            <p><a href="#" class="btn-custom">See pricing <span class="ion-ios-arrow-round-forward"></span></a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center d-flex align-items-stretch">
-                    <div class="text-about py-5 px-4">
-                        <h1 class="logo">
-                            <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                        </h1>
-                        <h2>Welcome to our Salon</h2>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        <p class="mt-3"><a href="#" class="btn btn-primary btn-outline-primary">Read more</a></p>
-                    </div>
-                </div>
-                <div class="col-md text-center d-flex align-items-stretch">
-                    <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/forwomen.jpg);">
-                        <div class="text">
-                            <h3>For Women</h3>
-                            <p><a href="#" class="btn-custom">See pricing <span class="ion-ios-arrow-round-forward"></span></a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
     <section class="testimony-section bg-light">
         <div class="container">
@@ -274,67 +209,66 @@
         </div>
     </section>
 
-    <footer class="ftco-footer ftco-section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo">Haircare</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Information</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                            <li><a href="#" class="py-2 d-block">Privacy</a></li>
-                            <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
-                            
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Links</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">Home</a></li>
-                            <li><a href="#" class="py-2 d-block">About</a></li>
-                            <li><a href="#" class="py-2 d-block">Services</a></li>
-                            <li><a href="#" class="py-2 d-block">Work</a></li>
-                            <li><a href="#" class="py-2 d-block">Blog</a></li>
-                            <li><a href="#" class="py-2 d-block">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
-                        <div class="block-23 mb-3">
-                            <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
+<footer class="ftco-footer ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2 logo">Haircare</h2>
+                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Thông Tin</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="py-2 d-block">Quyền riêng tư</a></li>
+                        <li><a href="#" class="py-2 d-block">Điều khoản sử dụng</a></li>
 
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Links</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Trang Chủ</a></li>
+                        <li><a href="#" class="py-2 d-block">Dịch Vụ</a></li>
+                        <li><a href="#" class="py-2 d-block">Phòng Trưng Bày</a></li>
+                        <li><a href="#" class="py-2 d-block">Về Chúng Tôi</a></li>
+                        <li><a href="#" class="py-2 d-block">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Bạn Có Thắc Mắc?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
 
