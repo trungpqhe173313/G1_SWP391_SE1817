@@ -60,11 +60,6 @@
             <span>Lịch hẹn</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="storeholidayschedule">
-            <i class="fas fa-calendar-alt"></i> <!-- Icon Lịch hẹn -->
-            <span>Lịch nghỉ cửa hàng</span></a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="viewAllBill">
             <i class="fas fa-money-check-alt"></i> <!-- Icon Thanh toán -->
             <span>Thanh toán</span></a>

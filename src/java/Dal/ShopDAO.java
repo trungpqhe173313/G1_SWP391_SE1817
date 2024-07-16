@@ -26,12 +26,10 @@ public class ShopDAO extends DBContext {
         int revenue = 0;
         String sql = "SELECT \n"
                 + "    SUM(totalAmount) AS TotalRevenue\n"
-                + "FROM Orders\n"
-                + "WHERE \n"
-                + "    YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "    AND MONTH(orderDate) = ?\n"
-                + "    AND statusID = 4\n"
-                + "GROUP BY MONTH(orderDate);";
+                + "FROM [order]\n"
+                + "WHERE YEAR(orderDate) = YEAR(GETDATE())\n"
+                + "and MONTH(orderDate) = ? and statusID=4\n"
+                + "GROUP BY MONTH(orderDate)";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
             ResultSet rs = st.executeQuery();
@@ -46,16 +44,15 @@ public class ShopDAO extends DBContext {
 
     public int getRevenueByBarber(int month, int employeeId) {
         int revenue = 0;
-        String sql = "SELECT COALESCE(SUM(totalAmount), 0) AS TotalRevenue\n"
-                + "FROM Orders\n"
-                + "WHERE \n"
-                + "    employeeId = ?\n"
-                + "    AND MONTH(orderDate) = ?\n"
-                + "    AND YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "    AND statusID IN (4);";
+        String sql = "SELECT COALESCE(SUM([totalAmount]), 0) AS TotalRevenue\n"
+                + "FROM [order]\n"
+                + "WHERE [employeeId] = ?\n"
+                + "  AND MONTH([orderDate]) = ?\n"
+                + "  AND YEAR([orderDate]) = YEAR(GETDATE())\n"
+                + "  AND [statusID] IN (4);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setInt(1, employeeId);
             st.setInt(2, month);
+            st.setInt(1, employeeId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 revenue = rs.getInt("TotalRevenue");
@@ -68,10 +65,10 @@ public class ShopDAO extends DBContext {
 
     public String getAvatarByEmployeeId(int employeeId) {
         String avatar = "";
-        String sql = "SELECT a.avatar\n"
-                + "FROM employee e\n"
-                + "JOIN account a ON e.phone = a.phone\n"
-                + "WHERE e.employeeId = ?;";
+        String sql = "SELECT a.[avatar]\n"
+                + "FROM [employee] e\n"
+                + "JOIN [account] a ON e.[phone] = a.[phone]\n"
+                + "WHERE e.[employeeId] = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, employeeId);
             ResultSet rs = st.executeQuery();
@@ -87,7 +84,7 @@ public class ShopDAO extends DBContext {
     public int getRevenueThisYear() {
         int revenue = 0;
         String sql = "SELECT SUM(totalAmount) AS Revenue\n"
-                + "FROM [orders]\n"
+                + "FROM [order]\n"
                 + "WHERE YEAR(orderDate) = YEAR(GETDATE()) and statusID=4;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery();
@@ -102,13 +99,11 @@ public class ShopDAO extends DBContext {
 
     public int getNumberOrderByMonth(int month) {
         int a = 0;
-        String sql = "SELECT \n"
+        String sql = "SELECT  \n"
                 + "    COUNT(orderId) AS TotalOrders\n"
-                + "FROM Orders\n"
-                + "WHERE \n"
-                + "    YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "    AND MONTH(orderDate) = ?\n"
-                + "    AND statusID = 4\n"
+                + "FROM [order]\n"
+                + "WHERE YEAR(orderDate) = YEAR(GETDATE())\n"
+                + "and MONTH(orderDate) = ?\n and statusID=4"
                 + "GROUP BY MONTH(orderDate);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
@@ -125,12 +120,11 @@ public class ShopDAO extends DBContext {
     public int getNumberOrderByBarber(int month, int employeeId) {
         int a = 0;
         String sql = "SELECT COUNT(*) AS TotalOrders\n"
-                + "FROM Orders\n"
-                + "WHERE \n"
-                + "    employeeId = ?\n"
-                + "    AND MONTH(orderDate) = ?\n"
-                + "    AND YEAR(orderDate) = YEAR(GETDATE())\n"
-                + "    AND statusID = 4;";
+                + "FROM [order]\n"
+                + "WHERE [employeeId] = ?\n"
+                + "  AND MONTH([orderDate]) = ?\n"
+                + "  AND YEAR([orderDate]) = YEAR(GETDATE())\n"
+                + "  AND [statusID] IN (4);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, employeeId);
             st.setInt(2, month);
@@ -146,31 +140,30 @@ public class ShopDAO extends DBContext {
 
     public List<Order> getOrderByMonth(int month) {
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT \n"
-                + "    o.orderId,\n"
-                + "     o.orderCode,\n"
-                + "    o.customerId,\n"
-                + "    o.employeeId,\n"
-                + "    o.statusID,\n"
-                + "    o.orderDate,\n"
-                + "    o.totalAmount\n"
-                + "FROM Orders o\n"
-                + "WHERE \n"
-                + "    MONTH(o.orderDate) = ?\n"
-                + "    AND o.statusID = 4\n"
-                + "    AND YEAR(o.orderDate) = YEAR(GETDATE());";
+        String sql = "SELECT [orderId]\n"
+                + "      ,[customerId]\n"
+                + "      ,[employeeId]\n"
+                + "      ,[statusID]\n"
+                + "      ,[orderDate]\n"
+                + "      ,[totalAmount]\n"
+                + "      ,[shiftId]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[order]\n"
+                + "  WHERE MONTH(orderDate) = ? and statusID=4\n"
+                + "  AND YEAR(orderDate) = YEAR(GETDATE());";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, month);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order o = new Order();
                 o.setId(rs.getInt("orderId"));
-                o.setCodeOrder(rs.getString("orderCode"));
                 o.setCustomerId(rs.getInt("customerId"));
                 o.setEmployeeId(rs.getInt("employeeId"));
                 o.setStatusId(rs.getInt("statusID"));
                 o.setOrderDate(rs.getDate("orderDate"));
                 o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setShiftsID(rs.getInt("shiftId"));
+                o.setUpdateTime(rs.getString("updateTime"));
                 list.add(o);
             }
         } catch (SQLException e) {
@@ -187,7 +180,9 @@ public class ShopDAO extends DBContext {
                 + "      ,[statusID]\n"
                 + "      ,[orderDate]\n"
                 + "      ,[totalAmount]\n"
-                + "  FROM [dbo].[orders]\n"
+                + "      ,[shiftId]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[order]\n"
                 + "  WHERE MONTH(orderDate) = ? and employeeId = ?\n"
                 + "  AND YEAR(orderDate) = YEAR(GETDATE()) and statusID=4;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -202,6 +197,8 @@ public class ShopDAO extends DBContext {
                 o.setStatusId(rs.getInt("statusID"));
                 o.setOrderDate(rs.getDate("orderDate"));
                 o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setShiftsID(rs.getInt("shiftId"));
+                o.setUpdateTime(rs.getString("updateTime"));
                 list.add(o);
             }
         } catch (SQLException e) {
@@ -218,7 +215,9 @@ public class ShopDAO extends DBContext {
                 + "      ,[statusID]\n"
                 + "      ,[orderDate]\n"
                 + "      ,[totalAmount]\n"
-                + "  FROM [dbo].[orders]\n"
+                + "      ,[shiftId]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[order]\n"
                 + "  WHERE customerId = ? and statusID=4";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
@@ -231,6 +230,8 @@ public class ShopDAO extends DBContext {
                 o.setStatusId(rs.getInt("statusID"));
                 o.setOrderDate(rs.getDate("orderDate"));
                 o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setShiftsID(rs.getInt("shiftId"));
+                o.setUpdateTime(rs.getString("updateTime"));
                 list.add(o);
             }
         } catch (SQLException e) {
@@ -247,7 +248,9 @@ public class ShopDAO extends DBContext {
                 + "      ,[statusID]\n"
                 + "      ,[orderDate]\n"
                 + "      ,[totalAmount]\n"
-                + "  FROM [dbo].[orders]\n"
+                + "      ,[shiftId]\n"
+                + "      ,[updateTime]\n"
+                + "  FROM [dbo].[order]\n"
                 + "  where orderId = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
@@ -260,6 +263,8 @@ public class ShopDAO extends DBContext {
                 o.setStatusId(rs.getInt("statusID"));
                 o.setOrderDate(rs.getDate("orderDate"));
                 o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setShiftsID(rs.getInt("shiftId"));
+                o.setUpdateTime(rs.getString("updateTime"));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
@@ -343,7 +348,7 @@ public class ShopDAO extends DBContext {
                 + "    e.[fullName],\n"
                 + "	e.phone,\n"
                 + "    SUM(o.[totalAmount]) AS TotalRevenue\n"
-                + "FROM [orders] o\n"
+                + "FROM [order] o\n"
                 + "JOIN [employee] e ON o.[employeeId] = e.[employeeId]\n"
                 + "WHERE MONTH(o.[orderDate]) = ?\n"
                 + "  AND YEAR(o.[orderDate]) = YEAR(GETDATE())\n"
@@ -394,25 +399,24 @@ public class ShopDAO extends DBContext {
         return list;
     }
 
-    public List<Shift> getListShiftByOrderId(int id) {
-        List<Shift> list = new ArrayList<>();
-        String sql = "SELECT s.id AS ShiftID, s.startTime\n"
-                + "FROM Order_shift os\n"
-                + "JOIN shift s ON os.ShiftID = s.id\n"
-                + "WHERE os.OrderID = ?;";
+    public Shift getShiftById(int id) {
+        Shift s = new Shift();
+        String sql = "SELECT [id]\n"
+                + "      ,[startTime]\n"
+                + "  FROM [dbo].[shift]\n"
+                + "  where id =?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Shift shift = new Shift();
-                shift.setId(rs.getInt("ShiftID"));
-                shift.setStartTime(rs.getString("startTime"));
-                list.add(shift);
+                s.setId(rs.getInt("id"));
+                s.setStartTime(rs.getString("startTime"));
+                return s;
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
         }
-        return list;
+        return s;
     }
 
     public Status getStatusById(int id) {
@@ -439,7 +443,7 @@ public class ShopDAO extends DBContext {
         List<Integer> list = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    MONTH(orderDate) AS month\n"
-                + "FROM dbo.[orders]\n"
+                + "FROM dbo.[order]\n"
                 + "WHERE \n"
                 + "    YEAR(orderDate) = YEAR(GETDATE())\n"
                 + "GROUP BY \n"
@@ -459,10 +463,9 @@ public class ShopDAO extends DBContext {
 
     public static void main(String[] args) {
         ShopDAO d = new ShopDAO();
-        List<Order> e = d.getOrderByMonth(6);
+        List<Order> e = d.getOrderByCustomerId(4);
         for (Order o : e) {
             System.out.println(o.toString());
         }
-        System.out.println("revenue month this year: " + d.getStatusById(4).getName());
     }
 }
