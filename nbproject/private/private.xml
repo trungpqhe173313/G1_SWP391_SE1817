@@ -19,7 +19,6 @@
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/common/RemindService.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/customer/ViewHistoryBooking.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Model/Shift.java</file>
-            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/UpdateBlogController.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/CancelStoreHolidayScheduleServlet.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/web/homepage.jsp</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/ToggleBlogStatusController.java</file>
@@ -37,6 +36,7 @@
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/ExportRevenueToExcelServlet.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/Employee/UpdateEmployeesProfile.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/ViewOrderDetatailUpdateController.java</file>
+            <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Controller/admin/AddEmployeesController.java</file>
             <file>file:/D:/FPT/Ky5FPTU/SWP391/Project/G1_SWP391_SE1817/src/java/Dal/BlogDAO.java</file>
         </group>
     </open-files>

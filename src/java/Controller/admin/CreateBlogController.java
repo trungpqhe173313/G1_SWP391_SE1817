@@ -77,7 +77,6 @@ public class CreateBlogController extends HttpServlet {
         BlogDAO blogDAO = new BlogDAO();
         blogDAO.createBlog(title, content, image);
 
-        // Redirect về trang danh sách blog sau khi thêm thành công
         response.sendRedirect(request.getContextPath() + "/bloglistadmin");
     }
 

@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package Controller.admin;
 
 import Dal.BlogDAO;
+import Model.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -56,8 +52,12 @@ public class UpdateBlogController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
-    } 
+        int postId = Integer.parseInt(request.getParameter("postId"));
+        BlogDAO blogDAO = new BlogDAO();
+        Blog blog = blogDAO.getBlogById(postId);
+        request.setAttribute("blog", blog);
+        request.getRequestDispatcher("UpdateBlog.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -69,20 +69,20 @@ public class UpdateBlogController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-                response.setContentType("text/plain");
+        response.setContentType("text/plain");
         
         // Get parameters from request
         int postId = Integer.parseInt(request.getParameter("postId"));
         String title = request.getParameter("title");
         String content = request.getParameter("content");
+        String image = request.getParameter("image");
         
         // Update blog in database
         BlogDAO blogDAO = new BlogDAO(); // Assuming BlogDAO handles database operations
         blogDAO.updateBlog(postId, title, content, null); // Pass null for image if not updating image
         
         // Prepare response
-        PrintWriter out = response.getWriter();
-        out.print("Blog updated successfully."); // Send success message
+        response.sendRedirect(request.getContextPath() + "/bloglistadmin");
     }
 
     /** 
