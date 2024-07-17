@@ -16,10 +16,11 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="home" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="service" class="nav-link">Services</a></li>
-                <li class="nav-item"><a href="gallery.jsp" class="nav-link">Gallery</a></li>
-                <li class="nav-item"><a href="about.jsp" class="nav-link">About</a></li>
+                <li class="nav-item active"><a href="home" class="nav-link">Trang Chủ</a></li>
+                <li class="nav-item"><a href="service" class="nav-link">Dịch Vụ</a></li>
+                <li class="nav-item"><a href="appointment?" class="nav-link">Đặt Lịch</a></li>
+                <li class="nav-item"><a href="about.jsp" class="nav-link">Về Chúng Tôi</a></li>
+                <li class="nav-item"><a href="blog" class="nav-link">Blog</a></li>
                     <c:if test="${sessionScope.account==null}">
 
                     <li class="nav-item"><a href="login" class="nav-link">Login</a></li>

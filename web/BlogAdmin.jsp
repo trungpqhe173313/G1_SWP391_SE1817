@@ -67,7 +67,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#editBlogModal">Tạo Blog Mới</button>
+                            <a href="createblog" class="btn btn-primary">Tạo Blog Mới</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -92,12 +92,6 @@
                                                 <td id="status-${blog.postId}" class="status-column">${blog.isActive ? 'Đang hoạt động' : 'Không hoạt động'}</td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <button type="button" class="btn btn-info btn-sm edit-btn mr-2"
-                                                                data-blogid="${blog.postId}"
-                                                                data-title="${blog.title}"
-                                                                data-content="${blog.content}">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
                                                         <div class="custom-control custom-switch custom-switch-lg">
                                                             <input type="checkbox" class="custom-control-input toggle-btn"
                                                                    id="toggle-${blog.postId}"
@@ -106,6 +100,9 @@
                                                             <label class="custom-control-label ml-2" for="toggle-${blog.postId}">
                                                             </label>
                                                         </div>
+                                                        <a href="updateblog?postId=${blog.postId}" class="btn btn-link">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -157,40 +154,41 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="vendor/ckeditor/ckeditor.js"></script>
-<script>
-            $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             $('#dataTable').DataTable({
                 "columnDefs": [
-                    { "orderable": false, "targets": [5] } // Disable sorting for column 5 (Xóa)
+                    { "orderable": false, "targets": [4, 5] } // Disable sorting for columns 4 (Trạng Thái) and 5 (Chỉnh Sửa)
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
                 }
             });
         });
-$(document).ready(function() {
-    $('.toggle-btn').change(function() {
-        var postId = $(this).data('blogid');
-        var isActive = $(this).prop('checked');
 
-        $.ajax({
-            type: 'POST',
-            url: 'toggleblogstatus',
-            data: {
-                postId: postId,
-                isActive: isActive
-            },
-            success: function(response) {
-                var statusText = isActive ? 'Đang hoạt động' : 'Không hoạt động';
-                $('#toggle-' + postId).prop('checked', isActive);
-                $('#status-' + postId).text(statusText);
-            },
-            error: function(xhr, status, error) {
-                console.error('Lỗi khi cập nhật trạng thái: ' + error);
-            }
+        $(document).ready(function() {
+            $('.toggle-btn').change(function() {
+                var postId = $(this).data('blogid');
+                var isActive = $(this).prop('checked');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'toggleblogstatus',
+                    data: {
+                        postId: postId,
+                        isActive: isActive
+                    },
+                    success: function(response) {
+                        var statusText = isActive ? 'Đang hoạt động' : 'Không hoạt động';
+                        $('#toggle-' + postId).prop('checked', isActive);
+                        $('#status-' + postId).text(statusText);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Lỗi khi cập nhật trạng thái: ' + error);
+                    }
+                });
+            });
         });
-    });
-});
-</script>    
+    </script>
 </body>
 </html>
