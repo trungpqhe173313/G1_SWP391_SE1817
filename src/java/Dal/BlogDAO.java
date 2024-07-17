@@ -138,4 +138,28 @@ public void toggleBlogStatus(int postId) {
         }
         return blog;
     }
+    // View Blog by ID
+public Blog getBlogById(int postId) {
+    String sql = "SELECT * FROM BlogPosts WHERE postId = ?";
+    Blog blog = null;
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setInt(1, postId);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                blog = new Blog();
+                blog.setPostId(rs.getInt("postId"));
+                blog.setTitle(rs.getString("title"));
+                blog.setContent(rs.getString("content"));
+                blog.setImage(rs.getString("image"));
+                blog.setCreateAt(rs.getDate("createdAt"));
+                blog.setUpdateAt(rs.getDate("updatedAt"));
+                blog.setIsActive(rs.getBoolean("isActive"));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return blog;
+}
+
 }
