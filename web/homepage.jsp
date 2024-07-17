@@ -201,9 +201,6 @@
             .carousel-indicators .active {
                 background-color: grey; /* Change this to your preferred active color */
             }
-            .section-margin-bottom {
-    margin-bottom: 150px; /* Điều chỉnh khoảng cách theo nhu cầu */
-}
         </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -249,9 +246,8 @@
                     <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
                         <div class="col-lg-12 ftco-animate d-flex align-items-center">
                             <div class="text text-center">
-                                <span class="subheading" style="font-size: 25px;">Chào mừng đến với Haircare</span>
-                                <h1 class="mb-4 mt-2" style="font-size: 100px;">Chúng tôi có đội ngũ</h1>
-                                <h1 class="mb-4 mt-2" style="font-size: 100px;">chăm sóc tóc chuyên nghiệp</h1>
+                                <span class="subheading">Welcome to Haircare</span>
+                                <h1 class="mb-4">We are professional care for your hair</h1>
                             </div>
                         </div>
                     </div>
@@ -259,37 +255,46 @@
             </div>
         </section>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container-fluid px-0">
-        <div class="row no-gutters">
-            <div class="col-md-6 text-center d-flex align-items-stretch order-md-2">
-                <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
-                    <div class="text">
-                        <h3>Cắt Tóc Nam</h3>
+        <section class="ftco-section ftco-no-pt ftco-no-pb">
+            <div class="container-fluid px-0">
+                <div class="row no-gutters">
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
+                            <div class="text">
+                                <h3>For Men</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center d-flex align-items-stretch">
+                        <div class="text-about py-5 px-4">
+                            <h1 class="logo">
+                                <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+                            </h1>
+                            <h2>Welcome to our Salon</h2>
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+
+                        </div>
+                    </div>
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/forwomen.jpg);">
+                            <div class="text">
+                                <h3>For Women</h3>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 text-center d-flex align-items-stretch order-md-1">
-                <div class="text-about py-5 px-4">
-                    <h1 class="logo">
-                        <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                    </h1>
-                    <h2>Chào Mừng Đến Với Salon Của Chúng Tôi</h2>
-                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+        </section>
 
         <section class="services-section ftco-section">
             <div class="container">
                 <div class="row justify-content-center pb-3">
                     <div class="col-md-10 heading-section text-center ftco-animate">
-                        <span class="subheading">Dịch Vụ</span>
-                        <h2 class="mb-4">Danh Sách Dịch Vụ</h2>
-                        <p>Dịch vụ của chúng tôi bao gồm từ cắt tóc, tạo kiểu, uốn, nhuộm đến các liệu trình chăm sóc tóc chuyên sâu, tất cả đều được thực hiện bởi đội ngũ chuyên gia tận tâm và giàu kinh nghiệm.</p>
+                        <span class="subheading">Services</span>
+                        <h2 class="mb-4">Services Menu</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                     </div>
                 </div>
 
@@ -380,148 +385,202 @@
         </div>
     </section>
 
-<section class="ftco-section ftco-booking bg-light section-margin-bottom">
-    <div class="container ftco-relative">
-        <div class="row justify-content-center pb-3">
-            <div class="col-md-10 heading-section text-center ftco-animate">
-                <span class="subheading">Đặt Lịch</span>
-                <h2 class="mb-4">Tạo Cuộc Hẹn Với Chúng Tôi</h2>
-                <p>Hãy đặt lịch hẹn ngay hôm nay để trải nghiệm dịch vụ chăm sóc tóc chuyên nghiệp của chúng tôi và tận hưởng một diện mạo hoàn toàn mới.</p>
+    <section class="ftco-section ftco-booking bg-light">
+        <div class="container ftco-relative">
+            <div class="row justify-content-center pb-3">
+                <div class="col-md-10 heading-section text-center ftco-animate">
+                    <span class="subheading">Booking</span>
+                    <h2 class="mb-4">Make an Appointment</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                </div>
             </div>
-        </div>
-        <h3 class="vr">Liên Hệ: 012-3456-7890</h3>
-        <div class="row justify-content-center">
-            <div class="col-md-10 ftco-animate">
-                <form action="appointment" class="appointment-form">
-                    <div class="form-group">
-                        <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+            <h3 class="vr">Call Us: 012-3456-7890</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-10 ftco-animate">
+                    <form action="appointment" class="appointment-form">
+                        <div class="form-group">
+                            <input type="submit" value="Make an Appointment" class="btn btn-primary">
+                        </div>
+                    </form>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container">
-        <div class="row no-gutters justify-content-center mb-5 pb-2">
-            <div class="col-md-6 text-center heading-section ftco-animate">
-                <span class="subheading">Phòng Trưng Bày</span>
-                <h2 class="mb-4">Các Mẫu Của Chúng Tôi</h2>
-                <p>Khám phá bộ sưu tập các kiểu tóc đa dạng và phong cách tại phòng trưng bày của chúng tôi. Mỗi mẫu tóc đều được thiết kế tỉ mỉ bởi những thợ làm tóc chuyên nghiệp, đảm bảo mang đến cho bạn vẻ ngoài ấn tượng và phong cách riêng biệt. Hãy ghé thăm và tìm cho mình một kiểu tóc hoàn hảo ngay hôm nay!</p>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid p-0">
-        <div class="row no-gutters">
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-1.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Stylist</span>
-                        <h3><a href="project.jsp">Beard</a></h3>
-                    </div>
-                    <a href="images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-2.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Haircut</a></h3>
-                    </div>
-                    <a href="images/work-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-3.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Hairstylist</a></h3>
-                    </div>
-                    <a href="images/work-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-4.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Haircut</a></h3>
-                    </div>
-                    <a href="images/work-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-5.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-6.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Fashion</span>
-                        <h3><a href="project.jsp">Model</a></h3>
-                    </div>
-                    <a href="images/work-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-7.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-7.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-8.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-8.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="ftco-section ftco-team">
+        <div class="container-fluid px-md-5">
+            <div class="row justify-content-center pb-3">
+                <div class="col-md-10 heading-section text-center ftco-animate">
+                    <h2 class="mb-4">Barber</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 ftco-animate">
+                    <div class="carousel-team owl-carousel">
+                        <div class="item">
+                            <a href="#" class="team text-center">
+                                <div class="img" style="background-image: url(images/stylist-1.jpg);"></div>
+                                <h2>Danica Lewis</h2>
+                                <span class="position">Hair Stylist</span>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="team text-center">
+                                <div class="img" style="background-image: url(images/stylist-2.jpg);"></div>
+                                <h2>Nicole Simon</h2>
+                                <span class="position">Nail Master</span>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="team text-center">
+                                <div class="img" style="background-image: url(images/stylist-3.jpg);"></div>
+                                <h2>Cloe Meyer</h2>
+                                <span class="position">Director</span>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="team text-center">
+                                <div class="img" style="background-image: url(images/stylist-4.jpg);"></div>
+                                <h2>Rachel Clinton</h2>
+                                <span class="position">Hair Stylist</span>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="team text-center">
+                                <div class="img" style="background-image: url(images/stylist-5.jpg);"></div>
+                                <h2>Dave Buff</h2>
+                                <span class="position">Barber</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+        <div class="container">
+            <div class="row no-gutters justify-content-center mb-5 pb-2">
+                <div class="col-md-6 text-center heading-section ftco-animate">
+                    <span class="subheading">Gallery</span>
+                    <h2 class="mb-4">Our gallery</h2>
+                    <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-1.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Stylist</span>
+                            <h3><a href="project.jsp">Beard</a></h3>
+                        </div>
+                        <a href="images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-2.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Haircut</a></h3>
+                        </div>
+                        <a href="images/work-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-3.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Hairstylist</a></h3>
+                        </div>
+                        <a href="images/work-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-4.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Haircut</a></h3>
+                        </div>
+                        <a href="images/work-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-5.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Makeup</a></h3>
+                        </div>
+                        <a href="images/work-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-6.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Fashion</span>
+                            <h3><a href="project.jsp">Model</a></h3>
+                        </div>
+                        <a href="images/work-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-7.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Makeup</a></h3>
+                        </div>
+                        <a href="images/work-7.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="project">
+                        <img src="images/work-8.jpg" class="img-fluid" alt="Colorlib Template">
+                        <div class="text">
+                            <span>Beauty</span>
+                            <h3><a href="project.jsp">Makeup</a></h3>
+                        </div>
+                        <a href="images/work-8.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+                            <span class="icon-expand"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="ftco-section ftco-pricing">
         <div class="container">
             <div class="row justify-content-center pb-3">
                 <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Xu Hướng</span>
-                    <h2 class="mb-4">Dịch Vụ Hàng Đầu</h2>
-                    <p>Chúng tôi tự hào mang đến cho bạn dịch vụ chăm sóc tóc hàng đầu với đội ngũ thợ làm tóc chuyên nghiệp và giàu kinh nghiệm. Từ cắt tóc, nhuộm màu, đến tạo kiểu, mọi dịch vụ đều được thực hiện với sự tận tâm và kỹ thuật cao. Hãy đến và trải nghiệm dịch vụ tuyệt vời để nâng tầm phong cách của bạn!</p>
+                    <span class="subheading">Pricing</span>
+                    <h2 class="mb-4">Top Dịch Vụ</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
                 </div>
             </div>
 
@@ -558,8 +617,8 @@
             <div class="col-md-6 col-lg-7 py-5 pl-md-5">
                 <div class="py-md-5">
                     <div class="heading-section ftco-animate">
-                        <span class="subheading">Đánh Giá</span>
-                        <h2 class="mb-0">Đánh Giá Từ Khách Hàng</h2>
+                        <span class="subheading">Testimony</span>
+                        <h2 class="mb-0">Happy Customer</h2>
                     </div>
                     <div class="carousel-testimony owl-carousel ftco-animate" id="feedback-list">
                         <!-- Start of dynamic feedback loop -->
@@ -586,7 +645,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Để Lại Đánh Giá</a>
+                    <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Feedback here</a>
                 </div>
             </div>
         </div>
@@ -616,7 +675,7 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2 logo">Haircare</h2>
-                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
                     <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                         <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                         <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -626,11 +685,11 @@
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Thông Tin</h2>
+                    <h2 class="ftco-heading-2">Information</h2>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Câu hỏi thường gặp</a></li>
-                        <li><a href="#" class="py-2 d-block">Quyền riêng tư</a></li>
-                        <li><a href="#" class="py-2 d-block">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                        <li><a href="#" class="py-2 d-block">Privacy</a></li>
+                        <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
 
                     </ul>
                 </div>
@@ -639,17 +698,18 @@
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Links</h2>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Trang Chủ</a></li>
-                        <li><a href="#" class="py-2 d-block">Dịch Vụ</a></li>
-                        <li><a href="#" class="py-2 d-block">Phòng Trưng Bày</a></li>
-                        <li><a href="#" class="py-2 d-block">Về Chúng Tôi</a></li>
+                        <li><a href="#" class="py-2 d-block">Home</a></li>
+                        <li><a href="#" class="py-2 d-block">About</a></li>
+                        <li><a href="#" class="py-2 d-block">Services</a></li>
+                        <li><a href="#" class="py-2 d-block">Work</a></li>
                         <li><a href="#" class="py-2 d-block">Blog</a></li>
+                        <li><a href="#" class="py-2 d-block">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Bạn Có Thắc Mắc?</h2>
+                    <h2 class="ftco-heading-2">Have a Questions?</h2>
                     <div class="block-23 mb-3">
                         <ul>
                             <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>

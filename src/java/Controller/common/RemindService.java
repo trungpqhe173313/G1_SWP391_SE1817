@@ -4,6 +4,7 @@
  */
 package Controller.common;
 
+import Controller.admin.RemindStoreStatus;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebListener;
 @WebListener
 public class RemindService implements ServletContextListener {
     Remind t=new Remind();
+    RemindStoreStatus rst = new RemindStoreStatus();
     CheckVoucher v = new CheckVoucher();
     
     

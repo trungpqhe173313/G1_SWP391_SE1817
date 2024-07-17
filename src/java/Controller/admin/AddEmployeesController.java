@@ -2,11 +2,11 @@ package Controller.admin;
 
 import Dal.EmployeesDAO;
 
-import Model.Account;
+import Model.Accounts;
 
 
 
-import Model.Employee;
+import Model.Employees;
 
 import Model.Account;
 import Model.Employee;

@@ -44,27 +44,6 @@ public class BlogDAO extends DBContext{
         }
     }
     
-    public List<Blog> getBlogById(int postId) {
-        String sql = "SELECT * FROM BlogPosts WHERE postId = ?";
-        List<Blog> blogs = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Blog blog = new Blog();
-                blog.setPostId(rs.getInt("postId"));
-                blog.setTitle(rs.getString("title"));
-                blog.setContent(rs.getString("content"));
-                blog.setImage(rs.getString("image"));
-                blog.setCreateAt(rs.getDate("createdAt"));
-                blog.setUpdateAt(rs.getDate("updatedAt"));
-                blog.setIsActive(rs.getBoolean("isActive"));
-                blogs.add(blog);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return blogs;
-    }
     // Delete Blog (Đổi trạng thái isActive)
 public void toggleBlogStatus(int postId) {
     String sqlSelect = "SELECT isActive FROM BlogPosts WHERE postId = ?";
@@ -89,6 +68,7 @@ public void toggleBlogStatus(int postId) {
     }
 }
 
+    
     // View List Blog
     public List<Blog> viewListBlog() {
         String sql = "SELECT * FROM BlogPosts";
@@ -158,5 +138,4 @@ public void toggleBlogStatus(int postId) {
         }
         return blog;
     }
-    
 }

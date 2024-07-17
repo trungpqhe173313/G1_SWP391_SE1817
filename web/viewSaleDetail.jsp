@@ -234,18 +234,6 @@
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Đơn Hàng</th>
-                                                        <th>Tên Khách Hàng</th>
-                                                        <th>SĐT</th>
-                                                        <th>Dịch Vụ</th>
-                                                        <th>Ngày Đặt Lịch</th>
-                                                        <th>Tổng Thanh Toán</th>
-                                                        <th>Trạng Thái</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </tfoot>
                                                 <tbody style="max-height: 430px; overflow-y: scroll;">
                                                     <c:forEach items="${listOrder}" var="o">
 

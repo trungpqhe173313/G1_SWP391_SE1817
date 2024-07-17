@@ -10,11 +10,13 @@ import Dal.OrderDAO;
 import Dal.Order_shiftDAO;
 import Dal.ShiftsDAO;
 import Dal.ShopDAO;
+import Dal.StoreDAO;
 import Model.Account;
 import Model.Order;
 import Model.Services;
 import Model.ServicesBooking;
 import Model.Shift;
+import Model.Store;
 import Model.Time;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -50,59 +52,68 @@ public class AppointmentServlet extends HttpServlet {
         if (session.getAttribute("account") == null) {
             request.getRequestDispatcher("login").forward(request, response);
         } else {
-            ShiftsDAO d = new ShiftsDAO();
-            List<String> listDate = new ArrayList<>();
+            StoreDAO sd = new StoreDAO();
+            Store store = sd.getStore();
+            //kiem tra xem cua hang co trong trang thai hoat dong khong
+            if (store.isIsActive() == true) {
+                ShiftsDAO d = new ShiftsDAO();
+                List<String> listDate = new ArrayList<>();
 
 // Lấy ngày hôm nay
-            LocalDate today = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String todayStr = today.format(formatter);
-            listDate.add(todayStr);
+                LocalDate today = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String todayStr = today.format(formatter);
+                listDate.add(todayStr);
 
 // Lấy hai ngày tiếp theo
-            for (int i = 0; i < 2; i++) {
-                today = today.plusDays(1);
-                String nextDayStr = today.format(formatter);
-                listDate.add(nextDayStr);
-            }
-            List<Shift> listAllShift = null;
-            List<Shift> listShift;
-            if (session.getAttribute("time") == null) {
-                //Lay ra tat ca cac ca 
-                listAllShift = d.getAllShiftFromNow();
-                //tao danh sach de luu nhung ca trong
-                listShift = listShiftEmpty(listAllShift, todayStr);
-
-                session.setAttribute("time", new Time(todayStr, listShift));
-            } else if (session.getAttribute("time") != null) {
-                Time time = (Time) session.getAttribute("time");
-                //Lay ra tat ca cac ca 
-                if (time.getDate().equals(todayStr)) {
+                for (int i = 0; i < 2; i++) {
+                    today = today.plusDays(1);
+                    String nextDayStr = today.format(formatter);
+                    listDate.add(nextDayStr);
+                }
+                List<Shift> listAllShift = null;
+                List<Shift> listShift;
+                if (session.getAttribute("time") == null) {
+                    //Lay ra tat ca cac ca 
                     listAllShift = d.getAllShiftFromNow();
-                } else {
-                    listAllShift = d.getAll();
-                }
-                //tao danh sach de luu nhung ca trong
-                listShift = listShiftEmpty(listAllShift, time.getDate());
-                session.setAttribute("time", new Time(time.getDate(), listShift));
+                    //tao danh sach de luu nhung ca trong
+                    listShift = listShiftEmpty(listAllShift, todayStr);
 
-            }
-            if (session.getAttribute("services") != null) {
-                ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
-                List<Shift> listShiftNeed = new ArrayList<>();
-                int servicesSize = servicesBooking.getListServices().size();
-                if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
-                    for (int i = 0; i < servicesSize; i++) {
-                        listShiftNeed.add(listAllShift.get(i));
+                    session.setAttribute("time", new Time(todayStr, listShift));
+                } else if (session.getAttribute("time") != null) {
+                    Time time = (Time) session.getAttribute("time");
+                    //Lay ra tat ca cac ca 
+                    if (time.getDate().equals(todayStr)) {
+                        listAllShift = d.getAllShiftFromNow();
+                    } else {
+                        listAllShift = d.getAll();
                     }
-                    request.setAttribute("listShiftNeed", listShiftNeed);
-                } else {
-                    request.setAttribute("mss", "Hôm nay đã hết ca vui lòng chọn ngày khác");
-                }
-            }
+                    //tao danh sach de luu nhung ca trong
+                    listShift = listShiftEmpty(listAllShift, time.getDate());
+                    session.setAttribute("time", new Time(time.getDate(), listShift));
 
-            request.setAttribute("listDate", listDate);
-            request.getRequestDispatcher("booking.jsp").forward(request, response);
+                }
+                if (session.getAttribute("services") != null) {
+                    ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
+                    List<Shift> listShiftNeed = new ArrayList<>();
+                    int servicesSize = servicesBooking.getListServices().size();
+                    if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
+                        for (int i = 0; i < servicesSize; i++) {
+                            listShiftNeed.add(listAllShift.get(i));
+                        }
+                        request.setAttribute("listShiftNeed", listShiftNeed);
+                    } else {
+                        request.setAttribute("mss", "Hôm nay đã hết ca vui lòng chọn ngày khác");
+                    }
+                }
+
+                request.setAttribute("listDate", listDate);
+                request.getRequestDispatcher("booking.jsp").forward(request, response);
+            } else {
+                request.setAttribute("store", store);
+                request.setAttribute("checkNotActive", true );
+                request.getRequestDispatcher("booking.jsp").forward(request, response);
+            }
         }
 
     }
