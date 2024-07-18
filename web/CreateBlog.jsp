@@ -15,14 +15,13 @@
 <body>
     <div class="container mt-5">
         <h2>Tạo Blog Mới</h2>
-        <form action="createblog" method="POST">
+        <form action="createblog" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Tiêu đề:</label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="form-group">
                 <label for="content">Nội dung:</label>
-                <!-- Replace textarea with CKEditor -->
                 <textarea id="content" name="content" rows="10" required></textarea>
             </div>
             <div class="form-group">
@@ -39,6 +38,33 @@
         CKEDITOR.replace('content', {
             filebrowserUploadUrl: ''
         });
+
+        function validateForm() {
+            // Get form values
+            const title = document.getElementById('title').value.trim();
+            const content = CKEDITOR.instances.content.getData().replace(/<[^>]*>/g, '').trim();
+
+            // Check for empty fields
+            if (!title || !content) {
+                alert("Tiêu đề và Nội dung không được bỏ trống.");
+                return false;
+            }
+
+            // Check for leading spaces
+            if (title !== title.trim() || content !== content.trim()) {
+                alert("Tiêu đề và Nội dung không được có khoảng cách ở đầu.");
+                return false;
+            }
+
+            // Check for double spaces between words
+            const doubleSpacePattern = /\s{2,}/;
+            if (doubleSpacePattern.test(title) || doubleSpacePattern.test(content)) {
+                alert("Tiêu đề và Nội dung không được có 2 khoảng cách giữa 2 string.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 
 </body>

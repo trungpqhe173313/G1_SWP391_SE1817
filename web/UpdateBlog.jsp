@@ -15,8 +15,9 @@
 <body>
     <div class="container mt-5">
         <h2>Cập Nhật Blog</h2>
-        <form action="updateblog" method="POST">
+        <form action="updateblog" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             <input type="hidden" name="postId" value="${blog.postId}"/>
+            <input type="hidden" name="currentImage" value="${blog.image}"/>
             <div class="form-group">
                 <label for="title">Tiêu đề:</label>
                 <input type="text" class="form-control" id="title" name="title" value="${blog.title}" required>
@@ -40,6 +41,32 @@
         CKEDITOR.replace('content', {
             filebrowserUploadUrl: ''
         });
+                function validateForm() {
+            // Get form values
+            const title = document.getElementById('title').value.trim();
+            const content = CKEDITOR.instances.content.getData().replace(/<[^>]*>/g, '').trim();
+
+            // Check for empty fields
+            if (!title || !content) {
+                alert("Tiêu đề và Nội dung không được bỏ trống.");
+                return false;
+            }
+
+            // Check for leading spaces
+            if (title !== title.trim() || content !== content.trim()) {
+                alert("Tiêu đề và Nội dung không được có khoảng cách ở đầu.");
+                return false;
+            }
+
+            // Check for double spaces between words
+            const doubleSpacePattern = /\s{2,}/;
+            if (doubleSpacePattern.test(title) || doubleSpacePattern.test(content)) {
+                alert("Tiêu đề và Nội dung không được có 2 khoảng cách giữa 2 string.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 
 </body>
