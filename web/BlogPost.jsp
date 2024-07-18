@@ -49,7 +49,7 @@
         <c:when test="${blog ne null}">
             <div>
                 <p>Ngày Đăng <c:out value="${blog.createAt}" /></p>
-                <img src="${blog.image}" alt="Blog Image">
+                <img src="img/service/${blog.image}" alt="Blog Image" width="300px" height="300px">
                 <p>${blog.content}</p>
             </div>
         </c:when>
