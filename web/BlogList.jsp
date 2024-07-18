@@ -47,7 +47,7 @@
                     <div class="blog-entry mb-4">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="${blog.image}" class="img-fluid" alt="${blog.title}">
+                                <img src="img/service/${blog.image}" class="img-fluid" alt="${blog.title}" width="200px" height="200px">
                             </div>
                             <div class="col-md-8">
                                 <h3 class="mb-2"><a href="blogpost?postId=${blog.postId}">${blog.title}</a></h3>
