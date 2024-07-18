@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label for="image">Ảnh đại diện:</label>
-                <input type="file" class="form-control-file" id="image" name="image">
+                <input type="file" class="form-control-file" id="image" name="image" required>
             </div>
             <button type="submit" class="btn btn-primary">Lưu Blog</button>
             <a href="bloglistadmin" class="btn btn-secondary ml-2">Quay lại</a>
@@ -43,6 +43,7 @@
             // Get form values
             const title = document.getElementById('title').value.trim();
             const content = CKEDITOR.instances.content.getData().replace(/<[^>]*>/g, '').trim();
+            const image = document.getElementById('image').value;
 
             // Check for empty fields
             if (!title || !content) {
@@ -56,16 +57,22 @@
                 return false;
             }
 
-            // Check for double spaces between words
-            const doubleSpacePattern = /\s{2,}/;
-            if (doubleSpacePattern.test(title) || doubleSpacePattern.test(content)) {
-                alert("Tiêu đề và Nội dung không được có 2 khoảng cách giữa 2 string.");
+            // Check if image file is selected
+            if (!image) {
+                alert("Ảnh đại diện không được để trống.");
+                return false;
+            }
+
+            // Check for valid image file extensions
+            const validExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = image.split('.').pop().toLowerCase();
+            if (!validExtensions.includes(fileExtension)) {
+                alert("Ảnh đại diện phải là file jpg hoặc png.");
                 return false;
             }
 
             return true;
         }
     </script>
-
 </body>
 </html>

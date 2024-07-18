@@ -41,7 +41,8 @@
         CKEDITOR.replace('content', {
             filebrowserUploadUrl: ''
         });
-                function validateForm() {
+
+        function validateForm() {
             // Get form values
             const title = document.getElementById('title').value.trim();
             const content = CKEDITOR.instances.content.getData().replace(/<[^>]*>/g, '').trim();
@@ -53,21 +54,13 @@
             }
 
             // Check for leading spaces
-            if (title !== title.trim() || content !== content.trim()) {
-                alert("Tiêu đề và Nội dung không được có khoảng cách ở đầu.");
-                return false;
-            }
-
-            // Check for double spaces between words
-            const doubleSpacePattern = /\s{2,}/;
-            if (doubleSpacePattern.test(title) || doubleSpacePattern.test(content)) {
-                alert("Tiêu đề và Nội dung không được có 2 khoảng cách giữa 2 string.");
+            if (title !== title.trim()) {
+                alert("Tiêu đề không được có khoảng cách ở đầu.");
                 return false;
             }
 
             return true;
         }
     </script>
-
 </body>
 </html>
