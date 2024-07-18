@@ -128,11 +128,11 @@
                     <form id="editPolicyForm">
                         <div class="form-group">
                             <label for="minAmount">Số Tiền Tối Thiểu</label>
-                            <input type="number" class="form-control" id="minAmount" name="minAmount" required>
+                            <input type="number" class="form-control" id="minAmount" name="minAmount" min="0" required>
                         </div>
                         <div class="form-group">
                             <label for="pointsPerUnit">Điểm Mỗi Đơn Vị</label>
-                            <input type="number" class="form-control" id="pointsPerUnit" name="pointsPerUnit" required>
+                            <input type="number" class="form-control" id="pointsPerUnit" name="pointsPerUnit" min="0" required>
                         </div>
                         <input type="hidden" id="policyId" name="policyId">
                         <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
@@ -188,6 +188,14 @@
             // Xử lý khi form được submit
             $('#editPolicyForm').on('submit', function(event) {
                 event.preventDefault();
+
+                // Validate form inputs
+                var minAmount = $('#minAmount').val();
+                var pointsPerUnit = $('#pointsPerUnit').val();
+                if (minAmount < 0 || pointsPerUnit < 0) {
+                    alert("Giá trị không được âm!");
+                    return;
+                }
 
                 // Lấy dữ liệu từ form
                 var formData = $(this).serialize();

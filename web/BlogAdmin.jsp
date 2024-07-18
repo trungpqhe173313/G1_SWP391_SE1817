@@ -78,7 +78,7 @@
                                             <th style="width: 500px;">Nội Dung</th>
                                             <th>Ngày Tạo</th>
                                             <th>Ngày Sửa</th>
-                                            <th style="width: 150px;">Trạng Thái</th>
+                                            <th style="width: 180px;">Trạng Thái</th>
                                             <th>Chỉnh Sửa</th>
                                         </tr>
                                     </thead>
