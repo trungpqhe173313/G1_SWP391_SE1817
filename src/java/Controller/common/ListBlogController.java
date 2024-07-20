@@ -1,34 +1,28 @@
-package Controller.admin;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 
-import Dal.EmployeesDAO;
+package Controller.common;
 
-import Model.Account;
-
-
-
-import Model.Employee;
-
-import Model.Account;
-import Model.Employee;
-
-import Model.Employee;
-
-import Model.Employee;
-
+import Dal.BlogDAO;
+import Model.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
  * @author ducth
  */
-public class AddEmployeesController extends HttpServlet {
-
+@WebServlet(name="ListBlogController", urlPatterns={"/blog"})
+public class ListBlogController extends HttpServlet {
+   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -40,13 +34,14 @@ public class AddEmployeesController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddEmployeesController</title>");  
+            out.println("<title>Servlet ListBlogController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddEmployeesController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ListBlogController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +58,10 @@ public class AddEmployeesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("addemployees.jsp").forward(request, response);
+        BlogDAO blogDAO = new BlogDAO();
+        List<Blog> blogs = blogDAO.viewListBlogCustomer();
+        request.setAttribute("blogs", blogs);
+        request.getRequestDispatcher("BlogList.jsp").forward(request, response);
     } 
 
     /** 
@@ -76,46 +74,9 @@ public class AddEmployeesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         // Lấy thông tin tài khoản từ request
-        String phone = request.getParameter("phone");
-        String password = request.getParameter("password");
-        String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar");
-        Boolean isMale = Boolean.parseBoolean(request.getParameter("isMale"));
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
-
-        // Lấy thông tin nhân viên từ request
-        Boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
-        String address = request.getParameter("address");
-
-        // Tạo đối tượng Account và Employees
-        Account account = new Account();
-        account.setPhone(phone);
-        account.setPassword(password);
-        account.setFullName(fullName);
-        account.setEmail(email);
-        account.setAvatar(avatar);
-        account.setIsMale(isMale);
-        account.setRoleId(roleId);
-
-        Employee employee = new Employee();
-        employee.setIsActive(isActive);
-        employee.setDateOfBirth(java.sql.Date.valueOf(java.time.LocalDate.now()));
-        employee.setAddress(address);
-
-        // Thêm vào cơ sở dữ liệu
-        EmployeesDAO dao = new EmployeesDAO();
-        try {
-    dao.addAccountAndEmployee(account, employee);
-    response.sendRedirect("employeesdetail");
-} catch (Exception e) {
-    e.printStackTrace();
-    response.getWriter().write("Có lỗi xảy ra khi chèn dữ liệu.");
-}
-
+        processRequest(request, response);
     }
-        
+
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description

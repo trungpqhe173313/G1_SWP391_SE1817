@@ -32,12 +32,17 @@
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-table"></i>
-            <span>Lương Tháng</span></a>
+            <span>Công Việc</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="sendleaverequest">
             <i class="fas fa-fw fa-table"></i>
-            <span>Lịch Sử Công Việc</span></a>
+            <span>Đơn xin nghỉ phép</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="logout">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Đăng xuất</span></a>
     </li>
 
     <!-- Divider -->
