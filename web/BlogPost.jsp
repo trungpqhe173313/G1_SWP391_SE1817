@@ -25,6 +25,12 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .blog-title {
+            color: #BF925B;
+            font-size: 2em; /* Kích thước chữ to */
+        }
+    </style>
 </head>
 <body>
     <jsp:include page="nav.jsp"></jsp:include>
@@ -48,8 +54,10 @@
     <c:choose>
         <c:when test="${blog ne null}">
             <div>
+                <p class="blog-title">${blog.title}</p>
                 <p>Ngày Đăng <c:out value="${blog.createAt}" /></p>
                 <img src="${blog.image}" alt="Blog Image">
+                
                 <p>${blog.content}</p>
             </div>
         </c:when>
