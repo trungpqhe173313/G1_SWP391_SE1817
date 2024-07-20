@@ -5,15 +5,23 @@
 
 package Controller.admin;
 
+import Controller.common.addimg;
 import Dal.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, //1mb
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 20)
 /**
  *
  * @author ducth
@@ -72,7 +80,16 @@ public class CreateBlogController extends HttpServlet {
         // Lấy thông tin từ request
         String title = request.getParameter("title");
         String content = request.getParameter("content");
-        String image = request.getParameter("image");
+//        String image = request.getParameter("image");
+        addimg img = new addimg();
+        Part part = request.getPart("image");
+        String fileName = img.extractFileName(part);
+        fileName = new File(fileName).getName();
+        if (fileName != null && !fileName.isEmpty()) {
+            String uploadPath = request.getServletContext().getRealPath("/") + "img/service" + File.separator + fileName;
+            part.write(uploadPath);
+        }
+        String image = (fileName != null && !fileName.isEmpty()) ? fileName : request.getParameter("image");
         // Gọi đến DAO để thêm mới blog
         BlogDAO blogDAO = new BlogDAO();
         blogDAO.createBlog(title, content, image);
