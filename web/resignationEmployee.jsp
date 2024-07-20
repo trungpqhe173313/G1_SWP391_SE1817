@@ -1,9 +1,10 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
-<html >
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,12 +38,12 @@
                 today.setHours(0, 0, 0, 0);
 
                 if (startDate < today) {
-                    alert('Ngày bắt đầu phải vào hoặc sau ngày hôm nay!');
+                    alert('Ngày bắt đầu phải vào hoặc sau ngày hôm nay.');
                     return false;
                 }
 
                 if (endDate <= startDate) {
-                    alert('Ngày kết thúc phải sau ngày bắt đầu!');
+                    alert('Ngày kết thúc phải sau ngày bắt đầu.');
                     return false;
                 }
 
@@ -98,20 +99,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h2 class="mb-4">Đơn nghỉ phép</h2>
-                                <form action="sendleaverequest" method="post" onsubmit="return validateForm();">
+                                <form action="SubmitLeaveRequestServlet" method="post" onsubmit="return validateForm();">
                                     <div class="form-group">
-                                        <label for="startDate">Ngày bắt đầu</label>
+                                        <label for="startDate">Start Date</label>
                                         <input type="date" class="form-control" id="startDate" name="startDate" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="endDate">Ngày kết thúc</label>
+                                        <label for="endDate">End Date</label>
                                         <input type="date" class="form-control" id="endDate" name="endDate" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reason">Lý do</label>
+                                        <label for="reason">Reason</label>
                                         <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Gửi</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -135,22 +136,22 @@
 
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout">Logout</a>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="#">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
