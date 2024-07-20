@@ -34,6 +34,16 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Công Việc</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="sendleaverequest">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Đơn xin nghỉ phép</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="logout">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Đăng xuất</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
