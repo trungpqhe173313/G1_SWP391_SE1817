@@ -1,9 +1,3 @@
-<%-- 
-    Document   : resignationEmployee
-    Created on : 19 Jul 2024, 21:36:54
-    Author     : phamt
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -25,17 +19,13 @@
         <!-- Custom styles for this template -->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-        <!-- Custom styles for this page -->
-        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-        <!-- Custom styles for input fields -->
-
         <!-- JavaScript for validation -->
         <script>
             function validateForm() {
                 const startDate = new Date(document.getElementById('startDate').value);
                 const endDate = new Date(document.getElementById('endDate').value);
                 const today = new Date();
+                const reason = document.getElementById('reason').value;
 
                 // Set the time part of the date objects to zero for comparison purposes
                 startDate.setHours(0, 0, 0, 0);
@@ -51,22 +41,24 @@
                     alert('Ngày kết thúc phải sau ngày bắt đầu.');
                     return false;
                 }
+
                 if (reason.length > 40) {
                     alert('Lý do không được vượt quá 40 chữ.');
-                  return false;
-               }
+                    return false;
+                }
+
                 return true;
             }
+
             function showMessage(message) {
-            if (message) {
-                alert(message);
+                if (message) {
+                    alert(message);
+                }
             }
-        }
         </script>
     </head>
-    <body id="page-top" onload="showMessage('<%= (String)session.getAttribute("message") %>'); session.removeAttribute('message');">
+    <body id="page-top" onload="showMessage('<%= (String) session.getAttribute("message") %>'); session.removeAttribute('message');">
         <div id="wrapper">
-            <!-- Include sidebar -->
             <jsp:include page="sidebarEmployees.jsp"></jsp:include>
 
             <div id="content-wrapper" class="d-flex flex-column">
@@ -109,15 +101,15 @@
                                 <h2 class="mb-4">Đơn nghỉ phép</h2>
                                 <form action="sendleaverequest" method="post" onsubmit="return validateForm();">
                                     <div class="form-group">
-                                        <label for="startDate">Start Date</label>
+                                        <label for="startDate">Ngày bắt đầu</label>
                                         <input type="date" class="form-control" id="startDate" name="startDate" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="endDate">End Date</label>
+                                        <label for="endDate">Ngày kết thúc</label>
                                         <input type="date" class="form-control" id="endDate" name="endDate" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reason">Reason</label>
+                                        <label for="reason">Lý do</label>
                                         <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -172,5 +164,3 @@
         <script src="js/sb-admin-2.min.js"></script>
     </body>
 </html>
-
-

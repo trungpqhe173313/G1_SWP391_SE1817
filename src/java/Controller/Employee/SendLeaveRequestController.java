@@ -98,7 +98,14 @@ public class SendLeaveRequestController extends HttpServlet {
 //            response.getWriter().println(startDate);
 //            response.getWriter().println(employee.getEmployeeId());
         new LeaveRequestsDAO().addLeaveRequest(employee.getEmployeeId(), startDate, endDate, reason, 1);
-        session.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công!");
+        // Kiểm tra xem yêu cầu nghỉ phép có được thêm vào cơ sở dữ liệu hay không
+        boolean success = new LeaveRequestsDAO().isLeaveRequestAdded(employee.getEmployeeId(), startDate, endDate, reason);
+        if (success) {
+            session.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công!");
+        } else {
+            session.setAttribute("message", "Đã có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+
         response.sendRedirect("resignationEmployee.jsp");
     }
 
