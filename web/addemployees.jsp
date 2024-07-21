@@ -1,11 +1,6 @@
-<%-- 
-    Document   : addemployees
-    Created on : May 30, 2024, 3:42:43 AM
-    Author     : ducth
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +46,6 @@
         input[type="text"],
         input[type="password"],
         input[type="email"],
-        input[type="date"],
         input[type="file"] {
             width: 100%;
             padding: 10px;
@@ -82,14 +76,14 @@
 <body>
     <div class="container">
         <h1>Thêm Tài Khoản và Nhân Viên Mới</h1>
-        <form action="addemployees" method="post" onsubmit="return validateForm()">
+        <form action="addemployee" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="phone">Số Điện Thoại:</label>
                 <input type="text" id="phone" name="phone" maxlength="10" required>
             </div>
             <div class="form-group">
-                <label for="password">Mật Khẩu:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="pass">Mật Khẩu:</label>
+                <input type="password" id="pass" name="pass" required>
             </div>
             <div class="form-group">
                 <label for="fullName">Họ và Tên:</label>
@@ -101,7 +95,7 @@
             </div>
             <div class="form-group full-width">
                 <label for="avatar">Avatar:</label>
-                <input type="file" id="avatar" name="avatar">
+                <input type="file" class="form-control-file" id="avatar" name="avatar">
             </div>
             <div class="form-group full-width gender-group">
                 <label>Giới Tính:</label>
@@ -110,16 +104,6 @@
                 <input type="radio" id="female" name="gender" value="female">
                 <label for="female">Nữ</label>
             </div>
-            <div class="form-group">
-                <label for="dateOfBirth">Ngày Sinh:</label>
-                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-            </div>
-            <div class="form-group full-width">
-                <label for="address">Địa Chỉ:</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-            <label for="isActive">Active:</label>
-            <input type="checkbox" id="isActive" name="isActive" value="true" checked>
             <div class="form-group full-width">
                 <input type="submit" value="Gửi">
             </div>
@@ -127,6 +111,7 @@
     </div>
 
     <script>
+        
         function validateForm() {
             var phoneNumber = document.getElementById("phone").value;
             if (!/^\d{10}$/.test(phoneNumber)) {

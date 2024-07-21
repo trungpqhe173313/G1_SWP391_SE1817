@@ -310,4 +310,42 @@ public class EmployeesDAO extends DBContext {
         }
         return employee;
     }
+public boolean addEmployee(String phone, String fullName, String pass, String email, boolean gender, int statusEmployee, String avatar) {
+    String sqlCustomer = "INSERT INTO customer (phone, fullName) VALUES (?, ?);";
+    String sqlAccount = "INSERT INTO account (phone, pass, roleId, email, gender, isActive, points, avatar, updateTime) VALUES (?, ?, 2, ?, ?, 1, NULL, ?, GETDATE());";
+    String sqlEmployee = "INSERT INTO employee (fullName, phone, statusEmployee, createdAt, updateTime) VALUES (?, ?, 1, GETDATE(), GETDATE());";
+
+    try (PreparedStatement pstmtCustomer = connection.prepareStatement(sqlCustomer);
+         PreparedStatement pstmtAccount = connection.prepareStatement(sqlAccount);
+         PreparedStatement pstmtEmployee = connection.prepareStatement(sqlEmployee)) {
+
+        // Set parameters for the customer insert
+        pstmtCustomer.setString(1, phone);
+        pstmtCustomer.setString(2, fullName);
+        int affectedRowsCustomer = pstmtCustomer.executeUpdate();
+
+        // Set parameters for the account insert
+        pstmtAccount.setString(1, phone);
+        pstmtAccount.setString(2, pass);
+        pstmtAccount.setString(3, email);
+        pstmtAccount.setBoolean(4, gender);
+        pstmtAccount.setString(5, avatar);
+        int affectedRowsAccount = pstmtAccount.executeUpdate();
+
+        // Set parameters for the employee insert
+        pstmtEmployee.setString(1, fullName);
+        pstmtEmployee.setString(2, phone);
+        int affectedRowsEmployee = pstmtEmployee.executeUpdate();
+
+        // Check if all inserts were successful
+        return affectedRowsCustomer > 0 && affectedRowsAccount > 0 && affectedRowsEmployee > 0;
+
+    } catch (SQLException e) {
+        Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, e);
+        return false;
+    }
+}
+
+
+
 }
