@@ -110,13 +110,6 @@
                 <input type="radio" id="female" name="gender" value="female">
                 <label for="female">Nữ</label>
             </div>
-            <div class="form-group full-width">
-                <label for="roleId">Vai Trò:</label>
-                <select id="roleId" name="roleId" required>
-                    <option value="3">Thu ngân</option>
-                    <option value="4">Thợ cắt tóc</option>
-                </select>
-            </div>
             <div class="form-group">
                 <label for="dateOfBirth">Ngày Sinh:</label>
                 <input type="date" id="dateOfBirth" name="dateOfBirth" required>
