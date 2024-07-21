@@ -278,8 +278,8 @@
                                                         </c:forEach>
                                                     </td>
                                                     <td>
-                                                        <a href="viewOrderDetatailUpdate?Oid=${o.id}" class='btn btn-info'>Info</a>
-                                                        <button class='btn btn-danger'>Cancel</button>
+                                                        <a href="viewOrderDetailUpdate?Oid=${o.id}" class='btn btn-info'>Chi tiết</a>
+                                                        <a href="CancelOrder?Oid=${o.id}" class='btn btn-danger'>Hủy</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

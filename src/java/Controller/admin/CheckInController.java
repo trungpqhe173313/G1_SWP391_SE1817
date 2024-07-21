@@ -34,17 +34,75 @@ public class CheckInController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String phone = request.getParameter("phoneNumber");
-        Customer customer = new CustomerDAO().getCustomerByP(phone);
-        Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
-        if (order == null) {
-            request.setAttribute("errorMessage", "Order not found");
-            request.getRequestDispatcher("errorPage.jsp").forward(request, response);
-        } else {
-            int oId = order.getId();
-            response.sendRedirect("viewOrderDetatailUpdate?Oid=" + oId);
-        }
-    }
+        CustomerDAO customerDAO = new CustomerDAO();
+        Customer customer = customerDAO.getCustomerByP(phone);
+        PrintWriter out = response.getWriter();
 
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script>");
+        out.println("</head>");
+        out.println("<body>");
+
+        if (customer == null) {
+            // Xử lý khi khách hàng không tồn tại
+            out.println("<script>");
+            out.println("Swal.fire({");
+            out.println("icon: 'info',");
+            out.println("title: 'Khách hàng mới',");
+            out.println("text: 'Khách hàng này chưa có trong hệ thống. Bạn có muốn đặt lịch mới không?',");
+            out.println("showCancelButton: true,");
+            out.println("confirmButtonText: 'Đặt lịch',");
+            out.println("cancelButtonText: 'Hủy bỏ'");
+            out.println("}).then((result) => {");
+            out.println("if (result.isConfirmed) {");
+            out.println("window.location.href = 'createAppointment?phone=" + phone + "';");
+            out.println("} else {");
+            out.println("window.history.back();");
+            out.println("}");
+            out.println("});");
+            out.println("</script>");
+        } else {
+            Order order = new OrderDAO().getOrderByAId(customer.getCustomerId());
+            if (order == null) {
+                out.println("<script>");
+                out.println("Swal.fire({");
+                out.println("icon: 'error',");
+                out.println("title: 'Chưa có lịch',");
+                out.println("text: 'Khách hàng này chưa có lịch hẹn. Bạn có muốn đặt lịch mới không?',");
+                out.println("showCancelButton: true,");
+                out.println("confirmButtonText: 'Đặt lịch',");
+                out.println("cancelButtonText: 'Hủy bỏ'");
+                out.println("}).then((result) => {");
+                out.println("if (result.isConfirmed) {");
+                out.println("window.location.href = 'createAppointment?phone=" + phone + "';");
+                out.println("} else {");
+                out.println("window.history.back();");
+                out.println("}");
+                out.println("});");
+                out.println("</script>");
+            } else {
+                int oId = order.getId();
+                out.println("<script>");
+                out.println("Swal.fire({");
+                out.println("icon: 'success',");
+                out.println("title: 'Thành công',");
+                out.println("text: 'Đang chuyển hướng đến chi tiết đơn hàng.'");
+                out.println("}).then((result) => {");
+                out.println("if (result.isConfirmed) {");
+                out.println("window.location.href = 'viewOrderDetailUpdate?Oid=" + oId + "';");
+                out.println("}");
+                out.println("});");
+                out.println("</script>");
+            }
+        }
+
+        out.println("</body>");
+        out.println("</html>");
+        out.close();
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

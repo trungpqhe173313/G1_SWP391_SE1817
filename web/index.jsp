@@ -28,6 +28,7 @@
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <body id="page-top">
@@ -63,7 +64,28 @@
                                     </div>
                                 </div>
                             </form>
+                            <script>
+                                function showError(message) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Lỗi',
+                                        text: message
+                                    });
+                                }
 
+                                function showSuccess(message, redirectUrl) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Thành công',
+                                        text: message,
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = redirectUrl;
+                                        }
+                                    });
+                                }
+                            </script>
 
 
 
@@ -139,10 +161,10 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-<!--                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-
-                            </div>-->
+                            <!--                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            
+                                                        </div>-->
 
                             <!-- Content Row -->
                             <div class="row">
@@ -191,54 +213,54 @@
                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                         Thợ rảnh</div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">${numberBarberFree}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Content Row -->
+                        <!-- Content Row -->
 
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming" role="tab"
-                                               aria-controls="upcoming" aria-selected="true">Lịch hẹn sắp tới</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all"
-                                               aria-selected="false">Tất cả lịch hẹn</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab"
-                                               aria-controls="cancelled" aria-selected="false">Lịch hẹn đã hủy</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
-                                            <div class="table-responsive mt-3">
-                                                <table class="table table-bordered" id="upcomingTable" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Mã lịch hẹn</th>
-                                                            <th>Thợ cắt</th>
-                                                            <th>Tên khách hàng</th>
-                                                            <th>Số điện thoại</th>
-                                                            <th>Ngày cắt</th>
-                                                            <th>Thời gian bắt đầu</th>
-                                                            <th>Trạng thái</th>
-                                                            <th>Thao tác</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming" role="tab"
+                                           aria-controls="upcoming" aria-selected="true">Lịch hẹn sắp tới</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all"
+                                           aria-selected="false">Tất cả lịch hẹn</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab"
+                                           aria-controls="cancelled" aria-selected="false">Lịch hẹn đã hủy</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered" id="upcomingTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mã lịch hẹn</th>
+                                                        <th>Thợ cắt</th>
+                                                        <th>Tên khách hàng</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th>Ngày cắt</th>
+                                                        <th>Thời gian bắt đầu</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     <c:forEach items="${upcomingOrder}" var="uOder">
                                                         <tr>
                                                             <td>${uOder.codeOrder}</td>
@@ -455,32 +477,32 @@
         <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
-                                      $(document).ready(function () {
-                                          $('#upcomingTable').DataTable();
-                                          $('#allTable').DataTable();
-                                          $('#cancelledTable').DataTable();
+                                $(document).ready(function () {
+                                    $('#upcomingTable').DataTable();
+                                    $('#allTable').DataTable();
+                                    $('#cancelledTable').DataTable();
 
-                                          $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                                              var target = $(e.target).attr("href"); // get activated tab
-                                              if (target === "#all") {
-                                                  $('#allTable').DataTable().ajax.reload(); // reload data for allTable
-                                              } else if (target === "#upcoming") {
-                                                  $('#upcomingTable').DataTable().ajax.reload(); // reload data for upcomingTable
-                                              } else if (target === "#cancelled") {
-                                                  $('#cancelledTable').DataTable().ajax.reload(); // reload data for cancelledTable
-                                              }
-                                          });
-                                      });
-                                      function validatePhoneNumber() {
-                                          const phoneInput = document.getElementById('phoneNumber').value;
-                                          const phonePattern = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+                                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                                        var target = $(e.target).attr("href"); // get activated tab
+                                        if (target === "#all") {
+                                            $('#allTable').DataTable().ajax.reload(); // reload data for allTable
+                                        } else if (target === "#upcoming") {
+                                            $('#upcomingTable').DataTable().ajax.reload(); // reload data for upcomingTable
+                                        } else if (target === "#cancelled") {
+                                            $('#cancelledTable').DataTable().ajax.reload(); // reload data for cancelledTable
+                                        }
+                                    });
+                                });
+                                function validatePhoneNumber() {
+                                    const phoneInput = document.getElementById('phoneNumber').value;
+                                    const phonePattern = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
 
-                                          if (!phonePattern.test(phoneInput)) {
-                                              alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại di động Việt Nam hợp lệ.');
-                                              return false; // Ngăn không cho form submit
-                                          }
-                                          return true; // Cho phép form submit
-                                      }
+                                    if (!phonePattern.test(phoneInput)) {
+                                        alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại di động Việt Nam hợp lệ.');
+                                        return false; // Ngăn không cho form submit
+                                    }
+                                    return true; // Cho phép form submit
+                                }
         </script>
     </body>
 

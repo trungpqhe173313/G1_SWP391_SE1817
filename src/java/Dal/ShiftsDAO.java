@@ -74,9 +74,30 @@ public class ShiftsDAO extends DBContext {
         return list;
     }
 
+//    public List<Shift> getAllShiftsForToday() {
+//        List<Shift> list = new ArrayList<>();
+//        String sql = "SELECT [id], [startTime]\n"
+//                + "FROM [dbo].[shift]\n"
+//                + "ORDER BY CASE \n"
+//                + "  WHEN CAST([startTime] AS TIME) >= CAST(GETDATE() AS TIME) THEN 0 \n"
+//                + "  ELSE 1 \n"
+//                + "END, [startTime];";
+//        try (PreparedStatement stm = connection.prepareStatement(sql);) {
+//            ResultSet rs = stm.executeQuery();
+//            while (rs.next()) {
+//                Shift s = new Shift(rs.getInt(1), rs.getString(2));
+//                list.add(s);
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ShiftsDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
+
     public List<Shift> getAllNextShift(int id, int number) {
         List<Shift> list = new ArrayList<>();
-         String sql = "SELECT TOP " + number + " * FROM shift WHERE id >= ? ORDER BY id;";
+        String sql = "SELECT TOP " + number + " * FROM shift WHERE id >= ? ORDER BY id;";
         try (PreparedStatement stm = connection.prepareStatement(sql);) {
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();

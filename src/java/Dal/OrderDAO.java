@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
-    private static final String PREFIX = "order";
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
     private static int currentNumber = 1;
     private static String lastDate = DATE_FORMAT.format(new Date());
@@ -38,7 +38,7 @@ public class OrderDAO extends DBContext {
             lastDate = currentDate;
         }
         
-        String orderCode = PREFIX + currentDate + String.format("%03d", currentNumber);
+        String orderCode = currentDate + String.format("%03d", currentNumber);
         currentNumber++;
         return orderCode;
     }
