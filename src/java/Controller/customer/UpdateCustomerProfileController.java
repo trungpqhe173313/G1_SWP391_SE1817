@@ -59,7 +59,20 @@ public class UpdateCustomerProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            CustomerDAO customerDAO = new CustomerDAO();
+            Customer customer = customerDAO.getCustomerByP(account.getPhone());
+            if (customer != null) {
+                request.setAttribute("customer", customer);
+                request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
+            } else {
+                response.getWriter().println("Customer not found.");
+            }
+        } else {
+            response.getWriter().println("No account found in session.");
+        }
     }
 
     /**
@@ -83,7 +96,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
         //int customerId = Integer.parseInt(idStr);
 
         // Kiểm tra xem các tham số đã được cung cấp chưa
-        if (phone == null || fullName == null || email == null || avatar == null) {
+        if (fullName == null || email == null ) {
             response.getWriter().println("Missing required parameters.");
             return;
         }
@@ -96,13 +109,13 @@ public class UpdateCustomerProfileController extends HttpServlet {
             if (customer != null) {
                 // Cập nhật thông tin khách hàng
                 customer.setFullName(fullName);
-                customer.setPhone(phone);
+                //customer.setPhone(phone);
 
                 // Cập nhật thông tin tài khoản liên kết
                 account.setEmail(email);
                 account.setGender(gender);
                 account.setAvatar(avatar);
-                customer.setAccount(account);
+                
                 // Cập nhật thông tin khách hàng trong cơ sở dữ liệu
                 boolean updateSuccessful = customerDAO.updateCustomer(customer);
                 if (updateSuccessful) {

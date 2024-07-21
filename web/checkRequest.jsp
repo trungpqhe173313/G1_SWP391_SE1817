@@ -127,7 +127,7 @@
                                                         </c:forEach>
                                                         <td>
                                                             <a href="yesRequest?rId=${request.requestId}" class='btn btn-info'>Đồng ý</a>
-                                                            <a href="cancelRequest?rId=${request.requestId}" class='btn btn-danger'>Hủy</a>
+                                                            <a href="cancelleaverequest?rId=${request.requestId}" class='btn btn-danger'>Hủy</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

@@ -44,19 +44,19 @@
                     <div class="card mb-4">
                         <div class="card-header">Thông tin tài khoản</div>
                         <div class="card-body">
-                            <form>
+                            <form action="updatecusprofile" method="post">
 
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (full name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="fullname">Họ và tên</label>
-                                        <input class="form-control" id="fullname" value="${c.fullName}">
+                                        <input class="form-control" id="fullname" value="${c.fullName}"readonly>
                                     </div>
                                     <!-- Form Group (phone number)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="phone">Số điện thoại</label>
-                                        <input class="form-control" id="phone" value="${c.phone}">
+                                        <input class="form-control" id="phone" value="${c.phone}"readonly>
                                     </div>
                                 </div>
                                 <!-- Form Row        -->
@@ -64,12 +64,12 @@
                                     <!-- Form Group (email address)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="email">Email</label>
-                                        <input class="form-control" id="email" value="${c.account.email}">
+                                        <input class="form-control" id="email" value="${c.account.email}"readonly>
                                     </div>
                                     <!-- Form Group (location)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="gender">Giới tính</label>
-                                        <input class="form-control" id="gender" value="${c.account.gender ? 'Male' : 'Female'}">
+                                        <input class="form-control" id="gender" value="${c.account.gender ? 'Male' : 'Female'}"readonly>
                                     </div>
                                 </div>
 

@@ -1,3 +1,8 @@
+<%-- 
+    Document   : resignationEmployee
+    Created on : 19 Jul 2024, 21:36:54
+    Author     : phamt
+--%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -46,7 +51,10 @@
                     alert('Ngày kết thúc phải sau ngày bắt đầu.');
                     return false;
                 }
-
+                if (reason.length > 40) {
+                    alert('Lý do không được vượt quá 40 chữ.');
+                  return false;
+               }
                 return true;
             }
             function showMessage(message) {
@@ -99,7 +107,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h2 class="mb-4">Đơn nghỉ phép</h2>
-                                <form action="SubmitLeaveRequestServlet" method="post" onsubmit="return validateForm();">
+                                <form action="sendleaverequest" method="post" onsubmit="return validateForm();">
                                     <div class="form-group">
                                         <label for="startDate">Start Date</label>
                                         <input type="date" class="form-control" id="startDate" name="startDate" required>

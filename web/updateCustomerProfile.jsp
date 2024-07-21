@@ -47,12 +47,12 @@
                                     <!-- Form Group (full name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="fullname">Họ và tên</label>
-                                        <input class="form-control" type="text" id="fullname" required value"${param.fullName}">
+                                        <input class="form-control" type="text" id="fullname" required value""${customer.fullName}"">
                                     </div>
                                     <!-- Form Group (phone number)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="phone">Số điện thoại</label>
-                                        <input class="form-control"type="text" name="phone" required value="${param.phone}" pattern="0[0-9]{9}" title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
+                                        <input class="form-control"type="text" name="phone" required value="${customer.phone}" readonly class="input">
                                     </div>
                                 </div>
                                 <!-- Form Row-->
@@ -60,14 +60,14 @@
                                     <!-- Form Group (email address)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="email">Email</label>
-                                        <input class="form-control" type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Địa chỉ email không hợp lệ" class="input">
+                                        <input class="form-control" type="text" name="email" required value="${customer.account.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Địa chỉ email không hợp lệ" class="input">
                                     </div>
                                     <!-- Form Group (location)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="gender">Giới tính</label>
                                         <div>
-                                            <label class="radio-label"><input type="radio" name="gender" value="Male" ${customer.gender ? "checked=\"checked\"" : ""}> Nam </label>
-                                            <label class="radio-label"><input type="radio" name="gender" value="Female" ${!customer.gender ? "checked=\"checked\"" : ""}> Nữ </label>
+                                            <label class="radio-label"><input type="radio" name="gender" value="Male" ${customer.account.gender ? "checked" : ""}> Nam </label>
+                                            <label class="radio-label"><input type="radio" name="gender" value="Female" ${!customer.account.gender ? "checked" : ""}> Nữ </label>
                                         </div>
                                     </div>
                                 </div>

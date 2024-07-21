@@ -91,15 +91,14 @@ public class SendLeaveRequestController extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String reason = request.getParameter("reason");
-
+       
         Employee employee = employeeDAO.getAllEmployees(phone);
                    // response.getWriter().println(reason);
 //            response.getWriter().println(endDate);
 //            response.getWriter().println(startDate);
 //            response.getWriter().println(employee.getEmployeeId());
         new LeaveRequestsDAO().addLeaveRequest(employee.getEmployeeId(), startDate, endDate, reason, 1);
-        
-        session.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công.");
+        session.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công!");
         response.sendRedirect("resignationEmployee.jsp");
     }
 
