@@ -1,14 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>SB Admin 2 - Dashboard</title>
+        <title>Tạo lịch hẹn mới</title>
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -19,6 +19,7 @@
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <style>
             .container-fluid {
                 width: 80%;
@@ -108,33 +109,20 @@
     </head>
 
     <body id="page-top">
-
-        <!-- Page Wrapper -->
         <div id="wrapper">
             <jsp:include page="sidebar.jsp"></jsp:include>
-                <!-- Content Wrapper -->
                 <div id="content-wrapper" class="d-flex flex-column">
-                    <!-- Main Content -->
                     <div id="content">
-                        <!-- Topbar -->
                         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                            <!-- Sidebar Toggle (Topbar) -->
                             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                                 <i class="fa fa-bars"></i>
                             </button>
-                            <!-- Topbar Search -->
-
-
-                            <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
-
-                                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                                 <li class="nav-item dropdown no-arrow d-sm-none">
                                     <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-search fa-fw"></i>
                                     </a>
-                                    <!-- Dropdown - Messages -->
                                     <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                          aria-labelledby="searchDropdown" style="background-color: #bf925b; border-color: #bf925b">
                                         <form class="form-inline mr-auto w-100 navbar-search">
@@ -152,20 +140,13 @@
                                     </div>
                                 </li>
 
-                                <!-- Nav Item - Alerts -->
-
-
                                 <div class="topbar-divider d-none d-sm-block"></div>
-                                <!<!--info acc -->
-                                <!-- Nav Item - User Information -->
                                 <li class="nav-item dropdown no-arrow">
                                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                        <img class="img-profile rounded-circle"
-                                             src="img/undraw_profile.svg">
+                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                                     </a>
-                                    <!-- Dropdown - User Information -->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                          aria-labelledby="userDropdown">
                                         <a class="dropdown-item" href="#">
@@ -187,87 +168,62 @@
                                         </a>
                                     </div>
                                 </li>
-
                             </ul>
-
                         </nav>
-                        <!-- End of Topbar -->
 
-                        <!-- Begin Page Content -->
                         <div class="container-fluid">
-                            <!-- Content Row -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tạo lịch hẹn mới</h6>
+                                </div>
+                                <form id="createAppointmentForm" action="createAppointment" method="post" onsubmit="return submitForm(event)">
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label>
+                                        <input type="text" id="phone" name="phone" value="${phone}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Tên khách hàng</label>
+                                    <input type="text" id="name" name="name"  required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="services">Dịch Vụ</label>
+                                    <select id="services" name="services" multiple="multiple" class="form-control select2" required>
+                                        <c:forEach items="${ListServices}" var="s">
+                                            <option value="${s.getServicesId()}">${s.getName()}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">Ngày</label>
+                                    <input type="date" value="${date}" id="date" name="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time">Giờ</label>
+                                    <select id="time" name="time" required class="form-control">
 
-                            <div class="container-fluid">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
-                                    </div>
-                                    <form action="viewOrderDetailUpdate" method="post">
-                                        <div class="form-group">
-                                            <label for="phone">Số điện thoại</label>
-                                            <input type="text" id="phone" name="phone" value="${infoCustumer.phone}" readonly>
-                                    </div>
-                                    <input type="hidden" name="Oid" value="${detailOrder.id}">
-                                    <div class="form-group">
-                                        <label for="services">Dịch Vụ</label>
-                                        <select id="services" name="services" multiple="multiple" class="form-control select2" required>
-                                            <c:forEach items="${ListServices}" var="s">
-                                                <c:set var="isSelected" value="false" />
-                                                <c:forEach items="${services}" var="selectedService">
-                                                    <c:if test="${s.getServicesId() eq selectedService.getServicesId()}">
-                                                        <c:set var="isSelected" value="true" />
-                                                    </c:if>
-                                                </c:forEach>
-                                                <option value="${s.getServicesId()}" ${isSelected eq "true" ? 'selected="selected"' : ''}>
-                                                    ${s.getName()}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="status">Trạng thái</label>
-                                        <select id="status" name="status" class="form-control">
-                                            <c:forEach items="${status}" var="s">
-                                                <option ${(s.id == detailOrder.statusId)?"selected = \"selected\"":""}
-                                                    value="${s.id}" >${s.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employee">Thợ</label>
-                                        <c:choose>
-                                            <c:when test="${0 == detailOrder.employeeId}">
-                                                <c:choose>
-                                                    <c:when test="${BarberFree != null}">
-                                                        <input type="hidden" name="employee" value="${BarberFree.employeeId}" />
-                                                        <input type="text"  value="${BarberFree.fullName}" readonly />
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <input type="hidden" name="employee" value="" />
-                                                        <input type="text"  value="Không có thợ" readonly />                                                       
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:forEach items="${ListEmployee}" var="e">
-                                                    <c:if test="${e.employeeId == detailOrder.employeeId}">
-                                                        <input type="hidden" name="employee" value="${e.employeeId}" />
-                                                        <input type="text"  name="employeeId" value="${e.fullName}" readonly />
-                                                    </c:if>                                                
-                                                </c:forEach>
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                    </div>
-                                    <button class="btn" type="submit">Xác nhận</button>
-                                </form>
-                            </div>
+                                        <c:forEach items="${Lshift}" var="shift">
+                                            <option value="${shift.getId()}">${shift.getStartTime()}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employee">Thợ</label>
+                                    <c:choose>
+                                        <c:when test="${BarberFree != null}">
+                                            <input type="hidden" name="employee" value="${BarberFree.employeeId}" />
+                                            <input type="text"  value="${BarberFree.fullName}" readonly />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="hidden" name="employee" value="" />
+                                            <input type="text"  value="Không có thợ" readonly />                                                       
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <button class="btn" type="submit">Tạo mới</button>
+                            </form>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
                 </div>
-                <!-- End of Main Content -->
-                <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
@@ -275,20 +231,9 @@
                         </div>
                     </div>
                 </footer>
-                <!-- End of Footer -->
-
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -308,29 +253,57 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
-        <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <!-- Page level custom scripts -->
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
-            $(document).ready(function () {
-                // Khởi tạo Select2 với allowClear và placeholder
-                $('#services').select2({
-                    placeholder: "Chọn dịch vụ",
-                    allowClear: true
-                });
-            });
+                                    $(document).ready(function () {
+                                        $('#services').select2({
+                                            placeholder: "Chọn dịch vụ",
+                                            allowClear: true
+                                        });
+                                    });
+
+                                    function submitForm(event) {
+                                        event.preventDefault();
+                                        const form = document.getElementById('createAppointmentForm');
+                                        const formData = new FormData(form);
+                                        fetch(form.action, {
+                                            method: 'POST',
+                                            body: formData
+                                        })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Thành công',
+                                                            text: 'Lịch hẹn đã được tạo mới thành công.'
+                                                        }).then(() => {
+                                                            window.location.href = 'appointmentList.jsp'; // Đường dẫn đến trang danh sách lịch hẹn
+                                                        });
+                                                    } else {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Lỗi',
+                                                            text: data.message
+                                                        });
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Lỗi',
+                                                        text: 'Có lỗi xảy ra. Vui lòng thử lại sau.'
+                                                    });
+                                                });
+                                        return false;
+                                    }
+
         </script>
     </body>
 </html>
