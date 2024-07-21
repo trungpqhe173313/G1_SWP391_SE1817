@@ -25,10 +25,6 @@
         <servlet-class>Controller.customer.ViewHistoryBooking</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddEmployeesController</servlet-name>
-        <servlet-class>Controller.admin.AddEmployeesController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EmployeesDetailController</servlet-name>
         <servlet-class>Controller.admin.EmployeesDetailController</servlet-class>
     </servlet>
@@ -295,10 +291,6 @@
     <servlet-mapping>
         <servlet-name>EmployeesDetailController</servlet-name>
         <url-pattern>/employeesdetail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddEmployeesController</servlet-name>
-        <url-pattern>/addemployees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateEmployeesStatusController</servlet-name>
