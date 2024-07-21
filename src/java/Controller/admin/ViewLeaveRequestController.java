@@ -40,6 +40,7 @@ public class ViewLeaveRequestController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         List<LeaveRequests> listR = new LeaveRequestsDAO().getAll();
+        //lọc danh sách
         List<LeaveRequests> approvedRequests = listR.stream()
                 .filter(x -> x.getStatusId()== 2)
                 .collect(Collectors.toList());
@@ -49,6 +50,7 @@ public class ViewLeaveRequestController extends HttpServlet {
         List<LeaveRequests> Requests = listR.stream()
                 .filter(x -> x.getStatusId()== 1)
                 .collect(Collectors.toList());
+        //
         List<Employee> lE = new EmployeesDAO().getAllEmployee();
         List<LeaveRequestStatus> statusRequest = new LeaveRequestStatusDAO().getAll();
         
