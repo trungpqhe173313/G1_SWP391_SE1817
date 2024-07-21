@@ -248,6 +248,22 @@
         <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
         <servlet-class>Controller.admin.ExportEmployeeRevenueToExcelServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendLeaveRequestController</servlet-name>
+        <servlet-class>Controller.Employee.SendLeaveRequestController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewLeaveRequest</servlet-name>
+        <servlet-class>Controller.admin.ViewLeaveRequestController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelLeaveRequestController</servlet-name>
+        <servlet-class>Controller.admin.CancelLeaveRequestController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfimLeaveRequestsController</servlet-name>
+        <servlet-class>Controller.admin.ConfimLeaveRequestsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -495,5 +511,21 @@
     <servlet-mapping>
         <servlet-name>ExportEmployeeRevenueToExcelServlet</servlet-name>
         <url-pattern>/exportemployeerevenuetoexcel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendLeaveRequestController</servlet-name>
+        <url-pattern>/sendleaverequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLeaveRequest</servlet-name>
+        <url-pattern>/viewleaverequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelLeaveRequestController</servlet-name>
+        <url-pattern>/cancelleaverequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfimLeaveRequestsController</servlet-name>
+        <url-pattern>/yesRequest</url-pattern>
     </servlet-mapping>
 </web-app>

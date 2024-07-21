@@ -127,7 +127,7 @@ public class EmployeesDAO extends DBContext {
         }
     }
 
-    public Employee getAllEmployees(String phone) throws SQLException {
+    public Employee getAllEmployees(String phone)  {
         Employee employee = null;
         try {
             String sql = "SELECT * FROM employee WHERE phone = ?";
@@ -136,6 +136,7 @@ public class EmployeesDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 employee = new Employee();
+                employee.setEmployeeId(rs.getInt(1));
                 employee.setFullName(rs.getString("fullName"));
                 employee.setPhone(rs.getString("phone"));
             }
