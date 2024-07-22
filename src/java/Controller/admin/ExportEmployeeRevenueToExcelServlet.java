@@ -1,23 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller.admin;
 
 import Dal.ShopDAO;
 import Model.Employee;
-import Model.Order;
-import Model.OrderRevenue;
 import Model.ViewSale;
 import java.io.IOException;
-import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,27 +11,18 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
-/**
- *
- * @author xdrag
- */
 public class ExportEmployeeRevenueToExcelServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String month_str = request.getParameter("month");
-        if (NumberUtils.isNumber(month_str) == false) {
+        if (!NumberUtils.isNumber(month_str)) {
             response.sendRedirect("viewrevenue");
             return;
         }
@@ -63,12 +40,20 @@ public class ExportEmployeeRevenueToExcelServlet extends HttpServlet {
                 vs.setSalary(vs.getRevenue() * 0.3);
                 listViewSale.add(vs);
             }
-            XSSFWorkbook wordkbook = new XSSFWorkbook();
-            XSSFSheet sheet = wordkbook.createSheet("doanh thu cua hang");
+            //Khởi tạo một đối tượng XSSFWorkbook mới, đại diện cho một workbook Excel trống.
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            //Tạo một sheet mới trong workbook với tên "Doanh Thu Nhân Viên".
+            XSSFSheet sheet = workbook.createSheet("Doanh Thu Nhân Viên");
+            //Khởi tạo biến row nhưng chưa gán giá trị cho nó. Biến này sẽ được sử dụng sau để tham chiếu đến các hàng trong sheet.
             XSSFRow row = null;
+            //Khởi tạo biến cell nhưng chưa gán giá trị cho nó. Biến này sẽ được sử dụng sau để tham chiếu đến các ô trong các hàng.
             Cell cell = null;
+            
+            //Tạo một hàng mới tại chỉ số hàng 2 (hàng thứ ba vì chỉ số bắt đầu từ 0) trên sheet.
             row = sheet.createRow(2);
+            //Tạo một ô mới trong hàng row tại chỉ số cột 0 (cột đầu tiên) với loại dữ liệu là CellType.STRING.
             cell = row.createCell(0, CellType.STRING);
+            //Đặt giá trị của ô là "Id".
             cell.setCellValue("Id");
 
             cell = row.createCell(1, CellType.STRING);
@@ -86,8 +71,6 @@ public class ExportEmployeeRevenueToExcelServlet extends HttpServlet {
             cell = row.createCell(5, CellType.STRING);
             cell.setCellValue("Lương");
 
-            
-
             int totalSalary = 0;
             for (int i = 0; i < listViewSale.size(); i++) {
                 ViewSale vs = listViewSale.get(i);
@@ -103,13 +86,13 @@ public class ExportEmployeeRevenueToExcelServlet extends HttpServlet {
                 cell = row.createCell(2, CellType.STRING);
                 cell.setCellValue(vs.getEmployee().getPhone());
 
-                cell = row.createCell(3, CellType.STRING);
+                cell = row.createCell(3, CellType.NUMERIC);
                 cell.setCellValue(vs.getTotalOrder());
 
-                cell = row.createCell(4, CellType.STRING);
+                cell = row.createCell(4, CellType.NUMERIC);
                 cell.setCellValue(vs.getRevenue());
 
-                cell = row.createCell(5, CellType.STRING);
+                cell = row.createCell(5, CellType.NUMERIC);
                 cell.setCellValue(vs.getSalary());
 
                 totalSalary += vs.getSalary();
@@ -119,59 +102,35 @@ public class ExportEmployeeRevenueToExcelServlet extends HttpServlet {
             cell.setCellValue("Tổng lương nhân viên: ");
             cell = row.createCell(5, CellType.NUMERIC);
             cell.setCellValue(totalSalary);
-
-            String pathName = "D://DoanhThuNhanVienThang" + month_str + ".xlsx";
-            File f = new File(pathName);
-            try {
-                FileOutputStream fos = new FileOutputStream(f);
-                wordkbook.write(fos);
-                fos.close();
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+            //dat loai noi dung phan hoi la file excel (MIME type su dung cho file excel dinh dang .xlxs) 
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            //dat tieu de Http, chi cho trinh duyet biet noi dung phan hoi duoc xu ly nhu 1 file dinh kem giup hien thị hop thoai tai xuong, file name
+            response.setHeader("Content-Disposition", "attachment; filename=DoanhThuNhanVienThang" + month_str + ".xlsx");
+            //response.getOutputStream(): Lấy OutputStream từ HttpServletResponse để ghi dữ liệu ra phản hồi HTTP. Dữ liệu này sẽ được gửi về trình duyệt của người dùng.
+            try (var out = response.getOutputStream()) {
+                //Ghi nội dung của XSSFWorkbook (workbook) vào OutputStream (out). Điều này có nghĩa là file Excel sẽ được ghi trực tiếp vào phản hồi HTTP.
+                workbook.write(out);
             }
+            workbook.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        request.getRequestDispatcher("viewsale").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Export Employee Revenue to Excel";
+    }
 }
