@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.Service;
+package Controller.customer;
 
-import Dal.ServicesDAO;
-import Model.Services;
+import static Controller.customer.AppointmentServlet.isValidVietnamesePhoneNumber;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,13 +12,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
- * @author LENOVO
+ * @author xdrag
  */
-public class ServiceControl extends HttpServlet {
+public class AppointmentWithoutLoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,12 +31,44 @@ public class ServiceControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ServicesDAO dao = new ServicesDAO();
+        //xoa cac services va lich da ton tai
         session.removeAttribute("time");
         session.removeAttribute("services");
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        request.getRequestDispatcher("services.jsp").forward(request, response);
+        String phone = request.getParameter("phone");
+        //kiem tra xem sdt co dung theo formart viet nam hoac bi null ko
+        if (!isValidVietnamesePhoneNumber(phone)) {
+            request.setAttribute("inValidPhone", phone);
+            request.setAttribute("mss", "số điện thoại không hợp lệ");
+            request.getRequestDispatcher("service").forward(request, response);
+            return;
+        }
+        //neu account null thi tao session phone
+        if (session.getAttribute("account") == null) {
+            session.setAttribute("phone", phone);
+        }
+        request.getRequestDispatcher("appointment").forward(request, response);
+    }
+
+    /**
+     * ham de kiem tra xem co phai sdt formart viet nam khong
+     *
+     * @param phoneNumber - string phone to check
+     * @return boolean
+     */
+    public static boolean isValidVietnamesePhoneNumber(String phoneNumber) {
+        // Kiểm tra nếu chuỗi là null hoặc rỗng
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            return false;
+        }
+
+        // Xóa tất cả dấu cách trong chuỗi
+        phoneNumber = phoneNumber.replaceAll("\\s", "");
+
+        // Định nghĩa pattern cho số điện thoại Việt Nam
+        String phonePattern = "^(03|05|07|08|09)\\d{8}$";
+
+        // Kiểm tra xem chuỗi có khớp với pattern không
+        return phoneNumber.matches(phonePattern);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,13 +83,7 @@ public class ServiceControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServicesDAO dao = new ServicesDAO();
-        HttpSession session = request.getSession();
-        session.removeAttribute("time");
-        session.removeAttribute("services");
-        List<Services> se = dao.GetAllServices();
-        request.setAttribute("listS", se);
-        request.getRequestDispatcher("services.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

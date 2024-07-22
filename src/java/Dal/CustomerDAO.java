@@ -213,13 +213,6 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        CustomerDAO customerdao = new CustomerDAO();
-        Customer c = customerdao.getCustomerById(3);
-        System.out.println(c.getPhone());
-
-    }
-
     public Customer getCustomerById(int customerId) {
         String sql = "SELECT *\n"
                 + "  FROM [Barber].[dbo].[customer]\n"
@@ -244,4 +237,10 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
+    public static void main(String[] args) {
+        CustomerDAO customerdao = new CustomerDAO();
+        Customer c = customerdao.getCustomerByP("0911111111");
+        System.out.println(c == null ? "null":c.toString());
+
+    }
 }
