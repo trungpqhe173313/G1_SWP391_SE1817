@@ -272,6 +272,10 @@
         <servlet-name>CreateAppointmentController</servlet-name>
         <servlet-class>Controller.admin.CreateAppointmentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
+        <servlet-class>Controller.customer.AppointmentWithoutLoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -543,5 +547,9 @@
     <servlet-mapping>
         <servlet-name>CreateAppointmentController</servlet-name>
         <url-pattern>/createAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
+        <url-pattern>/appointmentwithoutlogin</url-pattern>
     </servlet-mapping>
 </web-app>

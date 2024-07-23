@@ -98,6 +98,15 @@
             .carousel-indicators .active {
                 background-color: grey; /* Change this to your preferred active color */
             }
+            .error-message {
+                color: red;
+                font-size: 18px;
+                text-align: center;
+                margin-top: 10px;
+            }
+            .is-invalid {
+                border-color: red;
+            }
         </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -197,46 +206,6 @@
                     </c:forEach>
                 </div>
             </div>
-
-            <!--                <div class="row no-gutters d-flex">
-                                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                                    <div class="media block-6 services d-block text-center">        
-                                        
-                                        <div class="icon"><span class="flaticon-male-hair-of-head-and-face-shapes"></span></div>
-                                        <div class="media-body">
-                                            <h3 class="heading mb-3">Haircut &amp; Styling</h3>
-                                            <p>A small river named Duden flows by their place and supplies.</p>
-                                        </div>
-                                    </div>    
-                                </div>
-                                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                                    <div class="media block-6 services d-block text-center">
-                                        <div class="icon"><span class="flaticon-beard"></span></div>
-                                        <div class="media-body">
-                                            <h3 class="heading mb-3">Beard</h3>
-                                            <p>A small river named Duden flows by their place and supplies.</p>
-                                        </div>
-                                    </div>      
-                                </div>
-                                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                                    <div class="media block-6 services d-block text-center">
-                                        <div class="icon"><span class="flaticon-beauty-products"></span></div>
-                                        <div class="media-body">
-                                            <h3 class="heading mb-3">Makeup</h3>
-                                            <p>A small river named Duden flows by their place and supplies.</p>
-                                        </div>
-                                    </div>      
-                                </div>
-                                <div class="col-md-6 col-lg-3 d-flex align-self-stretch ftco-animate">
-                                    <div class="media block-6 services d-block text-center">
-                                        <div class="icon"><span class="flaticon-healthy-lifestyle-logo"></span></div>
-                                        <div class="media-body">
-                                            <h3 class="heading mb-3">Body Treatment</h3>
-                                            <p>A small river named Duden flows by their place and supplies.</p>
-                                        </div>
-                                    </div>      
-                                </div>
-                            </div>-->
         </div>
 
     </section>
@@ -253,13 +222,25 @@
             <h3 class="vr">Call Us: 012-3456-7890</h3>
             <div class="row justify-content-center">
                 <div class="col-md-10 ftco-animate">
-                    <form action="appointment" class="appointment-form">
-                        <div class="form-group">
-                            <input type="submit" value="Make an Appointment" class="btn btn-primary">
-                        </div>
-                    </form>
-
-
+                    <c:if test="${sessionScope.account != null}">
+                        <form action="appointment" class="appointment-form">
+                            <div class="error-message" id="error-message">${mss}</div>
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
+                    <c:if test="${sessionScope.account == null}">
+                        <form action="appointmentwithoutlogin" method="get" class="appointment-form" onsubmit="return validatePhoneNumber()">
+                            <div>
+                                <input type="text" name="phone" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
+                            </div>
+                            <div class="error-message" id="error-message">${mss}</div>
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -344,66 +325,66 @@
     </section>
 
 
-<footer class="ftco-footer ftco-section">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2 logo">Haircare</h2>
-                    <p>Chúng tôi cung cấp dịch vụ cắt tóc, tạo kiểu và chăm sóc tóc chuyên nghiệp, giúp bạn luôn tự tin với diện mạo hoàn hảo.</p>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Thông Tin</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                        <li><a href="#" class="py-2 d-block">Riêng tư</a></li>
-                        <li><a href="#" class="py-2 d-block">Điều khoản Điều kiện</a></li>
-
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Liên Kết</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="home" class="py-2 d-block">Trang Chủ</a></li>
-                        <li><a href="about.jsp" class="py-2 d-block">Về Chúng Tôi</a></li>
-                        <li><a href="service" class="py-2 d-block">Dịch Vụ</a></li>
-                        <li><a href="appointment?" class="py-2 d-block">Đặt Lịch</a></li>
-                        <li><a href="blog" class="py-2 d-block">Blog</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Bạn có câu hỏi cho chúng tôi?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+    <footer class="ftco-footer ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2 logo">Haircare</h2>
+                        <p>Chúng tôi cung cấp dịch vụ cắt tóc, tạo kiểu và chăm sóc tóc chuyên nghiệp, giúp bạn luôn tự tin với diện mạo hoàn hảo.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Thông Tin</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                            <li><a href="#" class="py-2 d-block">Riêng tư</a></li>
+                            <li><a href="#" class="py-2 d-block">Điều khoản Điều kiện</a></li>
 
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Liên Kết</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="home" class="py-2 d-block">Trang Chủ</a></li>
+                            <li><a href="about.jsp" class="py-2 d-block">Về Chúng Tôi</a></li>
+                            <li><a href="service" class="py-2 d-block">Dịch Vụ</a></li>
+                            <li><a href="appointment?" class="py-2 d-block">Đặt Lịch</a></li>
+                            <li><a href="blog" class="py-2 d-block">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Bạn có câu hỏi cho chúng tôi?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 
 
@@ -434,6 +415,17 @@
                                     interval: 3000
                                 });
                             });
+                            function validatePhoneNumber() {
+                                var phoneInput = document.getElementById("phone").value;
+                                var phonePattern = /^(03|05|07|08|09)\d{8}$/;
+
+                                if (!phonePattern.test(phoneInput)) {
+                                    alert("Vui lòng nhập số điện thoại Việt Nam hợp lệ.");
+                                    return false; // Ngăn không cho form submit
+                                }
+
+                                return true; // Cho phép form submit
+                            }
     </script>
 
 
