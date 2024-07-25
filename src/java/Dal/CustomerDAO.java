@@ -184,13 +184,12 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public void insertCustomer(Customer customer) {
-        String query = "INSERT INTO customer (customerId, fullName, phone) VALUES (?, ?, ?)";
+    public void insertCustomer(String fullName, String phone) {
+        String query = "INSERT INTO customer (fullName, phone) VALUES (?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(query);
-            stm.setInt(1, customer.getCustomerId());
-            stm.setString(2, customer.getFullName());
-            stm.setString(3, customer.getPhone());
+            PreparedStatement stm = connection.prepareStatement(query);    
+            stm.setString(1, fullName);
+            stm.setString(2, phone);
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
