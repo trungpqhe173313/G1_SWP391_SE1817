@@ -24,16 +24,16 @@
                         <img src="" id="signupLogo"/>
 
                         <h2 class="formTitle">
-                            Login to your account
+                            Đổi Mật Khẩu
                         </h2>
 
                         <div class="inputDiv">
-                            <label class="inputLabel" for="password">New Password</label>
+                            <label class="inputLabel" for="password">Mật Khẩu Mới</label>
                             <input type="password" id="password" name="password" required>
                         </div>
 
                         <div class="inputDiv">
-                            <label class="inputLabel" for="confirmPassword">Confirm Password</label>
+                            <label class="inputLabel" for="confirmPassword">Nhập Lại Mật Khẩu</label>
                             <input type="password" id="confirmPassword" name="confirmPassword">
                         </div>
 
@@ -53,21 +53,21 @@
                         <img src="" id="signupLogo"/>
 
                         <h2 class="formTitle">
-                            Login to your account
+                            Đổi Mật Khẩu
                         </h2>
 
                         <div class="inputDiv">
-                            <label class="inputLabel" for="password">Old Password</label>
+                            <label class="inputLabel" for="password">Mật Khẩu Cũ</label>
                             <input type="password" id="oldpassword" name="oldpassword" required>
                         </div>
 
                         <div class="inputDiv">
-                            <label class="inputLabel" for="password">New Password</label>
+                            <label class="inputLabel" for="password">Mật Khẩu Mới</label>
                             <input type="password" id="password" name="password" required>
                         </div>
 
                         <div class="inputDiv">
-                            <label class="inputLabel" for="confirmPassword">Confirm Password</label>
+                            <label class="inputLabel" for="confirmPassword">Nhập Lại Mật Khẩu</label>
                             <input type="password" id="confirmPassword" name="confirmPassword">
                         </div>
 
