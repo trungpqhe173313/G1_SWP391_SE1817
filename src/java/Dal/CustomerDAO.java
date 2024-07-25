@@ -197,11 +197,20 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        CustomerDAO customerdao = new CustomerDAO();
-        Customer c = customerdao.getCustomerById(3);
-        System.out.println(c.getPhone());
-
+    public void addCustomer(Customer customer) {
+        String sql = "INSERT INTO [dbo].[customer]\n"
+                + "           ([fullName]\n"
+                + "           ,[phone])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, customer.getFullName());
+            stmt.setString(2, customer.getPhone());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Customer getCustomerById(int customerId) {
@@ -228,4 +237,10 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
+    public static void main(String[] args) {
+        CustomerDAO customerdao = new CustomerDAO();
+        Customer c = customerdao.getCustomerByP("0911111111");
+        System.out.println(c == null ? "null":c.toString());
+
+    }
 }

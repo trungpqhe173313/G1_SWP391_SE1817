@@ -79,10 +79,10 @@
 
                     </div>
                     <button class="btn btn-primary" type="button" onclick="updateCustomer()">Cập nhập thông tin</button>
-                    <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button>
+                    <button class="btn btn-primary" type="button" onclick="changePassword(${c.customerId})">Cập nhập mật khẩu</button> 
                     <br>
                     <br>
-                    <a href="home"><- Quay lại trang chủ </a>
+                    <a href="home" class="btn btn-secondary custom-spacing">Quay lại</a>
                 </div>
             </div>
         </div>

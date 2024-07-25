@@ -202,7 +202,7 @@
                                     <div class="card-header py-3">
                                         <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
                                     </div>
-                                    <form action="viewOrderDetatailUpdate" method="post">
+                                    <form action="viewOrderDetailUpdate" method="post">
                                         <div class="form-group">
                                             <label for="phone">Số điện thoại</label>
                                             <input type="text" id="phone" name="phone" value="${infoCustumer.phone}" readonly>

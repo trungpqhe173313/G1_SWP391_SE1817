@@ -201,9 +201,6 @@
             .carousel-indicators .active {
                 background-color: grey; /* Change this to your preferred active color */
             }
-            .section-margin-bottom {
-    margin-bottom: 150px; /* Điều chỉnh khoảng cách theo nhu cầu */
-}
         </style>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -249,9 +246,8 @@
                     <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
                         <div class="col-lg-12 ftco-animate d-flex align-items-center">
                             <div class="text text-center">
-                                <span class="subheading" style="font-size: 25px;">Chào mừng đến với Haircare</span>
-                                <h1 class="mb-4 mt-2" style="font-size: 100px;">Chúng tôi có đội ngũ</h1>
-                                <h1 class="mb-4 mt-2" style="font-size: 100px;">chăm sóc tóc chuyên nghiệp</h1>
+                                <span class="subheading">Chào mừng đến với Haircare</span>
+                                <h1 class="mb-4">Dịch vụ làm tóc chuyên nghiệp</h1>
                             </div>
                         </div>
                     </div>
@@ -259,37 +255,44 @@
             </div>
         </section>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container-fluid px-0">
-        <div class="row no-gutters">
-            <div class="col-md-6 text-center d-flex align-items-stretch order-md-2">
-                <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
-                    <div class="text">
-                        <h3>Cắt Tóc Nam</h3>
+        <section class="ftco-section ftco-no-pt ftco-no-pb">
+            <div class="container-fluid px-0">
+                <div class="row no-gutters">
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/formen.jpg);">
+                            <div class="text">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center d-flex align-items-stretch">
+                        <div class="text-about py-5 px-4">
+                            <h1 class="logo">
+                                <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+                            </h1>
+                            <h2>Chào mừng đến với Haircare</h2>
+                            <p>Dịch Vụ Tóc Nam Chuyên Nghiệp - Tạo Dáng Độc Đáo, Phong Cách Hoàn Hảo.</p>
+
+                        </div>
+                    </div>
+                    <div class="col-md text-center d-flex align-items-stretch">
+                        <div class="services-wrap d-flex align-items-center img" style="background-image: url(images/Barber-performing-a-shave-service-1-scaled.jpg);">
+                            <div class="text">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 text-center d-flex align-items-stretch order-md-1">
-                <div class="text-about py-5 px-4">
-                    <h1 class="logo">
-                        <a href="#"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
-                    </h1>
-                    <h2>Chào Mừng Đến Với Salon Của Chúng Tôi</h2>
-                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+        </section>
 
         <section class="services-section ftco-section">
             <div class="container">
                 <div class="row justify-content-center pb-3">
                     <div class="col-md-10 heading-section text-center ftco-animate">
-                        <span class="subheading">Dịch Vụ</span>
-                        <h2 class="mb-4">Danh Sách Dịch Vụ</h2>
-                        <p>Dịch vụ của chúng tôi bao gồm từ cắt tóc, tạo kiểu, uốn, nhuộm đến các liệu trình chăm sóc tóc chuyên sâu, tất cả đều được thực hiện bởi đội ngũ chuyên gia tận tâm và giàu kinh nghiệm.</p>
+                        <span class="subheading">Dịch vụ</span>
+                        <h2 class="mb-4">Các dịch vụ</h2>
+                        <p>Chúng tôi cung cấp dịch vụ cắt tóc, tạo kiểu và chăm sóc tóc chuyên nghiệp, giúp bạn luôn tự tin với diện mạo hoàn hảo.</p>
                     </div>
                 </div>
 
@@ -380,148 +383,47 @@
         </div>
     </section>
 
-<section class="ftco-section ftco-booking bg-light section-margin-bottom">
-    <div class="container ftco-relative">
-        <div class="row justify-content-center pb-3">
-            <div class="col-md-10 heading-section text-center ftco-animate">
-                <span class="subheading">Đặt Lịch</span>
-                <h2 class="mb-4">Tạo Cuộc Hẹn Với Chúng Tôi</h2>
-                <p>Hãy đặt lịch hẹn ngay hôm nay để trải nghiệm dịch vụ chăm sóc tóc chuyên nghiệp của chúng tôi và tận hưởng một diện mạo hoàn toàn mới.</p>
-            </div>
-        </div>
-        <h3 class="vr">Liên Hệ: 012-3456-7890</h3>
-        <div class="row justify-content-center">
-            <div class="col-md-10 ftco-animate">
-                <form action="appointment" class="appointment-form">
-                    <div class="form-group">
-                        <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container">
-        <div class="row no-gutters justify-content-center mb-5 pb-2">
-            <div class="col-md-6 text-center heading-section ftco-animate">
-                <span class="subheading">Phòng Trưng Bày</span>
-                <h2 class="mb-4">Các Mẫu Của Chúng Tôi</h2>
-                <p>Khám phá bộ sưu tập các kiểu tóc đa dạng và phong cách tại phòng trưng bày của chúng tôi. Mỗi mẫu tóc đều được thiết kế tỉ mỉ bởi những thợ làm tóc chuyên nghiệp, đảm bảo mang đến cho bạn vẻ ngoài ấn tượng và phong cách riêng biệt. Hãy ghé thăm và tìm cho mình một kiểu tóc hoàn hảo ngay hôm nay!</p>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid p-0">
-        <div class="row no-gutters">
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-1.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Stylist</span>
-                        <h3><a href="project.jsp">Beard</a></h3>
-                    </div>
-                    <a href="images/work-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
+    <section class="ftco-section ftco-booking bg-light">
+        <div class="container ftco-relative">
+            <div class="row justify-content-center pb-3">
+                <div class="col-md-10 heading-section text-center ftco-animate">
+                    <span class="subheading">Đặt Lịch</span>
+                    <h2 class="mb-4">Tạo Cuộc Hẹn</h2>
+                    <p>Đặt lịch hẹn dễ dàng ngay hôm nay để trải nghiệm dịch vụ tóc nam chất lượng cao và phong cách độc đáo!</p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-2.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Haircut</a></h3>
-                    </div>
-                    <a href="images/work-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-3.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Hairstylist</a></h3>
-                    </div>
-                    <a href="images/work-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-4.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Haircut</a></h3>
-                    </div>
-                    <a href="images/work-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-5.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-6.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Fashion</span>
-                        <h3><a href="project.jsp">Model</a></h3>
-                    </div>
-                    <a href="images/work-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-7.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-7.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="project">
-                    <img src="images/work-8.jpg" class="img-fluid" alt="Colorlib Template">
-                    <div class="text">
-                        <span>Beauty</span>
-                        <h3><a href="project.jsp">Makeup</a></h3>
-                    </div>
-                    <a href="images/work-8.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
+            <h3 class="vr">Call Us: 012-3456-7890</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-10 ftco-animate">
+                    <c:if test="${sessionScope.account != null}">
+                        <form action="appointment" class="appointment-form">
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
+                    <c:if test="${sessionScope.account == null}">
+                        <form action="appointmentwithoutlogin" method="get" class="appointment-form" onsubmit="return validatePhoneNumber()">
+                            <div>
+                                <input type="text" name="phone" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <section class="ftco-section ftco-pricing">
         <div class="container">
             <div class="row justify-content-center pb-3">
                 <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Xu Hướng</span>
-                    <h2 class="mb-4">Dịch Vụ Hàng Đầu</h2>
-                    <p>Chúng tôi tự hào mang đến cho bạn dịch vụ chăm sóc tóc hàng đầu với đội ngũ thợ làm tóc chuyên nghiệp và giàu kinh nghiệm. Từ cắt tóc, nhuộm màu, đến tạo kiểu, mọi dịch vụ đều được thực hiện với sự tận tâm và kỹ thuật cao. Hãy đến và trải nghiệm dịch vụ tuyệt vời để nâng tầm phong cách của bạn!</p>
+                    <span class="subheading">Dịch vụ nổi bật</span>
+                    <h2 class="mb-4">Top Dịch Vụ</h2>
+                    <p>Khám phá những dịch vụ hàng đầu của chúng tôi: Cắt tóc, tạo kiểu, và chăm sóc tóc nam chuyên nghiệp, mang đến cho bạn vẻ ngoài ấn tượng nhất!</p>
                 </div>
             </div>
 
@@ -559,7 +461,7 @@
                 <div class="py-md-5">
                     <div class="heading-section ftco-animate">
                         <span class="subheading">Đánh Giá</span>
-                        <h2 class="mb-0">Đánh Giá Từ Khách Hàng</h2>
+                        <h2 class="mb-0">Phản hồi từ khách hàng</h2>
                     </div>
                     <div class="carousel-testimony owl-carousel ftco-animate" id="feedback-list">
                         <!-- Start of dynamic feedback loop -->
@@ -586,7 +488,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Để Lại Đánh Giá</a>
+                    <a href="javascript:void(0);" class="" onclick="openFeedbackModal()">Để lại phản hồi</a>
                 </div>
             </div>
         </div>
@@ -616,7 +518,7 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2 logo">Haircare</h2>
-                    <p>Tại Haircare, chúng tôi tận tâm phục vụ bạn với dịch vụ chăm sóc tóc chuyên nghiệp và không gian thân thiện. Hãy để chúng tôi mang đến cho bạn một trải nghiệm đẳng cấp và sự hài lòng tuyệt đối.</p>
+                    <p>Chúng tôi cung cấp dịch vụ cắt tóc, tạo kiểu và chăm sóc tóc chuyên nghiệp, giúp bạn luôn tự tin với diện mạo hoàn hảo.</p>
                     <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                         <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                         <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -628,28 +530,28 @@
                 <div class="ftco-footer-widget mb-4 ml-md-5">
                     <h2 class="ftco-heading-2">Thông Tin</h2>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Câu hỏi thường gặp</a></li>
-                        <li><a href="#" class="py-2 d-block">Quyền riêng tư</a></li>
-                        <li><a href="#" class="py-2 d-block">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                        <li><a href="#" class="py-2 d-block">Riêng tư</a></li>
+                        <li><a href="#" class="py-2 d-block">Điều khoản Điều kiện</a></li>
 
                     </ul>
                 </div>
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Links</h2>
+                    <h2 class="ftco-heading-2">Liên Kết</h2>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">Trang Chủ</a></li>
-                        <li><a href="#" class="py-2 d-block">Dịch Vụ</a></li>
-                        <li><a href="#" class="py-2 d-block">Phòng Trưng Bày</a></li>
-                        <li><a href="#" class="py-2 d-block">Về Chúng Tôi</a></li>
-                        <li><a href="#" class="py-2 d-block">Blog</a></li>
+                        <li><a href="home" class="py-2 d-block">Trang Chủ</a></li>
+                        <li><a href="about.jsp" class="py-2 d-block">Về Chúng Tôi</a></li>
+                        <li><a href="service" class="py-2 d-block">Dịch Vụ</a></li>
+                        <li><a href="appointment?" class="py-2 d-block">Đặt Lịch</a></li>
+                        <li><a href="blog" class="py-2 d-block">Blog</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Bạn Có Thắc Mắc?</h2>
+                    <h2 class="ftco-heading-2">Bạn có câu hỏi cho chúng tôi?</h2>
                     <div class="block-23 mb-3">
                         <ul>
                             <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
@@ -704,6 +606,17 @@
                                 });
                             });
                         });
+                        function validatePhoneNumber() {
+                            var phoneInput = document.getElementById("phone").value;
+                            var phonePattern = /^(03|05|07|08|09)\d{8}$/;
+
+                            if (!phonePattern.test(phoneInput)) {
+                                alert("Vui lòng nhập số điện thoại Việt Nam hợp lệ.");
+                                return false; // Ngăn không cho form submit
+                            }
+
+                            return true; // Cho phép form submit
+                        }
 </script>
 
 <!-- loader -->

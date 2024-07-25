@@ -50,6 +50,11 @@
             <span>Nhân Viên Đang Làm</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="viewleaverequest">
+            <i class="fas fa-calendar-alt"></i> <!-- Icon Duyệt đơn xin nghỉ phép-->
+            <span>Duyệt đơn xin nghỉ phép</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="servicedetail">
             <i class="fas fa-hand-holding-heart"></i> <!-- Icon Dịch Vụ -->
             <span>Dịch Vụ</span></a>
@@ -58,6 +63,11 @@
         <a class="nav-link" href="getOrderManager">
             <i class="fas fa-calendar-alt"></i> <!-- Icon Lịch hẹn -->
             <span>Lịch hẹn</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="storeholidayschedule">
+            <i class="fas fa-calendar-alt"></i> <!-- Icon Lịch hẹn -->
+            <span>Lịch nghỉ cửa hàng</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="viewAllBill">

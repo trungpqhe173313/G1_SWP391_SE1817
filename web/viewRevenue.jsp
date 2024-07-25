@@ -99,34 +99,7 @@
                                 <div class="topbar-divider d-none d-sm-block"></div>
 
                                 <!-- Nav Item - User Information -->
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Settings
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Activity Log
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                    </div>
-                                </li>
+                            <jsp:include page="navadmin.jsp"></jsp:include>
 
                             </ul>
 
@@ -235,8 +208,7 @@
                                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                                  aria-labelledby="dropdownMenuLink">
                                                 <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Sắp Xếp Theo Ngày</a>
-                                                <a class="dropdown-item" href="#">Sắp xếp Theo Giá Trị</a>
+                                                <a class="dropdown-item" href="exportrevenuetoexcel?month=${monthSelect}">Xuất doanh thu sang file Excel</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
@@ -247,7 +219,24 @@
                                         <div class="table-responsive" style="max-height: 860px;
                                              overflow-y: scroll; font-size: 1.1rem">
                                             <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Từ ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Đến ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-2" style="align-items: end; display: flex;">
+                                                        <input type="button" class="form-control mr-3" style="width: 100px;
+                                                               color: white; background-color:#4E73DF; border: none; " value="Lọc đơn">
+                                                        <input type="button" class="form-control" style="width: 100px;
+                                                               color: white; background-color:#4E73DF; border: none; " value="Làm mới">
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive">
+
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
                                                            style=" text-align: center;">
                                                         <thead>
@@ -261,17 +250,6 @@
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <th>Đơn Hàng</th>
-                                                                <th>Tên Khách Hàng</th>
-                                                                <th>SĐT</th>
-                                                                <th>Ngày Đặt Lịch</th>
-                                                                <th>Tổng Thanh Toán</th>
-                                                                <th>Trạng Thái</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </tfoot>
                                                         <tbody>
                                                             <c:forEach items="${listOrder}" var="o">
 
@@ -385,7 +363,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>
@@ -412,49 +390,49 @@
 
         <!-- Page level custom scripts -->
         <script>
-                                        // Set new default font family and font color to mimic Bootstrap's default styling
-                                        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-                                        Chart.defaults.global.defaultFontColor = '#858796';
+                                            // Set new default font family and font color to mimic Bootstrap's default styling
+                                            Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                                            Chart.defaults.global.defaultFontColor = '#858796';
 
-                                        // Pie Chart Example
-                                        var ctx = document.getElementById("myPieChart");
-                                        var myPieChart = new Chart(ctx, {
-                                            type: 'doughnut',
-                                            data: {
-                                                labels: ["Direct", "Referral", "Social"],
-                                                datasets: [{
-                                                        data: [55, 30, 15, 30],
-                                                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                                                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                                                        hoverBorderColor: "rgba(234, 236, 244, 1)",
-                                                    }],
-                                            },
-                                            options: {
-                                                maintainAspectRatio: false,
-                                                tooltips: {
-                                                    backgroundColor: "rgb(255,255,255)",
-                                                    bodyFontColor: "#858796",
-                                                    borderColor: '#dddfeb',
-                                                    borderWidth: 1,
-                                                    xPadding: 15,
-                                                    yPadding: 15,
-                                                    displayColors: false,
-                                                    caretPadding: 10,
+                                            // Pie Chart Example
+                                            var ctx = document.getElementById("myPieChart");
+                                            var myPieChart = new Chart(ctx, {
+                                                type: 'doughnut',
+                                                data: {
+                                                    labels: ["Direct", "Referral", "Social"],
+                                                    datasets: [{
+                                                            data: [55, 30, 15, 30],
+                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', 'red'],
+                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', 'red'],
+                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                        }],
                                                 },
-                                                legend: {
-                                                    display: false
+                                                options: {
+                                                    maintainAspectRatio: false,
+                                                    tooltips: {
+                                                        backgroundColor: "rgb(255,255,255)",
+                                                        bodyFontColor: "#858796",
+                                                        borderColor: '#dddfeb',
+                                                        borderWidth: 1,
+                                                        xPadding: 15,
+                                                        yPadding: 15,
+                                                        displayColors: false,
+                                                        caretPadding: 10,
+                                                    },
+                                                    legend: {
+                                                        display: false
+                                                    },
+                                                    cutoutPercentage: 80,
                                                 },
-                                                cutoutPercentage: 80,
-                                            },
-                                        });
+                                            });
 
-                                        function onMonthChange(selectElement) {
-                                            var selectedMonth = selectElement.value;
-                                            window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
-                                        }
-                                        $(document).ready(function () {
-                                            $('#dataTable').DataTable();
-                                        });
+                                            function onMonthChange(selectElement) {
+                                                var selectedMonth = selectElement.value;
+                                                window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
+                                            }
+                                            $(document).ready(function () {
+                                                $('#dataTable').DataTable();
+                                            });
         </script>
 
     </body>

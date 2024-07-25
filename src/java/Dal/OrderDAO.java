@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 public class OrderDAO extends DBContext {
 
-    private static final String PREFIX = "order";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
     private static int currentNumber = 1;
     private static String lastDate = DATE_FORMAT.format(new Date());
@@ -37,8 +36,8 @@ public class OrderDAO extends DBContext {
             currentNumber = 1; // Reset số thứ tự khi ngày thay đổi
             lastDate = currentDate;
         }
-        
-        String orderCode = PREFIX + currentDate + String.format("%03d", currentNumber);
+
+        String orderCode = currentDate + String.format("%03d", currentNumber);
         currentNumber++;
         return orderCode;
     }
@@ -127,6 +126,27 @@ public class OrderDAO extends DBContext {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
+    }
+
+    public int countOrderNotCompleteByCustomerId(int id) {
+        int count = 0;
+        try {
+
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Orders\n"
+                    + "WHERE customerId = ?\n"
+                    + "  AND orderDate = CAST(GETDATE() AS DATE)\n"
+                    + "  AND statusID NOT IN (4, 5);";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
     }
 
     public void cancelBooking(String orderId) {
@@ -396,7 +416,7 @@ public class OrderDAO extends DBContext {
 
     public static void main(String[] args) {
         OrderDAO o = new OrderDAO();
-        
-        System.out.println(o.getOrderByCode("Order7912").getCustomerId());
+
+        System.out.println(o.countOrderNotCompleteByCustomerId(5));
     }
 }
