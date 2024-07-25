@@ -184,13 +184,12 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public void insertCustomer(Customer customer) {
-        String query = "INSERT INTO customer (customerId, fullName, phone) VALUES (?, ?, ?)";
+    public void insertCustomer(String fullName, String phone) {
+        String query = "INSERT INTO customer (fullName, phone) VALUES (?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(query);
-            stm.setInt(1, customer.getCustomerId());
-            stm.setString(2, customer.getFullName());
-            stm.setString(3, customer.getPhone());
+            PreparedStatement stm = connection.prepareStatement(query);    
+            stm.setString(1, fullName);
+            stm.setString(2, phone);
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,13 +210,6 @@ public class CustomerDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static void main(String[] args) {
-        CustomerDAO customerdao = new CustomerDAO();
-        Customer c = customerdao.getCustomerById(3);
-        System.out.println(c.getPhone());
-
     }
 
     public Customer getCustomerById(int customerId) {
@@ -244,4 +236,10 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
+    public static void main(String[] args) {
+        CustomerDAO customerdao = new CustomerDAO();
+        Customer c = customerdao.getCustomerByP("0911111111");
+        System.out.println(c == null ? "null":c.toString());
+
+    }
 }
