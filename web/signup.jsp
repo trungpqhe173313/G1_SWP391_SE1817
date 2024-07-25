@@ -246,7 +246,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <label for="tab-2" class="tab">Đăng ký</label>
                 <div class="login-form">
                     <div class="sign-up-htm">
-                        <form action="signup" method="post">
+                        <form action="signup" method="post" enctype="multipart/form-data">
                             <div class="group">
                                 <label for="fullname" class="label">Họ và tên*</label>
                                 <input type="text" required value="${param.fullName}" name="fullname"  class="input">

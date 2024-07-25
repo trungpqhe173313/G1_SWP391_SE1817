@@ -11,12 +11,18 @@ import Model.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, //1mb
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 20)
 
 /**
  *
@@ -26,40 +32,41 @@ public class SignupController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setCharacterEncoding("text/html;charset=UTF-8");
-        String fullName = request.getParameter("fullName");
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
+        String fullName = request.getParameter("fullname");
         String phone = request.getParameter("phone");
         String password = request.getParameter("pass");
         String re_pass = request.getParameter("re_pass");
-        int roleId = 3; // Giá trị mặc định là Username
+        int roleId = 3; // Default value for roleId
         String email = request.getParameter("email");
         Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
-        boolean isActive = true; //Giá trị là active (hoặc 1)
-        String avatar = request.getParameter("avatar");
+        boolean isActive = true; // Set default value to true
+//        String avatar = request.getParameter("avatar");
+
+        addimg img = new addimg();
+        Part part = request.getPart("avatar");
+        String fileName = img.extractFileName(part);
+        fileName = new File(fileName).getName();
+        if (fileName != null && !fileName.isEmpty()) {
+            String uploadPath = request.getServletContext().getRealPath("/") + "img/service" + File.separator + fileName;
+            part.write(uploadPath);
+        }
+        String avatar = (fileName != null && !fileName.isEmpty()) ? fileName : request.getParameter("avatar");
 
         if (password == null || re_pass == null || !password.equals(re_pass)) {
-            request.setAttribute("error1", "Password incorrect!Confirm password must be equal password!");
+            request.setAttribute("error1", "Password incorrect! Confirm password must be equal to password!");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
-            return;
+           
         }
-        // Handle avatar upload
-//        String avatarPath = null;
-//        if (avatarPart != null && avatarPart.getSize() > 0) {
-//            String fileName = extractFileName(avatarPart);
-//            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-//            File uploadDir = new File(uploadPath);
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdir();
-//            }
-//            avatarPath = uploadPath + File.separator + fileName;
-//            avatarPart.write(avatarPath);
-//        }
 
-        AccountDAO d = new AccountDAO();
-        CustomerDAO cd = new CustomerDAO();
-        Account a = d.checkAccountExist(phone);
-        if (a == null) {
-            // Tạo mới đối tượng Account và đặt các giá trị
+        AccountDAO accountDAO = new AccountDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+        Account existingAccount = accountDAO.checkAccountExist(phone);
+
+        if (existingAccount == null) {
+            // Create new Account
             Account newAccount = new Account();
             newAccount.setPhone(phone);
             newAccount.setPass(password);
@@ -67,23 +74,21 @@ public class SignupController extends HttpServlet {
             newAccount.setEmail(email);
             newAccount.setGender(gender);
             newAccount.setIsActive(isActive);
+            newAccount.setAvatar(avatar);
 
-            // Tạo mới đối tượng Customer và đặt các giá trị
-            Customer customer = new Customer();
-            customer.setPhone(phone);
-            customer.setFullName(fullName);
-            customer.setAccount(newAccount); // Liên kết Customer với Account
-            
-            cd.insertCustomer(customer);
-            d.insertAccount(newAccount);
-            response.sendRedirect("login");
-            //request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            // Create new Customer
+//            Customer newCustomer = new Customer(1,fullName, phone);
+
+            // Insert Customer and Account
+            customerDAO.insertCustomer(fullName, phone);
+            accountDAO.insertAccount(newAccount);
+
+            response.sendRedirect("login.jsp");
         } else {
-            // Nếu tên người dùng đã tồn tại, thông báo lỗi và yêu cầu nhập lại
+            // If phone number already exists, show error
             request.setAttribute("error2", "Phone already exists! Please choose another one.");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         }
-
     }
 
     // Method to extract file name from Content-Disposition header of file part
@@ -97,7 +102,6 @@ public class SignupController extends HttpServlet {
 //        }
 //        return null;
 //    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("signup.jsp").forward(request, response);
