@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import jakarta.servlet.annotation.MultipartConfig;
+import org.mindrot.jbcrypt.BCrypt;
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, //1mb
         maxFileSize = 1024 * 1024 * 10,
@@ -62,13 +63,17 @@ public class AddEmployeeController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         // Extract parameters from the request
         String phone = request.getParameter("phone");
         String fullName = request.getParameter("fullName");
-        String pass = request.getParameter("pass");
+        String plainPassword = request.getParameter("pass");
         String email = request.getParameter("email");
-        boolean gender = "male".equals(request.getParameter("gender")); // true cho nam, false cho nữ
+        boolean gender = "male".equals(request.getParameter("gender")); // true for male, false for female
+
+        // Hash the password using BCrypt
+        String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+
         addimg img = new addimg();
         Part part = request.getPart("avatar");
         String fileName = img.extractFileName(part);
@@ -83,7 +88,7 @@ public class AddEmployeeController extends HttpServlet {
         EmployeesDAO employeesDAO = new EmployeesDAO();
 
         // Call the method to add an employee
-        boolean success = employeesDAO.addEmployee(phone, fullName, pass, email, gender, 1, avatar);
+        boolean success = employeesDAO.addEmployee(phone, fullName, hashedPassword, email, gender, 1, avatar);
 
         // Forward the request to a JSP page with a result message
         response.sendRedirect(request.getContextPath() + "/employeesdetail");

@@ -350,6 +350,7 @@ INSERT INTO status ([status]) VALUES
 (N'Đã Đặt'),
 (N'Hàng Đợi'),
 (N'Bắt Đầu'),
+(N'Đang Thanh Toán'),
 (N'Thanh Toán'),
 (N'Hủy Đơn');
 GO

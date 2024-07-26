@@ -31,6 +31,24 @@
         .form-control-plaintext[readonly] {
             cursor: default;
         }
+        .d-none {
+            display: none;
+        }
+            .avatar-container {
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+        border-radius: 50%; /* Makes the image circular */
+        overflow: hidden; /* Ensures image doesn't overflow the container */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .avatar-container img {
+        width: 100%; /* Makes sure the image fills the container */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Cover the container area */
+    }
     </style>
 </head>
 <body id="page-top">
@@ -75,12 +93,20 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 class="mb-4">Employee Information</h2>
-                            <form id="editForm" action="updateemployeesprofile" method="post">
+                            <h2 class="mb-4">Thông Tin Cá Nhân</h2>
+                            <form id="editForm" action="updateemployeesprofile" method="post" enctype="multipart/form-data">
                                 <div class="row">
-                                    <div class="col-md-3 text-center">
-                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle mb-4" alt="Avatar">
-                                    </div>
+<div class="row">
+    <div class="col-md-3 text-center">
+        <div class="avatar-container">
+            <img src="img/service/${accountDetails.avatar}" alt="Avatar" class="img-fluid">
+        </div>
+    </div>
+    <div class="col-md-9">
+        <!-- Rest of the form fields -->
+    </div>
+</div>
+
                                     <div class="col-md-9">
                                         <div class="form-group row">
                                             <label for="fullName" class="col-sm-4 col-form-label">Họ Tên</label>
@@ -127,13 +153,19 @@
                                                 <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${accountDetails.gender ? 'Nam' : 'Nữ'}"/>" />
                                             </div>
                                         </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-12 text-right">
-                                            <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
-                                            <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
-                                            <a href="changepassemployees" class="btn btn-info ml-2">Đổi mật khẩu</a>
+                                        <div class="form-group row d-none" id="avatarUploadSection">
+                                            <label for="avatar" class="col-sm-4 col-form-label">Chọn Ảnh Đại Diện</label>
+                                            <div class="col-sm-8">
+                                                <input type="file" class="form-control-file" id="avatar" name="avatar">
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 text-right">
+                                                <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
+                                                <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
+                                                <a href="changepassemployees" class="btn btn-info ml-2">Đổi mật khẩu</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -170,7 +202,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="#">Logout</a>
+                    <a class="btn btn-primary" href="logout">Logout</a>
                 </div>
             </div>
         </div>
@@ -186,57 +218,36 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Edit button click event
-        $('#editButton').click(function() {
-            // Enable all form inputs for editing
-            $('#fullName').prop('readonly', false).addClass('form-control');
-            $('#phone').prop('readonly', true).addClass('form-control');
-            $('#email').prop('readonly', false).addClass('form-control');
-            $('#roleId').prop('readonly', true).addClass('form-control');
-            $('#gender').prop('readonly', true).addClass('form-control');
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            // Show save button and hide edit button
-            $('#editButton').addClass('d-none');
-            $('#saveButton').removeClass('d-none');
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- Custom script to handle form submission and button toggle -->
+    <script>
+        document.getElementById('editButton').addEventListener('click', function() {
+            document.getElementById('fullName').removeAttribute('readonly');
+            document.getElementById('email').removeAttribute('readonly');
+            document.getElementById('editButton').classList.add('d-none');
+            document.getElementById('saveButton').classList.remove('d-none');
+            document.getElementById('avatarUploadSection').classList.remove('d-none');
         });
 
-        // Form submit event
-        $('#editForm').submit(function(event) {
-            // Prevent default form submission
-            event.preventDefault();
-
-            // Submit form using AJAX
-            $.ajax({
-                type: 'POST',
-                url: 'updateemployeesprofile', // Your Servlet URL
-                data: $('#editForm').serialize(), // Serialize form data
-                success: function(response) {
-                    // Redirect to employeesProfile.jsp after successful update
-                    window.location.href = 'employeesprofile';
-                },
-                error: function() {
-                    // Handle error if any
-                    alert('Error updating profile. Please try again.');
-                }
-            });
+        document.getElementById('editForm').addEventListener('submit', function(event) {
         });
-    });
 
-    function validateFullName(input) {
-        // Regular expression to match alphabetic characters and spaces
-        var regex = /^[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ ]*$/;
-        
-        // Check if input matches the pattern
-        if (!regex.test(input.value)) {
-            document.getElementById('fullNameError').textContent = 'Họ Tên chỉ được nhập chữ cái và khoảng trắng, ít nhất 2 ký tự.';
-            input.setCustomValidity('Họ Tên không hợp lệ.');
-        } else {
-            document.getElementById('fullNameError').textContent = '';
-            input.setCustomValidity('');
+        function validateFullName(input) {
+            // Validate full name input
+            const regex = /^[A-Za-zÀ-ỹ ]{2,}$/;
+            const error = document.getElementById('fullNameError');
+            if (!regex.test(input.value)) {
+                error.textContent = 'Tên không hợp lệ. Vui lòng nhập tên hợp lệ (chỉ chữ và khoảng trắng).';
+            } else {
+                error.textContent = '';
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>
