@@ -165,22 +165,35 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-    public boolean updateCustomer(Customer customer) {
-        String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
+//    public boolean updateCustomer(Customer customer) {
+//        String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//            stmt.setInt(1, customer.getCustomerId());
+//            stmt.setString(2, customer.getFullName());
+//            stmt.setString(3, customer.getPhone());
+//            stmt.setString(4, customer.getAccount().getEmail());
+//            stmt.setBoolean(5, customer.getAccount().getGender());
+//            stmt.setInt(6, customer.getCustomerId());
+//
+//            int rowsUpdated = stmt.executeUpdate();
+//            return rowsUpdated > 0;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            return false;
+//        }
+//    }
+    public void updateAccount(Account account) {
+        String sql = "UPDATE customer SET email = ?, gender = ?, avatar = ? WHERE phone=?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, customer.getCustomerId());
-            stmt.setString(2, customer.getFullName());
-            stmt.setString(3, customer.getPhone());
-            stmt.setString(4, customer.getAccount().getEmail());
-            stmt.setBoolean(5, customer.getAccount().getGender());
-            stmt.setInt(6, customer.getCustomerId());
-
-            int rowsUpdated = stmt.executeUpdate();
-            return rowsUpdated > 0;
+            stmt.setString(1, account.getEmail());
+            stmt.setBoolean(2, account.getGender());
+            stmt.setString(3, account.getAvatar());
+            stmt.setString(4, account.getPhone());
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            //return false;
         }
     }
 

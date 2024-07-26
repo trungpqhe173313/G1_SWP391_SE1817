@@ -233,12 +233,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <p class="text-danger">${error}</p>
                         <div class="group">
                             <label class="label" for="phone">Số điện thoại*</label>
-                            <input type="text" class="input"  required name = "phone" value="${cookie.cUser.value}">
+                            <input type="text" class="input"  required name = "phone" value="${param.cookie.cUser.value}">
                         </div>
 
                         <div class="group">
                             <label class="label" for="pass">Mật khẩu*</label>
-                            <input type="password" class="input"  required name = "pass" value="${cookie.cPass.value}">
+                            <input type="password" class="input"  required name = "pass" value="${param.cookie.cPass.value}">
                         </div>
                         <div class="group">
 

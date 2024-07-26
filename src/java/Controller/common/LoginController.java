@@ -6,6 +6,7 @@ package Controller.common;
 
 import Dal.AccountDAO;
 import Dal.CustomerDAO;
+import util.PasswordEncryption;
 import Model.Account;
 import Model.Customer;
 import java.io.IOException;
@@ -77,13 +78,12 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String phone = request.getParameter("phone");
         String password = request.getParameter("pass");
-
+        // Mã hóa mật khẩu người dùng nhập vào
+        password = PasswordEncryption.toSHA1(password);
+        
         AccountDAO da = new AccountDAO();
         Account a = da.checkAuthentic(phone, password);
-        // Mã hóa mật khẩu người dùng nhập vào
-        //String hashedPassword = AccountDAO.hashPassword(password);
-        //Account a = da.login(phone, hashedPassword);
-
+        
         String r = request.getParameter("remember");
         // tao 3 cookie  cookieU  , cookieP  , cookieR
         Cookie cookieU = new Cookie("cUser", phone);
@@ -106,16 +106,14 @@ public class LoginController extends HttpServlet {
         // save browser
 
         if (a == null) {
-            request.setAttribute("error", "Phone or password incorrect!!!");
+            request.setAttribute("error", "Số điện thoại hoặc mật khẩu không đúng!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             // Tạo session
             HttpSession session = request.getSession();
             session.setAttribute("account", a);
-            session.removeAttribute("time");
-            session.removeAttribute("services");
             if (a.getRoleId() == 1) {
-                response.sendRedirect("viewrevenue");
+                response.sendRedirect("viewOrder");
             } else if (a.getRoleId() == 2) {
                 response.sendRedirect("employeesprofile");
             } else {

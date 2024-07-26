@@ -98,7 +98,7 @@ public class AccountDAO extends DBContext {
     }
 
     public Account checkAuthentic(String phone, String pass) {
-        String sql = "SELECT * FROM account WHERE phone = ? and pass = ?";
+        String sql = "SELECT * FROM account WHERE phone = ? and pass = ? and isActive = 1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, phone);
@@ -122,52 +122,23 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+     public void updateAccount(Account account) {
+        String sql = "UPDATE customer SET email = ?, gender = ?, avatar = ? WHERE phone=?";
 
-    public Account login(String phone, String pass) {
-        String sql = "SELECT * FROM account WHERE phone = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, phone);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                String storedHashedPassword = rs.getString("pass");
-                if (storedHashedPassword.equals(hashPassword(pass))) {
-                    Account account = new Account();
-                    account.setPhone(rs.getString("phone"));
-                    account.setPass(storedHashedPassword);
-                    account.setRoleId(rs.getInt("roleId"));
-                    account.setEmail(rs.getString("email"));
-                    account.setGender(rs.getBoolean("gender"));
-                    account.setIsActive(rs.getBoolean("isActive"));
-                    account.setAvatar(rs.getString("avatar"));
-                    return account;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String hashPassword(String password) {
-        try {
-            // Create a MessageDigest instance for SHA-256
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            // Add password bytes to digest
-            md.update(password.getBytes());
-            // Get the hashed bytes
-            byte[] bytes = md.digest();
-            // Convert bytes to a hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            // Get complete hashed password in hex format
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getEmail());
+            stmt.setBoolean(2, account.getGender());
+            stmt.setString(3, account.getAvatar());
+            stmt.setString(4, account.getPhone());
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
         }
     }
+
+    
+
+    
 
     public Account checkAccountExist(String phone) {
         try {
