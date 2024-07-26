@@ -4,15 +4,18 @@
  */
 package Controller.admin;
 
+import Dal.ServicesDAO;
 import Dal.ShopDAO;
 import Model.Order;
 import Model.OrderRevenue;
+import Model.Services;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
@@ -54,14 +57,34 @@ public class GetRevenueByMonthServlet extends HttpServlet {
                 listOrder.add(or);
             }
 
+            //lay ra du lieu cho bieu do tron thong ke so luot su dung dich vu
+            HashMap<String, Integer> mapServices = new HashMap<>();
+            ServicesDAO servicesDao = new ServicesDAO();
+            List<Services> listServices = servicesDao.GetAllServices();
+            for (Services service : listServices) {
+                mapServices.put(service.getName(), servicesDao.countServicesByMonth(service.getServicesId(), month));
+            }
+            //lay ra du lieu cho bieu do cot ti le doanh thu cho cua tung thang
+            HashMap<Integer, Integer> mapRevenue = new HashMap<>();
             List<Integer> listMonthRevenue = d.getMonthRevenue();
+            for (Integer month2 : listMonthRevenue) {
+                //lay ra doanh thu thang
+                int revenueMonth = d.getRevenueByMonth(month2);
+                //lay ra doanh thu nam
+                int revenueYear = d.getRevenueThisYear();
+                //lay ra phan tram cua thang so voi tong 
+                int percent = (int) (((double) revenueMonth / revenueYear) * 100);
+                mapRevenue.put(month2, percent);
+            }
+            request.setAttribute("mapRevenue", mapRevenue);
+            request.setAttribute("mapServices", mapServices);
             request.setAttribute("listMonthRevenue", listMonthRevenue);
             request.setAttribute("monthSelect", month);
             request.setAttribute("rm", revenueThisMonth);
             request.setAttribute("ry", revenueThisYear);
             request.setAttribute("nom", numberOrderThisMonth);
             request.setAttribute("listOrder", listOrder);
-            request.getRequestDispatcher("viewRevenue.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("viewrevenue").forward(request, response);
         }

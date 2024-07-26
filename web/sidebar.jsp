@@ -16,7 +16,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="viewOrder">
+        <a class="nav-link" href="viewrevenue">
             <i class="fas fa-tachometer-alt"></i> <!-- Icon Dashboard -->
             <span>Dashboard</span></a>
     </li>

@@ -24,7 +24,8 @@ public class RemindService implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         // Thực hiện các hoạt động khi ứng dụng được khởi động
         System.out.println("Ứng dụng đã khởi động!");
-        // Khởi tạo và lên lịch cho TimerTask ở đây        
+        // Khởi tạo và lên lịch cho TimerTask ở đây     
+        
         t.remindAppointment();
         v.remindVoucherStatus();
     }
@@ -34,6 +35,7 @@ public class RemindService implements ServletContextListener {
         // Thực hiện các hoạt động khi ứng dụng bị đóng
         System.out.println("Ứng dụng đã bị đóng!");
         // Hủy TimerTask hoặc thực hiện các công việc dọn dẹp tại đây
+        
         t.cancelReminder();
         v.cancelReminder();
     }

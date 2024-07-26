@@ -112,11 +112,13 @@ public class LoginController extends HttpServlet {
             // Tạo session
             HttpSession session = request.getSession();
             session.setAttribute("account", a);
+            session.removeAttribute("time");
+            session.removeAttribute("services");
             if (a.getRoleId() == 1) {
-            response.sendRedirect("viewOrder");
+                response.sendRedirect("viewrevenue");
             } else if (a.getRoleId() == 2) {
                 response.sendRedirect("employeesprofile");
-            } else{
+            } else {
                 response.sendRedirect("home");
             }
         }

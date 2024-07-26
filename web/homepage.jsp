@@ -395,13 +395,23 @@
             <h3 class="vr">Call Us: 012-3456-7890</h3>
             <div class="row justify-content-center">
                 <div class="col-md-10 ftco-animate">
-                    <form action="appointment" class="appointment-form">
-                        <div class="form-group">
-                            <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
-                        </div>
-                    </form>
-
-
+                    <c:if test="${sessionScope.account != null}">
+                        <form action="appointment" class="appointment-form">
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
+                    <c:if test="${sessionScope.account == null}">
+                        <form action="appointmentwithoutlogin" method="get" class="appointment-form" onsubmit="return validatePhoneNumber()">
+                            <div>
+                                <input type="text" name="phone" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -596,6 +606,17 @@
                                 });
                             });
                         });
+                        function validatePhoneNumber() {
+                            var phoneInput = document.getElementById("phone").value;
+                            var phonePattern = /^(03|05|07|08|09)\d{8}$/;
+
+                            if (!phonePattern.test(phoneInput)) {
+                                alert("Vui lòng nhập số điện thoại Việt Nam hợp lệ.");
+                                return false; // Ngăn không cho form submit
+                            }
+
+                            return true; // Cho phép form submit
+                        }
 </script>
 
 <!-- loader -->

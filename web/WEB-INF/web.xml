@@ -264,6 +264,18 @@
         <servlet-name>ConfimLeaveRequestsController</servlet-name>
         <servlet-class>Controller.admin.ConfimLeaveRequestsController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelOrderController</servlet-name>
+        <servlet-class>Controller.admin.CancelOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateAppointmentController</servlet-name>
+        <servlet-class>Controller.admin.CreateAppointmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
+        <servlet-class>Controller.customer.AppointmentWithoutLoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -386,7 +398,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewOrderDetatailUpdateController</servlet-name>
-        <url-pattern>/viewOrderDetatailUpdate</url-pattern>
+        <url-pattern>/viewOrderDetailUpdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckInController</servlet-name>
@@ -527,5 +539,17 @@
     <servlet-mapping>
         <servlet-name>ConfimLeaveRequestsController</servlet-name>
         <url-pattern>/yesRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOrderController</servlet-name>
+        <url-pattern>/CancelOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAppointmentController</servlet-name>
+        <url-pattern>/createAppointment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
+        <url-pattern>/appointmentwithoutlogin</url-pattern>
     </servlet-mapping>
 </web-app>

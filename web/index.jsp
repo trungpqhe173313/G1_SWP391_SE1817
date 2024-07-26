@@ -1,11 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : May 26, 2024, 1:31:11 AM
-    Author     : phamt
---%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,25 +11,101 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+
         <title>SB Admin 2 - Dashboard</title>
+        <style>
+            #totalMoney{
+                color: green;
+                font-size: 1.3rem;
+                font-weight: 600;
+
+            }
+            .sticky-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 1rem;
+                margin-top: 20px;
+            }
+            .content-wrapper {
+                padding-bottom: 80px; /* Add padding to the bottom to prevent content being hidden by the footer */
+            }
+        </style>
+        <!--bieu do hinh vong-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load("current", {packages: ["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Dịch vụ', 'Số lượt sử dụng'],
+            <c:forEach items="${mapServices.entrySet()}" var="entry">
+                    ['${entry.getKey()}', ${entry.getValue()}],
+            </c:forEach>
+                ]);
+
+                var options = {
+                    title: 'Thống kê số lượt sử dụng',
+                    pieHole: 0.4,
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(data, options);
+            }
+        </script>
+        <!--bieu do cot-->
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['bar']});
+            google.charts.setOnLoadCallback(drawStuff);
+
+            function drawStuff() {
+                var data = new google.visualization.arrayToDataTable([
+                    ['Tháng', 'Phần trăm'],
+            <c:forEach items="${mapRevenue.entrySet()}" var="entry">
+                    ["${entry.getKey()}", ${entry.getValue()}],
+            </c:forEach>
+                ]);
+
+                var options = {
+                    width: 450,
+                    legend: {position: 'none'},
+                    axes: {
+                        x: {
+                            0: {side: 'top', label: 'Tháng'} // Top x-axis.
+                        }
+                    },
+                    bar: {groupWidth: "90%"}
+                };
+
+                var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+                // Convert the Classic options to Material options.
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+            }
+            ;
+        </script>
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css"/>
+
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"/>
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     </head>
 
     <body id="page-top">
 
         <!-- Page Wrapper -->
         <div id="wrapper">
+
+            <!-- Sidebar -->
             <jsp:include page="sidebar.jsp"></jsp:include>
+                <!-- End of Sidebar -->
+
                 <!-- Content Wrapper -->
                 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -49,23 +120,6 @@
                                 <i class="fa fa-bars"></i>
                             </button>
 
-                            <!-- Topbar Search -->
-                            <form id="checkInForm" action="checkIn" 
-                                  class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" onsubmit="return validatePhoneNumber()">
-                                <div class="input-group">
-                                    <input type="tel" class="form-control bg-light border-0 small" placeholder="Nhập số điện thoại"
-                                           aria-label="Phone Number" aria-describedby="basic-addon2" name="phoneNumber" id="phoneNumber" 
-                                           pattern="(0|\+84)[3|5|7|8|9][0-9]{8}" inputmode="numeric" required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-
-
-
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">
@@ -78,7 +132,7 @@
                                     </a>
                                     <!-- Dropdown - Messages -->
                                     <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                         aria-labelledby="searchDropdown" style="background-color: #bf925b; border-color: #bf925b">
+                                         aria-labelledby="searchDropdown">
                                         <form class="form-inline mr-auto w-100 navbar-search">
                                             <div class="input-group">
                                                 <input type="text" class="form-control bg-light border-0 small"
@@ -94,41 +148,10 @@
                                     </div>
                                 </li>
 
-                                <!-- Nav Item - Alerts -->
-
-
                                 <div class="topbar-divider d-none d-sm-block"></div>
-                                <!<!--info acc -->
+
                                 <!-- Nav Item - User Information -->
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                        <img class="img-profile rounded-circle"
-                                             src="img/undraw_profile.svg">
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Settings
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Activity Log
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                    </div>
-                                </li>
+                            <jsp:include page="navadmin.jsp"></jsp:include>
 
                             </ul>
 
@@ -136,352 +159,494 @@
                         <!-- End of Topbar -->
 
                         <!-- Begin Page Content -->
-                        <div class="container-fluid">
+                        <div class="container-fluid" style="margin-bottom: 20px;">
 
                             <!-- Page Heading -->
-<!--                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 class="h3 mb-0 text-gray-800">Thống Kê Doanh Số</h1>
+                                <span class="select-fixff" >
+                                    Tháng
+                                    <select name="month" onchange="onMonthChange(this)" style="width: 5rem;
+                                            padding: 4px; border: 2px solid #636363;
+                                            border-radius: 5px">
+                                    <c:forEach items="${listMonthRevenue}" var="m">
+                                        <option value="${m}" ${m == monthSelect ? 'selected' : ''}>${m}</option>
+                                    </c:forEach>
+                                </select>
+                            </span>
 
-                            </div>-->
+                        </div>
 
-                            <!-- Content Row -->
-                            <div class="row">
+                        <!-- Content Row -->
+                        <div class="row">
 
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-primary shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                        Earnings (Monthly)</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                </div>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Doanh Thu (Theo Tháng)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${rm}đ</div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Earnings (Annual)</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Thợ rảnh</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${numberBarberFree}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Content Row -->
-
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Lịch hẹn</h6>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Doanh Thu (Theo Năm)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${ry}đ</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming" role="tab"
-                                               aria-controls="upcoming" aria-selected="true">Lịch hẹn sắp tới</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all"
-                                               aria-selected="false">Tất cả lịch hẹn</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled" role="tab"
-                                               aria-controls="cancelled" aria-selected="false">Lịch hẹn đã hủy</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
-                                            <div class="table-responsive mt-3">
-                                                <table class="table table-bordered" id="upcomingTable" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Mã lịch hẹn</th>
-                                                            <th>Thợ cắt</th>
-                                                            <th>Tên khách hàng</th>
-                                                            <th>Số điện thoại</th>
-                                                            <th>Ngày cắt</th>
-                                                            <th>Thời gian bắt đầu</th>
-                                                            <th>Trạng thái</th>
-                                                            <th>Thao tác</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <c:forEach items="${upcomingOrder}" var="uOder">
-                                                        <tr>
-                                                            <td>${uOder.codeOrder}</td>
-                                                            <c:forEach items="${ListEmployee}" var="e">
-                                                                <c:if test="${uOder.employeeId == e.employeeId}">
-                                                                    <td>${e.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:if test="${uOder.employeeId == 0}">
-                                                                <td>Trống</td>
-                                                            </c:if>
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${uOder.customerId == ls.customerId}">
-                                                                    <td>${ls.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
+                            </div>
 
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${uOder.customerId == ls.customerId}">
-                                                                    <td>${ls.phone}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>${uOder.orderDate}</td>
-                                                            <td>${uOder.shift.startTime}</td>
-                                                            <c:forEach items="${status}" var="s">
-                                                                <c:if test="${uOder.statusId == s.id}">
-                                                                    <td>${s.name}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>
-                                                                <button class='btn btn-info'>Info</button>
-                                                                <button class='btn btn-danger'>Cancel</button>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
-                                        <div class="table-responsive mt-3">
-                                            <table class="table table-bordered" id="allTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Mã lịch hẹn</th>
-                                                        <th>Thợ cắt</th>
-                                                        <th>Tên khách hàng</th>
-                                                        <th>Số điện thoại</th>
-                                                        <th>Ngày cắt</th>
-                                                        <th>Thời gian bắt đầu</th>
-                                                        <th>Trạng thái</th>
-                                                        <th>Thao tác</th>
-                                                    </tr>
-                                                </thead>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                    Tổng Số Đơn(Theo Tháng)
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${nom}</div>
+                                                    </div>
 
-                                                <tbody>
-                                                    <c:forEach items="${orders}" var="o">
-                                                        <tr>
-                                                            <td>${o.codeOrder}</td>
-                                                            <c:forEach items="${ListEmployee}" var="e">
-                                                                <c:if test="${o.employeeId == e.employeeId}">
-                                                                    <td>${e.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:if test="${o.employeeId == 0}">
-                                                                <td>Trống</td>
-                                                            </c:if>
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${o.customerId == ls.customerId}">
-                                                                    <td>${ls.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${o.customerId == ls.customerId}">
-                                                                    <td>${ls.phone}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>${o.orderDate}</td>
-                                                            <td>${o.shift.startTime}</td>
-                                                            <c:forEach items="${status}" var="s">
-                                                                <c:if test="${o.statusId == s.id}">
-                                                                    <td>${s.name}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>
-                                                                <button class='btn btn-info'>Info</button>
-                                                                <button class='btn btn-danger'>Cancel</button>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
-                                        <div class="table-responsive mt-3">
-                                            <table class="table table-bordered" id="cancelledTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Mã lịch hẹn</th>
-                                                        <th>Thợ cắt</th>
-                                                        <th>Tên khách hàng</th>
-                                                        <th>Số điện thoại</th>
-                                                        <th>Ngày cắt</th>
-                                                        <th>Thời gian bắt đầu</th>
-                                                        <th>Trạng thái</th>
-                                                        <th>Thao tác</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <c:forEach items="${cancelOrder}" var="co">
-                                                        <tr>
-                                                            <td>${co.codeOrder}</td>
-                                                            <c:forEach items="${ListEmployee}" var="e">
-                                                                <c:if test="${co.employeeId == e.employeeId}">
-                                                                    <td>${e.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:if test="${co.employeeId == 0}">
-                                                                <td>Trống</td>
-                                                            </c:if>
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${co.customerId == ls.customerId}">
-                                                                    <td>${ls.fullName}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                            <c:forEach items="${ListCustomer}" var="ls">
-                                                                <c:if test="${co.customerId == ls.customerId}">
-                                                                    <td>${ls.phone}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>${co.orderDate}</td>
-                                                            <td>${co.shift.startTime}</td>
-                                                            <c:forEach items="${status}" var="s">
-                                                                <c:if test="${co.statusId == s.id}">
-                                                                    <td>${s.name}</td>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <td>
-                                                                <button class='btn btn-info'>Info</button>
-                                                                <button class='btn btn-danger'>Cancel</button>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.container-fluid -->
+
+                        <!-- Content Row -->
+
+                        <div class="row">
+
+                            <!-- Area Chart -->
+                            <div class="col-xl-8 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Đơn Hàng (Trong Tháng)</h6>
+                                        <div class="dropdown no-arrow">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                 aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Dropdown Header:</div>
+                                                <a class="dropdown-item" href="exportrevenuetoexcel?month=${monthSelect}">Xuất doanh thu sang file Excel</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+    <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+        <div class="card-body" style="height: 100%; width: 100%;">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="dateFilter">Từ ngày</label>
+                    <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
                 </div>
-                <!-- End of Main Content -->
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2021</span>
+                <div class="col-md-3">
+                    <label for="dateFilter">Đến ngày</label>
+                    <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
+                </div>
+                <div class="col-md-2" style="align-items: end; display: flex;">
+                    <input type="button" class="form-control mr-3" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Lọc đơn">
+                    <input type="button" class="form-control" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Làm mới">
+                </div>
+            </div>
+            <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
+                    <thead>
+                        <tr>
+                            <th>Đơn Hàng</th>
+                            <th>Tên Khách Hàng</th>
+                            <th>SĐT</th>
+                            <th>Ngày Đặt Lịch</th>
+                            <th>Tổng Thanh Toán</th>
+                            <th>Trạng Thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                        <c:forEach items="${listOrder}" var="o">
+                            <tr>
+                                <td>${o.getOrder().id}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                    </div>
+                                </td>
+                                <td>${o.getCustomer().phone}</td>
+                                <td>${o.getOrder().orderDate}</td>
+                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                <td>${o.getStatus().name}</td>
+                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+                                </div>
+                            </div>
+
+                            <!-- Pie Chart -->
+                            <div class="col-xl-4 col-lg-5">
+                                <div class="card shadow mb-4" style="height: 40rem; max-height: 500px; width: 40rem;max-width:500px;">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Thống kê dịch vụ trong tháng</h6>
+
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body" id="donutchart" style="width: 100%; height: 100%;" >
+                                    </div>
+                                </div>
+                                <div class="card shadow mb-4" style="height: 40rem; max-height: 500px; width: 40rem;max-width:500px;">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Thống kê doanh thu</h6>
+
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body" id="top_x_div" style="width: 100%; height: 100%;" >
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </footer>
-                <!-- End of Footer -->
+
+
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+
+
+            <!-- End of Footer -->
 
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="#">Logout</a>
-                    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="logout">Logout</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-        <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <!-- Page level custom scripts -->
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-                                      $(document).ready(function () {
-                                          $('#upcomingTable').DataTable();
-                                          $('#allTable').DataTable();
-                                          $('#cancelledTable').DataTable();
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                                          $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                                              var target = $(e.target).attr("href"); // get activated tab
-                                              if (target === "#all") {
-                                                  $('#allTable').DataTable().ajax.reload(); // reload data for allTable
-                                              } else if (target === "#upcoming") {
-                                                  $('#upcomingTable').DataTable().ajax.reload(); // reload data for upcomingTable
-                                              } else if (target === "#cancelled") {
-                                                  $('#cancelledTable').DataTable().ajax.reload(); // reload data for cancelledTable
-                                              }
-                                          });
-                                      });
-                                      function validatePhoneNumber() {
-                                          const phoneInput = document.getElementById('phoneNumber').value;
-                                          const phonePattern = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                                          if (!phonePattern.test(phoneInput)) {
-                                              alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại di động Việt Nam hợp lệ.');
-                                              return false; // Ngăn không cho form submit
-                                          }
-                                          return true; // Cho phép form submit
-                                      }
-        </script>
-    </body>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+    <!-- Page level custom scripts -->
+    <script>
+                                                            function onMonthChange(selectElement) {
+                                                                var selectedMonth = selectElement.value;
+                                                                window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
+                                                            }
+                                                            $(document).ready(function () {
+                                                                $('#dataTable').DataTable();
+                                                            });
+    </script>
+
+</body>
 
 </html>

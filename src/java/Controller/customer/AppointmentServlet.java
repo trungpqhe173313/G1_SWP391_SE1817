@@ -12,6 +12,7 @@ import Dal.ShiftsDAO;
 import Dal.ShopDAO;
 import Dal.StoreDAO;
 import Model.Account;
+import Model.Customer;
 import Model.Order;
 import Model.Services;
 import Model.ServicesBooking;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -49,71 +51,70 @@ public class AppointmentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("account") == null) {
-            request.getRequestDispatcher("login").forward(request, response);
-        } else {
-            StoreDAO sd = new StoreDAO();
-            Store store = sd.getStore();
-            //kiem tra xem cua hang co trong trang thai hoat dong khong
-            if (store.isIsActive() == true) {
-                ShiftsDAO d = new ShiftsDAO();
-                List<String> listDate = new ArrayList<>();
+        StoreDAO sd = new StoreDAO();
+        Store store = sd.getStore();
+        //kiem tra xem cua hang co trong trang thai hoat dong khong
+        if (store.isIsActive() == true) {
+            ShiftsDAO d = new ShiftsDAO();
+            List<String> listDate = new ArrayList<>();
 
 // Lấy ngày hôm nay
-                LocalDate today = LocalDate.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String todayStr = today.format(formatter);
-                listDate.add(todayStr);
+            LocalDateTime today = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String todayStr = today.format(formatter);
+            listDate.add(todayStr);
 
 // Lấy hai ngày tiếp theo
-                for (int i = 0; i < 2; i++) {
-                    today = today.plusDays(1);
-                    String nextDayStr = today.format(formatter);
-                    listDate.add(nextDayStr);
-                }
-                List<Shift> listAllShift = null;
-                List<Shift> listShift;
-                if (session.getAttribute("time") == null) {
-                    //Lay ra tat ca cac ca 
-                    listAllShift = d.getAllShiftFromNow();
-                    //tao danh sach de luu nhung ca trong
-                    listShift = listShiftEmpty(listAllShift, todayStr);
-
-                    session.setAttribute("time", new Time(todayStr, listShift));
-                } else if (session.getAttribute("time") != null) {
-                    Time time = (Time) session.getAttribute("time");
-                    //Lay ra tat ca cac ca 
-                    if (time.getDate().equals(todayStr)) {
-                        listAllShift = d.getAllShiftFromNow();
-                    } else {
-                        listAllShift = d.getAll();
-                    }
-                    //tao danh sach de luu nhung ca trong
-                    listShift = listShiftEmpty(listAllShift, time.getDate());
-                    session.setAttribute("time", new Time(time.getDate(), listShift));
-
-                }
-                if (session.getAttribute("services") != null) {
-                    ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
-                    List<Shift> listShiftNeed = new ArrayList<>();
-                    int servicesSize = servicesBooking.getListServices().size();
-                    if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
-                        for (int i = 0; i < servicesSize; i++) {
-                            listShiftNeed.add(listAllShift.get(i));
-                        }
-                        request.setAttribute("listShiftNeed", listShiftNeed);
-                    } else {
-                        request.setAttribute("mss", "Hôm nay đã hết ca vui lòng chọn ngày khác");
-                    }
-                }
-
-                request.setAttribute("listDate", listDate);
-                request.getRequestDispatcher("booking.jsp").forward(request, response);
-            } else {
-                request.setAttribute("store", store);
-                request.setAttribute("checkNotActive", true );
-                request.getRequestDispatcher("booking.jsp").forward(request, response);
+            for (int i = 0; i < 2; i++) {
+                today = today.plusDays(1);
+                String nextDayStr = today.format(formatter);
+                listDate.add(nextDayStr);
             }
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String formattedTime = today.format(timeFormatter);
+            List<Shift> listAllShift = null;
+            List<Shift> listShift;
+            if (session.getAttribute("time") == null) {
+                //Lay ra tat ca cac ca 
+                listAllShift = d.getAllShiftFromNow(formattedTime);
+                //tao danh sach de luu nhung ca trong
+                listShift = listShiftEmpty(listAllShift, todayStr);
+
+                session.setAttribute("time", new Time(todayStr, listShift));
+            } else if (session.getAttribute("time") != null) {
+                Time time = (Time) session.getAttribute("time");
+                //Lay ra tat ca cac ca 
+                if (time.getDate().equals(todayStr)) {
+                    listAllShift = d.getAllShiftFromNow(formattedTime);
+                } else {
+                    listAllShift = d.getAll();
+                }
+                //tao danh sach de luu nhung ca trong
+                listShift = listShiftEmpty(listAllShift, time.getDate());
+                session.setAttribute("time", new Time(time.getDate(), listShift));
+
+            }
+            if (session.getAttribute("services") != null) {
+                ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
+                List<Shift> listShiftNeed = new ArrayList<>();
+                int servicesSize = servicesBooking.getListServices().size();
+                if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
+                    for (int i = 0; i < servicesSize; i++) {
+                        listShiftNeed.add(listAllShift.get(i));
+                    }
+                    request.setAttribute("listShiftNeed", listShiftNeed);
+                } else {
+                    request.setAttribute("mss", "Hôm nay đã hết ca vui lòng chọn ngày khác");
+                }
+            }
+
+            request.setAttribute("listDate", listDate);
+            request.getRequestDispatcher("booking.jsp").forward(request, response);
+        } //neu cua hang dang trong trang thai khong hoat dong
+        else {
+            request.setAttribute("store", store);
+            request.setAttribute("checkNotActive", true);
+            request.getRequestDispatcher("booking.jsp").forward(request, response);
         }
 
     }
@@ -144,10 +145,55 @@ public class AppointmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String date_str = request.getParameter("date");
         String shift_str = request.getParameter("shifts");
         try {
-            HttpSession session = request.getSession();
+
+            CustomerDAO cd = new CustomerDAO();
+            OrderDAO d = new OrderDAO();
+            StoreDAO storeDao = new StoreDAO();
+            Store store = storeDao.getStore();
+            String phone = "";
+            //kiem tra xem cua hang co o trang thai hoat dong khong
+            if (store.isIsActive() == false) {
+                doGet(request, response);
+                return;
+            }
+            //kiem tra xem co dang nhap chua
+            if (session.getAttribute("account") != null) {
+                //neu da dang nhap thi cho phone = so dien thoại cua account;
+                Account a = (Account) session.getAttribute("account");
+                phone = a.getPhone();
+            }
+            //kiem tra xem neu nguoi dung chua dang nhap
+            if (session.getAttribute("account") == null) {
+                //kiem tra xem session phone chua ton tai
+                if (session.getAttribute("phone") == null) {
+                    request.setAttribute("mss", "vui lòng điền số điện thoại");
+                    request.getRequestDispatcher("service").forward(request, response);
+                    return;
+                }
+                //neu da ton tai thi cho phone = session phone
+                phone = (String) session.getAttribute("phone");
+            }
+            //kiem tra sdt da ton tai trong bang customer chua
+            if (cd.getCustomerByP(phone) == null) {
+                //neu chua co thi add sdt vao bang customer
+                Customer newCus = new Customer();
+                newCus.setPhone(phone);
+                cd.addCustomer(newCus);
+
+            }
+            //lay customer bang so dien thoai
+            Customer cus = cd.getCustomerByP(phone);
+            //kiem tra xem khach hang co don chua hoan thanh hom dũo chon ko
+            if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId(), date_str) != 0) {
+                request.setAttribute("mss", "bạn đã có đơn chưa hoàn thành");
+                request.getRequestDispatcher("service").forward(request, response);
+                return;
+            }
+
             ServicesBooking sb = (ServicesBooking) session.getAttribute("services");
             ShiftsDAO sd = new ShiftsDAO();
             List<Shift> listShiftNeed = sd.getAllNextShift(Integer.parseInt(shift_str),
@@ -173,13 +219,14 @@ public class AppointmentServlet extends HttpServlet {
                 request.setAttribute("listDate", listDate);
                 request.setAttribute("mss", "Đặt Không Thành Công Không đủ ca trống vui long chọn ca khác hoặc ngày khác");
                 request.getRequestDispatcher("booking.jsp").forward(request, response);
+                return;
             } else {
-                CustomerDAO cd = new CustomerDAO();
-                Account a = (Account) session.getAttribute("account");
-                int customerId = cd.getCustomerByP(a.getPhone()).getCustomerId();
+                //lay ra id cua customer
+                int customerId = cus.getCustomerId();
 
-                OrderDAO d = new OrderDAO();
+                //tao ra ordercode từ DAL.OrderDAO
                 String orderCode = d.generateOrderCode();
+
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
                 Date date = new java.sql.Date(sdf.parse(date_str).getTime());
@@ -239,6 +286,28 @@ public class AppointmentServlet extends HttpServlet {
             }
         }
         return listShiftEmpty;
+    }
+
+    /**
+     * ham de kiem tra xem co phai sdt formart viet nam khong
+     *
+     * @param phoneNumber - string phone to check
+     * @return boolean
+     */
+    public static boolean isValidVietnamesePhoneNumber(String phoneNumber) {
+        // Kiểm tra nếu chuỗi là null hoặc rỗng
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            return false;
+        }
+
+        // Xóa tất cả dấu cách trong chuỗi
+        phoneNumber = phoneNumber.replaceAll("\\s", "");
+
+        // Định nghĩa pattern cho số điện thoại Việt Nam
+        String phonePattern = "^(03|05|07|08|09)\\d{8}$";
+
+        // Kiểm tra xem chuỗi có khớp với pattern không
+        return phoneNumber.matches(phonePattern);
     }
 
     /**
