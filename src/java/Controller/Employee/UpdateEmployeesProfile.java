@@ -19,6 +19,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.SQLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
+
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, //1mb
         maxFileSize = 1024 * 1024 * 10,
@@ -83,22 +88,23 @@ public class UpdateEmployeesProfile extends HttpServlet {
         String phone = request.getParameter("phone");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
-                String currentImage = request.getParameter("avatar"); // Hình ảnh hiện tại
+        String currentAvatar = request.getParameter("currentAvatar"); // Hình ảnh hiện tại
         
-        // Lớp helper để xử lý tệp tải lên
-        addimg imgHelper = new addimg();
-        Part part = request.getPart("avatar");
-        String fileName = imgHelper.extractFileName(part);
-        fileName = new File(fileName).getName();
+        // Xử lý tệp tải lên
+        Part avatarPart = request.getPart("avatar");
+        String avatarFileName = Paths.get(avatarPart.getSubmittedFileName()).getFileName().toString();
         
-        // Kiểm tra nếu có tệp tải lên mới
-        if (fileName != null && !fileName.isEmpty()) {
-            String uploadPath = request.getServletContext().getRealPath("/") + "img/service" + File.separator + fileName;
-            part.write(uploadPath);
+        String avatarFilePath = currentAvatar; // Sử dụng hình ảnh hiện tại theo mặc định
+
+        if (avatarPart != null && avatarPart.getSize() > 0) {
+            avatarFilePath = getServletContext().getRealPath("/img/service/") + avatarFileName;
+            try (InputStream avatarContent = avatarPart.getInputStream()) {
+                Files.copy(avatarContent, Paths.get(avatarFilePath), StandardCopyOption.REPLACE_EXISTING);
+            }
         }
 
-        // Sử dụng hình ảnh mới nếu có, nếu không sử dụng hình ảnh hiện tại
-        String avatar = (fileName != null && !fileName.isEmpty()) ? fileName : currentImage;
+        // Sử dụng tên tệp hình ảnh mới nếu có, nếu không sử dụng hình ảnh hiện tại
+        String avatar = (avatarFileName != null && !avatarFileName.isEmpty()) ? avatarFileName : currentAvatar;
 
         AccountDAO accountDAO = new AccountDAO();
         EmployeesDAO employeesDAO = new EmployeesDAO();
