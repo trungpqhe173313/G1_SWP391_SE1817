@@ -26,22 +26,27 @@
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="employeesprofile">
-            <i class="fas fa-fw fa-table"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Thông Tin Cá Nhân</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-table"></i>
+        <a class="nav-link" href="orderinfoemployee">
+            <i class="fas fa-fw fa-briefcase"></i>
             <span>Công Việc</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="historyorder">
+            <i class="fas fa-fw fa-briefcase"></i>
+            <span>Lịch Sử Công Việc</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="sendleaverequest">
-            <i class="fas fa-fw fa-table"></i>
+            <i class="fas fa-fw fa-calendar-alt"></i>
             <span>Đơn xin nghỉ phép</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="logout">
-            <i class="fas fa-fw fa-table"></i>
+            <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>Đăng xuất</span></a>
     </li>
 
