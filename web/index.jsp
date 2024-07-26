@@ -120,6 +120,10 @@
                                 <i class="fa fa-bars"></i>
                             </button>
 
+                            <!-- Topbar Search -->
+                            <jsp:include page="checkin.jsp"></jsp:include>
+
+
 
                             <!-- Topbar Navbar -->
                             <ul class="navbar-nav ml-auto">

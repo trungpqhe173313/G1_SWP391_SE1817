@@ -68,7 +68,7 @@ public class CheckInController extends HttpServlet {
             if (order == null) {
                 out.println("<script>");
                 out.println("Swal.fire({");
-                out.println("icon: 'error',");
+                out.println("icon: 'info',");
                 out.println("title: 'Chưa có lịch',");
                 out.println("text: 'Khách hàng này chưa có lịch hẹn. Bạn có muốn đặt lịch mới không?',");
                 out.println("showCancelButton: true,");
@@ -88,7 +88,7 @@ public class CheckInController extends HttpServlet {
                 out.println("Swal.fire({");
                 out.println("icon: 'success',");
                 out.println("title: 'Thành công',");
-                out.println("text: 'Đang chuyển hướng đến chi tiết đơn hàng.'");
+                out.println("text: 'Đang chuyển hướng đến chi tiết lịch đặt.'");
                 out.println("}).then((result) => {");
                 out.println("if (result.isConfirmed) {");
                 out.println("window.location.href = 'viewOrderDetailUpdate?Oid=" + oId + "';");

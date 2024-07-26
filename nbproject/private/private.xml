@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project_SWP/src/java/Model/Customer.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/CustomerDAO.java</file>
-            <file>file:/D:/Project_SWP/web/booking.jsp</file>
-            <file>file:/D:/Project_SWP/web/BookingSucces.jsp</file>
-            <file>file:/D:/Project_SWP/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/Project_SWP/web/css/style.css</file>
-            <file>file:/D:/Project_SWP/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Project_SWP/web/homepage.jsp</file>
+            <file>file:/E:/G1_SWP391_SE1817/web/createAppointment.jsp</file>
+            <file>file:/E:/G1_SWP391_SE1817/src/java/Controller/customer/AppointmentServlet.java</file>
+            <file>file:/E:/G1_SWP391_SE1817/nbproject/build-impl.xml</file>
+            <file>file:/E:/G1_SWP391_SE1817/src/java/Dal/DBContext.java</file>
+            <file>file:/E:/G1_SWP391_SE1817/src/java/Controller/admin/CreateAppointmentController.java</file>
         </group>
     </open-files>
 </project-private>

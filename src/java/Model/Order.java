@@ -42,6 +42,16 @@ public class Order {
         this.codeOrder = codeOrder;
         this.customerId = customerId;
         this.statusId = statusId;
+        this.employeeId = 0;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+    }
+
+    public Order(String codeOrder, int customerId, int employeeId, int statusId, Date orderDate, int totalAmount) {
+        this.codeOrder = codeOrder;
+        this.customerId = customerId;
+        this.employeeId = employeeId;
+        this.statusId = statusId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
     }
