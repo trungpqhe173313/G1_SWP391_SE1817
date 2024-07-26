@@ -198,7 +198,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="img">Hình ảnh</label>
-                                                <input type="file" id="img" name="img" class="form-control-file mx-auto d-block">
+                                                <input type="file" id="img" name="img" value="testUpload" class="form-control-file mx-auto d-block">
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" value="Thêm" class="btn btn-primary btn-block"style="background-color: #bf925b;">

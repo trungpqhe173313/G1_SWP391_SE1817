@@ -219,7 +219,24 @@
                                         <div class="table-responsive" style="max-height: 860px;
                                              overflow-y: scroll; font-size: 1.1rem">
                                             <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Từ ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Đến ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-2" style="align-items: end; display: flex;">
+                                                        <input type="button" class="form-control mr-3" style="width: 100px;
+                                                               color: white; background-color:#4E73DF; border: none; " value="Lọc đơn">
+                                                        <input type="button" class="form-control" style="width: 100px;
+                                                               color: white; background-color:#4E73DF; border: none; " value="Làm mới">
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive">
+
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
                                                            style=" text-align: center;">
                                                         <thead>
@@ -373,49 +390,49 @@
 
         <!-- Page level custom scripts -->
         <script>
-                                        // Set new default font family and font color to mimic Bootstrap's default styling
-                                        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-                                        Chart.defaults.global.defaultFontColor = '#858796';
+                                            // Set new default font family and font color to mimic Bootstrap's default styling
+                                            Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                                            Chart.defaults.global.defaultFontColor = '#858796';
 
-                                        // Pie Chart Example
-                                        var ctx = document.getElementById("myPieChart");
-                                        var myPieChart = new Chart(ctx, {
-                                            type: 'doughnut',
-                                            data: {
-                                                labels: ["Direct", "Referral", "Social"],
-                                                datasets: [{
-                                                        data: [55, 30, 15, 30],
-                                                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','red'],
-                                                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf','red'],
-                                                        hoverBorderColor: "rgba(234, 236, 244, 1)",
-                                                    }],
-                                            },
-                                            options: {
-                                                maintainAspectRatio: false,
-                                                tooltips: {
-                                                    backgroundColor: "rgb(255,255,255)",
-                                                    bodyFontColor: "#858796",
-                                                    borderColor: '#dddfeb',
-                                                    borderWidth: 1,
-                                                    xPadding: 15,
-                                                    yPadding: 15,
-                                                    displayColors: false,
-                                                    caretPadding: 10,
+                                            // Pie Chart Example
+                                            var ctx = document.getElementById("myPieChart");
+                                            var myPieChart = new Chart(ctx, {
+                                                type: 'doughnut',
+                                                data: {
+                                                    labels: ["Direct", "Referral", "Social"],
+                                                    datasets: [{
+                                                            data: [55, 30, 15, 30],
+                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', 'red'],
+                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', 'red'],
+                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                        }],
                                                 },
-                                                legend: {
-                                                    display: false
+                                                options: {
+                                                    maintainAspectRatio: false,
+                                                    tooltips: {
+                                                        backgroundColor: "rgb(255,255,255)",
+                                                        bodyFontColor: "#858796",
+                                                        borderColor: '#dddfeb',
+                                                        borderWidth: 1,
+                                                        xPadding: 15,
+                                                        yPadding: 15,
+                                                        displayColors: false,
+                                                        caretPadding: 10,
+                                                    },
+                                                    legend: {
+                                                        display: false
+                                                    },
+                                                    cutoutPercentage: 80,
                                                 },
-                                                cutoutPercentage: 80,
-                                            },
-                                        });
+                                            });
 
-                                        function onMonthChange(selectElement) {
-                                            var selectedMonth = selectElement.value;
-                                            window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
-                                        }
-                                        $(document).ready(function () {
-                                            $('#dataTable').DataTable();
-                                        });
+                                            function onMonthChange(selectElement) {
+                                                var selectedMonth = selectElement.value;
+                                                window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
+                                            }
+                                            $(document).ready(function () {
+                                                $('#dataTable').DataTable();
+                                            });
         </script>
 
     </body>

@@ -140,8 +140,6 @@
                     <h3 class="vr">Call Us: 012-3456-7890</h3>
                     <div class="row justify-content-center">
                         <div class="col-md-10 ftco-animate">
-                            <!--kiem tra dang nhap chua-->
-                        <c:if test="${sessionScope.account != null}">
                             <c:set value="${sessionScope.account}" var="a" />
                             <!--kiem tra xem của hang co hoat dong khong--> 
                             <c:if test="${checkNotActive == null}">
@@ -149,7 +147,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <h5 class="mb-4">Chọn dịch vụ</h5>
-                                            <div class="form-group">
+                                            <div class="form-group" style="width: 400px">
                                                 <!--kiem tra neu chua chon dịch vụ-->
                                                 <c:if test="${sessionScope.services == null}">
                                                     <a href="servicesbooking" class="form-control text-center d-flex align-items-center justify-content-start" style="height: 100px;">
@@ -174,10 +172,11 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <h5 class="mb-4">Chọn ngày, giờ & barber</h5>
-                                            <div id="appointment-fields">
+                                            <div id="appointment-fields" class="form-group" style="width: 400px">
                                                 <!--kiem tra neu chua chon dich vu-->
                                                 <c:if test="${sessionScope.services == null}">
-                                                    <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" readonly class="form-control">
+                                                    <input type="text" id="please-select-service" value="Vui lòng chọn dịch vụ trước" 
+                                                           readonly style="width: 100%;">
                                                 </c:if>
                                                     <!--kiem tra neu chua chon dich vu-->
                                                 <c:if test="${sessionScope.services != null}">
@@ -237,14 +236,7 @@
                                 </div>
                             </c:if>
 
-                        </c:if>
-                        <c:if test="${sessionScope.account == null}">
-                            <form action="login" class="appointment-form">
-                                <div class="form-group">
-                                    <input type="submit" value="Make an Appointment" class="btn btn-primary">
-                                </div>
-                            </form>
-                        </c:if>
+                       
                     </div>
                 </div>
             </div>
