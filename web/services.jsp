@@ -146,8 +146,8 @@
             <div class="container">
                 <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
                     <div class="col-md-9 ftco-animate pb-5 text-center">
-                        <h2 class="mb-0 bread">Services</h2>
-                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Services</span></p>
+                        <h2 class="mb-0 bread">Dịch Vụ</h2>
+                        <p class="breadcrumbs"><span class="mr-2"><a href="homepage.jsp">Trang chủ <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Dịch Vụ</span></p>
                     </div>
                 </div>
             </div>
@@ -158,9 +158,9 @@
             <div class="container">
                 <div class="row justify-content-center pb-3">
                     <div class="col-md-10 heading-section text-center ftco-animate">
-                        <span class="subheading">Services</span>
-                        <h2 class="mb-4">Services Menu</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                        <span class="subheading">Dịch Vụ</span>
+                        <h2 class="mb-4">Menu Dịch Vụ</h2>
+                        
                     </div>
                 </div>
 
@@ -214,9 +214,9 @@
         <div class="container ftco-relative">
             <div class="row justify-content-center pb-3">
                 <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Booking</span>
-                    <h2 class="mb-4">Make an Appointment</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                    <span class="subheading">Đặt lịch</span>
+                    <h2 class="mb-4">Đặt lịch ngay</h2>
+<!--                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>-->
                 </div>
             </div>
             <h3 class="vr">Call Us: 012-3456-7890</h3>
@@ -246,7 +246,7 @@
         </div>
     </section>
 
-    <section class="ftco-section ftco-pricing">
+<!--    <section class="ftco-section ftco-pricing">
         <div class="container">
             <div class="row justify-content-center pb-3">
                 <div class="col-md-10 heading-section text-center ftco-animate">
@@ -322,7 +322,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
 
     <footer class="ftco-footer ftco-section">

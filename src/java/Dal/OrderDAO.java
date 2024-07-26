@@ -167,17 +167,18 @@ public class OrderDAO extends DBContext {
         return id;
     }
 
-    public int countOrderNotCompleteByCustomerId(int id) {
+    public int countOrderNotCompleteByCustomerId(int id, String date) {
         int count = 0;
         try {
 
             String sql = "SELECT COUNT(*)\n"
                     + "FROM Orders\n"
                     + "WHERE customerId = ?\n"
-                    + "  AND orderDate = CAST(GETDATE() AS DATE)\n"
+                    + "  AND orderDate = ?\n"
                     + "  AND statusID NOT IN (4, 5);";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
+            stm.setString(2, date);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 count = rs.getInt(1);
