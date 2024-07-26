@@ -20,7 +20,7 @@
             <input type="hidden" name="currentImage" value="${blog.image}"/>
             <div class="form-group">
                 <label for="title">Tiêu đề:</label>
-                <input type="text" class="form-control" id="title" name="title" value="${blog.title}" required>
+                <input type="text" class="form-control" id="title" name="title" value="${blog.title}" maxlength="200" required>
             </div>
             <div class="form-group">
                 <label for="content">Nội dung:</label>

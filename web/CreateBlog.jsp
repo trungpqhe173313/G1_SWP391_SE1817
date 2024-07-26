@@ -18,7 +18,7 @@
         <form action="createblog" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Tiêu đề:</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title" maxlength="200" required>
             </div>
             <div class="form-group">
                 <label for="content">Nội dung:</label>
