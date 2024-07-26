@@ -3,10 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/src/java/Controller/common/LoginController.java</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/web/signup.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/web/resignationEmployee.jsp</file>
-            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/src/java/Controller/Employee/SendLeaveRequestController.java</file>
+            <file>file:/C:/Users/admin/Documents/GitHub/G1_SWP391_SE1817/src/java/Controller/customer/UpdateCustomerProfileController.java</file>
         </group>
     </open-files>
 </project-private>
