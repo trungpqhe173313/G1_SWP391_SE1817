@@ -176,10 +176,10 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Tạo lịch hẹn mới</h6>
                                 </div>
-                                <form id="createAppointmentForm" action="createAppointment" method="post" onsubmit="return submitForm(event)">
+                                <form id="createAppointmentForm" action="createAppointment" method="post" >
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại</label>
-                                        <input type="text" id="phone" name="phone" value="${phone}" readonly>
+                                        <input type="text" id="phone" name="phone" value="${phone}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Tên khách hàng</label>
@@ -261,49 +261,52 @@
         <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
-                                    $(document).ready(function () {
-                                        $('#services').select2({
-                                            placeholder: "Chọn dịch vụ",
-                                            allowClear: true
-                                        });
-                                    });
+            $(document).ready(function () {
+                $('#services').select2({
+                    placeholder: "Chọn dịch vụ",
+                    allowClear: true
+                });
 
-                                    function submitForm(event) {
-                                        event.preventDefault();
-                                        const form = document.getElementById('createAppointmentForm');
-                                        const formData = new FormData(form);
-                                        fetch(form.action, {
-                                            method: 'POST',
-                                            body: formData
-                                        })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        Swal.fire({
-                                                            icon: 'success',
-                                                            title: 'Thành công',
-                                                            text: 'Lịch hẹn đã được tạo mới thành công.'
-                                                        }).then(() => {
-                                                            window.location.href = 'appointmentList.jsp'; // Đường dẫn đến trang danh sách lịch hẹn
-                                                        });
-                                                    } else {
-                                                        Swal.fire({
-                                                            icon: 'error',
-                                                            title: 'Lỗi',
-                                                            text: data.message
-                                                        });
-                                                    }
-                                                })
-                                                .catch(error => {
-                                                    Swal.fire({
-                                                        icon: 'error',
-                                                        title: 'Lỗi',
-                                                        text: 'Có lỗi xảy ra. Vui lòng thử lại sau.'
-                                                    });
-                                                });
-                                        return false;
-                                    }
+                // Gửi form bằng AJAX và hiển thị thông báo SweetAlert2
+                $('#createAppointmentForm').submit(function (e) {
+                    e.preventDefault(); // Ngăn chặn hành động submit mặc định
 
+                    $.ajax({
+                        type: 'POST',
+                        url: 'createAppointment',
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: response.message,
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href = 'getOrderManager'; // Đường dẫn đến trang danh sách lịch hẹn
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi!',
+                                    text: response.message + (response.error ? ' Chi tiết: ' + response.error : ''),
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                });
+            });
         </script>
+
     </body>
 </html>

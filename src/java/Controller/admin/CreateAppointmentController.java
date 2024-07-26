@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import com.google.gson.JsonObject;
+import java.util.Arrays;
 
 /**
  *
@@ -133,12 +134,17 @@ public class CreateAppointmentController extends HttpServlet {
                 jsonResponse.addProperty("message", "Không đủ ca làm việc trống cho dịch vụ đã chọn.");
             } else {
                 List<Services> Lservices = new ServicesDAO().GetAllServices();
-                Customer customer = new Customer();
-                customer.setFullName(name);
-                customer.setPhone(phone);
-                new CustomerDAO().addCustomer(customer);
+                //kiểm tra xem có tồn tại khách hàng ko
+                Customer Checkcustomer = new CustomerDAO().getCustomerByP(phone);
+                if (Checkcustomer == null) {
+                    Customer customer = new Customer();
+                    customer.setFullName(name);
+                    customer.setPhone(phone);
+                    new CustomerDAO().addCustomer(customer);
+                }
+                //lấy ra id customer mới nhất
                 Customer cus = new CustomerDAO().getCustomerByP(phone);
-
+                
                 java.sql.Date sqlDate = null;
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -148,6 +154,7 @@ public class CreateAppointmentController extends HttpServlet {
                     e.printStackTrace();
                     jsonResponse.addProperty("success", false);
                     jsonResponse.addProperty("message", "Lỗi khi phân tích ngày tháng.");
+                    jsonResponse.addProperty("error", e.getMessage());
                     out.print(jsonResponse.toString());
                     out.close();
                     return;
@@ -169,7 +176,7 @@ public class CreateAppointmentController extends HttpServlet {
                 if (Eid == null || Eid.isEmpty()) {
                     o = new Order(orderCodee, cus.getCustomerId(), 2, sqlDate, total);
                 } else {
-                    o = new Order(orderCodee, cus.getCustomerId(), 3, sqlDate, total);
+                    o = new Order(orderCodee, cus.getCustomerId(), Integer.parseInt(Eid), 3, sqlDate, total);
                 }
                 new OrderDAO().AddOrder(o);
 
@@ -188,6 +195,7 @@ public class CreateAppointmentController extends HttpServlet {
             e.printStackTrace();
             jsonResponse.addProperty("success", false);
             jsonResponse.addProperty("message", "Có lỗi xảy ra khi tạo lịch hẹn mới.");
+            jsonResponse.addProperty("error", e.getMessage()); // Thêm chi tiết lỗi vào phản hồi JSON
         } finally {
             out.print(jsonResponse.toString());
             out.close();
