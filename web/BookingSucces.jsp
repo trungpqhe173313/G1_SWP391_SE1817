@@ -99,7 +99,7 @@
                                 <tr scope="row" style="font-size: 1rem;">
                                 <td style="font-size: 1.1rem; font-weight: 500;">
                                     <c:forEach items="${listServices}" var="s">
-                                        - ${s.getName()} </br>
+                                        ${s.getName()} </br>
                                     </c:forEach>
                                 </td>
                                 <td>

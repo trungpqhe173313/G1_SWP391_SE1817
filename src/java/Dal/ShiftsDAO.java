@@ -55,13 +55,14 @@ public class ShiftsDAO extends DBContext {
         return s;
     }
 
-    public List<Shift> getAllShiftFromNow() {
+    public List<Shift> getAllShiftFromNow( String time) {
         List<Shift> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[startTime]\n"
                 + "  FROM [dbo].[shift]\n"
-                + "  WHERE CONVERT(TIME, [startTime], 120) >= CONVERT(TIME, GETDATE(), 120);";
+                + "  WHERE CONVERT(TIME, [startTime], 120) >= CONVERT(TIME, ?, 120);";
         try (PreparedStatement stm = connection.prepareStatement(sql);) {
+            stm.setString(1, time);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Shift s = new Shift(rs.getInt(1), rs.getString(2));

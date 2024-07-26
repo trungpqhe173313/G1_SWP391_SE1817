@@ -5,12 +5,11 @@
         <group>
             <file>file:/D:/Project_SWP/src/java/Model/Customer.java</file>
             <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentServlet.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/common/LoginController.java</file>
             <file>file:/D:/Project_SWP/src/java/Dal/CustomerDAO.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/Service/ServiceControl.java</file>
             <file>file:/D:/Project_SWP/web/booking.jsp</file>
+            <file>file:/D:/Project_SWP/web/BookingSucces.jsp</file>
             <file>file:/D:/Project_SWP/src/java/Dal/OrderDAO.java</file>
-            <file>file:/D:/Project_SWP/src/java/Controller/customer/AppointmentWithoutLoginServlet.java</file>
+            <file>file:/D:/Project_SWP/web/css/style.css</file>
             <file>file:/D:/Project_SWP/web/WEB-INF/web.xml</file>
             <file>file:/D:/Project_SWP/web/homepage.jsp</file>
         </group>
