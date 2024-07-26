@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import com.google.gson.JsonObject;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 /**
@@ -80,7 +81,15 @@ public class CreateAppointmentController extends HttpServlet {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String todayStr = today.format(formatter);
-        List<Shift> Lshift = listShiftEmpty(new ShiftsDAO().getAllShiftFromNow(), todayStr);
+        
+        // Lấy thời gian hiện tại
+        LocalTime currentTime = LocalTime.now();
+        
+        // Định dạng giờ phút theo mẫu mong muốn
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = currentTime.format(timeFormatter);
+        List<Shift> Lshift = listShiftEmpty(new ShiftsDAO().getAllShiftFromNow(formattedTime), todayStr);
+        
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
         LocalDate dateNow = LocalDate.now();
         request.setAttribute("phone", phone);
