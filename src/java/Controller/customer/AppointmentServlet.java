@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -58,7 +59,7 @@ public class AppointmentServlet extends HttpServlet {
             List<String> listDate = new ArrayList<>();
 
 // Lấy ngày hôm nay
-            LocalDate today = LocalDate.now();
+            LocalDateTime today = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String todayStr = today.format(formatter);
             listDate.add(todayStr);
@@ -69,11 +70,13 @@ public class AppointmentServlet extends HttpServlet {
                 String nextDayStr = today.format(formatter);
                 listDate.add(nextDayStr);
             }
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String formattedTime = today.format(timeFormatter);
             List<Shift> listAllShift = null;
             List<Shift> listShift;
             if (session.getAttribute("time") == null) {
                 //Lay ra tat ca cac ca 
-                listAllShift = d.getAllShiftFromNow();
+                listAllShift = d.getAllShiftFromNow(formattedTime);
                 //tao danh sach de luu nhung ca trong
                 listShift = listShiftEmpty(listAllShift, todayStr);
 
@@ -82,7 +85,7 @@ public class AppointmentServlet extends HttpServlet {
                 Time time = (Time) session.getAttribute("time");
                 //Lay ra tat ca cac ca 
                 if (time.getDate().equals(todayStr)) {
-                    listAllShift = d.getAllShiftFromNow();
+                    listAllShift = d.getAllShiftFromNow(formattedTime);
                 } else {
                     listAllShift = d.getAll();
                 }
@@ -107,7 +110,8 @@ public class AppointmentServlet extends HttpServlet {
 
             request.setAttribute("listDate", listDate);
             request.getRequestDispatcher("booking.jsp").forward(request, response);
-        } else {
+        } //neu cua hang dang trong trang thai khong hoat dong
+        else {
             request.setAttribute("store", store);
             request.setAttribute("checkNotActive", true);
             request.getRequestDispatcher("booking.jsp").forward(request, response);
@@ -145,9 +149,17 @@ public class AppointmentServlet extends HttpServlet {
         String date_str = request.getParameter("date");
         String shift_str = request.getParameter("shifts");
         try {
+
             CustomerDAO cd = new CustomerDAO();
             OrderDAO d = new OrderDAO();
+            StoreDAO storeDao = new StoreDAO();
+            Store store = storeDao.getStore();
             String phone = "";
+            //kiem tra xem cua hang co o trang thai hoat dong khong
+            if (store.isIsActive() == false) {
+                doGet(request, response);
+                return;
+            }
             //kiem tra xem co dang nhap chua
             if (session.getAttribute("account") != null) {
                 //neu da dang nhap thi cho phone = so dien thoại cua account;
@@ -171,12 +183,12 @@ public class AppointmentServlet extends HttpServlet {
                 Customer newCus = new Customer();
                 newCus.setPhone(phone);
                 cd.addCustomer(newCus);
-                
+
             }
             //lay customer bang so dien thoai
             Customer cus = cd.getCustomerByP(phone);
-            //kiem tra xem khach hang co don chua hoan thanh hom nay ko
-            if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId()) != 0) {
+            //kiem tra xem khach hang co don chua hoan thanh hom dũo chon ko
+            if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId(), date_str) != 0) {
                 request.setAttribute("mss", "bạn đã có đơn chưa hoàn thành");
                 request.getRequestDispatcher("service").forward(request, response);
                 return;

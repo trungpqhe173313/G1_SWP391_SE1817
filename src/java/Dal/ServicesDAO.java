@@ -184,6 +184,29 @@ public class ServicesDAO extends DBContext {
         return service;
     }
 
+    public int countServicesByMonth(int servicesId, int month) {
+        int count = 0;
+        try {
+
+            String sql = "SELECT COUNT(*) AS ServiceUsageCount\n"
+                    + "FROM Order_services os\n"
+                    + "INNER JOIN Orders o ON os.orderId = o.orderId\n"
+                    + "WHERE os.servicesId = ?\n"
+                    + "  AND YEAR(o.orderDate) = YEAR(GETDATE())\n"
+                    + "  AND MONTH(o.orderDate) = ?;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, servicesId);
+            stm.setInt(2, month);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
+    }
+
     public void toggleVisibility(int serviceId) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -204,7 +227,6 @@ public class ServicesDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
 
     public List<Services> getServicesInOrder(int id) {
         List<Services> s = new ArrayList<>();
@@ -242,5 +264,8 @@ public class ServicesDAO extends DBContext {
         }
         return s;
     }
-
+    public static void main(String[] args) {
+        ServicesDAO d = new ServicesDAO();
+        System.out.println(d.countServicesByMonth(6, 7));
+    }
 }
