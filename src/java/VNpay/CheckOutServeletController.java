@@ -70,8 +70,6 @@ public class CheckOutServeletController extends HttpServlet {
         String Eid = request.getParameter("Eid");
         //update status employee to free(id = 1)
         new EmployeesDAO().updateStatusBarber(1,Eid);
-        //update status order to done(id = 4)
-        new OrderDAO().upDateStatusOrder(4, oId);
         Customer c = new CustomerDAO().getCustomerProfileById(cId);
         //get discount points min
         List<Discount> ld = new DiscountDAO().getAllDis();

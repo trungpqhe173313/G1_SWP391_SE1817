@@ -121,7 +121,7 @@
                             </button>
 
                             <!-- Topbar Search -->
-                            <jsp:include page="checkin.jsp"></jsp:include>
+                        <jsp:include page="checkin.jsp"></jsp:include>
 
 
 
@@ -272,282 +272,282 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-    <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
-        <div class="card-body" style="height: 100%; width: 100%;">
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="dateFilter">Từ ngày</label>
-                    <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
-                </div>
-                <div class="col-md-3">
-                    <label for="dateFilter">Đến ngày</label>
-                    <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
-                </div>
-                <div class="col-md-2" style="align-items: end; display: flex;">
-                    <input type="button" class="form-control mr-3" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Lọc đơn">
-                    <input type="button" class="form-control" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Làm mới">
-                </div>
-            </div>
-            <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
-                    <thead>
-                        <tr>
-                            <th>Đơn Hàng</th>
-                            <th>Tên Khách Hàng</th>
-                            <th>SĐT</th>
-                            <th>Ngày Đặt Lịch</th>
-                            <th>Tổng Thanh Toán</th>
-                            <th>Trạng Thái</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                                            <div class="card-body" style="height: 100%; width: 100%;">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Từ ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="dateFilter">Đến ngày</label>
+                                                        <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
+                                                    </div>
+                                                    <div class="col-md-2" style="align-items: end; display: flex;">
+                                                        <input type="button" class="form-control mr-3" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Lọc đơn">
+                                                        <input type="button" class="form-control" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Làm mới">
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
                                 </div>
                             </div>
@@ -642,13 +642,13 @@
 
     <!-- Page level custom scripts -->
     <script>
-                                                            function onMonthChange(selectElement) {
-                                                                var selectedMonth = selectElement.value;
-                                                                window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
-                                                            }
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable();
-                                                            });
+                        function onMonthChange(selectElement) {
+                            var selectedMonth = selectElement.value;
+                            window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
+                        }
+                        $(document).ready(function () {
+                            $('#dataTable').DataTable();
+                        });
     </script>
 
 </body>

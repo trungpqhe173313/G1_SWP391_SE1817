@@ -58,7 +58,7 @@ public class UpdateBillServlet extends HttpServlet {
                     new AccountDAO().updatePoints(points, account.getPhone());
                     new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
                 } else {
-                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);;
+                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
                 }
             } else {
                 new OrderDAO().upDateStatusOrderByCode(6, codeOrder);
