@@ -320,7 +320,7 @@
                         </div>
 
 
-                    </div>
+                </div>
                     <!-- /.container-fluid -->
 
                 </div>

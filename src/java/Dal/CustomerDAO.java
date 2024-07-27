@@ -41,6 +41,28 @@ public class CustomerDAO extends DBContext {
 
         return null;
     }
+    public Customer getCustomerByPhone(String phone) {
+
+        try {
+
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[customer]\n"
+                    + "  where phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerId(rs.getInt(1));
+                customer.setPhone(rs.getString("phone"));
+                customer.setFullName(rs.getString("fullName"));
+                return customer;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public List<Customer> getAllCustomer() {
         List<Customer> customer = new ArrayList<>();
@@ -165,29 +187,37 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-    public boolean updateCustomer(Customer customer) {
-        String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, customer.getCustomerId());
-            stmt.setString(2, customer.getFullName());
-            stmt.setString(3, customer.getPhone());
-            stmt.setString(4, customer.getAccount().getEmail());
-            stmt.setBoolean(5, customer.getAccount().getGender());
-            stmt.setInt(6, customer.getCustomerId());
-
-            int rowsUpdated = stmt.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+//    public boolean updateCustomer(Customer customer) {
+//        String sql = "UPDATE customer SET fullName=?, phone=?, email=?, gender=? WHERE customerId=?";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//            stmt.setInt(1, customer.getCustomerId());
+//            stmt.setString(2, customer.getFullName());
+//            stmt.setString(3, customer.getPhone());
+//            stmt.setString(4, customer.getAccount().getEmail());
+//            stmt.setBoolean(5, customer.getAccount().getGender());
+//            stmt.setInt(6, customer.getCustomerId());
+//
+//            int rowsUpdated = stmt.executeUpdate();
+//            return rowsUpdated > 0;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            return false;
+//        }
+//    }
+    public void updateCustomer(String phone, String fullName) throws SQLException{
+        String sql = "UPDATE customer SET fullName = ? WHERE phone=?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, fullName);
+            pstmt.setString(2, phone);
+            pstmt.executeUpdate();
+        } 
     }
 
     public void insertCustomer(String fullName, String phone) {
         String query = "INSERT INTO customer (fullName, phone) VALUES (?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(query);    
+            PreparedStatement stm = connection.prepareStatement(query);
             stm.setString(1, fullName);
             stm.setString(2, phone);
             stm.executeUpdate();
