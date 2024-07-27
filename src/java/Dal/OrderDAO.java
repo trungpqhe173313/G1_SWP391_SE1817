@@ -72,10 +72,11 @@ public class OrderDAO extends DBContext {
 
         return lastOrderCode;
     }
-//    public static void main(String[] args) {
-//        String i = OrderDAO.generateOrderCode();
-//        System.out.println(i);
-//    }
+    public static void main(String[] args) {
+        String i = OrderDAO.generateOrderCode();
+        System.out.println("day la generate code");
+        System.out.println(i);
+    }
 
     private static String generateNewOrderCode() {
         String currentDate = DATE_FORMAT.format(new Date());
@@ -467,18 +468,18 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
-    public static void main(String[] args) {
-        OrderDAO o = new OrderDAO();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //ep kieu string sang date truoc roi tao ra mot cai sql date
-        java.sql.Date date;
-        try {
-            date = new java.sql.Date(sdf.parse("2024-07-28").getTime());
-            o.AddOrder(new Order("asdf", 2, 1, date, 200));
-        } catch (ParseException ex) {
-            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        System.out.println(o.countOrderNotCompleteByCustomerId(5, "2024-07-05"));
-    }
+//    public static void main(String[] args) {
+//        OrderDAO o = new OrderDAO();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        //ep kieu string sang date truoc roi tao ra mot cai sql date
+//        java.sql.Date date;
+//        try {
+//            date = new java.sql.Date(sdf.parse("2024-07-28").getTime());
+//            o.AddOrder(new Order("asdf", 2, 1, date, 200));
+//        } catch (ParseException ex) {
+//            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        System.out.println(o.countOrderNotCompleteByCustomerId(5, "2024-07-05"));
+//    }
 }

@@ -9,12 +9,14 @@ import Dal.EmployeesDAO;
 import Dal.FeedbackDAO;
 import Dal.LeaveRequestStatusDAO;
 import Dal.ServicesDAO;
+import Dal.StoreDAO;
 import Dal.VoucherDAO;
 import Model.Customer;
 import Model.Employee;
 import Model.Feedback;
 import Model.LeaveRequests;
 import Model.Services;
+import Model.Store;
 import Model.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +24,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -53,6 +56,21 @@ public class HomeController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         List<Customer> cusList = customerDAO.getAllCustomer();
         request.setAttribute("cusList", cusList);
+
+//         for (Feedback feedback : feedbackList) {
+//            System.out.println(feedback.toString());
+//        }
+        StoreDAO sd = new StoreDAO();
+        LocalDate today = LocalDate.now();
+        System.out.println("remind store da dc chay");
+        Store s = sd.getStore();
+        if (today.isAfter(s.getStartDate().minusDays(1)) && today.isBefore(s.getEndDate().plusDays(1))) {
+            s.setIsActive(false);
+            sd.UpdateStore(s);
+        } else {
+            s.setIsActive(true);
+            sd.UpdateStore(s);
+        }
         updateEmployeeStatus();
         //Kiểm tra xem có ai xin nghỉ phép chuyển sang nghỉ làm
         VoucherDAO vdao = new VoucherDAO();

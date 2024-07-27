@@ -60,7 +60,7 @@ public class SendLeaveRequestController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("resignationEmployee.jsp");
+        request.getRequestDispatcher("resignationEmployee.jsp").forward(request, response);
     }
 
     /**
