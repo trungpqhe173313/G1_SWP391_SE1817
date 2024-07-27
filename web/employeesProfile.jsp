@@ -76,7 +76,7 @@
                                         <div class="avatar-container">
                                             <img src="img/service/${accountDetails.avatar}" alt="Avatar" class="img-fluid" id="currentAvatar">
                                         </div>
-                                        <input type="hidden" name="currentAvatar" value="${accountDetails.avatar}">
+                                        <input type="hidden" name="currentAvatar" id="currentAvatarInput" value="${accountDetails.avatar}">
                                         <div class="form-group row d-none" id="avatarUploadSection">
                                             <label for="avatar" class="col-sm-12 col-form-label">Chọn Ảnh Đại Diện</label>
                                             <div class="col-sm-12">
@@ -208,29 +208,32 @@
         function validateForm() {
             var fullName = document.getElementById('fullName').value;
             var email = document.getElementById('email').value;
-            const image = document.getElementById('avatar').value;
+            var image = document.getElementById('avatar').value;
 
-        var fullName = document.getElementById("fullName").value;
-        if (!/^[\p{L}\s]+$/u.test(fullName)) {
-            alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
-            return false;
-        }
-
-    // Validate no leading spaces in other fields
-    var inputs = document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]');
-    for (var i = 0; i < inputs.length; i++) {
-        if (/^\s/.test(inputs[i].value)) {
-            alert("Không được viết dấu khoảng cách ở đầu của tất cả các trường.");
-            return false;
-        }
-    }
-            // Check for valid image file extensions
-            const validExtensions = ['jpg', 'jpeg', 'png'];
-            const fileExtension = image.split('.').pop().toLowerCase();
-            if (!validExtensions.includes(fileExtension)) {
-                alert("Ảnh đại diện phải là file jpg hoặc png.");
+            if (!/^[\p{L}\s]+$/u.test(fullName)) {
+                alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
                 return false;
             }
+
+            var inputs = document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]');
+            for (var i = 0; i < inputs.length; i++) {
+                if (/^\s/.test(inputs[i].value)) {
+                    alert("Không được viết dấu khoảng cách ở đầu của tất cả các trường.");
+                    return false;
+                }
+            }
+
+            if (!image) {
+                document.getElementById('avatar').value = document.getElementById('currentAvatarInput').value;
+            } else {
+                const validExtensions = ['jpg', 'jpeg', 'png'];
+                const fileExtension = image.split('.').pop().toLowerCase();
+                if (!validExtensions.includes(fileExtension)) {
+                    alert("Ảnh đại diện phải là file jpg hoặc png.");
+                    return false;
+                }
+            }
+
             return true;
         }
     </script>
