@@ -20,7 +20,8 @@
         <title>SB Admin 2 - Dashboard</title>
         <style>
             .selectdate {
-                padding: 1rem 0.9rem;
+                padding: 0.6rem 0.9rem;
+                margin-top: 1rem;
             }
             .selectdate label {
                 font-size: 1.4rem;
@@ -30,7 +31,7 @@
                 border-radius: 5px;
             }
             .form {
-                margin-top: 3rem;
+                margin-top: 1rem;
                 height: 100%;
             }
             .button {
@@ -128,34 +129,7 @@
                                 <div class="topbar-divider d-none d-sm-block"></div>
 
                                 <!-- Nav Item - User Information -->
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Settings
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Activity Log
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                    </div>
-                                </li>
+                                <jsp:include page="navadmin.jsp"></jsp:include>
 
                             </ul>
 
@@ -166,7 +140,7 @@
                         <div class="container-fluid" style="width: 100%; max-width: 2600px; margin-bottom: 20px; margin-top: 4rem;">
                             <!-- Page Heading -->
                             <div class="d-flex justify-content-center">
-                                <div class="row justify-content-around" style="width: 1600px;">
+                                <div class="row justify-content-around" style="width: 1700px;">
                                     <!-- Earnings (Monthly) Card Example -->
                                     <div class="col-lg-6">
                                         <div class="card mb-4 shadow" >
@@ -190,16 +164,16 @@
                                         font-weight: 700;">Đặt lịch nghỉ cho cửa hàng</h3>
                                     <!-- Card Header - Dropdown -->
                                     <form class="form" action="storeholidayschedule" method="post">
-                                        <span class="selectdate">
+                                        <div class="selectdate">
                                             <label>Ngày bắt đầu</label>
                                             <input type="date" id="startdate" value="${startDate}" name="startdate"/>
-                                        </span>
-                                        <span class="selectdate" style="margin-left: 2rem;">
+                                        </div>
+                                        <div class="selectdate">
                                             <label>Ngày kết thúc</label>
                                             <input type="date" id="enddate" value="${endDate}" name="enddate" />
-                                        </span>
+                                        </div>
                                         <div style="padding: 1rem 0.4rem;
-                                             margin: 1rem 0;">
+                                             margin: 0.5rem 0;">
                                             <label style="font-size: 1.4rem; display: block;">Trạng thái cửa hàng hiện tại: </label>
                                             <input type="text" value="${store.isActive == true ? 'Hoạt động':'Tạm nghỉ'}" readonly style="padding: 0.4rem;
                                                border-radius: 5px;

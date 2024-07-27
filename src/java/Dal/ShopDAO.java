@@ -179,6 +179,40 @@ public class ShopDAO extends DBContext {
         return list;
     }
 
+    public List<Order> getOrderFromTo(String startDate, String endDate) {
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    orderId,\n"
+                + "    orderCode,\n"
+                + "    customerId,\n"
+                + "    employeeId,\n"
+                + "    statusID,\n"
+                + "    orderDate,\n"
+                + "    totalAmount\n"
+                + "FROM Orders\n"
+                + "WHERE orderDate BETWEEN ? AND ?\n"
+                + "  AND statusID = 4;";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, startDate);
+            st.setString(2, endDate);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("orderId"));
+                o.setCodeOrder(rs.getString("orderCode"));
+                o.setCustomerId(rs.getInt("customerId"));
+                o.setEmployeeId(rs.getInt("employeeId"));
+                o.setStatusId(rs.getInt("statusID"));
+                o.setOrderDate(rs.getDate("orderDate"));
+                o.setTotalAmount(rs.getInt("totalAmount"));
+                list.add(o);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL exception occurred", e);
+        }
+        return list;
+    }
+
     public List<Order> getOrderByBarber(int month, int employeeId) {
         List<Order> list = new ArrayList<>();
         String sql = "SELECT [orderId]\n"
@@ -219,7 +253,7 @@ public class ShopDAO extends DBContext {
                 + "      ,[orderDate]\n"
                 + "      ,[totalAmount]\n"
                 + "  FROM [dbo].[orders]\n"
-                + "  WHERE customerId = ? and statusID=4";
+                + "  WHERE customerId = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();

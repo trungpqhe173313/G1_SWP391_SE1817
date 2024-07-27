@@ -276,6 +276,14 @@
         <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
         <servlet-class>Controller.customer.AppointmentWithoutLoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>Controller.customer.BookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterRevenueTableServlet</servlet-name>
+        <servlet-class>Controller.admin.FilterRevenueTableServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -551,5 +559,13 @@
     <servlet-mapping>
         <servlet-name>AppointmentWithoutLoginServlet</servlet-name>
         <url-pattern>/appointmentwithoutlogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterRevenueTableServlet</servlet-name>
+        <url-pattern>/filterrevenuetable</url-pattern>
     </servlet-mapping>
 </web-app>

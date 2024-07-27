@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -215,12 +216,12 @@
                         }
 
                         document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
-                        document.getElementById('total-price').innerText = tongGia + 'K';
+                        document.getElementById('total-price').innerText = tongGia + 'đ';
                     });
                 });
 
                 document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
-                document.getElementById('total-price').innerText = tongGia + 'K';
+                document.getElementById('total-price').innerText = tongGia + 'đ';
 
                 function done() {
                     const dichVuChon = Object.keys(dichVuDaThem);

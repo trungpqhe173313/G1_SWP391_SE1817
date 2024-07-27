@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -166,7 +167,7 @@
                                 <h1 class="h3 mb-0 text-gray-800">Thống Kê Doanh Số</h1>
                                 <span class="select-fixff" >
                                     Tháng
-                                    <select name="month" onchange="onMonthChange(this)" style="width: 5rem;
+                                    <select id="monthSelect" name="month" onchange="onMonthChange(this)" style="width: 5rem;
                                             padding: 4px; border: 2px solid #636363;
                                             border-radius: 5px">
                                     <c:forEach items="${listMonthRevenue}" var="m">
@@ -188,7 +189,11 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     Doanh Thu (Theo Tháng)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${rm}đ</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <fmt:formatNumber value="${rm}" type="number" pattern="###,###">
+
+                                                    </fmt:formatNumber><sup>đ</sup>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -206,7 +211,11 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     Doanh Thu (Theo Năm)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${ry}đ</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <fmt:formatNumber value="${ry}" type="number" pattern="###,###">
+
+                                                    </fmt:formatNumber><sup>đ</sup>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -251,7 +260,7 @@
                                     <!-- Card Header - Dropdown -->
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Đơn Hàng (Trong Tháng)</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Đơn Hàng (Theo tháng)</h6>
                                         <div class="dropdown no-arrow">
                                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -268,282 +277,63 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-    <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
-        <div class="card-body" style="height: 100%; width: 100%;">
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="dateFilter">Từ ngày</label>
-                    <input type="date" class="form-control" id="dateFilter" name="startdate" onchange="filterTable()">
-                </div>
-                <div class="col-md-3">
-                    <label for="dateFilter">Đến ngày</label>
-                    <input type="date" class="form-control" id="dateFilter" name="enddate" onchange="filterTable()">
-                </div>
-                <div class="col-md-2" style="align-items: end; display: flex;">
-                    <input type="button" class="form-control mr-3" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Lọc đơn">
-                    <input type="button" class="form-control" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Làm mới">
-                </div>
-            </div>
-            <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
-                    <thead>
-                        <tr>
-                            <th>Đơn Hàng</th>
-                            <th>Tên Khách Hàng</th>
-                            <th>SĐT</th>
-                            <th>Ngày Đặt Lịch</th>
-                            <th>Tổng Thanh Toán</th>
-                            <th>Trạng Thái</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                                            <div class="card-body" style="height: 100%; width: 100%;">
+                                                <form id="filterForm" class="row mb-3" action="filterrevenuetable" method="POST" onsubmit="return validateForm()">
+                                                    <div class="col-md-3">
+                                                        <label for="startdate">Từ ngày</label>
+                                                        <input type="date" class="form-control" id="startdate" value="${startdate}" name="startdate">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="enddate">Đến ngày</label>
+                                                        <input type="date" class="form-control" id="enddate" value="${enddate}" name="enddate">
+                                                    </div>
+                                                    <div class="col-md-2" style="align-items: end; display: flex;">
+                                                        <input type="hidden" id="hiddenMonth" name="month">
+                                                        <input type="submit" class="form-control mr-3" style="width: 100px; color: white; background-color:#4E73DF; border: none;" value="Lọc đơn">
+                                                        <input type="button" class="form-control" style="width: 100px; color: white;
+                                                               background-color:#4E73DF; border: none;" value="Làm mới" onclick="window.location.href = 'getrevenuebymonth?month=${monthSelect}';">
+                                                    </div>
+                                                </form>
+                                                <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach items="${listOrder}" var="o">
+                                                                <tr>
+                                                                    <td>${o.getOrder().id}</td>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${o.getCustomer().phone}</td>
+                                                                    <td>${o.getOrder().orderDate}</td>
+                                                                    <td id="totalMoney">
+                                                                        <fmt:formatNumber value="${o.getOrder().totalAmount}" type="number" pattern="###,###">
+
+                                                                        </fmt:formatNumber><sup>đ</sup>
+                                                                    </td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                    <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                        <c:forEach items="${listOrder}" var="o">
-                            <tr>
-                                <td>${o.getOrder().id}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <a href="#">${o.getCustomer().getFullName()}</a>
-                                    </div>
-                                </td>
-                                <td>${o.getCustomer().phone}</td>
-                                <td>${o.getOrder().orderDate}</td>
-                                <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                <td>${o.getStatus().name}</td>
-                                <td><a href="viewrevenueorder?orderId=${o.getOrder().id}" class="more">Details</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
                                 </div>
                             </div>
@@ -554,7 +344,7 @@
                                     <!-- Card Header - Dropdown -->
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Thống kê dịch vụ trong tháng</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Thống kê dịch vụ trong tháng ${monthSelect}</h6>
 
                                     </div>
                                     <!-- Card Body -->
@@ -638,13 +428,32 @@
 
     <!-- Page level custom scripts -->
     <script>
-                                                            function onMonthChange(selectElement) {
-                                                                var selectedMonth = selectElement.value;
-                                                                window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
-                                                            }
-                                                            $(document).ready(function () {
-                                                                $('#dataTable').DataTable();
-                                                            });
+                                                                   function onMonthChange(selectElement) {
+                                                                       var selectedMonth = selectElement.value;
+                                                                       window.location.href = 'getrevenuebymonth?month=' + selectedMonth;
+                                                                   }
+                                                                   $(document).ready(function () {
+                                                                       $('#dataTable').DataTable();
+                                                                   });
+                                                                   function validateForm() {
+                                                                       const month = document.querySelector('#monthSelect').value;
+                                                                       const startdate = document.querySelector('#startdate').value;
+                                                                       const enddate = document.querySelector('#enddate').value;
+
+                                                                       if (!month || !startdate || !enddate) {
+                                                                           alert('Vui lòng điền đầy đủ thông tin.');
+                                                                           return false;
+                                                                       }
+
+                                                                       if (new Date(startdate) > new Date(enddate)) {
+                                                                           alert('Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu.');
+                                                                           return false;
+                                                                       }
+
+                                                                       document.querySelector('#hiddenMonth').value = month;
+
+                                                                       return true;
+                                                                   }
     </script>
 
 </body>
