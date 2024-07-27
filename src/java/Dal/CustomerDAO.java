@@ -242,7 +242,7 @@ public class CustomerDAO extends DBContext {
     } catch (SQLException ex) {
         Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         return "Thêm khách hàng thất bại!";
-    }
+    }}
     
     public Customer getCustomerById(int customerId) {
         String sql = "SELECT *\n"
@@ -268,8 +268,5 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-    public static void main(String[] args) {
-      Customer c =  new CustomerDAO().getCustomerByPhone("0366666666");
-        System.out.println(c.getPhone());
-    }
+   
 }
