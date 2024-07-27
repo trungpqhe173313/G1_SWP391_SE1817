@@ -2,7 +2,7 @@
 go
 CREATE DATABASE Barber;
 GO
-
+--DROP DATABASE Barber
 USE Barber;
 GO
 CREATE TABLE Services (

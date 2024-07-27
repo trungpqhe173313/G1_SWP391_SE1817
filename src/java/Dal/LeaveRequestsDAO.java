@@ -66,6 +66,22 @@ public class LeaveRequestsDAO extends DBContext {
             Logger.getLogger(LeaveRequestsDAO.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    
+    // Phương thức kiểm tra xem yêu cầu nghỉ phép có được thêm vào cơ sở dữ liệu hay không
+    public boolean isLeaveRequestAdded(int employeeId, String startDate, String endDate, String reason) {
+        String sql = "SELECT * FROM LeaveRequests WHERE employeeId = ? AND startDate = ? AND endDate = ? AND reason = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, employeeId);
+            ps.setString(2, startDate);
+            ps.setString(3, endDate);
+            ps.setString(4, reason);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public void updateRequests(String rId, int i) {
         // Get the current date from LocalDate
