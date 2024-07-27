@@ -117,7 +117,7 @@ public class LoginController extends HttpServlet {
             if (a.getRoleId() == 1) {
                 response.sendRedirect("viewrevenue");
             } else if (a.getRoleId() == 2) {
-                response.sendRedirect("employeesprofile");
+                response.sendRedirect("orderinfoemployee");
             } else {
                 response.sendRedirect("home");
             }

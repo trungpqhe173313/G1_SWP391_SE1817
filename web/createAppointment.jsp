@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Tên khách hàng</label>
-                                    <input type="text" id="name" name="name"  required="">
+                                    <input type="text" id="name" name="name" value="${name}" required="">
                                 </div>
                                 <div class="form-group">
                                     <label for="services">Dịch Vụ</label>

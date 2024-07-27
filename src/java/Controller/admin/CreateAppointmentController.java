@@ -92,6 +92,10 @@ public class CreateAppointmentController extends HttpServlet {
         
         List<Employee> ListEmployee = new EmployeesDAO().getAllEmployee();
         LocalDate dateNow = LocalDate.now();
+        Customer cus = new CustomerDAO().getCustomerByP(phone);
+        if(cus != null){
+            request.setAttribute("name", cus.getFullName());
+        }
         request.setAttribute("phone", phone);
         request.setAttribute("BarberFree", BarberFree);
         request.setAttribute("Lshift", Lshift);
@@ -150,6 +154,8 @@ public class CreateAppointmentController extends HttpServlet {
                     customer.setFullName(name);
                     customer.setPhone(phone);
                     new CustomerDAO().addCustomer(customer);
+                }else{
+                    new CustomerDAO().updateCustomer(phone, name);
                 }
                 //lấy ra id customer mới nhất
                 Customer cus = new CustomerDAO().getCustomerByP(phone);

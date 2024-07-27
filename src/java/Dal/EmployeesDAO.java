@@ -215,7 +215,8 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3),
+                 rs.getInt(4), rs.getString(6));
                 employee.add(e);
             }
         } catch (SQLException ex) {
@@ -235,6 +236,17 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        EmployeesDAO d = new EmployeesDAO();
+        List<Employee> le = d.getAllEmployee();
+        
+        for (Employee employee : le) {
+            if(employee.getStatusId()== 3){
+                System.out.println("kk");
+            }
+System.out.println("kk");
         }
     }
 
@@ -292,10 +304,7 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         return count;
     }
 
-    public static void main(String[] args) {
-        EmployeesDAO d = new EmployeesDAO();
-        System.out.println(d.countNumberActiveEmployee());
-    }
+    
 
     public List<Employee> getAllBarberFree() {
         List<Employee> employee = new ArrayList<>();
@@ -363,77 +372,78 @@ public boolean addEmployee(String phone, String fullName, String pass, String em
         }
         return false;
     }
-    public List<Map<String, Object>> getOrdersByStatus(int employeeId, String status) throws SQLException {
-        List<Map<String, Object>> resultList = new ArrayList<>();
+public List<Map<String, Object>> getOrdersByStatus(int employeeId, String status, boolean checkEmployeeStatus) throws SQLException {
+    List<Map<String, Object>> resultList = new ArrayList<>();
 
-        String sql = "SELECT "
-                + "   o.orderId, "
-                + "   o.orderCode, "
-                + "   o.orderDate, "
-                + "   o.totalAmount, "
-                + "   o.updateTime, "
-                + "   c.fullName AS customerName, "
-                + "   e.fullName AS employeeName, "
-                + "   st.status AS status, "
-                + "   STRING_AGG(srv.name, ', ') AS serviceNames "
-                + "FROM "
-                + "   Orders o "
-                + "INNER JOIN "
-                + "   customer c ON o.customerId = c.customerId "
-                + "INNER JOIN "
-                + "   employee e ON o.employeeId = e.employeeId "
-                + "INNER JOIN "
-                + "   status st ON o.statusID = st.id "
-                + "INNER JOIN "
-                + "   Order_services os ON o.orderId = os.orderId "
-                + "INNER JOIN "
-                + "   Services srv ON os.servicesId = srv.servicesId "
-                + "WHERE "
-                + "   e.employeeId = ? AND st.status = ? "
-                + "GROUP BY "
-                + "   o.orderId, "
-                + "   o.orderCode, "
-                + "   o.orderDate, "
-                + "   o.totalAmount, "
-                + "   o.updateTime, "
-                + "   c.fullName, "
-                + "   e.fullName, "
-                + "   st.status";
+    String sql = "SELECT "
+            + "   o.orderId, "
+            + "   o.orderCode, "
+            + "   o.orderDate, "
+            + "   o.totalAmount, "
+            + "   o.updateTime, "
+            + "   c.fullName AS customerName, "
+            + "   e.fullName AS employeeName, "
+            + "   st.status AS status, "
+            + "   STRING_AGG(srv.name, ', ') AS serviceNames "
+            + "FROM "
+            + "   Orders o "
+            + "INNER JOIN "
+            + "   customer c ON o.customerId = c.customerId "
+            + "INNER JOIN "
+            + "   employee e ON o.employeeId = e.employeeId "
+            + "INNER JOIN "
+            + "   status st ON o.statusID = st.id "
+            + "INNER JOIN "
+            + "   Order_services os ON o.orderId = os.orderId "
+            + "INNER JOIN "
+            + "   Services srv ON os.servicesId = srv.servicesId "
+            + "WHERE "
+            + "   e.employeeId = ? AND st.status = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, employeeId);
-            pstmt.setString(2, status);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Map<String, Object> row = new HashMap<>();
-                    row.put("orderCode", rs.getString("orderCode"));
-                    row.put("orderDate", rs.getDate("orderDate"));
-                    row.put("totalAmount", rs.getInt("totalAmount"));
-                    row.put("updateTime", rs.getTimestamp("updateTime"));
-                    row.put("customerName", rs.getString("customerName"));
-                    row.put("employeeName", rs.getString("employeeName"));
-                    row.put("status", rs.getString("status"));
-                    row.put("serviceNames", rs.getString("serviceNames"));
+    if (checkEmployeeStatus) {
+        sql += " AND e.statusEmployee = (SELECT id FROM statusEmployee WHERE [status] = N'Đang Bận')";
+    }
 
-                    resultList.add(row);
-                }
+    sql += " GROUP BY "
+            + "   o.orderId, "
+            + "   o.orderCode, "
+            + "   o.orderDate, "
+            + "   o.totalAmount, "
+            + "   o.updateTime, "
+            + "   c.fullName, "
+            + "   e.fullName, "
+            + "   st.status";
+
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setInt(1, employeeId);
+        pstmt.setString(2, status);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("orderCode", rs.getString("orderCode"));
+                row.put("orderDate", rs.getDate("orderDate"));
+                row.put("totalAmount", rs.getInt("totalAmount"));
+                row.put("updateTime", rs.getTimestamp("updateTime"));
+                row.put("customerName", rs.getString("customerName"));
+                row.put("employeeName", rs.getString("employeeName"));
+                row.put("status", rs.getString("status"));
+                row.put("serviceNames", rs.getString("serviceNames"));
+
+                resultList.add(row);
             }
         }
-
-        return resultList;
     }
 
-    public List<Map<String, Object>> getPendingOrders(int employeeId) throws SQLException {
-        return getOrdersByStatus(employeeId, "Hàng Đợi");
-    }
+    return resultList;
+}
 
-    public List<Map<String, Object>> getInProgressOrders(int employeeId) throws SQLException {
-        return getOrdersByStatus(employeeId, "Bắt Đầu");
-    }
+public List<Map<String, Object>> getInProgressOrders(int employeeId) throws SQLException {
+    return getOrdersByStatus(employeeId, "Bắt Đầu", true);
+}
 
-    public List<Map<String, Object>> getCompletedOrders(int employeeId) throws SQLException {
-        return getOrdersByStatus(employeeId, "Thanh Toán");
-    }
+public List<Map<String, Object>> getCompletedOrders(int employeeId) throws SQLException {
+    return getOrdersByStatus(employeeId, "Thanh Toán", false);
+}
 
 
 
@@ -456,9 +466,9 @@ public boolean addEmployee(String phone, String fullName, String pass, String em
     }
     public boolean updateStatusFromAvailableToBusy(int employeeId) {
         String sql = "UPDATE employee "
-                   + "SET statusEmployee = 2, "  // Assuming 2 is the ID for "Đang Bận"
+                   + "SET statusEmployee = 1, "  // Assuming 2 is the ID for "Đang Bận"
                    + "    updateTime = GETDATE() "
-                   + "WHERE statusEmployee = 1 AND employeeId = ?"; // Assuming 1 is the ID for "Đang Rảnh"
+                   + "WHERE statusEmployee = 2 AND employeeId = ?"; // Assuming 1 is the ID for "Đang Rảnh"
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, employeeId);
@@ -469,31 +479,5 @@ public boolean addEmployee(String phone, String fullName, String pass, String em
         }
         return false;
     }
-
-public boolean updateStatusFromBusyToAvailable(int employeeId) {
-    String sql = "BEGIN TRANSACTION; "
-               + "UPDATE employee "
-               + "SET statusEmployee = 1, "  // Assuming 1 is the ID for "Đang Rảnh"
-               + "    updateTime = GETDATE() "
-               + "WHERE statusEmployee = 2 AND employeeId = ?; " // Assuming 2 is the ID for "Đang Bận"
-               + "UPDATE Orders "
-               + "SET statusID = 4, "  // Assuming 4 is the ID for "Đang Thanh Toán"
-               + "    updateTime = GETDATE() "
-               + "WHERE employeeId = ? AND statusID = 3; "  // Assuming 3 is the ID for "Bắt Đầu"
-               + "COMMIT;";
-
-    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-        // Set employeeId for updating employee status
-        pstmt.setInt(1, employeeId);
-        // Set employeeId for updating order status
-        pstmt.setInt(2, employeeId);
-        
-        int rowsUpdated = pstmt.executeUpdate();
-        return rowsUpdated > 0;
-    } catch (SQLException ex) {
-        Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return false;
-}
 
 }

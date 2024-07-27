@@ -254,7 +254,9 @@
                                                     </td>
                                                     <td>
                                                         <a href="viewOrderDetailUpdate?Oid=${o.id}" class='btn btn-info'>Chi tiết</a>
-                                                        <a href="CancelOrder?Oid=${o.id}" class='btn btn-danger'>Hủy</a>
+                                                        <c:if test="${o.statusId != 3 and o.statusId != 4 and o.statusId != 5}">
+                                                            <a href="CancelOrder?Oid=${o.id}" class='btn btn-danger'>Hủy</a>
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
