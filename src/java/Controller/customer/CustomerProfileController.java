@@ -89,7 +89,7 @@ public class CustomerProfileController extends HttpServlet {
 
         Account account = (Account) session.getAttribute("account");
         if (account == null) {
-            response.sendRedirect("login.jsp");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
 

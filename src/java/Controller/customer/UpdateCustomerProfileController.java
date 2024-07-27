@@ -82,7 +82,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("account") == null) {
-            response.sendRedirect("login.jsp");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
 
