@@ -38,6 +38,13 @@ public class ServicesBookingAjaxServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if (session.getAttribute("account") == null) {
+            if (session.getAttribute("phone") == null) {
+                request.setAttribute("mss", "vui lòng điền số điện thoại hoặc đăng nhập!!");
+                request.getRequestDispatcher("booking").forward(request, response);
+                return;
+            }
+        }
         ServicesDAO d = new ServicesDAO();
         // Nhận dữ liệu từ yêu cầu
         String soDichVuStr = request.getParameter("soDichVu");

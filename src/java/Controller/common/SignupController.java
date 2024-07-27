@@ -61,7 +61,7 @@ public class SignupController extends HttpServlet {
            
         }else{
             // Mã hóa mật khẩu người dùng nhập vào
-            password = PasswordEncryption.toSHA1(password);
+//            password = PasswordEncryption.toSHA1(password);
         }
 
         AccountDAO accountDAO = new AccountDAO();

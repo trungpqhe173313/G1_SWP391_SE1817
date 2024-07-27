@@ -51,6 +51,13 @@ public class AppointmentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if (session.getAttribute("account") == null) {
+            if (session.getAttribute("phone") == null) {
+                request.setAttribute("mss", "vui lòng điền số điện thoại hoặc đăng nhập!!");
+                    request.getRequestDispatcher("booking").forward(request, response);
+                    return;
+            }
+        }
         StoreDAO sd = new StoreDAO();
         Store store = sd.getStore();
         //kiem tra xem cua hang co trong trang thai hoat dong khong
@@ -192,23 +199,23 @@ public class AppointmentServlet extends HttpServlet {
                 //neu da ton tai thi cho phone = session phone
                 phone = (String) session.getAttribute("phone");
             }
+            System.out.println("phone appointment: "+phone);
             //kiem tra sdt da ton tai trong bang customer chua
             if (cd.getCustomerByP(phone) == null) {
                 //neu chua co thi add sdt vao bang customer
                 Customer newCus = new Customer();
                 newCus.setPhone(phone);
-                cd.addCustomer(newCus);
+                System.out.println(cd.addCustomer(newCus));
             }
+            System.out.println("appointment add customer");
             //lay customer bang so dien thoai
             Customer cus = cd.getCustomerByP(phone);
-            System.out.println("appointment cus: "+ cus.toString());
             //kiem tra xem khach hang co don chua hoan thanh hom dũo chon ko
             if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId(), date_str) != 0) {
                 request.setAttribute("mss", "bạn đã có đơn chưa hoàn thành");
-                request.getRequestDispatcher("service").forward(request, response);
+                request.getRequestDispatcher("booking").forward(request, response);
                 return;
             }
-
             ServicesBooking sb = (ServicesBooking) session.getAttribute("services");
             ShiftsDAO sd = new ShiftsDAO();
             List<Shift> listShiftNeed = sd.getAllNextShift(Integer.parseInt(shift_str),
@@ -241,23 +248,20 @@ public class AppointmentServlet extends HttpServlet {
                 int customerId = cus.getCustomerId();
 
                 //tao ra ordercode từ DAL.OrderDAO
-//                String orderCode = d.generateOrderCode();
-                String orderCode = "ab178";
+                String orderCode = d.generateOrderCode();
+                
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
                 Date date = new java.sql.Date(sdf.parse(date_str).getTime());
                 Order o = new Order(orderCode, customerId, 1, date, sb.getTotalMoney());
                 d.AddOrder(o);
-                System.out.println("appointment order: "+ o.toString());
                 int orderId = d.getNewOrderId();
-                System.out.println("appointment orderId: "+ orderId);
                 List<Services> listServices = sb.getListServices();
                 for (Services s : listServices) {
                     d.AddOrder_services(s.getServicesId(), orderId);
                 }
                 Order_shiftDAO osd = new Order_shiftDAO();
                 for (Shift s : listShiftNeed) {
-                    System.out.println("appointment shiftId: "+ s.toString());
                     osd.InsertShift("" + orderId, s.getId());
                 }
                 ShopDAO shopDao = new ShopDAO();
