@@ -211,7 +211,13 @@ public class CustomerDAO extends DBContext {
             pstmt.setString(1, fullName);
             pstmt.setString(2, phone);
             pstmt.executeUpdate();
-        } 
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        Customer c = new CustomerDAO().getCustomerByP("0912345788");
+        System.out.println(c.getPhone());
     }
 
     public void insertCustomer(String fullName, String phone) {
@@ -241,11 +247,7 @@ public class CustomerDAO extends DBContext {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void main(String[] args) {
-        Customer  c = new Customer(0, "pass", "0912345777");
-        new CustomerDAO().addCustomer(c);
-
-    }
+    
     public Customer getCustomerById(int customerId) {
         String sql = "SELECT *\n"
                 + "  FROM [Barber].[dbo].[customer]\n"
