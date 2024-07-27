@@ -215,7 +215,8 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
+                Employee e = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3),
+                 rs.getInt(4), rs.getString(6));
                 employee.add(e);
             }
         } catch (SQLException ex) {
@@ -235,6 +236,17 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        EmployeesDAO d = new EmployeesDAO();
+        List<Employee> le = d.getAllEmployee();
+        
+        for (Employee employee : le) {
+            if(employee.getStatusId()== 3){
+                System.out.println("kk");
+            }
+System.out.println("kk");
         }
     }
 
@@ -292,10 +304,7 @@ public List<Map<String, Object>> getWorkingEmployees() throws SQLException {
         return count;
     }
 
-    public static void main(String[] args) {
-        EmployeesDAO d = new EmployeesDAO();
-        System.out.println(d.countNumberActiveEmployee());
-    }
+    
 
     public List<Employee> getAllBarberFree() {
         List<Employee> employee = new ArrayList<>();
