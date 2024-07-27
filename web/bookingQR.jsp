@@ -153,7 +153,7 @@
                     <c:if test="${sessionScope.account == null}">
                         <form action="appointmentwithoutlogin" method="get" class="appointment-form" onsubmit="return validatePhoneNumber()">
                             <div>
-                                <input type="text" name="phone" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
+                                <input type="text" name="phone" placeholder="SĐT" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
                             </div>
                             <div class="error-message" id="error-message">${mss}</div>
                             <div class="form-group">

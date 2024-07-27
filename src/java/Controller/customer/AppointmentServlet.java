@@ -70,26 +70,33 @@ public class AppointmentServlet extends HttpServlet {
                 String nextDayStr = today.format(formatter);
                 listDate.add(nextDayStr);
             }
+            //lay ra gio va phut hien tai
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             String formattedTime = today.format(timeFormatter);
+            //tao list tat ca cac shift de so sanh dieu kien
             List<Shift> listAllShift = null;
+            //tao list nhung shift duoc hien thi
             List<Shift> listShift;
+            //session time chua date duoc chon, danh sach cac shift duoc hien thi
+            //neu nhu session time = null 
             if (session.getAttribute("time") == null) {
-                //Lay ra tat ca cac ca 
+                //Lay ra tat ca cac shift
                 listAllShift = d.getAllShiftFromNow(formattedTime);
-                //tao danh sach de luu nhung ca trong
+                //tao danh sach de luu nhung ca trong va dua vao method listShiftEmpty de so sanh cac shift tim ra ca trong de luu vao danh sach shift hien thi
                 listShift = listShiftEmpty(listAllShift, todayStr);
 
                 session.setAttribute("time", new Time(todayStr, listShift));
             } else if (session.getAttribute("time") != null) {
+                //neu nhu session time da ton tại thi lay ra doi tuong time
                 Time time = (Time) session.getAttribute("time");
-                //Lay ra tat ca cac ca 
+                //Lay ra tat ca cac ca tu thoi diem nay tro di neu nhu date trong Time la ngay hom nay
                 if (time.getDate().equals(todayStr)) {
                     listAllShift = d.getAllShiftFromNow(formattedTime);
                 } else {
+                    //neu khong phải hom nay thi lay ra toàn bo ca
                     listAllShift = d.getAll();
                 }
-                //tao danh sach de luu nhung ca trong
+                //luu nhung ca trong duoc tra ve qua method listShiftEmpty
                 listShift = listShiftEmpty(listAllShift, time.getDate());
                 session.setAttribute("time", new Time(time.getDate(), listShift));
 
@@ -98,6 +105,7 @@ public class AppointmentServlet extends HttpServlet {
                 ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
                 List<Shift> listShiftNeed = new ArrayList<>();
                 int servicesSize = servicesBooking.getListServices().size();
+                //kiem tra xem
                 if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
                     for (int i = 0; i < servicesSize; i++) {
                         listShiftNeed.add(listAllShift.get(i));
@@ -112,7 +120,14 @@ public class AppointmentServlet extends HttpServlet {
             request.getRequestDispatcher("booking.jsp").forward(request, response);
         } //neu cua hang dang trong trang thai khong hoat dong
         else {
+            String mssStore ="";
+            if (store.getStartDate().equals(store.getEndDate())) {
+                mssStore = "Cửa hàng đang tạm đóng ngày "+ store.getStartDate();
+            } else{
+                mssStore = "Cửa hàng đang tạm đóng từ ngày " + store.getStartDate() + " đến ngày " +store.getEndDate();
+            }
             request.setAttribute("store", store);
+            request.setAttribute("mssStore", mssStore);
             request.setAttribute("checkNotActive", true);
             request.getRequestDispatcher("booking.jsp").forward(request, response);
         }
@@ -198,6 +213,7 @@ public class AppointmentServlet extends HttpServlet {
             ShiftsDAO sd = new ShiftsDAO();
             List<Shift> listShiftNeed = sd.getAllNextShift(Integer.parseInt(shift_str),
                     sb.getListServices().size());
+            //neu tat ca shift can ma co ca nao khong con trong hoac so luong service loen hon so luong cac ca can sẽ thong bao dat khong thanh cong
             if (!checkAllShiftEmpty(listShiftNeed, date_str)
                     || sb.getListServices().size() > listShiftNeed.size()) {
 
@@ -225,8 +241,8 @@ public class AppointmentServlet extends HttpServlet {
                 int customerId = cus.getCustomerId();
 
                 //tao ra ordercode từ DAL.OrderDAO
-//                String orderCode = d.generateOrderCode();
-                String orderCode = "11ab";
+                String orderCode = d.generateOrderCode();
+//                String orderCode = "11ab";
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
@@ -257,7 +273,8 @@ public class AppointmentServlet extends HttpServlet {
         } catch (Exception e) {
         }
     }
-
+    
+    //ham de kiem tra danh sach cac ca dua vao co con trong khong
     public boolean checkAllShiftEmpty(List<Shift> listShift, String date) {
         boolean check = true;
         Order_shiftDAO osd = new Order_shiftDAO();
@@ -273,18 +290,21 @@ public class AppointmentServlet extends HttpServlet {
     }
 
     /**
-     *
+     * ham de kiem tra va tra ve list nhung ca trong
      * @param shift to check is that shift empty
      * @param date
-     * @return boolean
+     * @return List
      */
     public List<Shift> listShiftEmpty(List<Shift> listShift, String date) {
         List<Shift> listShiftEmpty = new ArrayList<>();
         Order_shiftDAO osd = new Order_shiftDAO();
         EmployeesDAO ed = new EmployeesDAO();
+        //dem so nhan vien 
         int numberEmployeeActive = ed.countNumberActiveEmployee();
         for (Shift s : listShift) {
+            //so sanh so nhan vien voi so don cua ca do trong ngay date
             if (numberEmployeeActive > osd.countNumberOrderInShift(s.getId(), date)) {
+                //neu so nhan vien lon hon so don trong ca thi them vao danh sach ca trong
                 listShiftEmpty.add(s);
             }
         }

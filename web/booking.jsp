@@ -169,7 +169,12 @@
                                                 <c:forEach items="${sessionScope.services.getListServices()}" var="s">
                                                     <span class="service-name">${s.getName()}</span>
                                                 </c:forEach>
-                                                <div style="font-size: 19px; color: #19692c; margin-top: 1rem;">Tổng số tiền cần thanh toán: ${sessionScope.services.getTotalMoney()}K</div>
+                                                <div style="font-size: 19px; color: #19692c; margin-top: 1rem;">
+                                                    Tổng số tiền:
+                                                    <fmt:formatNumber value="${sessionScope.services.getTotalMoney()}" type="number" pattern="###,###">
+
+                                                    </fmt:formatNumber><sup>đ</sup>
+                                                </div>
                                             </c:if>
                                         </div>
                                     </div>
@@ -229,7 +234,7 @@
                         <!--kiem tra cua hang khong hoat dong-->
                         <c:if test="${checkNotActive != null}">
                             <div style="text-align: center;" >
-                                <h3 style="font-weight: 700;">Cửa Hàng Đang Tạm Đóng Từ Ngày ${store.startDate} Đến Ngày ${store.endDate}</h3>
+                                <h3 style="font-weight: 700;">${mssStore}</h3>
                                 <h4 style="font-weight: 500;">Quý Khách vui lòng trở lại vào hôm khác</h4>
                                 <form action="home" class="appointment-form">
                                     <div class="form-group">
@@ -328,76 +333,76 @@
         <script src="js/main.js"></script>
 
         <script>
-                        function validateForm() {
-                            // Check if services are selected
-                            var servicesSelected = ${sessionScope.services != null ? true : false};
-                            if (!servicesSelected) {
-                                document.getElementById("error-message").innerText = "Vui lòng chọn dịch vụ.";
-                                return false;
-                            }
-
-                            // Check if date is selected
-                            var date = document.getElementById("date").value;
-                            if (date === "") {
-                                document.getElementById("error-message").innerText = "Vui lòng chọn ngày.";
-                                return false;
-                            }
-
-                            // Check if shifts are selected
-                            var shifts = document.getElementById("shifts").value;
-                            if (shifts === "") {
-                                document.getElementById("error-message").innerText = "Vui lòng chọn ca làm việc.";
-                                return false;
-                            }
-
-                            return true; // All validations passed
-                        }
-
-                        $(document).ready(function () {
-                            // Khi người dùng thay đổi ngày
-                            $('#date').change(function () {
-                                var selectedDate = $(this).val();
-
-                                // Gửi yêu cầu AJAX để lấy danh sách ca làm việc mới
-                                $.ajax({
-                                    url: 'fetchdate', // Đường dẫn tới Servlet của bạn để lấy danh sách ca làm việc
-                                    method: 'GET',
-                                    data: {date: selectedDate},
-                                    success: function () {
-                                        // Sau khi xử lý thành công, tải lại trang
-                                        window.location.href = 'appointment';
-                                    },
-                                    error: function (error) {
-                                        console.log('Error fetching shifts:', error);
+                                function validateForm() {
+                                    // Check if services are selected
+                                    var servicesSelected = ${sessionScope.services != null ? true : false};
+                                    if (!servicesSelected) {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn dịch vụ.";
+                                        return false;
                                     }
-                                });
-                            });
 
-                            $('#shifts').change(function () {
-                                var selectedShiftId = $(this).val();
+                                    // Check if date is selected
+                                    var date = document.getElementById("date").value;
+                                    if (date === "") {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn ngày.";
+                                        return false;
+                                    }
 
-                                $.ajax({
-                                    url: 'fetchnextshifts', // Đảm bảo URL đúng với đường dẫn servlet
-                                    method: 'POST',
-                                    data: {shiftId: selectedShiftId},
-                                    success: function (response) {
-                                        // Kiểm tra phản hồi JSON
-                                        console.log(response);
+                                    // Check if shifts are selected
+                                    var shifts = document.getElementById("shifts").value;
+                                    if (shifts === "") {
+                                        document.getElementById("error-message").innerText = "Vui lòng chọn ca làm việc.";
+                                        return false;
+                                    }
 
-                                        // Xóa các ca dự kiến hiện tại
-                                        $('.projected-shifts').empty();
+                                    return true; // All validations passed
+                                }
 
-                                        // Cập nhật các ca dự kiến mới
-                                        $.each(response, function (index, shift) {
-                                            $('.projected-shifts').append('<span class="service-name">' + shift.startTime + '</span>');
+                                $(document).ready(function () {
+                                    // Khi người dùng thay đổi ngày
+                                    $('#date').change(function () {
+                                        var selectedDate = $(this).val();
+
+                                        // Gửi yêu cầu AJAX để lấy danh sách ca làm việc mới
+                                        $.ajax({
+                                            url: 'fetchdate', // Đường dẫn tới Servlet của bạn để lấy danh sách ca làm việc
+                                            method: 'GET',
+                                            data: {date: selectedDate},
+                                            success: function () {
+                                                // Sau khi xử lý thành công, tải lại trang
+                                                window.location.href = 'appointment';
+                                            },
+                                            error: function (error) {
+                                                console.log('Error fetching shifts:', error);
+                                            }
                                         });
-                                    },
-                                    error: function (error) {
-                                        console.log('Error processing shift ID:', error);
-                                    }
+                                    });
+
+                                    $('#shifts').change(function () {
+                                        var selectedShiftId = $(this).val();
+
+                                        $.ajax({
+                                            url: 'fetchnextshifts', // Đảm bảo URL đúng với đường dẫn servlet
+                                            method: 'POST',
+                                            data: {shiftId: selectedShiftId},
+                                            success: function (response) {
+                                                // Kiểm tra phản hồi JSON
+                                                console.log(response);
+
+                                                // Xóa các ca dự kiến hiện tại
+                                                $('.projected-shifts').empty();
+
+                                                // Cập nhật các ca dự kiến mới
+                                                $.each(response, function (index, shift) {
+                                                    $('.projected-shifts').append('<span class="service-name">' + shift.startTime + '</span>');
+                                                });
+                                            },
+                                            error: function (error) {
+                                                console.log('Error processing shift ID:', error);
+                                            }
+                                        });
+                                    });
                                 });
-                            });
-                        });
         </script>
     </body>
 

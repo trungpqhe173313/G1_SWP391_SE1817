@@ -94,32 +94,32 @@
                 <div class="container ftco-relative" >
                 <c:set value="${order}" var="o" />
                 <div class="row justify-content-center pb-3">
-                    <div class="col-md-10 heading-section text-center ftco-animate">
+                    <div class="col-md-10 heading-section text-center ftco-animate" >
                         <h2 class="mb-4" style="color: green; font-weight: 600;">Đặt Lịch thành công ✔</h2>
-                        <p style="font-size: 1.2rem; color: black;">Bạn có lịch hẹn vào lúc: <span style="color: green;">${ListShifts.get(0).getStartTime()}, ${o.getOrderDate()}</span></p>
+                        <p style="font-size: 1.3rem; color: black;">Bạn có lịch hẹn vào lúc: <span style="color: green;">${ListShifts.get(0).getStartTime()}, ${o.getOrderDate()}</span></p>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate" >
-                        <form action="appointment" class="appointment-form" onsubmit="return validateForm()" >
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-sm-5 mb-4">
-                                    <h5 class="mb-4" style="font-weight: 600;">Chi tiết lịch đặt</h5>
+                        <form action="home" class="appointment-form" onsubmit="return validateForm()" >
+                            <div class="row d-flex justify-content-center" >
+                                <div class="col-sm-5 mb-4" >
+                                    <h5 class="mb-4" style="font-weight: 600; border-bottom: 1px #333333 solid;">Chi tiết lịch:</h5>
 
                                     <div class="form-group" style="width: 300px; margin: auto;">
                                         <div>
-                                            <p style="font-weight: 500; font-size: 1rem; color: black;">Dịch vụ:</p>
+                                            <p style="font-weight: 500; font-size: 1.1rem; color: black;">Dịch vụ:</p>
                                         </div>
                                         <c:forEach items="${listServices}" var="s">
                                             <span class="service-name">${s.getName()}</span>
                                         </c:forEach>
-                                        <div style="font-size: 19px; color: #19692c; margin-top: 1rem;">Tổng số tiền cần thanh toán:
+
+                                    </div>
+                                        <div style="font-size: 1.3rem; color: #19692c; margin-top: 1rem; font-weight: 600; border-bottom: 1px #333333 solid;">Tổng số tiền:
                                             <fmt:formatNumber value="${o.getTotalAmount()}" type="number" pattern="###,###">
 
                                             </fmt:formatNumber><sup>đ</sup>
                                         </div>
-
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

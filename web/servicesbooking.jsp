@@ -137,19 +137,23 @@
                         </c:if>
                         <div class="col-md-3 ftco-animate">
                             <c:if test="${s.isActive}">
-                            <div class="pricing-entry pb-5 text-center">
-                                <div>
-                                    <h3 class="mb-4">${s.name}</h3>
-                                    <img src="img/service/${s.image}" width="width" height="height" alt="alt"/>
-                                    <p class="service-description">${s.description}</p>
-                                    <p class="price-fixed"><span class="price">${s.price}K</span></p>
+                                <div class="pricing-entry pb-5 text-center">
+                                    <div>
+                                        <h3 class="mb-4">${s.name}</h3>
+                                        <img src="img/service/${s.image}" width="width" height="height" alt="alt"/>
+                                        <p class="service-description">${s.description}</p>
+                                        <p class="price-fixed"><span class="price">
+                                                <fmt:formatNumber value="${s.price}" type="number" pattern="###,###">
+
+                                                </fmt:formatNumber><sup>đ</sup>
+                                            </span></p>
+                                    </div>
+                                    <p class="button text-center">
+                                        <a href="#" class="btn ${selected ? 'btn-secondary' : 'btn-primary'} px-4 py-3 add-service" data-price="${s.price}" data-service="${s.servicesId}">
+                                            ${selected ? 'Đã thêm' : 'Thêm dịch vụ'}
+                                        </a>
+                                    </p>
                                 </div>
-                                <p class="button text-center">
-                                    <a href="#" class="btn ${selected ? 'btn-secondary' : 'btn-primary'} px-4 py-3 add-service" data-price="${s.price}" data-service="${s.servicesId}">
-                                        ${selected ? 'Đã thêm' : 'Thêm dịch vụ'}
-                                    </a>
-                                </p>
-                            </div>
                             </c:if>        
                         </div>
                     </c:forEach>
@@ -158,7 +162,7 @@
         </section>
 
         <div class="fixed-bottom-bar">
-            <span id="service-count">0 dịch vụ</span> | <span id="total-price">0K</span>
+            <span id="service-count">0 dịch vụ</span> | <span id="total-price">0₫</span>
             <button class="btn btn-primary" style="border-radius: 5px" onclick="done()">Xong</button>
         </div>
 
@@ -184,65 +188,71 @@
         <script src="js/main.js"></script>
 
         <script>
-                let soDichVu = 0;
-                let tongGia = 0;
-                const dichVuDaThem = {};
+            let soDichVu = 0;
+            let tongGia = 0;
+            const dichVuDaThem = {};
 
-                document.querySelectorAll('.add-service').forEach(button => {
-                    const dichVu = button.getAttribute('data-service');
-                    const gia = parseFloat(button.getAttribute('data-price'));
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0
+            });
 
-                    if (button.classList.contains('btn-secondary')) {
+            document.querySelectorAll('.add-service').forEach(button => {
+                const dichVu = button.getAttribute('data-service');
+                const gia = parseFloat(button.getAttribute('data-price'));
+
+                if (button.classList.contains('btn-secondary')) {
+                    dichVuDaThem[dichVu] = gia;
+                    soDichVu++;
+                    tongGia += gia;
+                }
+
+                button.addEventListener('click', () => {
+                    if (dichVuDaThem[dichVu]) {
+                        delete dichVuDaThem[dichVu];
+                        soDichVu--;
+                        tongGia -= gia;
+                        button.textContent = 'Thêm dịch vụ';
+                        button.classList.remove('btn-secondary');
+                        button.classList.add('btn-primary');
+                    } else {
                         dichVuDaThem[dichVu] = gia;
                         soDichVu++;
                         tongGia += gia;
+                        button.textContent = 'Đã thêm';
+                        button.classList.remove('btn-primary');
+                        button.classList.add('btn-secondary');
                     }
 
-                    button.addEventListener('click', () => {
-                        if (dichVuDaThem[dichVu]) {
-                            delete dichVuDaThem[dichVu];
-                            soDichVu--;
-                            tongGia -= gia;
-                            button.textContent = 'Thêm dịch vụ';
-                            button.classList.remove('btn-secondary');
-                            button.classList.add('btn-primary');
-                        } else {
-                            dichVuDaThem[dichVu] = gia;
-                            soDichVu++;
-                            tongGia += gia;
-                            button.textContent = 'Đã thêm';
-                            button.classList.remove('btn-primary');
-                            button.classList.add('btn-secondary');
-                        }
-
-                        document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
-                        document.getElementById('total-price').innerText = tongGia + 'đ';
-                    });
+                    document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
+                    document.getElementById('total-price').innerText = formatter.format(tongGia);
                 });
+            });
 
-                document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
-                document.getElementById('total-price').innerText = tongGia + 'đ';
+            document.getElementById('service-count').innerText = soDichVu + ' dịch vụ';
+            document.getElementById('total-price').innerText = formatter.format(tongGia);
 
-                function done() {
-                    const dichVuChon = Object.keys(dichVuDaThem);
+            function done() {
+                const dichVuChon = Object.keys(dichVuDaThem);
 
-                    $.ajax({
-                        type: 'GET',
-                        url: 'servicesbookingajax',
-                        data: {
-                            soDichVu: soDichVu,
-                            tongGia: tongGia,
-                            dichVu: dichVuChon
-                        },
-                        success: function (response) {
-                            // Assuming the server sends a success response regardless of selected services
-                            window.location.href = 'appointment';
-                        },
-                        error: function (error) {
-                            console.error('Lỗi:', error);
-                        }
-                    });
-                }
+                $.ajax({
+                    type: 'GET',
+                    url: 'servicesbookingajax',
+                    data: {
+                        soDichVu: soDichVu,
+                        tongGia: tongGia,
+                        dichVu: dichVuChon
+                    },
+                    success: function (response) {
+                        // Assuming the server sends a success response regardless of selected services
+                        window.location.href = 'appointment';
+                    },
+                    error: function (error) {
+                        console.error('Lỗi:', error);
+                    }
+                });
+            }
         </script>
     </body>
 </html>
