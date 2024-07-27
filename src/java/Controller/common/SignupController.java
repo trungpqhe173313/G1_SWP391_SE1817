@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller.common;
+
 import util.PasswordEncryption;
 import Dal.AccountDAO;
 import Dal.CustomerDAO;
@@ -58,11 +59,12 @@ public class SignupController extends HttpServlet {
         if (password == null || re_pass == null || !password.equals(re_pass)) {
             request.setAttribute("error1", "Mật khẩu không đúng! Xác nhận mật khẩu phải giống với mật khẩu!");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
-           
-        }else{
-            // Mã hóa mật khẩu người dùng nhập vào
-            password = PasswordEncryption.toSHA1(password);
+
         }
+//else{
+//            // Mã hóa mật khẩu người dùng nhập vào
+//            password = PasswordEncryption.toSHA1(password);
+//        }
 
         AccountDAO accountDAO = new AccountDAO();
         CustomerDAO customerDAO = new CustomerDAO();
@@ -81,7 +83,6 @@ public class SignupController extends HttpServlet {
 
             // Create new Customer
 //            Customer newCustomer = new Customer(1,fullName, phone);
-
             // Insert Customer and Account
             customerDAO.insertCustomer(fullName, phone);
             accountDAO.insertAccount(newAccount);
