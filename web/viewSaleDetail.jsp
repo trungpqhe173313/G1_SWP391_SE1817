@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,34 +136,7 @@
                                 <div class="topbar-divider d-none d-sm-block"></div>
 
                                 <!-- Nav Item - User Information -->
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                                    </a>
-                                    <!-- Dropdown - User Information -->
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Settings
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Activity Log
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                    </div>
-                                </li>
+                                <jsp:include page="navadmin.jsp"></jsp:include>
 
                             </ul>
 
@@ -206,59 +180,65 @@
                                             <p class="my-3" id="nameTopBarber" style="margin-top: -20px; font-size: 1.5rem;">${vs.getEmployee().getFullName()}</p>
                                             <p class="text-muted mb-1" style="font-size: 1.1rem; font-weight: 700;">${vs.getEmployee().getPhone()}</p>
                                             <p class="text-muted mb-4" style="font-size: 1.3rem; font-weight: 700;">Lương Ước Tính: 
-                                                <span style="color: green; font-weight: 800;">${vs.getSalary()}đ</span></p>
+                                                <span style="color: green; font-weight: 800;">
+                                                <fmt:formatNumber value="${vs.getSalary()}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                </span></p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="card shadow mb-4 col-md-8" style="max-width: 1550px;">
+                                <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Đơn Hàng</h6>
-
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <div class="table-responsive" style="width: 100%">
+                                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                                            <div class="card-body" style="height: 100%; width: 100%;">
+                                                <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Đơn Hàng</th>
+                                                                <th>Tên Khách Hàng</th>
+                                                                <th>SĐT</th>
+                                                                <th>Dịch Vụ</th>
+                                                                <th>Ngày Đặt Lịch</th>
+                                                                <th>Tổng Thanh Toán</th>
+                                                                <th>Trạng Thái</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <c:forEach items="${listOrder}" var="o">
 
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style=" text-align: center;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Đơn Hàng</th>
-                                                        <th>Tên Khách Hàng</th>
-                                                        <th>SĐT</th>
-                                                        <th>Dịch Vụ</th>
-                                                        <th>Ngày Đặt Lịch</th>
-                                                        <th>Tổng Thanh Toán</th>
-                                                        <th>Trạng Thái</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="max-height: 430px; overflow-y: scroll;">
-                                                    <c:forEach items="${listOrder}" var="o">
-
-                                                        <tr>
-                                                            <td>${o.getOrder().id}</td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <a href="#">${o.getCustomer().getFullName()}</a>
-                                                                </div>
-                                                            </td>
-                                                            <td>${o.getCustomer().phone}</td>
-                                                            <td>
-                                                                <c:forEach items="${o.getServices()}" var="s">
-                                                                    <span>${s.getName()}</span>
-                                                                </c:forEach>
-                                                            </td>
-                                                            <td>${o.getOrder().orderDate}</td>
-                                                            <td id="totalMoney">${o.getOrder().totalAmount}đ</td>
-                                                            <td>${o.getStatus().name}</td>
-                                                            <td><a href="viewsaleorder?orderId=${o.getOrder().id}&month=${monthSelect}" 
-                                                                   class="more">Details</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                            <tr>
+                                                                <td>${o.getOrder().id}</td>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <a href="#">${o.getCustomer().getFullName()}</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>${o.getCustomer().phone}</td>
+                                                                <td>
+                                                                    <c:forEach items="${o.getServices()}" var="s">
+                                                                        <span>${s.getName()}</span>
+                                                                    </c:forEach>
+                                                                </td>
+                                                                <td>${o.getOrder().orderDate}</td>
+                                                                <td id="totalMoney">
+                                                                    <fmt:formatNumber value="${o.getOrder().totalAmount}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                                    </td>
+                                                                    <td>${o.getStatus().name}</td>
+                                                                <td><a href="viewsaleorder?orderId=${o.getOrder().id}&month=${monthSelect}" 
+                                                                       class="more">Details</a></td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -275,14 +255,6 @@
 
                     <!-- End of Main Content -->
 
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Your Website 2021</span>
-                            </div>
-                        </div>
-                    </footer>
                     <!-- End of Footer -->
 
                 </div>

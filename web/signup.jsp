@@ -249,7 +249,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <form action="signup" method="post" enctype="multipart/form-data">
                             <div class="group">
                                 <label for="fullname" class="label">Họ và tên*</label>
-                                <input type="text" required value="${param.fullName}" name="fullname"  class="input">
+                                <input type="text" required value="${param.fullname}" name="fullname"  
+                                       pattern="^(?!\s*$)(?:[A-Za-zÀ-ỹà-ỹ]+(?:\s+[A-Za-zÀ-ỹà-ỹ]+){1,})$" 
+                                       title="Họ và tên chỉ có chữ cái, tối thiểu 2 chữ, và có thể có dấu tiếng Việt" class="input">
                             </div>
 
                             <div class="group">
@@ -257,7 +259,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 <input type="text" name="phone" required value="${param.phone}" pattern="0[0-9]{9}" 
                                        title="Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0" class="input">
                             </div>
-
+                            <p class="text-danger">${error2}</p>
                             <div class="group">
                                 <label for="pass" class="label">Mật khẩu*</label>
                                 <input type="password" required value="${param.pass}" name="pass" class="input">
@@ -270,8 +272,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                             <div class="group">
                                 <label for="email" class="label">Email*</label>
-                                <input type="text" name="email" required value="${param.email}" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-                                       title="Địa chỉ email không hợp lệ" class="input">
+                                <input type="text" name="email" required value="${param.email}" 
+                                       pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$" 
+                                       title="Địa chỉ email không hợp lệ. Email phải có dạng như tomas@gmail.com" class="input">
                             </div>
 
                             <div class="group-gen">

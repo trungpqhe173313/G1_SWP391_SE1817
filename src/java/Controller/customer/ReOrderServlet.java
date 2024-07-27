@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -36,7 +35,7 @@ public class ReOrderServlet extends HttpServlet {
         String orderId_str = request.getParameter("orderId");
         ShopDAO d = new ShopDAO();
         HttpSession session = request.getSession();
-        if (NumberUtils.isNumber(orderId_str) == true) {
+        if (isNumber(orderId_str)) {
             int orderId = Integer.parseInt(orderId_str);
             List<Services> listServices = d.getServicesByOrderId(orderId);
             int soDichVu = 0;
@@ -49,9 +48,18 @@ public class ReOrderServlet extends HttpServlet {
             session.setAttribute("services", sb);
             // Chuyển tiếp đến trang đặt lịch
             request.getRequestDispatcher("appointment").forward(request, response);
-        }else{
+        } else {
             request.getRequestDispatcher("viewhistorybooking").forward(request, response);
         }
+    }
+
+    public static boolean isNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        // Biểu thức chính quy để kiểm tra số
+        String regex = "-?\\d+(\\.\\d+)?";
+        return str.matches(regex);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

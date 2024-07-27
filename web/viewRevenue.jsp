@@ -216,9 +216,8 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <div class="table-responsive" style="max-height: 860px;
-                                             overflow-y: scroll; font-size: 1.1rem">
-                                            <div class="card-body">
+                                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                                            <div class="card-body" style="height: 100%; width: 100%;">
                                                 <div class="row mb-3">
                                                     <div class="col-md-3">
                                                         <label for="dateFilter">Từ ngày</label>
@@ -321,7 +320,7 @@
                         </div>
 
 
-                    </div>
+                </div>
                     <!-- /.container-fluid -->
 
                 </div>

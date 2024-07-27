@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -79,6 +80,9 @@
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
     <body>
         <jsp:include page="nav.jsp"></jsp:include>
@@ -98,62 +102,72 @@
 
             <section class="ftco-section ftco-booking bg-light">
                 <div class="container">
-                    <div class="table-container">
-                        <table class="table custom-table" id="dataTable" style="border-radius: 5px;">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Đơn</th>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Dịch Vụ</th>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Giờ Đặt</th>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Barber</th>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Tổng Tiền</th>
-                                    <th scope="col" style="
-                                        background-color: #EBE8DE;">Trạng Thái</th>
-                                    <th scope="col" style="text-align: center;
-                                        background-color: #EBE8DE;">Đặt Lại</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${listOrder}" var="lb">
-                                <tr scope="row" style="font-size: 1rem;">
-                                    <td>${lb.getOrder().getId()}</td>
-                                    <td style="font-size: 1rem; font-weight: 500;">
-                                        <c:forEach items="${lb.getServices()}" var="s">
-                                            - ${s.getName()} </br>
-                                        </c:forEach>
-                                    </td>
-                                    <td>
-                                        <c:forEach items="${lb.shift}" var="shift">
-                                            
-                                        <span style="font-size: 1rem;">${shift.getStartTime()}</span>
-                                        </c:forEach>
-                                        </br>
-                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getOrder().getOrderDate()}</span>
-                                    </td>
-                                    <td>
-                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getEmployee().getFullName()}</span>
-                                        </br>
-                                        <span style="font-size: 1rem;">${lb.getEmployee().getPhone()}</span>
-                                    </td>
-                                    <td style="color: green">${lb.getOrder().getTotalAmount()}đ</td>
-                                    <td>${lb.getStatus().getName()}</td>
-                                    <td class="icon-center">
-                                        <a href="reorder?orderId=${lb.getOrder().getId()}">
-                                            <i class="bi bi-calendar-plus"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"><td colspan="100"></td></tr>
-                                </c:forEach>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="card-body col-md-12">
+                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                            <div class="card-body" style="height: 100%; width: 100%;">
+                                <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Đơn</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Dịch Vụ</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Giờ Đặt</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Barber</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Tổng Tiền</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Trạng Thái</th>
+                                                <th style="
+                                                    background-color: #EBE8DE;">Đặt Lại</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${listOrder}" var="lb">
+
+                                                <tr>
+                                                    <td style="font-size: 1rem;">${lb.getOrder().getId()}</td>
+                                                    <td style="font-size: 1rem; font-weight: 500;">
+                                                        <c:forEach items="${lb.getServices()}" var="s">
+                                                            ${s.getName()} </br>
+                                                        </c:forEach>
+                                                    </td>
+                                                    <td><c:forEach items="${lb.shift}" var="shift">
+
+                                                            <span style="font-size: 1rem;">${shift.getStartTime()}</span>
+                                                        </c:forEach>
+                                                        </br>
+                                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getOrder().getOrderDate()}</span></td>
+                                                    <td>
+                                                        <span style="font-size: 1.1rem; font-weight: 460">${lb.getEmployee().getFullName()}</span>
+                                                        </br>
+                                                        <span style="font-size: 1rem;">${lb.getEmployee().getPhone()}</span>
+                                                    </td>
+                                                    <td style="color: green">
+                                                    <fmt:formatNumber value="${lb.getOrder().getTotalAmount()}" type="number" pattern="###,###">
+
+                                                                        </fmt:formatNumber><sup>đ</sup>
+                                                    </td>
+                                                    <td>${lb.getStatus().getName()}</td>
+                                                    <td>
+                                                        <a href="reorder?orderId=${lb.getOrder().getId()}">
+                                                            <i class="bi bi-calendar-plus"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="row justify-content-center">
                     <div class="col-md-10 ftco-animate">
                         <form action="home" class="appointment-form">
@@ -246,5 +260,14 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script>
+                                $(document).ready(function () {
+                                    $('#dataTable').DataTable();
+                                });
+        </script>
     </body>
 </html>

@@ -18,8 +18,7 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LINHNTHE170290
- * sendleaverequest
+ * @author LINHNTHE170290 sendleaverequest
  */
 public class SendLeaveRequestController extends HttpServlet {
 
@@ -40,7 +39,7 @@ public class SendLeaveRequestController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SendLeaveRequestController</title>");            
+            out.println("<title>Servlet SendLeaveRequestController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SendLeaveRequestController at " + request.getContextPath() + "</h1>");
@@ -73,6 +72,7 @@ public class SendLeaveRequestController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -86,6 +86,7 @@ public class SendLeaveRequestController extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
+
         String phone = account.getPhone();
         EmployeesDAO employeeDAO = new EmployeesDAO();
         String startDate = request.getParameter("startDate");
@@ -93,14 +94,17 @@ public class SendLeaveRequestController extends HttpServlet {
         String reason = request.getParameter("reason");
 
         Employee employee = employeeDAO.getAllEmployees(phone);
-                   // response.getWriter().println(reason);
-//            response.getWriter().println(endDate);
-//            response.getWriter().println(startDate);
-//            response.getWriter().println(employee.getEmployeeId());
         new LeaveRequestsDAO().addLeaveRequest(employee.getEmployeeId(), startDate, endDate, reason, 1);
-        
-        session.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công.");
-        response.sendRedirect("resignationEmployee.jsp");
+
+        // Kiểm tra xem yêu cầu nghỉ phép có được thêm vào cơ sở dữ liệu hay không
+        boolean success = new LeaveRequestsDAO().isLeaveRequestAdded(employee.getEmployeeId(), startDate, endDate, reason);
+        if (success) {
+            request.setAttribute("message", "Đơn xin nghỉ phép đã được gửi thành công!");
+        } else {
+            request.setAttribute("message", "Đã có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+
+        request.getRequestDispatcher("resignationEmployee.jsp").forward(request, response);
     }
 
     /**
