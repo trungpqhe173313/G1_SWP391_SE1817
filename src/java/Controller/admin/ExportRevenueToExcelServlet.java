@@ -15,14 +15,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 public class ExportRevenueToExcelServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String month_str = request.getParameter("month");
-        if (!NumberUtils.isNumber(month_str)) {
+        if (!isNumber(month_str)) {
             response.sendRedirect("viewrevenue");
             return;
         }
@@ -50,8 +49,7 @@ public class ExportRevenueToExcelServlet extends HttpServlet {
             XSSFRow row = null;
             //Khởi tạo biến cell nhưng chưa gán giá trị cho nó. Biến này sẽ được sử dụng sau để tham chiếu đến các ô trong các hàng.
             Cell cell = null;
-            
-            
+
             //Tạo một hàng mới tại chỉ số hàng 2 (hàng thứ ba vì chỉ số bắt đầu từ 0) trên sheet.
             row = sheet.createRow(2);
             //Tạo một ô mới trong hàng row tại chỉ số cột 0 (cột đầu tiên) với loại dữ liệu là CellType.STRING.
@@ -125,6 +123,15 @@ public class ExportRevenueToExcelServlet extends HttpServlet {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static boolean isNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        // Biểu thức chính quy để kiểm tra số
+        String regex = "-?\\d+(\\.\\d+)?";
+        return str.matches(regex);
     }
 
     @Override

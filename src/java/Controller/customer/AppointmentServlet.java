@@ -241,9 +241,8 @@ public class AppointmentServlet extends HttpServlet {
                 int customerId = cus.getCustomerId();
 
                 //tao ra ordercode từ DAL.OrderDAO
-                String orderCode = d.generateOrderCode();
-//                String orderCode = "11ab";
-
+//                String orderCode = d.generateOrderCode();
+                String orderCode = "ab178";
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
                 Date date = new java.sql.Date(sdf.parse(date_str).getTime());
