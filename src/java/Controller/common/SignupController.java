@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller.common;
-
+import util.PasswordEncryption;
 import Dal.AccountDAO;
 import Dal.CustomerDAO;
 import Model.Account;
@@ -56,9 +56,12 @@ public class SignupController extends HttpServlet {
         String avatar = (fileName != null && !fileName.isEmpty()) ? fileName : request.getParameter("avatar");
 
         if (password == null || re_pass == null || !password.equals(re_pass)) {
-            request.setAttribute("error1", "Password incorrect! Confirm password must be equal to password!");
+            request.setAttribute("error1", "Mật khẩu không đúng! Xác nhận mật khẩu phải giống với mật khẩu!");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
            
+        }else{
+            // Mã hóa mật khẩu người dùng nhập vào
+            password = PasswordEncryption.toSHA1(password);
         }
 
         AccountDAO accountDAO = new AccountDAO();
@@ -86,7 +89,7 @@ public class SignupController extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             // If phone number already exists, show error
-            request.setAttribute("error2", "Phone already exists! Please choose another one.");
+            request.setAttribute("error2", "Số điện thoại đã tồn tại! Vui lòng chọn số khác.");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         }
     }

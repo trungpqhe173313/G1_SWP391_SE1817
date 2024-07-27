@@ -64,30 +64,6 @@
                             <i class="fa fa-bars"></i>
                         </button>
                     </form>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow">
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                 </nav>
 
                 <div class="container">
@@ -100,7 +76,7 @@
                                         <div class="avatar-container">
                                             <img src="img/service/${accountDetails.avatar}" alt="Avatar" class="img-fluid" id="currentAvatar">
                                         </div>
-                                        <input type="hidden" name="currentAvatar" value="${accountDetails.avatar}">
+                                        <input type="hidden" name="currentAvatar" id="currentAvatarInput" value="${accountDetails.avatar}">
                                         <div class="form-group row d-none" id="avatarUploadSection">
                                             <label for="avatar" class="col-sm-12 col-form-label">Chọn Ảnh Đại Diện</label>
                                             <div class="col-sm-12">
@@ -232,21 +208,31 @@
         function validateForm() {
             var fullName = document.getElementById('fullName').value;
             var email = document.getElementById('email').value;
+            var image = document.getElementById('avatar').value;
 
-        var fullName = document.getElementById("fullName").value;
-        if (!/^[\p{L}\s]+$/u.test(fullName)) {
-            alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
-            return false;
-        }
+            if (!/^[\p{L}\s]+$/u.test(fullName)) {
+                alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
+                return false;
+            }
 
-    // Validate no leading spaces in other fields
-    var inputs = document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]');
-    for (var i = 0; i < inputs.length; i++) {
-        if (/^\s/.test(inputs[i].value)) {
-            alert("Không được viết dấu khoảng cách ở đầu của tất cả các trường.");
-            return false;
-        }
-    }
+            var inputs = document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]');
+            for (var i = 0; i < inputs.length; i++) {
+                if (/^\s/.test(inputs[i].value)) {
+                    alert("Không được viết dấu khoảng cách ở đầu của tất cả các trường.");
+                    return false;
+                }
+            }
+
+            if (!image) {
+                document.getElementById('avatar').value = document.getElementById('currentAvatarInput').value;
+            } else {
+                const validExtensions = ['jpg', 'jpeg', 'png'];
+                const fileExtension = image.split('.').pop().toLowerCase();
+                if (!validExtensions.includes(fileExtension)) {
+                    alert("Ảnh đại diện phải là file jpg hoặc png.");
+                    return false;
+                }
+            }
 
             return true;
         }

@@ -5,21 +5,27 @@
 package Controller.customer;
 
 import Dal.CustomerDAO;
-import Model.Account;
-import Model.Customer;
+import Dal.AccountDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
 
 /**
  *
  * @author admin
  */
 public class UpdateCustomerProfileController extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,12 +39,12 @@ public class UpdateCustomerProfileController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try (var out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCustomerProfileController</title>");            
+            out.println("<title>Servlet UpdateCustomerProfileController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateCustomerProfileController at " + request.getContextPath() + "</h1>");
@@ -47,7 +53,6 @@ public class UpdateCustomerProfileController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -59,7 +64,7 @@ public class UpdateCustomerProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("updateCustomerProfile.jsp").forward(request, response);
+
     }
 
     /**
@@ -73,54 +78,55 @@ public class UpdateCustomerProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy thông tin từ form
-        //String idStr = request.getParameter("customerid");
-        String avatar = request.getParameter("avatar");
-        String fullName = request.getParameter("fullName");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        Boolean gender = request.getParameter("gender") != null ? Boolean.valueOf(request.getParameter("gender")) : null;
-        //int customerId = Integer.parseInt(idStr);
+        response.setContentType("text/html;charset=UTF-8");
 
-        // Kiểm tra xem các tham số đã được cung cấp chưa
-        if (phone == null || fullName == null || email == null || avatar == null) {
-            response.getWriter().println("Missing required parameters.");
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("account") == null) {
+            response.sendRedirect("login.jsp");
             return;
         }
-        // Lấy thông tin tài khoản từ phiên làm việc
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-        if (account != null) {
-            CustomerDAO customerDAO = new CustomerDAO();
-            Customer customer = customerDAO.getCustomerByP(account.getPhone());
-            if (customer != null) {
-                // Cập nhật thông tin khách hàng
-                customer.setFullName(fullName);
-                customer.setPhone(phone);
 
-                // Cập nhật thông tin tài khoản liên kết
-                account.setEmail(email);
-                account.setGender(gender);
-                account.setAvatar(avatar);
-                customer.setAccount(account);
-                // Cập nhật thông tin khách hàng trong cơ sở dữ liệu
-                boolean updateSuccessful = customerDAO.updateCustomer(customer);
-                if (updateSuccessful) {
-                    // Chuyển hướng đến trang CustomerProfile.jsp sau khi cập nhật thành công
-                    response.sendRedirect("CustomerProfile.jsp");
-                } else {
-                    // Xử lý trường hợp cập nhật thất bại
-                    response.getWriter().println("Failed to update customer information.");
-                }
-            } else {
-                // Xử lý trường hợp không tìm thấy khách hàng
-                response.getWriter().println("Customer not found.");
+        AccountDAO accountDAO = new AccountDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+
+        String phone = request.getParameter("phone");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+
+//        Part filePart = request.getPart("avatar"); // Retrieves file part from the request
+//        String avatar = (filePart != null && filePart.getSize() > 0) ? filePart.getSubmittedFileName() : null;
+        Part filePart = request.getPart("avatar"); // Retrieves <input type="file" name="avatar">
+
+        // Process file upload
+        String avatar = null;
+        if (filePart != null && filePart.getSize() > 0) {
+            avatar = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+            Path uploadPath = Paths.get(getServletContext().getRealPath("/img/service/") + avatar);
+
+            try (InputStream input = filePart.getInputStream()) {
+                Files.copy(input, uploadPath);
             }
-        } else {
-            // Xử lý trường hợp không có tài khoản trong phiên làm việc
-            response.getWriter().println("No account found in session.");
-        }
 
+            // Save the file path or file name in the database as needed
+        }
+        try {
+            // Update account information
+            accountDAO.updateAccount(phone, email, avatar);
+
+            // Update customer information
+            customerDAO.updateCustomer(phone, fullName);
+
+            // Save the file to disk if it exists
+//            if (avatar != null) {
+//                filePart.write(getServletContext().getRealPath("/") + "img/service/" + avatar);
+//            }
+
+            // Redirect to the profile page or any other success page
+            response.sendRedirect("cusprofile");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi khi cập nhật hồ sơ.");
+        }
     }
 
     /**
@@ -131,6 +137,5 @@ public class UpdateCustomerProfileController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

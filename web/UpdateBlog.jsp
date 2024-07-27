@@ -46,6 +46,7 @@
             // Get form values
             const title = document.getElementById('title').value.trim();
             const content = CKEDITOR.instances.content.getData().replace(/<[^>]*>/g, '').trim();
+            const image = document.getElementById('image').value;
 
             // Check for empty fields
             if (!title || !content) {
@@ -58,7 +59,16 @@
                 alert("Tiêu đề không được có khoảng cách ở đầu.");
                 return false;
             }
-
+            if (!image) {
+                document.getElementById('avatar').value = document.getElementById('currentAvatarInput').value;
+            } else {
+                const validExtensions = ['jpg', 'jpeg', 'png'];
+                const fileExtension = image.split('.').pop().toLowerCase();
+                if (!validExtensions.includes(fileExtension)) {
+                    alert("Ảnh đại diện phải là file jpg hoặc png.");
+                    return false;
+                }
+            }
             return true;
         }
     </script>

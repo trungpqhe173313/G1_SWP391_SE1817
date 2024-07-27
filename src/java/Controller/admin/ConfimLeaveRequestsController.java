@@ -34,7 +34,7 @@ public class ConfimLeaveRequestsController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String rId = request.getParameter("rId");
         new LeaveRequestsDAO().updateRequests(rId, 2);
-        response.sendRedirect("viewLeaveRequest");
+        response.sendRedirect("viewleaverequest");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

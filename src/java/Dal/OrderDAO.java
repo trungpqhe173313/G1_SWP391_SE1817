@@ -11,6 +11,7 @@ import Model.Shift;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -233,8 +234,8 @@ public class OrderDAO extends DBContext {
             st.setInt(6, o.getTotalAmount());
             st.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -466,5 +467,18 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
-    
+    public static void main(String[] args) {
+        OrderDAO o = new OrderDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //ep kieu string sang date truoc roi tao ra mot cai sql date
+        java.sql.Date date;
+        try {
+            date = new java.sql.Date(sdf.parse("2024-07-28").getTime());
+            o.AddOrder(new Order("asdf", 2, 1, date, 200));
+        } catch (ParseException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println(o.countOrderNotCompleteByCustomerId(5, "2024-07-05"));
+    }
 }

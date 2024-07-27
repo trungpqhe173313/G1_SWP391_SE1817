@@ -30,11 +30,6 @@
     </div>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="viewrevenue">
-            <i class="fas fa-chart-line"></i> <!-- Icon Doanh Thu -->
-            <span>Doanh Thu</span></a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link" href="viewsale">
             <i class="fas fa-chart-line"></i> <!-- Icon Doanh Thu Nhân Viên -->
             <span>Doanh Thu Nhân Viên</span></a>

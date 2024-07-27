@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -171,7 +172,9 @@
                                                 <p class="text-muted mb-1" style="font-size: 1.3rem;
                                                    font-weight: 700; color: #d89313;">Doanh Số</p>
                                                 <p class="text-muted mb-4" style="font-size: 1rem;
-                                                   font-weight: 700; color: #d89313;">${top2.getRevenue()}đ</p>
+                                                   font-weight: 700; color: #d89313;">
+                                                <fmt:formatNumber value="${top2.getRevenue()}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                </p>
                                             </div>
 
                                         </div>
@@ -195,7 +198,9 @@
                                                 <p class="text-muted mb-1" style="font-size: 1.3rem;
                                                    font-weight: 700; color: #d89313;">Doanh Số</p>
                                                 <p class="text-muted mb-4" style="font-size: 1rem;
-                                                   font-weight: 700; color: green;">${top1.getRevenue()}đ</p>
+                                                   font-weight: 700; color: green;">
+                                                <fmt:formatNumber value="${top1.getRevenue()}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -218,7 +223,9 @@
                                                 <p class="text-muted mb-1" style="font-size: 1.3rem;
                                                    font-weight: 700; color: #d89313;">Doanh Số</p>
                                                 <p class="text-muted mb-4" style="font-size: 1rem;
-                                                   font-weight: 700; color: #d89313;">${top3.getRevenue()}đ</p>
+                                                   font-weight: 700; color: #d89313;">
+                                                <fmt:formatNumber value="${top3.getRevenue()}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                </p>
                                             </div>
 
                                         </div>
@@ -235,8 +242,7 @@
                             <div class="col-lg-12">
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Thống kê doanh thu nhân viên</h6>
                                         <div class="dropdown no-arrow">
                                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -255,10 +261,10 @@
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
-                                        <div class="table-responsive" style="max-height: 500px; overflow-y: scroll;">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <div class="table-responsive" style="height: auto; width: auto; font-size: 1.1rem">
+                                            <div class="card-body" style="height: 100%; width: 100%;">
+                                                <div class="table-responsive" style="height: 100%; overflow-x: hidden;">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center; table-layout: auto;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Tên Nhân Viên</th>
@@ -279,7 +285,9 @@
                                                                     </td>
                                                                     <td>${vs.getEmployee().getPhone()}</td>
                                                                     <td>${vs.getTotalOrder()}</td>
-                                                                    <td id="totalMoney">${vs.getRevenue()}đ</td>
+                                                                    <td id="totalMoney">
+                                                                    <fmt:formatNumber value="${vs.getRevenue()}" type="number" pattern="###,###"></fmt:formatNumber><sup>đ</sup>
+                                                                    </td>
                                                                     <td><a href="viewsaledetail?employeeId=${vs.getEmployee().getEmployeeId()}&month=${monthSelect}" class="more">
                                                                             Details</a></td>
                                                                 </tr>

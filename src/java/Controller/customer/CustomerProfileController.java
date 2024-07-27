@@ -4,6 +4,7 @@
  */
 package Controller.customer;
 
+import Dal.AccountDAO;
 import Dal.CustomerDAO;
 import Model.Account;
 import Model.Customer;
@@ -61,26 +62,53 @@ public class CustomerProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false); // do not create new session
-        if (session != null) {
-            // Lấy số điện thoại của người dùng đã đăng nhập từ session
-            Account account = (Account) session.getAttribute("account");
-            if (account != null) {
-                CustomerDAO customerDAO = new CustomerDAO();
-                Customer customer = customerDAO.getCustomerProfile(account.getPhone());
-                if (customer != null) {
-                    request.setAttribute("customer", customer);
-                    request.getRequestDispatcher("CustomerProfile.jsp").forward(request, response);
-                    return;
-                } else {
-                    request.setAttribute("error", "Error system!!!");
-                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
-                }
-            }
+//        if (session != null) {
+//            // Lấy số điện thoại của người dùng đã đăng nhập từ session
+//            Account account = (Account) session.getAttribute("account");
+//            if (account != null) {
+//                CustomerDAO customerDAO = new CustomerDAO();
+//                Customer customer = customerDAO.getCustomerProfile(account.getPhone());
+//                if (customer != null) {
+//                    request.setAttribute("customer", customer);
+//                    
+//                    request.getRequestDispatcher("CustomerProfile.jsp").forward(request, response);
+//                    return;
+//                } else {
+//                    request.setAttribute("error", "Lỗi hệ thống!");
+//                    request.getRequestDispatcher("homepage.jsp").forward(request, response);
+//                }
+//            }
+//        }
+//        // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+//        response.sendRedirect("login.jsp");
+
+        if (session == null) {
+            response.sendRedirect("login.jsp");
+            return;
         }
-        // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-        response.sendRedirect("login.jsp");
 
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
+        String phone = account.getPhone();
+        
+        AccountDAO accountDAO = new AccountDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+
+        try {
+            Account ac = accountDAO.getAccountByPhone(phone);
+            Customer cus = customerDAO.getCustomerByPhone(phone);
+
+            request.setAttribute("account", ac);
+            request.setAttribute("customer", cus);
+
+            request.getRequestDispatcher("CustomerProfile.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -88,7 +116,7 @@ public class CustomerProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        
     }
 
     /**
