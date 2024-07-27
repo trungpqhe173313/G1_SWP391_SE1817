@@ -86,7 +86,6 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-<!--                                            <th>Hình Ảnh</th>-->
                                             <th>Họ Và Tên</th>
                                             <th>Số Điện Thoại</th>
                                             <th>Giới Tính</th>
