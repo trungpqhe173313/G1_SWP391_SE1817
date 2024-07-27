@@ -127,16 +127,15 @@ CREATE TABLE Voucher (
 );
 CREATE TABLE LoyaltyPolicies (
     PolicyID INT IDENTITY(1,1) PRIMARY KEY,
-    MinAmount INT NOT NULL, -- Số tiền tối thiểu để bắt đầu tính điểm
-    PointsPerUnit INT NOT NULL -- Số điểm cho mỗi đơn vị tiền chi tiêu
+    MinAmount INT NOT NULL,
+    PointsPerUnit INT NOT NULL
 );
--- Tạo bảng mới cho các trạng thái đơn xin nghỉ
+
 CREATE TABLE LeaveRequestStatus (
     id INT IDENTITY(1,1) PRIMARY KEY,
     status NVARCHAR(255) NOT NULL
 );
 
--- Tạo bảng mới cho các đơn xin nghỉ
 CREATE TABLE LeaveRequests (
     requestId INT IDENTITY(1,1) PRIMARY KEY,
     employeeId INT,
@@ -158,6 +157,7 @@ CREATE TABLE BlogPosts (
     updatedAt DATETIME DEFAULT GETDATE(),
     isActive BIT DEFAULT 1,
 );
+GO
 
 ALTER TABLE account
 ADD CONSTRAINT FK_account_role FOREIGN KEY (roleId) REFERENCES role(id) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -263,8 +263,7 @@ INSERT INTO LeaveRequestStatus (status) VALUES
 (N'Đang Chờ Duyệt'),
 (N'Đã Duyệt'),
 (N'Từ Chối');
-
-
+GO
 
 -- Inserting data into roles table
 INSERT INTO role ([role]) VALUES
@@ -277,23 +276,24 @@ GO
 INSERT INTO statusEmployee ([status]) VALUES
 (N'Đang Rảnh'),
 (N'Đang Bận'),
-(N'Nghỉ Làm');
+(N'Nghỉ Làm'),
+(N'Đang phép');
 GO
 
 -- Inserting data into customer table
 INSERT INTO customer (phone, fullName) VALUES
-(N'0912345169', N'Phạm Văn Eanh'),
-(N'0912345269', N'Phạm Văn Fanh'),
-(N'0912345369', N'Phạm Văn Ganh'),
-(N'0912345469', N'Phạm Văn Hanh'),
-(N'0912345569', N'Phạm Văn Ianh'),
-(N'0912345769', N'Phạm Văn Kanh'),
+(N'0912345169', N'Phạm Văn Mách'),
+(N'0912345269', N'Nguyễn Trần Duy Nhất'),
+(N'0912345369', N'Hoàng Trung'),
+(N'0912345469', N'Phạm Vân Trường'),
+(N'0912345569', N'Nguyễn Tử Long'),
+(N'0912345769', N'Phạm Khổng Minh'),
 (N'0912345869', N'Phạm Văn Lanh'),
 (N'0912345969', N'Phạm Văn Manh'),
 (N'0912345669', N'Phạm Văn Anh'),
-(N'0912345668', N'Nguyễn Văn B'),
-(N'0912345667', N'Trương Văn C'),
-(N'0912345666', N'Hoàng Văn D'),
+(N'0912345668', N'Nguyễn Văn Bảo'),
+(N'0912345667', N'Trương Văn Cam'),
+(N'0912345666', N'Hoàng Văn Dương'),
 (N'0912345611', N'Đỗ Tiến Thuật'),
 (N'0912345679', N'Phạm Quốc Trung'),
 (N'0912345678', N'Phạm Đạt Quý'),
@@ -308,28 +308,28 @@ GO
 
 -- Inserting data into account table
 INSERT INTO account (phone, pass, roleId, email, gender, isActive, points, avatar, updateTime) VALUES
-(N'0912345169', 'password10', 3, 'phamvane@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345269', 'password10', 3, 'phamvanf@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345369', 'password10', 3, 'phamvang@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345469', 'password10', 3, 'phamvanh@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345569', 'password10', 3, 'phamvani@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345769', 'password10', 3, 'phamvank@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345869', 'password10', 3, 'phamvanl@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345969', 'password10', 3, 'phamvanm@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345611', 'password14', 2, 'thuat@example.com', 1, 1, NULL, NULL, GETDATE()),
+(N'0912345169', 'password3', 3, 'phamvane@example.com', 1, 1, 10, N'OIP.jpg', GETDATE()),
+(N'0912345269', 'password3', 3, 'phamvanf@example.com', 1, 1, 20, N'OIP.jpg', GETDATE()),
+(N'0912345369', 'password3', 3, 'phamvang@example.com', 1, 1, 10, N'OIP.jpg', GETDATE()),
+(N'0912345469', 'password3', 3, 'phamvanh@example.com', 1, 1, 10, N'OIP.jpg', GETDATE()),
+(N'0912345569', 'password3', 3, 'phamvani@example.com', 1, 1, 10, N'OIP.jpg', GETDATE()),
+(N'0912345769', 'password3', 3, 'phamvank@example.com', 1, 1, 10, N'OIP.jpg', GETDATE()),
+(N'0912345869', 'password3', 3, 'phamvanl@example.com', 1, 1, 20, N'OIP.jpg', GETDATE()),
+(N'0912345969', 'password3', 3, 'phamvanm@example.com', 1, 1, 100, N'OIP.jpg', GETDATE()),
+(N'0912345611', 'password2', 2, 'thuat@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
 (N'0912345671', 'password1', 1, 'admin@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345678', 'password3', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345677', 'password4', 2, 'thien@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345676', 'password5', 2, 'anh@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345675', 'password6', 2, 'kiet@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345674', 'password7', 2, 'duong@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345673', 'password8', 2, 'vinh@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345672', 'password9', 2, 'uoc@example.com', 1, 1, NULL, NULL, GETDATE()),
-(N'0912345669', 'password10', 3, 'phamvana@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345668', 'password11', 3, 'nguyenvanb@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345667', 'password12', 3, 'truongvanc@example.com', 1, 1, 100, NULL, GETDATE()),
-(N'0912345666', 'password13', 3, 'hoangvand@example.com', 1, 1, 100, NULL, GETDATE());
+(N'0912345679', 'password2', 2, 'trung@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345678', 'password2', 2, 'quypdhe173508@fpt.edu.vn', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345677', 'password2', 2, 'thien@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345676', 'password2', 2, 'anh@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345675', 'password2', 2, 'kiet@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345674', 'password2', 2, 'duong@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345673', 'password2', 2, 'vinh@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345672', 'password2', 2, 'uoc@example.com', 1, 1, NULL, N'OIP.jpg', GETDATE()),
+(N'0912345669', 'password3', 3, 'phamvana@example.com', 1, 1, 100, N'OIP.jpg', GETDATE()),
+(N'0912345668', 'password3', 3, 'nguyenvanb@example.com', 1, 1, 100, N'OIP.jpg', GETDATE()),
+(N'0912345667', 'password3', 3, 'truongvanc@example.com', 1, 1, 100, N'OIP.jpg', GETDATE()),
+(N'0912345666', 'password3', 3, 'hoangvand@example.com', 1, 1, 100, N'OIP.jpg', GETDATE());
 GO
 
 -- Inserting data into employee table
@@ -350,9 +350,9 @@ INSERT INTO status ([status]) VALUES
 (N'Đã Đặt'),
 (N'Hàng Đợi'),
 (N'Bắt Đầu'),
-(N'Đang Thanh Toán'),
 (N'Thanh Toán'),
-(N'Hủy Đơn');
+(N'Hủy Đơn'),
+(N'Thanh Toán Thất Bại');
 GO
 -- Chèn dữ liệu mẫu vào bảng LeaveRequests
 INSERT INTO LeaveRequests (employeeId, startDate, endDate, reason, statusId) VALUES
@@ -410,16 +410,27 @@ GO
 
 -- Inserting data into Orders table
 INSERT INTO Orders (orderCode, customerId, employeeId, statusID, orderDate, totalAmount) VALUES
-(N'A123', 1, NULL, 1, '2024-06-30', 150000),
-(N'B123', 2, NULL, 1, '2024-06-30', 180000),
-(N'C123', 3, NULL, 1, '2024-06-30', 250000),
-(N'D123', 4, NULL, 1, '2024-06-30', 120000),
-(N'E123', 5, NULL, 1, '2024-06-30', 170000),
-(N'F123', 6, NULL, 1, '2024-06-30', 130000),
-(N'G123', 7, NULL, 1, '2024-06-30', 140000),
-(N'H123', 8, NULL, 1, '2024-06-30', 160000),
-(N'I123', 9, NULL, 1, '2024-06-30', 190000),
-(N'K123', 10, NULL, 1, '2024-06-30', 210000);
+(N'14072024BK001', 1, 1, 4, '2024-07-14', 150000),
+(N'20072024BK002', 2, 2, 4, '2024-07-20', 180000),
+(N'22072024BK003', 3, 3, 4, '2024-07-22', 250000),
+(N'23072024BK004', 4, 4, 4, '2024-07-23', 120000),
+(N'27072024BK001', 9, 1, 5, '2024-07-27', 190000),
+(N'25072024BK001', 10, 1, 4, '2024-07-25', 190000),
+(N'28072024BK001', 11, 1, 3, '2024-07-28', 210000),
+(N'28062024BK002', 10, 2, 4, '2024-06-13', 213000),
+(N'28062024BK003', 5, 3, 4, '2024-06-21', 315000),
+(N'28062024BK004', 12, 3, 4, '2024-06-15', 128000),
+(N'28062024BK005', 2, 4, 4, '2024-06-17', 570000),
+(N'17062024BK006', 3, 5, 4, '2024-06-17', 430000),
+(N'28062024BK007', 4, 6, 4, '2024-06-03', 600000),
+(N'28062024BK008', 6, 2, 4, '2024-06-26', 380000),
+(N'28062024BK009', 7, 2, 4, '2024-06-29', 550000),
+(N'28062024BK010', 10, 7, 4, '2024-06-30', 620000),
+(N'28062024BK011', 8, 8, 4, '2024-06-17', 440000),
+(N'29072024BK005', 5, NULL, 1, '2024-07-29', 170000),
+(N'29072024BK006', 6, NULL, 1, '2024-07-29', 130000),
+(N'29072024BK007', 7, NULL, 1, '2024-07-29', 140000),
+(N'29072024BK008', 8, NULL, 1, '2024-07-29', 160000);
 GO
 
 -- Inserting data into Order_services table
@@ -443,16 +454,20 @@ INSERT INTO Order_services (servicesId, orderId) VALUES
 (4, 10),
 (1, 10),
 (5, 5),
-(3, 5);
-GO
-
--- Inserting data into Voucher table
-INSERT INTO Voucher (Name, discount, status, startTime, endTime) VALUES
-(N'voucher 1', 10000, 1, '2024-06-30', '2024-06-30'),
-(N'voucher 2', 20000, 1, '2024-06-30', '2024-06-30'),
-(N'voucher 3', 30000, 1, '2024-06-30', '2024-06-30'),
-(N'voucher 4', 40000, 1, '2024-06-30', '2024-06-30'),
-(N'voucher 5', 50000, 1, '2024-06-30', '2024-06-30');
+(3, 5),
+(4, 11),
+(1, 12),
+(1, 13),
+(4, 13),
+(1, 14),
+(2, 15),
+(4, 15),
+(2, 16),
+(3, 17),
+(3, 18),
+(4, 19),
+(5, 20),
+(6, 21);
 GO
 
 -- Inserting data into the feedback table
@@ -478,7 +493,18 @@ VALUES
 	(5, 7),
 	(6, 8),
 	(6, 9),
-	(7, 10);
+	(7, 10),
+	(2, 11),
+	(2, 12),
+	(2, 13),
+	(2, 14),
+	(2, 15),
+	(2, 16),
+	(2, 17),
+	(2, 18),
+	(2, 19),
+	(2, 20),
+	(2, 21);
 GO
 
 INSERT INTO LoyaltyPolicies (MinAmount, PointsPerUnit)
@@ -497,22 +523,22 @@ INSERT INTO BlogPosts (title, content, image, createdAt, updatedAt, isActive)
 VALUES 
 (N'5 Kiểu tóc nam hot nhất mùa hè 2024', 
 N'Năm 2024 mang đến nhiều kiểu tóc nam đầy phong cách và mới mẻ. Hãy cùng khám phá 5 kiểu tóc nam hot nhất mùa hè này, từ undercut cổ điển đến các kiểu tóc hiện đại như quiff và pompadour.', 
-N'/images/blog/toc-nam-2024.jpg', GETDATE(), GETDATE(), 1),
+N'Barber-performing-a-shave-service-1-scaled.jpg', GETDATE(), GETDATE(), 1),
 
 (N'Làm sao để chăm sóc tóc sau khi uốn', 
 N'Uốn tóc có thể làm tóc trở nên khô và dễ gãy. Để giữ cho tóc luôn mềm mượt và khỏe mạnh sau khi uốn, bạn cần biết cách chăm sóc đúng cách. Bài viết này sẽ chia sẻ một số bí quyết chăm sóc tóc hiệu quả sau khi uốn.', 
-N'/images/blog/cham-soc-toc-uon.jpg', GETDATE(), GETDATE(), 1),
+N'Barber-performing-a-shave-service-1-scaled.jpg', GETDATE(), GETDATE(), 1),
 
 (N'Các sản phẩm dưỡng tóc tốt nhất cho tóc nhuộm', 
 N'Tóc nhuộm cần được chăm sóc đặc biệt để giữ màu lâu và tóc luôn khỏe mạnh. Dưới đây là danh sách các sản phẩm dưỡng tóc tốt nhất mà bạn nên thử cho tóc nhuộm của mình.', 
-N'/images/blog/san-pham-duong-toc-nhuom.jpg', GETDATE(), GETDATE(), 1),
+N'Barber-performing-a-shave-service-1-scaled.jpg', GETDATE(), GETDATE(), 1),
 
 (N'Mẹo vặt để cắt tóc tại nhà', 
 N'Không phải lúc nào bạn cũng có thể đến tiệm cắt tóc. Trong những trường hợp đó, biết cách tự cắt tóc tại nhà sẽ rất hữu ích. Bài viết này sẽ hướng dẫn bạn một số mẹo để cắt tóc tại nhà dễ dàng và đẹp.', 
-N'/images/blog/meo-cat-toc-tai-nha.jpg', GETDATE(), GETDATE(), 1),
+N'Barber-performing-a-shave-service-1-scaled.jpg', GETDATE(), GETDATE(), 1),
 
 (N'Xu hướng màu tóc nổi bật cho năm 2024', 
 N'Bạn đang tìm kiếm một sự thay đổi cho màu tóc của mình? Hãy cùng khám phá những xu hướng màu tóc nổi bật cho năm 2024. Từ những màu sắc truyền thống đến những tông màu nổi bật, chắc chắn sẽ có lựa chọn phù hợp cho bạn.', 
-N'/images/blog/xu-huong-mau-toc-2024.jpg', GETDATE(), GETDATE(), 1);
+N'Barber-performing-a-shave-service-1-scaled.jpg', GETDATE(), GETDATE(), 1);
 GO
 

@@ -75,7 +75,7 @@ public class OnShiftController extends HttpServlet {
 //            employeesDAO.updateStatusFromAvailableToBusy(employeeId);
 //        } else 
             if ("end".equals(action)) {
-            employeesDAO.updateStatusFromBusyToAvailable(employeeId);
+            employeesDAO.updateStatusFromAvailableToBusy(employeeId);
         } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
             return;
