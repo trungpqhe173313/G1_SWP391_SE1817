@@ -41,6 +41,28 @@ public class CustomerDAO extends DBContext {
 
         return null;
     }
+    public Customer getCustomerByPhone(String phone) {
+
+        try {
+
+            String sql = "SELECT *\n"
+                    + "  FROM [Barber].[dbo].[customer]\n"
+                    + "  where phone = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, phone);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerId(rs.getInt(1));
+                customer.setPhone(rs.getString("phone"));
+                customer.setFullName(rs.getString("fullName"));
+                return customer;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public List<Customer> getAllCustomer() {
         List<Customer> customer = new ArrayList<>();
@@ -183,24 +205,19 @@ public class CustomerDAO extends DBContext {
 //            return false;
 //        }
 //    }
-    public void updateAccount(Account account) {
-        String sql = "UPDATE customer SET email = ?, gender = ?, avatar = ? WHERE phone=?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, account.getEmail());
-            stmt.setBoolean(2, account.getGender());
-            stmt.setString(3, account.getAvatar());
-            stmt.setString(4, account.getPhone());
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-            //return false;
-        }
+    public void updateCustomer(String phone, String fullName) throws SQLException{
+        String sql = "UPDATE customer SET fullName = ? WHERE phone=?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, fullName);
+            pstmt.setString(2, phone);
+            pstmt.executeUpdate();
+        } 
     }
 
     public void insertCustomer(String fullName, String phone) {
         String query = "INSERT INTO customer (fullName, phone) VALUES (?, ?)";
         try {
-            PreparedStatement stm = connection.prepareStatement(query);    
+            PreparedStatement stm = connection.prepareStatement(query);
             stm.setString(1, fullName);
             stm.setString(2, phone);
             stm.executeUpdate();
@@ -252,7 +269,7 @@ public class CustomerDAO extends DBContext {
     public static void main(String[] args) {
         CustomerDAO customerdao = new CustomerDAO();
         Customer c = customerdao.getCustomerByP("0911111111");
-        System.out.println(c == null ? "null":c.toString());
+        System.out.println(c == null ? "null" : c.toString());
 
     }
 }

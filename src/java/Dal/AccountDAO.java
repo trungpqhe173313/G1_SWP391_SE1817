@@ -24,24 +24,29 @@ import java.util.logging.Logger;
  */
 public class AccountDAO extends DBContext {
 
-    public String getCustomerByPhone(String phone) {
-
-        try {
-
-            String sql = "SELECT fullName\n"
-                    + "  FROM [Barber].[dbo].[customer]\n"
-                    + "  where phone = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, phone);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                return rs.getString("fullName");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+//    public Account getAccountByPhoneForCustomer(String phone) {
+//
+//        try {
+//
+//            String sql = "SELECT email, gender, avatar\n"
+//                    + "  FROM [Barber].[dbo].[customer]\n"
+//                    + "  where phone = ?";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setString(1, phone);
+//            ResultSet rs = stm.executeQuery();
+//            if (rs.next()) {
+//                Account account = new Account();
+//                account.setPhone(rs.getString("phone"));
+//                account.setEmail(rs.getString("email"));
+//                account.setGender(rs.getBoolean("gender"));
+//                account.setAvatar(rs.getString("avatar"));
+//                return account;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
 
     public Account getAccountByPhone(String phone) {
 
@@ -122,17 +127,16 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-     public void updateAccount(Account account) {
-        String sql = "UPDATE customer SET email = ?, gender = ?, avatar = ? WHERE phone=?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, account.getEmail());
-            stmt.setBoolean(2, account.getGender());
-            stmt.setString(3, account.getAvatar());
-            stmt.setString(4, account.getPhone());
+     public void updateAccount(String phone, String email, String avatar, boolean gender) {
+        String sql = "UPDATE account SET email = ?, gender = ?, avatar = ? WHERE phone=?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, avatar);
+            pstmt.setBoolean(3, gender);
+            pstmt.setString(4, phone);
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-            //return false;
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

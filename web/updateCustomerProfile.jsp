@@ -28,14 +28,14 @@
                         <!-- Profile picture card-->
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Ảnh đại diện</div>
-<!--                            <div class="card-body text-center">
+                            <div class="card-body text-center">
                                  Profile picture image
                                 <img class="img-account-profile rounded-circle mb-2" src="${account.avatar != null ? 'img/service/' + account.avatar : 'http://bootdey.com/img/Content/avatar/avatar1.png'}" alt="Ảnh đại diện">
                                  Profile picture help block
                                 <div class="small font-italic text-muted mb-4">JPG hoặc PNG không > 5 MB</div>
                                  Profile picture upload button
                                 <input class="form-control mb-2" type="file" id="avatar" name="avatar">
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-8">

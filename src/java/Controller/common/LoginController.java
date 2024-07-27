@@ -79,7 +79,7 @@ public class LoginController extends HttpServlet {
         String phone = request.getParameter("phone");
         String password = request.getParameter("pass");
         // Mã hóa mật khẩu người dùng nhập vào
-        password = PasswordEncryption.toSHA1(password);
+        //password = PasswordEncryption.toSHA1(password);
         
         AccountDAO da = new AccountDAO();
         Account a = da.checkAuthentic(phone, password);
