@@ -77,11 +77,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     try {
         int employeeId = employeesDAO.getEmployeeId(phone);
-
-        List<Map<String, Object>> pendingOrders = employeesDAO.getPendingOrders(employeeId);
         List<Map<String, Object>> inProgressOrders = employeesDAO.getInProgressOrders(employeeId);
 
-        request.setAttribute("pendingOrders", pendingOrders);
         request.setAttribute("inProgressOrders", inProgressOrders);
         request.getRequestDispatcher("OrderInfoEmployee.jsp").forward(request, response);
 
