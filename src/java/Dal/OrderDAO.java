@@ -72,11 +72,11 @@ public class OrderDAO extends DBContext {
 
         return lastOrderCode;
     }
-//    public static void main(String[] args) {
-//        String i = OrderDAO.generateOrderCode();
-//        System.out.println("day la generate code");
-//        System.out.println(i);
-//    }
+    public static void main(String[] args) {
+        String i = OrderDAO.generateOrderCode();
+        System.out.println("day la generate code");
+        System.out.println(i);
+    }
 
     private static String generateNewOrderCode() {
         String currentDate = DATE_FORMAT.format(new Date());

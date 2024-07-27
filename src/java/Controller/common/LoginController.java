@@ -80,10 +80,10 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("pass");
         // Mã hóa mật khẩu người dùng nhập vào
         //password = PasswordEncryption.toSHA1(password);
-        
+
         AccountDAO da = new AccountDAO();
         Account a = da.checkAuthentic(phone, password);
-        
+
         String r = request.getParameter("remember");
         // tao 3 cookie  cookieU  , cookieP  , cookieR
         Cookie cookieU = new Cookie("cUser", phone);
@@ -112,8 +112,10 @@ public class LoginController extends HttpServlet {
             // Tạo session
             HttpSession session = request.getSession();
             session.setAttribute("account", a);
+            session.removeAttribute("time");
+            session.removeAttribute("services");
             if (a.getRoleId() == 1) {
-                response.sendRedirect("viewOrder");
+                response.sendRedirect("viewrevenue");
             } else if (a.getRoleId() == 2) {
                 response.sendRedirect("employeesprofile");
             } else {

@@ -226,26 +226,20 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public void addCustomer(Customer customer) {
-        String sql = "INSERT INTO [dbo].[customer]\n"
-                + "           ([fullName]\n"
-                + "           ,[phone])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, customer.getFullName());
-            stmt.setString(2, customer.getPhone());
-            stmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public String addCustomer(Customer customer) {
+    String sql = "INSERT INTO [dbo].[customer] ([fullName], [phone]) VALUES (?, ?)";
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setString(1, customer.getFullName());
+        stmt.setString(2, customer.getPhone());
+        stmt.executeUpdate();
+        return "Thêm khách hàng thành công!";
+    } catch (SQLException ex) {
+        Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return "Thêm khách hàng thất bại!";
     }
-    public static void main(String[] args) {
-        Customer  c = new Customer(0, "pass", "0912345777");
-        new CustomerDAO().addCustomer(c);
+}
 
-    }
+ 
     public Customer getCustomerById(int customerId) {
         String sql = "SELECT *\n"
                 + "  FROM [Barber].[dbo].[customer]\n"
@@ -270,5 +264,8 @@ public class CustomerDAO extends DBContext {
         return customer;
     }
 
-    
+    public static void main(String[] args) {
+      Customer c =  new CustomerDAO().getCustomerByPhone("0366666666");
+        System.out.println(c.getPhone());
+    }
 }

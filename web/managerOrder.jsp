@@ -92,6 +92,9 @@
                 cursor: pointer;
                 border-radius: 5px;
             }
+            .content-wrapper {
+                padding-bottom: 80px; /* Add padding to the bottom to prevent content being hidden by the footer */
+            }
         </style>
     </head>
 
@@ -162,7 +165,7 @@
                                 <div class="topbar-divider d-none d-sm-block"></div>
                                 <!--info acc -->
                                 <!-- Nav Item - User Information -->
-                                <jsp:include page="navadmin.jsp"></jsp:include>
+                            <jsp:include page="navadmin.jsp"></jsp:include>
 
                             </ul>
 
