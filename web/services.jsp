@@ -160,7 +160,7 @@
                     <div class="col-md-10 heading-section text-center ftco-animate">
                         <span class="subheading">Dịch Vụ</span>
                         <h2 class="mb-4">Menu Dịch Vụ</h2>
-                        
+
                     </div>
                 </div>
 
@@ -216,7 +216,7 @@
                 <div class="col-md-10 heading-section text-center ftco-animate">
                     <span class="subheading">Đặt lịch</span>
                     <h2 class="mb-4">Đặt lịch ngay</h2>
-<!--                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>-->
+                    <p>Đặt lịch cắt tóc ngay để trải nghiệm dịch vụ chăm sóc tóc chuyên nghiệp và tận tình nhất!</p>
                 </div>
             </div>
             <h3 class="vr">Call Us: 012-3456-7890</h3>
@@ -226,6 +226,7 @@
                         <form action="appointment" class="appointment-form">
                             <div class="error-message" id="error-message">${mss}</div>
                             <div class="form-group">
+                                
                                 <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
                             </div>
                         </form>
@@ -233,11 +234,11 @@
                     <c:if test="${sessionScope.account == null}">
                         <form action="appointmentwithoutlogin" method="get" class="appointment-form" onsubmit="return validatePhoneNumber()">
                             <div>
-                                <input type="text" name="phone" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
+                                <input type="text" name="phone" placeholder="SĐT" id="phone" value="${inValidPhone}" class="form-control" style="width: 300px; margin: auto;">
                             </div>
                             <div class="error-message" id="error-message">${mss}</div>
                             <div class="form-group">
-                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary">
+                                <input type="submit" value="Đặt Lịch Ngay" class="btn btn-primary" >
                             </div>
                         </form>
                     </c:if>
@@ -246,83 +247,83 @@
         </div>
     </section>
 
-<!--    <section class="ftco-section ftco-pricing">
-        <div class="container">
-            <div class="row justify-content-center pb-3">
-                <div class="col-md-10 heading-section text-center ftco-animate">
-                    <span class="subheading">Pricing</span>
-                    <h2 class="mb-4">Our Prices</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+    <!--    <section class="ftco-section ftco-pricing">
+            <div class="container">
+                <div class="row justify-content-center pb-3">
+                    <div class="col-md-10 heading-section text-center ftco-animate">
+                        <span class="subheading">Pricing</span>
+                        <h2 class="mb-4">Our Prices</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 ftco-animate">
+                        <div class="pricing-entry pb-5 text-center">
+                            <div>
+                                <h3 class="mb-4">Hair Style</h3>
+                                <p><span class="price">$50.00</span> <span class="per">/ session</span></p>
+                            </div>
+                            <ul>
+                                <li>Hair Dryer</li>
+                                <li>Hair Coloring</li>
+                                <li>Hair Cut</li>
+                                <li>Hair Dresser</li>
+                                <li>Hair Spa</li>
+                            </ul>
+                            <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ftco-animate">
+                        <div class="pricing-entry pb-5 text-center">
+                            <div>
+                                <h3 class="mb-4">Manicure Pedicure</h3>
+                                <p><span class="price">$34.50</span> <span class="per">/ session</span></p>
+                            </div>
+                            <ul>
+                                <li>Manicure</li>
+                                <li>Pedicure</li>
+                                <li>Coloring</li>
+                                <li>Nails</li>
+                                <li>Nail Cut</li>
+                            </ul>
+                            <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ftco-animate">
+                        <div class="pricing-entry active pb-5 text-center">
+                            <div>
+                                <h3 class="mb-4">Makeup</h3>
+                                <p><span class="price">$54.50</span> <span class="per">/ session</span></p>
+                            </div>
+                            <ul>
+                                <li>Makeup</li>
+                                <li>Professional Makeup</li>
+                                <li>Blush On</li>
+                                <li>Facial Massage</li>
+                                <li>Facial Spa</li>
+                            </ul>
+                            <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ftco-animate">
+                        <div class="pricing-entry pb-5 text-center">
+                            <div>
+                                <h3 class="mb-4">Body Treatment</h3>
+                                <p><span class="price">$89.50</span> <span class="per">/ session</span></p>
+                            </div>
+                            <ul>
+                                <li>Massage</li>
+                                <li>Spa</li>
+                                <li>Foot Spa</li>
+                                <li>Body Spa</li>
+                                <li>Relaxing</li>
+                            </ul>
+                            <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Hair Style</h3>
-                            <p><span class="price">$50.00</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Hair Dryer</li>
-                            <li>Hair Coloring</li>
-                            <li>Hair Cut</li>
-                            <li>Hair Dresser</li>
-                            <li>Hair Spa</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Manicure Pedicure</h3>
-                            <p><span class="price">$34.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Manicure</li>
-                            <li>Pedicure</li>
-                            <li>Coloring</li>
-                            <li>Nails</li>
-                            <li>Nail Cut</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry active pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Makeup</h3>
-                            <p><span class="price">$54.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Makeup</li>
-                            <li>Professional Makeup</li>
-                            <li>Blush On</li>
-                            <li>Facial Massage</li>
-                            <li>Facial Spa</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Body Treatment</h3>
-                            <p><span class="price">$89.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Massage</li>
-                            <li>Spa</li>
-                            <li>Foot Spa</li>
-                            <li>Body Spa</li>
-                            <li>Relaxing</li>
-                        </ul>
-                        <p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">Get Offer</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
+        </section>-->
 
 
     <footer class="ftco-footer ftco-section">

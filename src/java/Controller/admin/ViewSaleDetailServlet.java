@@ -14,10 +14,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -41,8 +39,8 @@ public class ViewSaleDetailServlet extends HttpServlet {
         ShopDAO d = new ShopDAO();
 
         //kiem tra xem employeeId va month co phai la chu so khong
-        if (NumberUtils.isNumber(employeeId_str) == true
-                && NumberUtils.isNumber(month_str) == true) {
+        if (isNumber(employeeId_str)
+                && isNumber(month_str)) {
             int month = Integer.parseInt(month_str);
 
             //lay ra nhan vien va add vao doi tuong viewsale de hien thi thong tin
@@ -77,6 +75,15 @@ public class ViewSaleDetailServlet extends HttpServlet {
         } else {
             request.getRequestDispatcher("viewsale").forward(request, response);
         }
+    }
+
+    public static boolean isNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        // Biểu thức chính quy để kiểm tra số
+        String regex = "-?\\d+(\\.\\d+)?";
+        return str.matches(regex);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

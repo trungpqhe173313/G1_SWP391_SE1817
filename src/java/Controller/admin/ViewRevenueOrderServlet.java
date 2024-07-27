@@ -12,7 +12,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -34,7 +33,7 @@ public class ViewRevenueOrderServlet extends HttpServlet {
         String orderId_str = request.getParameter("orderId");
         ShopDAO d = new ShopDAO();
 
-        if (NumberUtils.isNumber(orderId_str) == true) {
+        if (isNumber(orderId_str)) {
             int orderId = Integer.parseInt(orderId_str);
             Order o = d.getOrderById(orderId);
             OrderRevenue or = new OrderRevenue();
@@ -46,11 +45,19 @@ public class ViewRevenueOrderServlet extends HttpServlet {
             or.setShift(d.getListShiftByOrderId(o.getId()));
             or.setStatus(d.getStatusById(o.getStatusId()));
             request.setAttribute("o", or);
-            System.out.println(or.toString());
             request.getRequestDispatcher("viewRevenueOrder.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("viewrevenue").forward(request, response);
         }
+    }
+
+    public static boolean isNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        // Biểu thức chính quy để kiểm tra số
+        String regex = "-?\\d+(\\.\\d+)?";
+        return str.matches(regex);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
