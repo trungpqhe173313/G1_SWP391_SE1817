@@ -2,16 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package VNpay;
 
-import Dal.AccountDAO;
-import Dal.CustomerDAO;
-import Dal.LoyaltyPoliciesDAO;
-import Dal.OrderDAO;
-import Model.Account;
-import Model.Customer;
-import Model.LoyaltyPolicies;
-import Model.Order;
+package Controller.admin;
+
+import Dal.EmployeesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,55 +16,38 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author phamt
+ * @author ducth
  */
-@WebServlet(name = "UpdateBillServlet", urlPatterns = {"/updateBill"})
-public class UpdateBillServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="CheckPhoneController", urlPatterns={"/checkphone"})
+public class CheckPhoneController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String codeOrder = request.getParameter("codeOrder");
-            String isTransactionSuccessful = request.getParameter("isTransactionSuccessful");
-            int amount = Integer.parseInt(request.getParameter("amount")) /100;
-            Order order = new OrderDAO().getOrderByCode(codeOrder);
-            //get info customer in order
-            Customer customer = new CustomerDAO().getCustomerById(order.getCustomerId());
-            //get account
-            Account account = new AccountDAO().getAccountByPhone(customer.getPhone());
-            int points = 0;
-            boolean transactionSuccessful = Boolean.parseBoolean(isTransactionSuccessful);
-            if (transactionSuccessful) {
-                if (account != null) {
-                    LoyaltyPolicies lp = new LoyaltyPoliciesDAO().getLoyalty();
-                    points = account.getPoint() + (amount / lp.getMinAmount()) * lp.getPointsPerUnit();
-                    new AccountDAO().updatePoints(points, account.getPhone());
-                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
-                } else {
-                    new OrderDAO().upDateStatusOrderByCode(4, codeOrder);
-                }
-            } else {
-                new OrderDAO().upDateStatusOrderByCode(6, codeOrder);
-            }
-            response.sendRedirect("getOrderManager");
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CheckPhoneController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CheckPhoneController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,13 +55,12 @@ public class UpdateBillServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,13 +68,35 @@ public class UpdateBillServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    throws ServletException, IOException {
+        // Set response content type
+        response.setContentType("application/json;charset=UTF-8");
+
+        // Get the phone number from the request
+        String phone = request.getParameter("phone");
+
+        // Initialize EmployeesDAO
+        EmployeesDAO dao = new EmployeesDAO();
+        boolean phoneExists = false;
+
+        // Check if the phone number exists in the database
+        try {
+            phoneExists = dao.phoneExists(phone);
+        } catch (Exception e) {
+            // Handle the exception if needed
+            e.printStackTrace();
+        }
+
+        // Output the result as JSON
+        try (PrintWriter out = response.getWriter()) {
+            // Create a JSON response
+            String jsonResponse = "{ \"exists\": " + phoneExists + " }";
+            out.print(jsonResponse);
+        }
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

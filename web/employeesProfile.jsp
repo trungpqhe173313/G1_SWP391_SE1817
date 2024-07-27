@@ -31,6 +31,24 @@
         .form-control-plaintext[readonly] {
             cursor: default;
         }
+        .d-none {
+            display: none;
+        }
+        .avatar-container {
+            width: 100px; /* Adjust the width as needed */
+            height: 100px; /* Adjust the height as needed */
+            border-radius: 50%; /* Makes the image circular */
+            overflow: hidden; /* Ensures image doesn't overflow the container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-container img {
+            width: 100%; /* Makes sure the image fills the container */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Cover the container area */
+        }
     </style>
 </head>
 <body id="page-top">
@@ -46,48 +64,32 @@
                             <i class="fa fa-bars"></i>
                         </button>
                     </form>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow">
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                 </nav>
 
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 class="mb-4">Employee Information</h2>
-                            <form id="editForm" action="updateemployeesprofile" method="post">
+                            <h2 class="mb-4">Thông Tin Cá Nhân</h2>
+                            <form id="editForm" action="updateemployeesprofile" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 <div class="row">
                                     <div class="col-md-3 text-center">
-                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle mb-4" alt="Avatar">
+                                        <div class="avatar-container">
+                                            <img src="img/service/${accountDetails.avatar}" alt="Avatar" class="img-fluid" id="currentAvatar">
+                                        </div>
+                                        <input type="hidden" name="currentAvatar" value="${accountDetails.avatar}">
+                                        <div class="form-group row d-none" id="avatarUploadSection">
+                                            <label for="avatar" class="col-sm-12 col-form-label">Chọn Ảnh Đại Diện</label>
+                                            <div class="col-sm-12">
+                                                <input type="file" class="form-control-file" id="avatar" name="avatar" onchange="previewAvatar(event)">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-9">
+                                        <!-- Rest of the form fields -->
                                         <div class="form-group row">
                                             <label for="fullName" class="col-sm-4 col-form-label">Họ Tên</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="fullName" name="fullName" readonly value="${employeeDetails.fullName}" maxlength="50" required
-                                                pattern="[A-Za-zÀ-ỹ ]{2,}" oninput="validateFullName(this)" />
-                                                <small class="text-danger" id="fullNameError"></small>
+                                                <input type="text" class="form-control" id="fullName" name="fullName" readonly value="${employeeDetails.fullName}" maxlength="50" required/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -106,14 +108,8 @@
                                             <label for="roleId" class="col-sm-4 col-form-label">Chức Vụ</label>
                                             <div class="col-sm-8">
                                                 <c:choose>
-                                                    <c:when test="${accountDetails.roleId == 1}">
-                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Admin" />
-                                                    </c:when>
                                                     <c:when test="${accountDetails.roleId == 2}">
                                                         <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Nhân Viên" />
-                                                    </c:when>
-                                                    <c:when test="${accountDetails.roleId == 3}">
-                                                        <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Khách Hàng" />
                                                     </c:when>
                                                     <c:otherwise>
                                                         <input type="text" class="form-control" id="roleId" name="roleId" readonly value="Unknown" />
@@ -127,13 +123,13 @@
                                                 <input type="text" class="form-control" id="gender" name="gender" readonly value="<c:out value="${accountDetails.gender ? 'Nam' : 'Nữ'}"/>" />
                                             </div>
                                         </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-12 text-right">
-                                            <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
-                                            <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
-                                            <a href="changepassemployees" class="btn btn-info ml-2">Đổi mật khẩu</a>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12 text-right">
+                                                <button type="button" class="btn btn-primary" id="editButton">Chỉnh Sửa</button>
+                                                <button type="submit" class="btn btn-success d-none" id="saveButton">Lưu</button>
+                                                <a href="changepassemployees" class="btn btn-info ml-2">Đổi mật khẩu</a>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </form>
@@ -170,7 +166,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="#">Logout</a>
+                    <a class="btn btn-primary" href="logout">Logout</a>
                 </div>
             </div>
         </div>
@@ -186,57 +182,57 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Edit button click event
-        $('#editButton').click(function() {
-            // Enable all form inputs for editing
-            $('#fullName').prop('readonly', false).addClass('form-control');
-            $('#phone').prop('readonly', true).addClass('form-control');
-            $('#email').prop('readonly', false).addClass('form-control');
-            $('#roleId').prop('readonly', true).addClass('form-control');
-            $('#gender').prop('readonly', true).addClass('form-control');
+    <!-- Custom scripts for this page-->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
 
-            // Show save button and hide edit button
-            $('#editButton').addClass('d-none');
-            $('#saveButton').removeClass('d-none');
+    <script>
+        document.getElementById('editButton').addEventListener('click', function() {
+            document.getElementById('avatarUploadSection').classList.remove('d-none');
+            document.getElementById('saveButton').classList.remove('d-none');
+            document.getElementById('editButton').classList.add('d-none');
+            document.getElementById('fullName').removeAttribute('readonly');
+            document.getElementById('email').removeAttribute('readonly');
         });
 
-        // Form submit event
-        $('#editForm').submit(function(event) {
-            // Prevent default form submission
-            event.preventDefault();
+        function previewAvatar(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('currentAvatar');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
 
-            // Submit form using AJAX
-            $.ajax({
-                type: 'POST',
-                url: 'updateemployeesprofile', // Your Servlet URL
-                data: $('#editForm').serialize(), // Serialize form data
-                success: function(response) {
-                    // Redirect to employeesProfile.jsp after successful update
-                    window.location.href = 'employeesprofile';
-                },
-                error: function() {
-                    // Handle error if any
-                    alert('Error updating profile. Please try again.');
-                }
-            });
-        });
-    });
+        function validateForm() {
+            var fullName = document.getElementById('fullName').value;
+            var email = document.getElementById('email').value;
+            const image = document.getElementById('avatar').value;
 
-    function validateFullName(input) {
-        // Regular expression to match alphabetic characters and spaces
-        var regex = /^[A-Za-zÀ-ỹ][A-Za-zÀ-ỹ ]*$/;
-        
-        // Check if input matches the pattern
-        if (!regex.test(input.value)) {
-            document.getElementById('fullNameError').textContent = 'Họ Tên chỉ được nhập chữ cái và khoảng trắng, ít nhất 2 ký tự.';
-            input.setCustomValidity('Họ Tên không hợp lệ.');
-        } else {
-            document.getElementById('fullNameError').textContent = '';
-            input.setCustomValidity('');
+        var fullName = document.getElementById("fullName").value;
+        if (!/^[\p{L}\s]+$/u.test(fullName)) {
+            alert("Họ và Tên chỉ được chứa các chữ cái và khoảng trắng.");
+            return false;
+        }
+
+    // Validate no leading spaces in other fields
+    var inputs = document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]');
+    for (var i = 0; i < inputs.length; i++) {
+        if (/^\s/.test(inputs[i].value)) {
+            alert("Không được viết dấu khoảng cách ở đầu của tất cả các trường.");
+            return false;
         }
     }
-</script>
+            // Check for valid image file extensions
+            const validExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = image.split('.').pop().toLowerCase();
+            if (!validExtensions.includes(fileExtension)) {
+                alert("Ảnh đại diện phải là file jpg hoặc png.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

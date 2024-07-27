@@ -70,26 +70,33 @@ public class AppointmentServlet extends HttpServlet {
                 String nextDayStr = today.format(formatter);
                 listDate.add(nextDayStr);
             }
+            //lay ra gio va phut hien tai
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             String formattedTime = today.format(timeFormatter);
+            //tao list tat ca cac shift de so sanh dieu kien
             List<Shift> listAllShift = null;
+            //tao list nhung shift duoc hien thi
             List<Shift> listShift;
+            //session time chua date duoc chon, danh sach cac shift duoc hien thi
+            //neu nhu session time = null 
             if (session.getAttribute("time") == null) {
-                //Lay ra tat ca cac ca 
+                //Lay ra tat ca cac shift
                 listAllShift = d.getAllShiftFromNow(formattedTime);
-                //tao danh sach de luu nhung ca trong
+                //tao danh sach de luu nhung ca trong va dua vao method listShiftEmpty de so sanh cac shift tim ra ca trong de luu vao danh sach shift hien thi
                 listShift = listShiftEmpty(listAllShift, todayStr);
 
                 session.setAttribute("time", new Time(todayStr, listShift));
             } else if (session.getAttribute("time") != null) {
+                //neu nhu session time da ton tại thi lay ra doi tuong time
                 Time time = (Time) session.getAttribute("time");
-                //Lay ra tat ca cac ca 
+                //Lay ra tat ca cac ca tu thoi diem nay tro di neu nhu date trong Time la ngay hom nay
                 if (time.getDate().equals(todayStr)) {
                     listAllShift = d.getAllShiftFromNow(formattedTime);
                 } else {
+                    //neu khong phải hom nay thi lay ra toàn bo ca
                     listAllShift = d.getAll();
                 }
-                //tao danh sach de luu nhung ca trong
+                //luu nhung ca trong duoc tra ve qua method listShiftEmpty
                 listShift = listShiftEmpty(listAllShift, time.getDate());
                 session.setAttribute("time", new Time(time.getDate(), listShift));
 
@@ -98,6 +105,7 @@ public class AppointmentServlet extends HttpServlet {
                 ServicesBooking servicesBooking = (ServicesBooking) session.getAttribute("services");
                 List<Shift> listShiftNeed = new ArrayList<>();
                 int servicesSize = servicesBooking.getListServices().size();
+                //kiem tra xem
                 if (!listAllShift.isEmpty() && listAllShift.size() >= servicesSize) {
                     for (int i = 0; i < servicesSize; i++) {
                         listShiftNeed.add(listAllShift.get(i));
@@ -112,7 +120,14 @@ public class AppointmentServlet extends HttpServlet {
             request.getRequestDispatcher("booking.jsp").forward(request, response);
         } //neu cua hang dang trong trang thai khong hoat dong
         else {
+            String mssStore ="";
+            if (store.getStartDate().equals(store.getEndDate())) {
+                mssStore = "Cửa hàng đang tạm đóng ngày "+ store.getStartDate();
+            } else{
+                mssStore = "Cửa hàng đang tạm đóng từ ngày " + store.getStartDate() + " đến ngày " +store.getEndDate();
+            }
             request.setAttribute("store", store);
+            request.setAttribute("mssStore", mssStore);
             request.setAttribute("checkNotActive", true);
             request.getRequestDispatcher("booking.jsp").forward(request, response);
         }
@@ -171,7 +186,7 @@ public class AppointmentServlet extends HttpServlet {
                 //kiem tra xem session phone chua ton tai
                 if (session.getAttribute("phone") == null) {
                     request.setAttribute("mss", "vui lòng điền số điện thoại");
-                    request.getRequestDispatcher("service").forward(request, response);
+                    request.getRequestDispatcher("booking").forward(request, response);
                     return;
                 }
                 //neu da ton tai thi cho phone = session phone
@@ -183,10 +198,10 @@ public class AppointmentServlet extends HttpServlet {
                 Customer newCus = new Customer();
                 newCus.setPhone(phone);
                 cd.addCustomer(newCus);
-
             }
             //lay customer bang so dien thoai
             Customer cus = cd.getCustomerByP(phone);
+            System.out.println("appointment cus: "+ cus.toString());
             //kiem tra xem khach hang co don chua hoan thanh hom dũo chon ko
             if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId(), date_str) != 0) {
                 request.setAttribute("mss", "bạn đã có đơn chưa hoàn thành");
@@ -198,6 +213,7 @@ public class AppointmentServlet extends HttpServlet {
             ShiftsDAO sd = new ShiftsDAO();
             List<Shift> listShiftNeed = sd.getAllNextShift(Integer.parseInt(shift_str),
                     sb.getListServices().size());
+            //neu tat ca shift can ma co ca nao khong con trong hoac so luong service loen hon so luong cac ca can sẽ thong bao dat khong thanh cong
             if (!checkAllShiftEmpty(listShiftNeed, date_str)
                     || sb.getListServices().size() > listShiftNeed.size()) {
 
@@ -225,20 +241,23 @@ public class AppointmentServlet extends HttpServlet {
                 int customerId = cus.getCustomerId();
 
                 //tao ra ordercode từ DAL.OrderDAO
-                String orderCode = d.generateOrderCode();
-
+//                String orderCode = d.generateOrderCode();
+                String orderCode = "ab178";
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
                 Date date = new java.sql.Date(sdf.parse(date_str).getTime());
                 Order o = new Order(orderCode, customerId, 1, date, sb.getTotalMoney());
                 d.AddOrder(o);
+                System.out.println("appointment order: "+ o.toString());
                 int orderId = d.getNewOrderId();
+                System.out.println("appointment orderId: "+ orderId);
                 List<Services> listServices = sb.getListServices();
                 for (Services s : listServices) {
                     d.AddOrder_services(s.getServicesId(), orderId);
                 }
                 Order_shiftDAO osd = new Order_shiftDAO();
                 for (Shift s : listShiftNeed) {
+                    System.out.println("appointment shiftId: "+ s.toString());
                     osd.InsertShift("" + orderId, s.getId());
                 }
                 ShopDAO shopDao = new ShopDAO();
@@ -248,13 +267,13 @@ public class AppointmentServlet extends HttpServlet {
                 request.setAttribute("ListShifts", listShiftNeed);
                 request.setAttribute("order", o);
                 request.setAttribute("status", shopDao.getStatusById(o.getStatusId()));
-                request.setAttribute("mss", "Đặt Thành Công");
                 request.getRequestDispatcher("BookingSucces.jsp").forward(request, response);
             }
         } catch (Exception e) {
         }
     }
-
+    
+    //ham de kiem tra danh sach cac ca dua vao co con trong khong
     public boolean checkAllShiftEmpty(List<Shift> listShift, String date) {
         boolean check = true;
         Order_shiftDAO osd = new Order_shiftDAO();
@@ -270,18 +289,21 @@ public class AppointmentServlet extends HttpServlet {
     }
 
     /**
-     *
+     * ham de kiem tra va tra ve list nhung ca trong
      * @param shift to check is that shift empty
      * @param date
-     * @return boolean
+     * @return List
      */
     public List<Shift> listShiftEmpty(List<Shift> listShift, String date) {
         List<Shift> listShiftEmpty = new ArrayList<>();
         Order_shiftDAO osd = new Order_shiftDAO();
         EmployeesDAO ed = new EmployeesDAO();
+        //dem so nhan vien 
         int numberEmployeeActive = ed.countNumberActiveEmployee();
         for (Shift s : listShift) {
+            //so sanh so nhan vien voi so don cua ca do trong ngay date
             if (numberEmployeeActive > osd.countNumberOrderInShift(s.getId(), date)) {
+                //neu so nhan vien lon hon so don trong ca thi them vao danh sach ca trong
                 listShiftEmpty.add(s);
             }
         }

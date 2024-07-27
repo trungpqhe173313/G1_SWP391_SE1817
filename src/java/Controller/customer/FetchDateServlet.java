@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +45,15 @@ public class FetchDateServlet extends HttpServlet {
         // Đọc thông tin ngày từ request
         String selectedDate = request.getParameter("date");
         // Lấy ngày hôm nay
-        LocalDate today = LocalDate.now();
+        LocalDateTime today = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String todayStr = today.format(formatter);
-
+        
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String formattedTime = today.format(timeFormatter);
         List<Shift> shifts;
         if (selectedDate.equals(todayStr)) {
-            shifts = d.getAllShiftFromNow();
+            shifts = d.getAllShiftFromNow(formattedTime);
         } else {
             shifts = d.getAll();
         }

@@ -15,9 +15,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import org.apache.tomcat.jakartaee.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -38,7 +38,7 @@ public class GetRevenueByMonthServlet extends HttpServlet {
             throws ServletException, IOException {
         ShopDAO d = new ShopDAO();
         String month_str = request.getParameter("month");
-        if (NumberUtils.isNumber(month_str) == true) {
+        if (isInteger(month_str)) {
             int month = Integer.parseInt(month_str);
             int revenueThisMonth = d.getRevenueByMonth(month);
             int revenueThisYear = d.getRevenueThisYear();
@@ -89,6 +89,18 @@ public class GetRevenueByMonthServlet extends HttpServlet {
             request.getRequestDispatcher("viewrevenue").forward(request, response);
         }
 
+    }
+
+    public static boolean isInteger(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

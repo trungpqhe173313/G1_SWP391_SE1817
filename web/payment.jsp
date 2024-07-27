@@ -85,18 +85,18 @@
                         </div>
                         <c:if test="${cus != null}">
                             <div class="points">
-                                <h3 class="title">Use Points</h3>
+                                <h3 class="title">Tích điểm</h3>
                                 <div class="form-group">
                                     <input type="hidden" name="points" id="available-points-hidden" value="${cus.account.point}">
-                                    <p>You have <span id="available-points">${cus.account.point}</span> points available. Maximum discount will be applied automatically.</p>
-                                    <button type="button" class="btn btn-secondary mt-2" id="apply-points">Apply Points</button>
-                                    <div class="error-message" id="error-message">Please enter a valid number of points.</div>
+                                    <p>Bạn có <span id="available-points">${cus.account.point}</span> Bạn có muốn sử dụng không ?</p>
+                                    <button type="button" class="btn btn-secondary mt-2" id="apply-points">Sử dụng</button>
+                                    
                                 </div>
                             </div>
                         </c:if>
 
                         <div class="form-group col-sm-12 mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Proceed</button>
+                            <button type="submit" class="btn btn-primary btn-block">Thanh toán</button>
                         </div>
                     </form>
                 </div>

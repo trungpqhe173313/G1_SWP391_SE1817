@@ -271,7 +271,7 @@ public class AccountDAO extends DBContext {
                 account.setEmail(rs.getString("email"));
                 account.setGender(rs.getBoolean("gender"));
                 account.setAvatar(rs.getString("avatar"));
-                account.setAvatar(rs.getString("pass"));
+                account.setPass(rs.getString("pass"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
