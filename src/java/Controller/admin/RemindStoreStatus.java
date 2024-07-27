@@ -20,6 +20,7 @@ public class RemindStoreStatus {
             @Override
             public void run() {
                 LocalDate today = LocalDate.now();
+                System.out.println("remind store da dc chay");
                 Store s = sd.getStore();
                 if (today.isAfter(s.getStartDate().minusDays(1)) && today.isBefore(s.getEndDate().plusDays(1))) {
                     s.setIsActive(false);
@@ -52,5 +53,6 @@ public class RemindStoreStatus {
 
     public void cancelReminder() {
         t.cancel();
+        System.out.println("reminde store da dc dung");
     }
 }

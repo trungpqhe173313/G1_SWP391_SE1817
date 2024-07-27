@@ -205,7 +205,7 @@ public class AppointmentServlet extends HttpServlet {
             //kiem tra xem khach hang co don chua hoan thanh hom dũo chon ko
             if (d.countOrderNotCompleteByCustomerId(cus.getCustomerId(), date_str) != 0) {
                 request.setAttribute("mss", "bạn đã có đơn chưa hoàn thành");
-                request.getRequestDispatcher("service").forward(request, response);
+                request.getRequestDispatcher("booking").forward(request, response);
                 return;
             }
 
@@ -241,23 +241,20 @@ public class AppointmentServlet extends HttpServlet {
                 int customerId = cus.getCustomerId();
 
                 //tao ra ordercode từ DAL.OrderDAO
-//                String orderCode = d.generateOrderCode();
-                String orderCode = "ab178";
+                String orderCode = d.generateOrderCode();
+                
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 //ep kieu string sang date truoc roi tao ra mot cai sql date
                 Date date = new java.sql.Date(sdf.parse(date_str).getTime());
                 Order o = new Order(orderCode, customerId, 1, date, sb.getTotalMoney());
                 d.AddOrder(o);
-                System.out.println("appointment order: "+ o.toString());
                 int orderId = d.getNewOrderId();
-                System.out.println("appointment orderId: "+ orderId);
                 List<Services> listServices = sb.getListServices();
                 for (Services s : listServices) {
                     d.AddOrder_services(s.getServicesId(), orderId);
                 }
                 Order_shiftDAO osd = new Order_shiftDAO();
                 for (Shift s : listShiftNeed) {
-                    System.out.println("appointment shiftId: "+ s.toString());
                     osd.InsertShift("" + orderId, s.getId());
                 }
                 ShopDAO shopDao = new ShopDAO();
