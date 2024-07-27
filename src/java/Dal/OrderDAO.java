@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,15 +31,55 @@ public class OrderDAO extends DBContext {
     private static String lastDate = DATE_FORMAT.format(new Date());
 
     public static synchronized String generateOrderCode() {
+        String lastOrderCode = new OrderDAO().getLastOrderCodeFromDatabase();
+        if (lastOrderCode == null || lastOrderCode.isEmpty()) {
+            return generateNewOrderCode();
+        }
+
+        // Tách ngày và số thứ tự từ mã đơn hàng cuối cùng
+        String datePart = lastOrderCode.substring(0, 8);
+        String numberPart = lastOrderCode.substring(10); // "BK" chiếm 2 ký tự
+
+        lastDate = datePart;
+        currentNumber = Integer.parseInt(numberPart) + 1;
+
+        // Kiểm tra nếu ngày hiện tại khác với ngày của mã đơn hàng cuối cùng
         String currentDate = DATE_FORMAT.format(new Date());
         if (!currentDate.equals(lastDate)) {
             currentNumber = 1; // Reset số thứ tự khi ngày thay đổi
             lastDate = currentDate;
         }
 
-        String orderCode = currentDate + String.format("%03d", currentNumber);
-        currentNumber++;
+        // Tạo mã đơn hàng mới
+        String orderCode = currentDate + "BK" + String.format("%03d", currentNumber);
         return orderCode;
+    }
+
+    
+    public String getLastOrderCodeFromDatabase() {
+        String lastOrderCode = null;
+        String sql = "SELECT TOP 1 [orderId], [orderCode]\n"
+                + "FROM [Barber].[dbo].[Orders]\n"
+                + "ORDER BY [orderId] DESC";
+        try (PreparedStatement stm = connection.prepareStatement(sql); ResultSet resultSet = stm.executeQuery()) {
+
+            if (resultSet.next()) {
+                lastOrderCode = resultSet.getString(2);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lastOrderCode;
+    }
+//    public static void main(String[] args) {
+//        String i = OrderDAO.generateOrderCode();
+//        System.out.println(i);
+//    }
+
+    private static String generateNewOrderCode() {
+        String currentDate = DATE_FORMAT.format(new Date());
+        return currentDate + "BK001";
     }
 
     public Order getOrderByAId(int customerId) {
@@ -169,18 +208,30 @@ public class OrderDAO extends DBContext {
         String sql = "INSERT INTO [dbo].[Orders]\n"
                 + "           ([orderCode]\n"
                 + "           ,[customerId]\n"
+                + "           ,[employeeId]\n"
                 + "           ,[statusID]\n"
                 + "           ,[orderDate]\n"
                 + "           ,[totalAmount]\n"
                 + "           ,[updateTime])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,GETDATE())";
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,GETDATE())";
         try (PreparedStatement st = connection.prepareStatement(sql);) {
             st.setString(1, o.getCodeOrder());
             st.setInt(2, o.getCustomerId());
-            st.setInt(3, o.getStatusId());
-            st.setDate(4, o.getOrderDate());
-            st.setInt(5, o.getTotalAmount());
+            if (o.getEmployeeId() != 0) {
+                st.setInt(3, o.getEmployeeId());
+            } else {
+                st.setNull(3, java.sql.Types.INTEGER);
+            }
+            st.setInt(4, o.getStatusId());
+            st.setDate(5, o.getOrderDate());
+            st.setInt(6, o.getTotalAmount());
             st.executeUpdate();
 
         } catch (SQLException ex) {

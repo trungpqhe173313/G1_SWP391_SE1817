@@ -5,17 +5,29 @@
 
 package Controller.Employee;
 
+import Controller.common.addimg;
 import Dal.AccountDAO;
 import Dal.EmployeesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.sql.SQLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, //1mb
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 20)
 /**
  *
  * @author ducth
@@ -76,7 +88,23 @@ public class UpdateEmployeesProfile extends HttpServlet {
         String phone = request.getParameter("phone");
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
-        String avatar = request.getParameter("avatar");
+        String currentAvatar = request.getParameter("currentAvatar"); // Hình ảnh hiện tại
+        
+        // Xử lý tệp tải lên
+        Part avatarPart = request.getPart("avatar");
+        String avatarFileName = Paths.get(avatarPart.getSubmittedFileName()).getFileName().toString();
+        
+        String avatarFilePath = currentAvatar; // Sử dụng hình ảnh hiện tại theo mặc định
+
+        if (avatarPart != null && avatarPart.getSize() > 0) {
+            avatarFilePath = getServletContext().getRealPath("/img/service/") + avatarFileName;
+            try (InputStream avatarContent = avatarPart.getInputStream()) {
+                Files.copy(avatarContent, Paths.get(avatarFilePath), StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
+
+        // Sử dụng tên tệp hình ảnh mới nếu có, nếu không sử dụng hình ảnh hiện tại
+        String avatar = (avatarFileName != null && !avatarFileName.isEmpty()) ? avatarFileName : currentAvatar;
 
         AccountDAO accountDAO = new AccountDAO();
         EmployeesDAO employeesDAO = new EmployeesDAO();
@@ -94,8 +122,7 @@ public class UpdateEmployeesProfile extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("avatar", avatar);
 
-            // Forward to the same JSP for display
-            request.getRequestDispatcher("/employeesprofile").forward(request, response);
+            response.sendRedirect("employeesprofile");
         } catch (SQLException ex) {
             // Handle SQL exception
             ex.printStackTrace(); // Log the exception for debugging
